@@ -1,94 +1,76 @@
-
-body {
+* {
     font-family: 'Inter', sans-serif;
-    background-image: linear-gradient(to bottom left, #122f54, #a9bfdd);
-    width: 100vw;
-    height: 100vh;
 }
 
-#loginmain {
-    height: 100vh;
-    width: 100%;
-    background: linear-gradient(to bottom left, #122f54, #a9bfdd);
-}
-
-#login2 {
-    margin: auto;
-    width: 65%;
-    height: 70%;
-    min-width: 400px;
-    min-height: 400px;
-    padding: 10px;
-}
-
-
-.principal {
-    padding-left: 10%;
-}
-
-#login3 {
-    float: left;
-    height: 100%;
-    width: 55%;
-    background-image: url("images/patern\ 1.png");
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+.wrapper {
+    background-image: url(images/bglogin.jpg);
+    background-position: center;
     background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.row {
+    width: 900px;
+    height: 550px;
+    border-radius: 21px;
+    background: #fff;
+    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.side-image {
     background-color: #122f54;
-    border-radius: 50px 0 0 50px;
-    text-align: center;
+    background-image: url(images/patern.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    border-radius: 20px 0 0 20px;
 }
 
-#maiscodelogo1 {
-    margin-top: 20%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    height: 12vh;
+.input-field {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 10px;
 }
 
-#loginh2 {
-    color: white;
-    margin-top: 4%;
-    margin-bottom: 4%;
-}
-
-#loginp {
-    color: white;
-    margin-left: 4%;
-    margin-right: 4%;
-
-}
-
-#login4 {
-    text-align: center;
-    float: left;
-    height: 100%;
-    width: 35%;
-    background-color: white;
-    border-radius: 0 50px 50px 0;
-}
-
-#loginh4 {
-    margin-top: 25%;
-}
-
-#loginform {
-    margin-top: 15%;
-}
-
-#loginname {
-    margin-bottom: 3vh;
-}
-
-#loginname,
-#loginpassword {
+.input {
+    height: 45px;
+    width: 100%;
+    background: transparent;
     border: none;
-    border-bottom: 1px solid black;
-    max-width: 65%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    outline: none;
+    color: #40414a;
 }
 
-#logincheck {
-    margin-left: -6vw;
+.input-box .input-field label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.input-field .input:focus~label {
+    top: -10px;
+    font-size: 13px;
+}
+
+.input-field .input:valid~label {
+    top: -10px;
+    font-size: 13px;
+    color: #5d5070;
+}
+
+.input-field .input:focus,
+.input-field .input:valid {
+    border-bottom: 1px solid #000;
+}
+
+@media only screen and (max-width: 768px) {
+    .side-image {
+        border-radius: 20px 20px 0 0;
+    }
 }
