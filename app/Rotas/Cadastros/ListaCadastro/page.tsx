@@ -5,47 +5,27 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import loginWallpaper from "@/public/tecnologia (1).png"
 import Image from "next/image"
 import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
-
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export default function CardWithForm() {
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="flex justify-center items-center">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
-      <Card className="w-[350px]">
+      <Card className="w-[375px]">
         <CardHeader>
           <CardTitle>Cliente</CardTitle>
         </CardHeader>
@@ -69,7 +49,7 @@ export default function CardWithForm() {
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name"></Label>
                 <Input className='rounded-none opacity-40' id="name" placeholder="Nome" style={{ border: 'none', borderBottom: '1px solid #000' }} />
-              </div>
+              </div>  
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="cpf"></Label>
                 <Input className='rounded-none opacity-40' id="cpf" placeholder="CNPJ/CPF" style={{ border: 'none', borderBottom: '1px solid #000' }} />
@@ -86,12 +66,23 @@ export default function CardWithForm() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-center items-center">
-          <Button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >Cadastrar cliente</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cadastrar cliente</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[255px]">
+              <DialogHeader>
+                <DialogTitle>Confirmar alteração?</DialogTitle>
+              </DialogHeader>
+              <DialogFooter className="flex justify-center space-x-3">
+                <Button className="bg-green-500 py-1 px-2" type="submit">Confirmar</Button>
+                <Button className="bg-red-500 py-1 px-2" type="submit">Cancelar</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </CardFooter>
       </Card>
-
     </div>
-
   );
 }
 
