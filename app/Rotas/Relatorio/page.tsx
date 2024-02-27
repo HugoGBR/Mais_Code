@@ -24,7 +24,7 @@ interface DataItem {
 }
 
 const data: DataItem[] = [
- 
+  // Seus dados reais aqui
   {
     id: 1,
     date: "13/08/2023",
@@ -155,7 +155,19 @@ const HomePage: React.FC = () => {
 
         <CardContent>
           <div className="flex justify-center items-center ">
-            
+            <Image
+              className="opacity-100"
+              src={loginWallpaper}
+              alt="Imagem"
+              sizes="10vw"
+              style={
+                {
+                  width: "3%",
+                  height: "30%",
+                  right: "50px"
+                }
+              }
+            />
           </div>
           <table className="table-auto">
             <thead>
