@@ -39,7 +39,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Copy } from "lucide-react"
  
 const data: Payment[] = [
   {
@@ -315,5 +314,3 @@ export function DataTableDemo() {
     </div>
   )
 }
-Copy
-Introduction
