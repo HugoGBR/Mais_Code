@@ -22,10 +22,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-export default function CardWithForm() {
+export default function PopUp() {
   return (
     <div className="flex justify-center items-center h-screen">
-      <Card className="w-[375px]">
+      <Card className="w-[375px] shadow-xl">
         <CardHeader>
           <CardTitle>Cliente</CardTitle>
         </CardHeader>
@@ -65,17 +65,17 @@ export default function CardWithForm() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center items-center">
+        <CardFooter className="flex justify-center items-center shadow-2xl">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline"className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente </Button>
+              <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente </Button>
             </DialogTrigger>
             <DialogContent className="w-auto">
               <DialogHeader>
-                <DialogTitle className="mt-3 text-center text-2xl">Confirmar alteração?</DialogTitle>
+                <DialogTitle className="mt-3 text-center text-xl">Confirmar alteração?</DialogTitle>
               </DialogHeader>
               <DialogFooter className="flex justify-center items-center">
-                <div className="space-x-4 ">
+                <div className="space-x-3">
                   <Button className="bg-green-500" type="button">Confirmar </Button>
                   <Button className="bg-red-500 " type="button"> Cancelar</Button>
                 </div>
@@ -87,4 +87,3 @@ export default function CardWithForm() {
     </div>
   );
 }
-
