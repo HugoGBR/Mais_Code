@@ -39,7 +39,10 @@ const LoginForm = () => {
               <input type="checkbox" id="logincheck" name="logincheck" value="check" className="mr-2" />
               Lembrar-me
             </label>
-            <input type="submit" value="Entrar" id="loginenter" className="text-white bg-blue-500 w-full py-1 rounded-md hover:bg-blue-600 cursor-pointer" onClick={handleLogin}/>
+              <button type="button" id="loginenter" className="text-white bg-blue-500 w-full py-1 rounded-md hover:bg-blue-600 cursor-pointer" onClick={handleLogin}>
+               Entrar
+              </button>
+
             {error && <p className="text-red-500 mt-4 text-sm/[12px]">{error}</p>}
             <div className="flex justify-center mt-2">
               <a href="/esqueci-minha-senha" className="text-sm">
