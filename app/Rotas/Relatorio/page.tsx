@@ -1,3 +1,7 @@
+import React from "react";
+import Image from "next/image";
+import loginWallpaper from "@/public/download.png"
+
 import {
   Card,
   CardContent,
@@ -6,7 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import React from "react";
+
+
 
 interface DataItem {
   id: number;
@@ -19,7 +24,7 @@ interface DataItem {
 }
 
 const data: DataItem[] = [
-  // Seus dados reais aqui
+ 
   {
     id: 1,
     date: "13/08/2023",
@@ -46,7 +51,7 @@ const data: DataItem[] = [
     salesman: "Vendedor 1",
     customer: "Gustavo",
     value: 100000.0,
-    status: "Inativo",
+    status: "Concluido",
   },
 
   {
@@ -76,10 +81,12 @@ const data: DataItem[] = [
     salesman: "Vendedor 1",
     customer: "Gustavo",
     value: 100000.0,
-    status: "Inativo",
+    status: "Ativo",
   },
   // ... Mais dados
 ];
+
+
 
 const formatCurrency = (value: number) => {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -88,15 +95,13 @@ const formatCurrency = (value: number) => {
 const getStatusColor = (status: string) => {
   switch (status) {
     case "Inativo":
-    case "Condu":
-    case "Conchada":
       return "bg-red-500";
-    case "REVE":
-    case "Alive":
-    case "kativa":
-      return "bg-orange-500";
-    default:
-      return "bg-gray-500";
+      case "Ativo":
+        return "bg-green-500";
+      case "Concluido":
+        return "bg-purple-500";   
+    
+    
   }
 };
 
@@ -130,6 +135,8 @@ const TableRow: React.FC<{ row: DataItem }> = ({ row }) => {
 
 const HomePage: React.FC = () => {
   return (
+
+
     <div
       style={{
         display: "flex",
@@ -138,10 +145,8 @@ const HomePage: React.FC = () => {
         height: "100vh",
       }}
     >
-      <h1 style={{height: 500, position: "absolute", top: "100", left: "0", margin: "40px" }}>
-        Relatório
-      </h1>
-      <Card style={{ margin: "0 auto" }}>
+
+      <Card className=" shadow-2xl">
         <CardHeader>
           <CardTitle></CardTitle>
 
@@ -149,6 +154,9 @@ const HomePage: React.FC = () => {
         </CardHeader>
 
         <CardContent>
+          <div className="flex justify-center items-center ">
+            
+          </div>
           <table className="table-auto">
             <thead>
               <tr>
@@ -168,10 +176,11 @@ const HomePage: React.FC = () => {
             </tbody>
           </table>
         </CardContent>
-
         <CardFooter></CardFooter>
       </Card>
     </div>
+
+
   );
 };
 
