@@ -49,7 +49,7 @@ export default function CardWithForm() {
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name"></Label>
                 <Input className='rounded-none opacity-40' id="name" placeholder="Nome" style={{ border: 'none', borderBottom: '1px solid #000' }} />
-              </div>  
+              </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="cpf"></Label>
                 <Input className='rounded-none opacity-40' id="cpf" placeholder="CNPJ/CPF" style={{ border: 'none', borderBottom: '1px solid #000' }} />
@@ -68,15 +68,17 @@ export default function CardWithForm() {
         <CardFooter className="flex justify-center items-center">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cadastrar cliente</Button>
+              <Button variant="outline"className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[255px]">
+            <DialogContent className="w-auto">
               <DialogHeader>
-                <DialogTitle>Confirmar alteração?</DialogTitle>
+                <DialogTitle className="mt-3 text-center text-2xl">Confirmar alteração?</DialogTitle>
               </DialogHeader>
-              <DialogFooter className="flex justify-center space-x-3">
-                <Button className="bg-green-500 py-1 px-2" type="submit">Confirmar</Button>
-                <Button className="bg-red-500 py-1 px-2" type="submit">Cancelar</Button>
+              <DialogFooter className="flex justify-center items-center">
+                <div className="space-x-4 ">
+                  <Button className="bg-green-500" type="button">Confirmar </Button>
+                  <Button className="bg-red-500 " type="button"> Cancelar</Button>
+                </div>
               </DialogFooter>
             </DialogContent>
           </Dialog>
