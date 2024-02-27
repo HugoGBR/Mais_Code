@@ -49,10 +49,10 @@ const CadastroProduto: React.FC = () => {
                                 onChange={(e) => setNomeProduto(e.target.value)}
                                 placeholder="Nome do Produto"
                                 required
-                                className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="border-b-2 mt-1 p-2 block w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             />
                         </div>
-                        <div className="mb-4 grid grid-cols-3">
+                        <div className="flex space-x-4 mb-4 grid grid-cols-3 rounded-none">
                             <input
                                 type="text"
                                 id="valorProduto"
@@ -61,28 +61,35 @@ const CadastroProduto: React.FC = () => {
                                 onChange={(e) => setValorProduto(e.target.value)}
                                 placeholder="R$"
                                 required
-                                className="mt-1 p-2 block border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="border-b-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             />
+                            <div>
                             <Select>
-                                        <SelectTrigger className="">
-                                            <SelectValue placeholder="Status" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="light">Novo</SelectItem>
-                                            <SelectItem value="dark">Antigo</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <Select>
-                                        <SelectTrigger className="">
-                                            <SelectValue placeholder="Status" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="light">Novo</SelectItem>
-                                            <SelectItem value="dark">Antigo</SelectItem>
-                                        </SelectContent>
-                                    </Select>
+                                <SelectTrigger className="">
+                                    <SelectValue placeholder="Status" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="light">Novo</SelectItem>
+                                    <SelectItem value="dark">Antigo</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            </div>
+
+                            <div>
+                            <Select>
+                                <SelectTrigger className="">
+                                    <SelectValue placeholder="Status" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="light">Novo</SelectItem>
+                                    <SelectItem value="dark">Antigo</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            </div>                       
+
+                            
                         </div>
-                        
+
                         <div className="mb-4">
                             <textarea
                                 id="descricaoProduto"
@@ -91,7 +98,7 @@ const CadastroProduto: React.FC = () => {
                                 onChange={(e) => setDescricaoProduto(e.target.value)}
                                 placeholder="Descrição do Produto"
                                 rows={4}
-                                className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="shadow-inner-2 mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             ></textarea>
                         </div>
                         <div className="text-center"> {/* Centralizando o botão "CADASTRAR" */}
