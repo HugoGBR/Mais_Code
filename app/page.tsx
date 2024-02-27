@@ -1,13 +1,14 @@
 'use client'
 import React, { useState } from "react";
 import "tailwindcss/tailwind.css";
+import { useRouter } from "next/navigation";
 
 // Defina o componente do formulário de login
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const route = useRouter()
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
     setError('');
@@ -23,7 +24,7 @@ const LoginForm = () => {
       setError('Campos obrigatórios. Preencha todos os campos.');
     } else {
       // Lógica de autenticação aqui
-      // Se a autenticação for bem-sucedida, redirecione ou execute outras ações necessárias
+      route.push('http://localhost:3000/Rotas/Home');
     }
   };
 
@@ -38,7 +39,7 @@ const LoginForm = () => {
               <input type="checkbox" id="logincheck" name="logincheck" value="check" className="mr-2" />
               Lembrar-me
             </label>
-            <input type="submit" value="Entrar" id="loginenter" className="text-white bg-blue-500 w-full py-1 rounded-md hover:bg-blue-600 cursor-pointer" />
+            <input type="submit" value="Entrar" id="loginenter" className="text-white bg-blue-500 w-full py-1 rounded-md hover:bg-blue-600 cursor-pointer" onClick={handleLogin}/>
             {error && <p className="text-red-500 mt-4 text-sm/[12px]">{error}</p>}
             <div className="flex justify-center mt-2">
               <a href="/esqueci-minha-senha" className="text-sm">
