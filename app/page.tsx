@@ -24,7 +24,8 @@ const LoginForm = () => {
       setError('Campos obrigatórios. Preencha todos os campos.');
     } else {
       // Lógica de autenticação aqui
-      route.push('http://localhost:3000/Rotas/Home');
+      route.push('/Rotas/Home');
+
     }
   };
 

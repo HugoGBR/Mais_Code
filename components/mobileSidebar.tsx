@@ -7,16 +7,9 @@ export default function MobileSideBar() {
 
     return (
         <>
-            <Sheet>
-                <SheetTrigger >
-                    <button className="md:hidden">
-                        <Menu />
-                    </button>
-                </SheetTrigger>
-                <SheetContent>
-                    <SideBar />
-                </SheetContent>
-            </Sheet>
+            <button className="md:hidden">
+                <Menu />
+            </button>
         </>
     )
 }
