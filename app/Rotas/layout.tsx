@@ -15,6 +15,7 @@ export default function RootLayout({
             </div>
             <main className="">
                 <Navbar/>
+                teste
                 {children}
             </main>
 

@@ -48,6 +48,7 @@ export default function SideBar() {
                             <Link href={item.href} className="text-sm flex p-3 font-medium hover:text-white hover:bg-white/10 rounded-lg">
                                 <div className="flex items-center">
                                 <User /> {item.nome}
+                                    teste
                                 </div>
                             </Link>
                         ))}
