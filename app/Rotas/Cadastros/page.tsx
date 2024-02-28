@@ -71,7 +71,7 @@ export default function CardWithForm() {
       </MenubarMenu>
     </Menubar>
     </div>
-        <div className="flex justify-center items-center h-screen" ><Card className="w-[375px]">
+        <div className="flex justify-center items-center h-screen" ><Card className="w-[375px]Z\">
       <CardHeader>
         <CardTitle>Cliente</CardTitle>
       </CardHeader>
