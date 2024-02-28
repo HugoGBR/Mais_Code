@@ -43,46 +43,52 @@ import {
 const data: Payment[] = [
   {
     id: "m5gr84i9",
-    amount: 316,
-    status: "success",
+    client: 316,
+    contrato: "success",
     email: "ken99@yahoo.com",
+    tip: "ihjn",
   },
   {
     id: "3u1reuv4",
-    amount: 242,
-    status: "success",
+    client: 242,
+    contrato: "success",
     email: "Abe45@gmail.com",
+    tip: "ihjn",
   },
   {
     id: "derv1ws0",
-    amount: 837,
-    status: "processing",
+    client: 837,
+    contrato: "processing",
     email: "Monserrat44@gmail.com",
+    tip: "ihjn",
   },
   {
     id: "5kma53ae",
-    amount: 874,
-    status: "success",
+    client: 874,
+    contrato: "failed",
     email: "Silas22@gmail.com",
+    tip: "ihjn",
   },
   {
     id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
+    client: 721,
+    contrato: "failed",
     email: "carmella@hotmail.com",
+    tip: "ihjn",
   },
 ]
  
 export type Payment = {
   id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
+  client: number
+  contrato: "pending" | "processing" | "success" | "failed"
   email: string
+  tip: string
 }
  
 export const columns: ColumnDef<Payment>[] = [
   {
-    id: "select",
+    id: " ",
     header: ({ table }) => (
       <Checkbox
         checked={
@@ -104,10 +110,10 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "contrato",
+    header: "N. Contrato",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize">{row.getValue("contrato")}</div>
     ),
   },
   {
@@ -118,7 +124,7 @@ export const columns: ColumnDef<Payment>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Data
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -126,52 +132,55 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: "client",
+    header: () => <div className="text-right">Cliente</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
- 
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
- 
-      return <div className="text-right font-medium">{formatted}</div>
+      const client = parseFloat(row.getValue("client"))
     },
   },
+
+  {
+    accessorKey: "tip",
+    header: "Tipo",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("tip")}</div>
+    ),
+  },
+
+  {
+    accessorKey: "parc",
+    header: "Parcelas",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("parc")}</div>
+    ),
+  },
+
+  {
+    accessorKey: "status",
+    header: "N. Contrato",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("status")}</div>
+    ),
+  },
+
+  {
+    accessorKey: "status",
+    header: "N. Contrato",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("status")}</div>
+    ),
+  },
+
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original
- 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
     },
   },
 ]
  
-export function DataTableDemo() {
+export default function DataTableDemo() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
