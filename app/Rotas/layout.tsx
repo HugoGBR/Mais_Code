@@ -12,7 +12,7 @@ export default function RootLayout({
                 <SideBar/>
                 </div>
             </div>
-            <main className="ml-48">
+            <main className="flex items-center justify-center">
                 {children}
             </main>
         </div>

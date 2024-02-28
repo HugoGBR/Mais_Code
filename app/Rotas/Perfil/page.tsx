@@ -36,7 +36,7 @@ export default function Home() {
 
   return (
 
-      <div  className='flex justify-center items-center h-screen bg-gray-100'>
+      <div  className='flex justify-center items-center h-screen'>
         <Card className='p-6 drop-shadow-xl rounded-xl'>
             <form onSubmit={handleSubmit(handleForm)}>
             <div>
@@ -51,25 +51,25 @@ export default function Home() {
               <div className=''>
                 <input type="text" placeholder='João da Silva'{...register('nome')} 
                 className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600 p-2 mt-1'/>
-                {errors.nome && (<div className='text-red-500 font-semibold'>{errors.nome.message}</div>)}
+                {errors.nome && (<div className='text-red-500 text-sm'>{errors.nome.message}</div>)}
               </div>
 
               <div>
                 <input type='text' placeholder='999.999.999-99'{...register('cpf')} 
                 className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1' />
-                {errors.cpf && (<div className='text-red-500 font-semibold'>{errors.cpf.message}</div>)}
+                {errors.cpf && (<div className='text-red-500 text-sm'>{errors.cpf.message}</div>)}
               </div>
 
               <div>
                 <input type='email' placeholder='joão@gmail.com' {...register('email')} 
                 className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1' />
-                {errors.email && (<div className='text-red-500 font-semibold'>{errors.email.message}</div>)}
+                {errors.email && (<div className='text-red-500 text-sm'>{errors.email.message}</div>)}
               </div>
 
               <div>
                 <input type='password' placeholder='************' {...register('senha')} 
                 className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1'  />
-                {errors.senha && (<div className='text-red-500 font-semibold'>{errors.senha.message}</div>)}
+                {errors.senha && (<div className='text-red-500 text-sm'>{errors.senha.message}</div>)}
               </div>
             </div>
 
