@@ -18,7 +18,6 @@ import {
 
 export default function PopupConfirmacao() {
     return (
-        <CardFooter className="flex justify-center items-center shadow-2xl">
             <Dialog>
                 <DialogTrigger asChild>
                     <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded  transition duration-500 ease-in-out hover:text-white">Cadastrar cliente </Button>
@@ -35,6 +34,5 @@ export default function PopupConfirmacao() {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
-        </CardFooter>
     )
 }
