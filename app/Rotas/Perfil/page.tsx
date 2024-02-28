@@ -1,6 +1,7 @@
 "use client"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import PopupConfirmacao from "@/components/PopUpConfirm"
 import { z } from 'zod'
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
@@ -8,10 +9,6 @@ import { Card,CardFooter, } from "@/components/ui/card"
 import FileAvatar from "@/components/FileAvatar"
 import {
   Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 
@@ -80,7 +77,7 @@ export default function Home() {
             <CardFooter className="flex justify-center items-center">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline"className="transition duration-300 ease-in-out bg-blue-800 hover:bg-blue-400 text-white rounded-xl  md:w-56 shadow-xl ">Editar</Button>
+                  <Button onClick={PopupConfirmacao} variant="outline"className="transition duration-300 ease-in-out bg-blue-800 hover:bg-blue-400 text-white rounded-xl  md:w-56 shadow-xl ">Editar</Button>
                 </DialogTrigger>
               </Dialog>
             </CardFooter>
