@@ -1,20 +1,11 @@
 "use client"
-import Image from 'next/image'
-import loginWallpaper from "@/public/icons/icon_perfil_preto.png"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-  } from "@/components/ui/card"
-
+import { Card,CardFooter, } from "@/components/ui/card"
+import FileAvatar from "@/components/FileAvatar"
 import {
   Dialog,
   DialogContent,
@@ -32,7 +23,6 @@ const formulario = z.object({
 })
 
 type formulario = z.infer<typeof formulario>
-
 
 
 export default function Home() {
@@ -53,23 +43,11 @@ export default function Home() {
         <Card className='p-6 drop-shadow-xl rounded-xl'>
             <form onSubmit={handleSubmit(handleForm)}>
             <div>
-              <h1 className='font-bold pb-5'>Usuário</h1>
+              <h1 className='font-bold pb-5 text-2xl'>Usuário</h1>
             </div>
-            <div className='rounded-2x1 flex justify-center'>
-              <Image
-              src = {loginWallpaper}
-              alt = 'image'
-              sizes = '40vw'
-              style={
-                {
-                  width: '15%',
-                  height: '15%'
-                }
-              }
-              />
-          </div>
-              <div className='flex justify-center mb-10'>
-                <p>Editar foto</p>
+
+              <div>
+                <FileAvatar/>
               </div>
 
             <div className='pb-16 grid grid-cols-1 sm:grid-cols-2 gap-4'>
@@ -102,19 +80,8 @@ export default function Home() {
             <CardFooter className="flex justify-center items-center">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline"className=" transition duration-300 ease-in-out bg-blue-800 hover:bg-blue-400 text-white rounded-xl  md:w-56 shadow-xl ">Editar</Button>
+                  <Button variant="outline"className="transition duration-300 ease-in-out bg-blue-800 hover:bg-blue-400 text-white rounded-xl  md:w-56 shadow-xl ">Editar</Button>
                 </DialogTrigger>
-                <DialogContent className="w-auto rounded-lg">
-                  <DialogHeader>
-                    <DialogTitle className="mt-3 mb-4 text-center text-2xl">Confirmar alteração?</DialogTitle>
-                  </DialogHeader>
-                  <DialogFooter className="flex justify-center items-center">
-                    <div className="space-x-7">
-                      <Button className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white" type="button">Confirmar </Button>
-                      <Button className="w-32 border border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white" type="button"> Cancelar</Button>
-                    </div>
-                  </DialogFooter>
-                </DialogContent>
               </Dialog>
             </CardFooter>
         </Card>
