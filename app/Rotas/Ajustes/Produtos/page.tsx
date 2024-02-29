@@ -7,6 +7,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import CaracterLimit from '@/components/CaracterLimit';
 
 
 const CadastroProduto: React.FC = () => {
@@ -22,7 +23,7 @@ const CadastroProduto: React.FC = () => {
         if (descricao.length <= descricaoLimiteCaracteres) {
             setDescricaoProduto(descricao);
         }
-    };  
+    };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -32,18 +33,6 @@ const CadastroProduto: React.FC = () => {
 
     return (
         <div className="flex flex-col h-screen">
-            <div className='col-2 flex items-center'>
-                {/* Botão de Voltar */}
-                <button
-                    onClick={() => window.history.back()}
-                    className="bg-gray-200 px-4 py-2 rounded">
-                    Voltar
-                </button>
-                {/* Título "Produtos" */}
-                <h1 className="text-2xl font-semibold mb-4 ml-4">Produtos</h1>
-            </div>
-
-
             {/* Card de Cadastro */}
             <div className=" flex justify-center items-center flex-grow">
                 <div className=" max-w-lg w-full bg-white shadow-xl rounded-md p-8"> {/* Removida a classe text-center do card */}
@@ -73,45 +62,34 @@ const CadastroProduto: React.FC = () => {
                                 className="border-b-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             />
                             <div>
-                            <Select>
-                                <SelectTrigger className="">
-                                    <SelectValue placeholder="Status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="light">Novo</SelectItem>
-                                    <SelectItem value="dark">Antigo</SelectItem>
-                                </SelectContent>
-                            </Select>
+                                <Select>
+                                    <SelectTrigger className="">
+                                        <SelectValue placeholder="Status" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="light">Novo</SelectItem>
+                                        <SelectItem value="dark">Antigo</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
 
                             <div>
-                            <Select>
-                                <SelectTrigger className="">
-                                    <SelectValue placeholder="Status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="light">Novo</SelectItem>
-                                    <SelectItem value="dark">Antigo</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            </div>                       
+                                <Select>
+                                    <SelectTrigger className="">
+                                        <SelectValue placeholder="Status" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="light">Novo</SelectItem>
+                                        <SelectItem value="dark">Antigo</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                            
+
                         </div>
 
-                        <div className="mb-4">
-                            <textarea
-                                id="descricaoProduto"
-                                name="descricaoProduto"
-                                value={descricaoProduto}
-                                onChange={handleDescricaoChange}
-                                placeholder="Descrição do Produto"
-                                rows={4}
-                                maxLength={descricaoLimiteCaracteres}
-                                className="shadow-inner-2 mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            ></textarea>
-                            {/* Exibe o contador de caracteres restantes */}
-                            <p className="text-sm text-gray-500">{descricaoProduto.length}/{descricaoLimiteCaracteres}</p>
+                        <div className="mb-4 flex flex-col">
+                            <CaracterLimit/>
                         </div>
                         <div className="text-center">
                             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
