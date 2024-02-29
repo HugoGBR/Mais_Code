@@ -36,7 +36,7 @@ export default function Home() {
 
   return (
 
-      <div  className='flex justify-center items-center h-screen'>
+      <div  className=''>
         <Card className='p-6 drop-shadow-xl rounded-xl'>
             <form onSubmit={handleSubmit(handleForm)}>
             <div>
