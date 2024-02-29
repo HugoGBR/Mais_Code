@@ -37,7 +37,7 @@ export default function ConfiguracoesParcela() {
         <CardFooter className="flex justify-center items-center shadow-xl">
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente</Button>
+                    <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar</Button>
                 </DialogTrigger>
                 <DialogContent className="w-[475px] h-3/4 rounded-lg">
                     <DialogHeader>
