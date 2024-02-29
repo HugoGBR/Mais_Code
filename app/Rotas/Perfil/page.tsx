@@ -13,28 +13,28 @@ import {
 } from "@/components/ui/dialog"
 
 const formulario = z.object({
-  nome: z.string().min(10, 'Digite no mínimo 10 caracteres.').max(60, 'Digite o nome completo, máximo de 60 caracteres.'),
-  cpf: z.string().min(14, 'O CPF deve conter 14 caracteres.'),
-  email: z.string().email("Email inválido."),
-  senha: z.string().min(5, 'Número mínimo de caracteres é 5.').max(10, "Atingiu o limite de caracteres.")
+    nome: z.string().min(10, 'Digite no mínimo 10 caracteres.').max(60, 'Digite o nome completo, máximo de 60 caracteres.'),
+    cpf: z.string().min(14, 'O CPF deve conter 14 caracteres.'),
+    email: z.string().email("Email inválido."),
+    senha: z.string().min(5, 'Número mínimo de caracteres é 5.').max(10, "Atingiu o limite de caracteres.")
 })
 
 type formulario = z.infer<typeof formulario>
 
 
 export default function Home() {
-  const { register, handleSubmit, formState: { errors } } = useForm<formulario>({
-    resolver: zodResolver(formulario)
-  })
+    const {register, handleSubmit, formState: {errors}} = useForm<formulario>({
+        resolver: zodResolver(formulario)
+    })
 
-  function handleForm(dados: formulario) {
-    route.push('https://en.wikipedia.org/wiki/Monkey')
-    console.log(dados)
-  }
+    function handleForm(dados: formulario) {
+        route.push('https://en.wikipedia.org/wiki/Monkey')
+        console.log(dados)
+    }
 
-  const route = useRouter();
+    const route = useRouter();
 
-  return (
+    return (
 
       <div  className=''>
         <Card className='p-6 drop-shadow-xl rounded-xl'>
