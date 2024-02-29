@@ -1,4 +1,5 @@
 import SideBar from "@/components/Sidebar";
+import BtnVoltar from "@/components/BtnVoltar";
 
 export default function RootLayout({
                                        children,
@@ -12,7 +13,7 @@ export default function RootLayout({
                     <SideBar/>
                 </div>
             </div>
-            <main className="w-full">
+            <main className="flex flex-col items-center justify-center w-full">
                 {children}
             </main>
         </div>
