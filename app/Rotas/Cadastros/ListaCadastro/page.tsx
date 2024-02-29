@@ -57,7 +57,7 @@ export default function ListaCadastro() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center items-center shadow-2xl">
+        <CardFooter className="flex justify-center items-center ">
           <PopupConfirmacao/>
         </CardFooter>
       </Card>

@@ -39,20 +39,20 @@ export default function ConfiguracoesParcela() {
                 <DialogTrigger asChild>
                     <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente</Button>
                 </DialogTrigger>
-                <DialogContent className="w-[475px] rounded-lg">
+                <DialogContent className="w-[475px] h-3/4 rounded-lg">
                     <DialogHeader>
-                        <DialogTitle className="mt-3 text-center text-2xl text-black">
+                        <DialogTitle className="mt-3 pl-12 text-2xl text-black">
                             Configuração de Parcelas
                         </DialogTitle>
 
                         <Table>
                             <TableHeader>
-                                <TableRow>
-                                    <TableHead className="text-center">Parcelas</TableHead>
-                                    <TableHead className="text-center">Valor</TableHead>
+                                <TableRow className="grid-cols-2 grid space-x-9 ">
+                                    <TableHead className="text-lg pl-14 text-black ">Parcelas</TableHead>
+                                    <TableHead className="text-lg text-black">Valor</TableHead>
                                 </TableRow>
                             </TableHeader>
-                     <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+                     <ScrollArea className="h-[500px] w-[430px] rounded-md border p-4">
                      <TableBody>
                                 <TableRow>
                                     <TableCell className="text-center">1x</TableCell>
@@ -150,8 +150,6 @@ export default function ConfiguracoesParcela() {
                             </TableBody>
                         </ScrollArea> 
                         </Table>
-
-
                 </DialogHeader>
                 <DialogFooter className="flex justify-center items-center">
                     <div>
