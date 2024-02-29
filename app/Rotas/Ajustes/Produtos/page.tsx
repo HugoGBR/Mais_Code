@@ -61,7 +61,7 @@ const CadastroProduto: React.FC = () => {
                                 className="border-b-2 mt-1 p-2 block w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             />
                         </div>
-                        <div className="flex space-x-4 mb-4 grid grid-cols-3 rounded-none">
+                        <div className="space-x-4 mb-4 grid grid-cols-3 rounded-none">
                             <input
                                 type="text"
                                 id="valorProduto"
