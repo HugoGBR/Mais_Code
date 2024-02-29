@@ -52,14 +52,14 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import Image from "next/image";
-import urlimagem from "@/public/tecnologia.png"
+import urlimagem from "@/public/perfil.png"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 export default function CardWithForm() {
     return (
 
-        <div >
-            <div>
-                <Menubar>
+        <div className="flex flex-col justify-center  h-screen ">
+            <div className="flex">
+                <Menubar className="">
                     <MenubarMenu>
                         <MenubarTrigger>Contrato</MenubarTrigger>
                     </MenubarMenu>
@@ -71,7 +71,7 @@ export default function CardWithForm() {
                     </MenubarMenu>
                 </Menubar>
             </div>
-            <div className="flex justify-center items-center h-screen" >
+            <div className="flex justify-center mb-2" >
                 <Card className="w-[375px]Z\">
                     <CardHeader>
                         <CardTitle>Cliente</CardTitle>
@@ -99,22 +99,24 @@ export default function CardWithForm() {
                                     <Input className="rounded-none opacity-40" id="address" placeholder="Endereço" style={{ border: 'none', borderBottom: '1px solid #000' }} />
                                 </div>
                             </div>
+                            <br/>
+                            
                             <CardTitle>Cargo</CardTitle>
-
+                            <br/>
 
                             <div className=" flex flex-row">
                                 <RadioGroup defaultValue="option-one ">
-                                    <div className="">
+                                    <div>
                                         <RadioGroupItem value="option-one" id="option-one" />
-                                        <Label htmlFor="option-one">Vendedor</Label>
+                                        <Label htmlFor="option-one"> Vendedor</Label>
                                     </div>
-                                    <div className="">
+                                    <div>
                                         <RadioGroupItem value="option-two" id="option-two" />
-                                        <Label htmlFor="option-two">Financeiro</Label>
+                                        <Label htmlFor="option-two"> Financeiro</Label>
                                     </div>
-                                    <div className="">
+                                    <div>
                                         <RadioGroupItem value="option-three" id="option-three" />
-                                        <Label htmlFor="option-three">Administrador</Label>
+                                        <Label htmlFor="option-three"> Administrador</Label>
                                     </div>
                                 </RadioGroup>
                             </div>
