@@ -7,6 +7,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import CaracterLimit from '@/components/CaracterLimit';
 
 
 const CadastroProduto: React.FC = () => {
@@ -88,20 +89,7 @@ const CadastroProduto: React.FC = () => {
                         </div>
 
                         <div className="mb-4 flex flex-col">
-                            <textarea
-                                id="descricaoProduto"
-                                name="descricaoProduto"
-                                value={descricaoProduto}
-                                onChange={handleDescricaoChange}
-                                placeholder="Descrição do Produto"
-                                rows={4}
-                                maxLength={descricaoLimiteCaracteres}
-                                className="shadow-inner-2 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            ></textarea>
-                            {/* Exibe o contador de caracteres restantes */}
-                            <div className="flex justify-end">
-                                <p className="text-sm text-gray-500">{descricaoProduto.length}/{descricaoLimiteCaracteres}</p>
-                            </div>
+                            <CaracterLimit/>
                         </div>
                         <div className="text-center">
                             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
