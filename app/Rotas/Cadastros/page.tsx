@@ -16,9 +16,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-    
-
-
+  
 
 export default function Contrato() {
     //Faça suas const aqui(constantes)
@@ -26,7 +24,7 @@ export default function Contrato() {
     return(
         <div className="flex items-center justify-center h-screen ">
 
-    <Card>
+    <Card className="w-1/3">
   <CardHeader>
     <CardTitle>Contrato: Nº 00005</CardTitle>
     <CardDescription>Dados do Contrato</CardDescription>
@@ -48,8 +46,8 @@ export default function Contrato() {
   </div>
 
 
-<h2>Modelo de Contrato:</h2>
-<div className="gap-5">
+<div className="grid grid-cols-2 gap-5 mt-5 ">
+<label className="" htmlFor="DadosContrato">Dados do Contrato</label>
     <div>
 <Select>
 <SelectTrigger className="w-[180px] gap-3">
@@ -61,7 +59,7 @@ export default function Contrato() {
   </SelectContent>
 </Select>
     </div>
-<div>
+<div className="grid grid-cols-2 gap-5 ">
 <Select>
 <SelectTrigger className="w-[180px]">
     <SelectValue placeholder="Hora Dev" />
@@ -72,6 +70,17 @@ export default function Contrato() {
     <SelectItem value="hrdev3">React</SelectItem>
   </SelectContent>
 </Select>
+<div>
+  <label htmlFor="teste">Horas Trabalhadas</label> <br />
+  <input placeholder="0000" type="text" />
+</div>
+<div>
+  <h2>Dados do Contato</h2>
+
+  <input placeholder="Nome:" type="text" /> 
+  <input placeholder="Contato" type="text" />
+  <input placeholder="Email:" type="text" />
+</div>
 </div>
 
 </div>
