@@ -52,7 +52,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import Image from "next/image";
-import urlimagem from "@/public/tecnologia.png"
+import urlimagem from "@/public/icons/icon_perfil_preto.png"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 export default function CardWithForm() {
     return (

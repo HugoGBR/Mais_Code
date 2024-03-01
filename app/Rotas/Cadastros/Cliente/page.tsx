@@ -52,7 +52,7 @@ import {
     PaginationPrevious,
   } from "@/components/ui/pagination"
 import Image from "next/image";
-import urlimagem from "@/public/tecnologia.png"
+import urlimagem from "@/public/icon-empresa.png"
  
 export default function CardWithForm() {
   return (
