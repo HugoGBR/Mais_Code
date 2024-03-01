@@ -58,7 +58,7 @@ export default function Contrato() {
 
                             <div className="flex flex-col ml-5">
                                 <label className="text-sm" htmlFor="teste">Horas Trabalhadas</label>
-                                <input className="border-b-2  focus:outline-none focus:border-blue-500"
+                                <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                        placeholder="Horas" type="number"/>
                             </div>
                             <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
