@@ -22,7 +22,7 @@ export default function Contrato() {
     //Faça suas const aqui(constantes)
 
     return (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h-screen ">
 
             <Card>
                 <CardHeader>
@@ -71,10 +71,7 @@ export default function Contrato() {
                             </SelectContent>
                         </Select>
                     </div>
-
                 </div>
-
-
             </Card>
         </div>
 
