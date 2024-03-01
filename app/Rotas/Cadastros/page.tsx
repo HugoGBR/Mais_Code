@@ -29,15 +29,15 @@ export default function Contrato() {
                         <div className="grid grid-cols-2 gap-5 mb-4">
                             <input className="border-b-2 focus:outline-none focus:border-blue-500" placeholder="Cliente"
                                    type="text"/>
-                            <input className="border-b-2 focus:outline-none focus:border-blue-500 invisible"
+                            <input className="invisible border-b-2 focus:outline-none focus:border-blue-500"
                                    placeholder="Colaborador"
                                    type="text"/>
-                            <div className="flex-col flex">
+                            <div className="flex flex-col">
                                 <label className="text-sm" htmlFor="teste">Data Inicio</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                        placeholder="Data de inicio" type="date"/>
                             </div>
-                            <div className="flex-col flex">
+                            <div className="flex flex-col">
                                 <label className="text-sm" htmlFor="teste">Data Termino</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500" type="date"/>
                             </div>
@@ -45,9 +45,9 @@ export default function Contrato() {
 
 
                         <div className="grid grid-cols-2 mb-5">
-                            <label className="text-sm col-span-2" htmlFor="teste">Modelo do Contratos</label>
+                            <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
                             <Select>
-                                <SelectTrigger className="h-8 w-36 rounded-lg mt-1">
+                                <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
                                     <SelectValue placeholder="Tipo Contrato"/>
                                 </SelectTrigger>
                                 <SelectContent>
@@ -58,12 +58,12 @@ export default function Contrato() {
 
                             <div className="flex flex-col ml-5">
                                 <label className="text-sm" htmlFor="teste">Horas Trabalhadas</label>
-                                <input className=" border-b-2 focus:outline-none focus:border-blue-500"
+                                <input className="border-b-2  focus:outline-none focus:border-blue-500"
                                        placeholder="Horas" type="number"/>
                             </div>
-                            <label className="text-sm col-span-2" htmlFor="teste">Produto</label>
+                            <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
                             <Select>
-                                <SelectTrigger className="h-8 w-36 rounded-lg mt-1">
+                                <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
                                     <SelectValue placeholder="Produto"/>
                                 </SelectTrigger>
                                 <SelectContent>
@@ -101,7 +101,7 @@ export default function Contrato() {
                         <div className="mb-5">
                             <label className="text-sm " htmlFor="Nn">Status Cliente</label>
                             <Select>
-                                <SelectTrigger className="h-8 w-36 rounded-lg mt-2">
+                                <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
                                     <SelectValue placeholder="Tipo"/>
                                 </SelectTrigger>
                                 <SelectContent>
@@ -115,23 +115,23 @@ export default function Contrato() {
                         <div className="flex items-center space-x-8 border-b-2">
                             <div className="flex items-center mb-4">
                                 <input id="pagamento-opcao-1" type="radio" value="À vista"
-                                       className="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                       className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                        aria-labelledby="pagamento-opcao-1" aria-describedby="pagamento-opcao-1"/>
                                 <label htmlFor="pagamento-opcao-1"
-                                       className="text-sm font-medium text-gray-900 ml-2 block">
+                                       className="block ml-2 text-sm font-medium text-gray-900">
                                     À vista
                                 </label>
                             </div>
                             <div className="flex items-center mb-4">
                                 <input id="pagamento-opcao-2" type="radio" value="Parcelado"
-                                       className="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                       className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                        aria-labelledby="pagamento-opcao-2" aria-describedby="pagamento-opcao-2"/>
                                 <label htmlFor="pagamento-opcao-2"
-                                       className="text-sm font-medium text-gray-900 ml-2 block">
+                                       className="block ml-2 text-sm font-medium text-gray-900">
                                     Parcelado
                                 </label>
                             </div>
-                            <input className="border-b-2 w-24" placeholder="N Parcelas" type="text"/>
+                            <input className="w-24 border-b-2" placeholder="N Parcelas" type="text"/>
                             <GoGear/>
                         </div>
 
@@ -139,9 +139,9 @@ export default function Contrato() {
                             <h1>Total à Pagar</h1>
                             <h1 className="font-bold">R$ 0000,00</h1>
                         </div>
-                        <div className="text-center mt-5">
+                        <div className="mt-5 text-center">
                             <button type="submit"
-                                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                 CADASTRAR
                             </button>
                         </div>
@@ -151,9 +151,7 @@ export default function Contrato() {
                 </Card>
 
             </div>
-            <h1 className="font-black text-red-600">Ainda precisa arrumar algumas coisas na parte de formas de pagamento, confio que
-                voce vai ter o
-                olhar clinico de ler o codigo e entender oque esta faltando. Assim que voce apagar o H1 a tela ira ficar no tamanho correto</h1>
+          
         </div>
 
     )
