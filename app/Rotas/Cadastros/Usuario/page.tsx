@@ -71,17 +71,17 @@ export default function CardWithForm() {
                     </MenubarMenu>
                 </Menubar>
             </div> */}
-            <div className="flex" style={{marginLeft: '400px'}}>
-                <Button variant="outline">Contrato</Button>
+            <div className="flex" style={{marginLeft: '200px'}}>
+                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black" type="button">Contrato</Button>
 
-                <Button variant="outline">Cliente</Button>
+                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black" type="button">Cliente</Button>
 
-                <Button variant="outline">Usuario</Button>
+                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black" type="button">Usuario</Button>
             </div>
             <div className="flex justify-center mb-2" >
                 <Card className="w-[375px]Z\">
                     <CardHeader>
-                        <CardTitle>Cliente</CardTitle>
+                        <CardTitle>Usuario</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="flex justify-center items-center opacity-40">
@@ -140,8 +140,8 @@ export default function CardWithForm() {
                                 </DialogHeader>
                                 <DialogFooter className="flex justify-center items-center">
                                     <div className="space-x-4">
-                                        <Button className="bg-green-500" type="button">Confirmar </Button>
-                                        <Button className="bg-red-500 " type="button"> Cancelar</Button>
+                                        <Button className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white" type="button">Confirmar </Button>
+                                        <Button className="w-32 border  border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white" type="button"> Cancelar</Button>
                                     </div>
                                 </DialogFooter>
                             </DialogContent>
