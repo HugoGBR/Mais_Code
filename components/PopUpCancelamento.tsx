@@ -1,4 +1,5 @@
 'use client'
+import CaracterLimit from "@/components/CaracterLimit";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -14,25 +15,63 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
+    DialogDescription,
 } from "@/components/ui/dialog"
+import { Textarea } from "@/components/ui/textarea"
+import { useState } from "react";
 
 
-export default function PopUpCancelamento(){
-    return(
-        <CardFooter className="flex justify-center items-center">
-        <Dialog>
-            <DialogContent className="w-auto rounded-lg">
-                <DialogHeader>
-                    <DialogTitle className="mt-3 mb-4 text-center text-2xl">Confirmar alteração?</DialogTitle>
-                </DialogHeader>
-                <DialogFooter className="flex justify-center items-center">
-                    <div className="space-x-7">
-                        <Button className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white" type="button">Confirmar </Button>
-                        <Button className="w-32 border border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white" type="button"> Cancelar</Button>
+export default function PopUpCancelamento() {
+    const [descricaoProduto, setDescricaoProduto] = useState<string>('');
+    const descricaoLimiteCaracteres = 255;
+    const handleDescricaoChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
+        const descricao = event.target.value;
+        // Verifica se a descrição excede o limite de caracteres
+        if (descricao.length <= descricaoLimiteCaracteres) {
+            setDescricaoProduto(descricao);
+        }
+    };
+
+    return (
+        <CardFooter className="flex justify-center items-center shadow-xl">
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Confirmar</Button>
+                </DialogTrigger>
+                <DialogContent className="w-1/3 rounded-lg">
+                    <DialogHeader>
+                        <DialogTitle className="mt-2 text-center text-4xl text-red-500 mb-2">
+                            Cancelamento Venda
+                        </DialogTitle>
+                        <DialogDescription className="flex justify-center items-center">
+                            Explique o motivo do cancelamento
+                            da venda no campo a baixo
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div>
+                        <textarea
+                            id="descricaoProduto"
+                            name="descricaoProduto"
+                            value={descricaoProduto}
+                            onChange={handleDescricaoChange}
+                            placeholder="Descreva o motivo do cancelamento"
+                            rows={4}
+                            maxLength={descricaoLimiteCaracteres}
+                            className="shadow-inner-2 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        ></textarea>
+                        {/* Exibe o contador de caracteres restantes */}
+                        <div className="flex justify-end">
+                            <p className="text-sm text-gray-500">{descricaoProduto.length}/{descricaoLimiteCaracteres}</p>
+                        </div>
                     </div>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    </CardFooter>
+                    <DialogFooter className="flex justify-center items-center">
+                        <div>
+                            <Button className="w-auto border border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out
+                             hover:bg-green-500 hover:text-white" type="button">Confirmar</Button>
+                        </div>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </CardFooter>
     )
 }

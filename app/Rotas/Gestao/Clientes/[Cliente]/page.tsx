@@ -20,7 +20,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import PopupConfirmacao from "@/components/PopupConfirmacao/page";
+import PopupConfirmacao from "@/components/PopUpConfirmacao";
+
 
 export default function ListaCadastro() {
   return (
