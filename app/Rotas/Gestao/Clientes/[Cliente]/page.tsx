@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -21,9 +20,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import PopupConfirmacao from "@/components/PopUpConfirm";
+import PopupConfirmacao from "@/components/PopupConfirmacao/page";
 
-export default function PopUp() {
+export default function ListaCadastro() {
   return (
     <div className="flex justify-center items-center h-screen">
       <Card className="w-[375px] shadow-xl">

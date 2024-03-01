@@ -15,6 +15,9 @@ export default function PopupConfirmacao() {
     return (
         <CardFooter className="flex justify-center items-center">
             <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente</Button>
+                </DialogTrigger>
                 <DialogContent className="w-auto rounded-lg">
                     <DialogHeader>
                         <DialogTitle className="mt-3 mb-4 text-center text-2xl">Confirmar alteração?</DialogTitle>
