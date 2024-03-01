@@ -2,8 +2,6 @@
 import * as React from "react";
 import {Button} from "@/components/ui/button"
 import Link from "next/link";
-import BtnVoltar from "@/components/BtnVoltar";
-
 
 export default function Ajuste() {
 
@@ -11,7 +9,7 @@ export default function Ajuste() {
         <div>
             Home
             <Button asChild>
-                <Link href="/Rotas/Ajustes/Produtos">Login</Link>
+                <Link href="/Rotas/Ajustes/Produtos">Cadastrar</Link>
             </Button>
         </div>
     )
