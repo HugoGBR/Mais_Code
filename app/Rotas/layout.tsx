@@ -13,7 +13,7 @@ export default function RootLayout({
                     <SideBar/>
                 </div>
             </div>
-            <main className="flex flex-col items-center justify-center w-full">
+            <main className="flex flex-col items-center justify-center w-full bg-[#F2F6F9]">
                 {children}
             </main>
         </div>
