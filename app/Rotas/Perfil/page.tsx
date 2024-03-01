@@ -1,7 +1,7 @@
 "use client"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import PopupConfirmacao from "@/components/PopUpConfirm"
+import PopupConfirmacao from '@/components/PopUpConfirmacao'
 import { z } from 'zod'
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
