@@ -151,9 +151,6 @@ export default function Contrato() {
                 </Card>
 
             </div>
-            <h1 className="font-black text-red-600">Ainda precisa arrumar algumas coisas na parte de formas de pagamento, confio que
-                voce vai ter o
-                olhar clinico de ler o codigo e entender oque esta faltando. Assim que voce apagar o H1 a tela ira ficar no tamanho correto</h1>
         </div>
 
     )

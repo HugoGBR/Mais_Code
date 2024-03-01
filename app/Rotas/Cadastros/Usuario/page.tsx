@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -13,46 +12,18 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
     Menubar,
-    MenubarCheckboxItem,
-    MenubarContent,
-    MenubarItem,
     MenubarMenu,
-    MenubarRadioGroup,
-    MenubarRadioItem,
-    MenubarSeparator,
-    MenubarShortcut,
-    MenubarSub,
-    MenubarSubContent,
-    MenubarSubTrigger,
     MenubarTrigger,
 } from "@/components/ui/menubar"
 import * as React from "react";
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination"
 import Image from "next/image";
-import urlimagem from "@/public/tecnologia.png"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 export default function CardWithForm() {
     return (
@@ -78,7 +49,7 @@ export default function CardWithForm() {
                     </CardHeader>
                     <CardContent>
                         <div className="flex justify-center items-center opacity-40">
-                            <Image src={urlimagem} style={{ height: "25%", width: "25%" }} sizes="5vw" alt="imagem" />
+                            <Image src="" style={{ height: "25%", width: "25%" }} sizes="5vw" alt="imagem" />
                         </div>
                         <form>
                             <div className="grid grid-cols-2 gap-4">
