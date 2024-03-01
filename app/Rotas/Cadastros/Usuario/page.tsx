@@ -57,8 +57,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 export default function CardWithForm() {
     return (
 
-        <div className="flex flex-col justify-center  h-screen ">
-            <div className="flex">
+        <div className="flex flex-col justify-center  h-screen gap-5">
+            {/* <div className="flex" style={{marginLeft: '400px'}}>
                 <Menubar className="">
                     <MenubarMenu>
                         <MenubarTrigger>Contrato</MenubarTrigger>
@@ -70,6 +70,13 @@ export default function CardWithForm() {
                         <MenubarTrigger>Usuario</MenubarTrigger>
                     </MenubarMenu>
                 </Menubar>
+            </div> */}
+            <div className="flex" style={{marginLeft: '400px'}}>
+                <Button variant="outline">Contrato</Button>
+
+                <Button variant="outline">Cliente</Button>
+
+                <Button variant="outline">Usuario</Button>
             </div>
             <div className="flex justify-center mb-2" >
                 <Card className="w-[375px]Z\">
