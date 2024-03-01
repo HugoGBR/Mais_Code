@@ -66,6 +66,11 @@ export default function Gestao(){
   }
   ];
 
+
+// adicionar filtro tabs
+
+
+
   return(
     <div className="items-center py-10">
     <Tabs defaultValue='Cliente'>
