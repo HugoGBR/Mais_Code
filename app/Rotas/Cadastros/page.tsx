@@ -16,6 +16,8 @@ export default function Contrato() {
     //Faça suas const aqui(constantes)
 
     return (
+
+        
         <div className="flex space-x-4">
             <div>
                 <Card className="p-10 drop-shadow-xl">
@@ -136,8 +138,9 @@ export default function Contrato() {
                         </div>
 
                         <div className="flex justify-between mt-5">
-                            <h1>Total à Pagar</h1>
-                            <h1 className="font-bold">R$ 0000,00</h1>
+                        <label className="font-bold" htmlFor="teste">Valor da Entrada</label>
+                            <input className="font-bold border-b-2 w-28 focus:outline-none focus:border-blue-500"
+                                   placeholder="R$ 0000,00" type="text"/>
                         </div>
                         <div className="mt-5 text-center">
                             <button type="submit"
