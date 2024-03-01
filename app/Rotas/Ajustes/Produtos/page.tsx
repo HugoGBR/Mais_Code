@@ -47,7 +47,7 @@ const CadastroProduto: React.FC = () => {
                                 onChange={(e) => setNomeProduto(e.target.value)}
                                 placeholder="Nome do Produto"
                                 required
-                                className="border-b-2 mt-1 p-2 block w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="border-b-2 mt-1 p-2 block w-full focus:outline-none focus:border-blue-500"
                             />
                         </div>
                         <div className="space-x-4 mb-4 grid grid-cols-3 rounded-none">
