@@ -1,6 +1,5 @@
 import React from "react";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function BtnVoltar() {
