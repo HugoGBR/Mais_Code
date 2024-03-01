@@ -1,26 +1,14 @@
 "use client"
-import Image from 'next/image'
-import loginWallpaper from "@/public/icons/icon_perfil_preto.png"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import PopupConfirmacao from '@/components/PopUpConfirmacao'
 import { z } from 'zod'
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-  } from "@/components/ui/card"
-
+import { Card,CardFooter, } from "@/components/ui/card"
+import FileAvatar from "@/components/FileAvatar"
 import {
   Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useState } from 'react'
@@ -54,29 +42,17 @@ function handleForm(dados: formulario) {
   
   const route = useRouter();
 
-  return (
+    return (
 
       <div className='flex justify-center items-center h-screen bg-gray-100'>
         <Card className='p-6 drop-shadow-xl rounded-xl'>
             <form onSubmit={handleSubmit(handleForm)}>
             <div>
-              <h1 className='font-bold pb-5'>Usuário</h1>
+              <h1 className='font-bold pb-5 text-2xl'>Usuário</h1>
             </div>
-            <div className='rounded-2x1 flex justify-center'>
-              <Image
-              src = {loginWallpaper}
-              alt = 'image'
-              sizes = '40vw'
-              style={
-                {
-                  width: '15%',
-                  height: '15%'
-                }
-              }
-              />
-          </div>
-              <div className='flex justify-center mb-10'>
-                <p>Editar foto</p>
+
+              <div>
+                <FileAvatar/>
               </div>
 
             <div className='pb-16 grid grid-cols-1 sm:grid-cols-2 gap-4'>
