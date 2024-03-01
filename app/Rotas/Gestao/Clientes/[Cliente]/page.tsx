@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import loginWallpaper from "@/public/tecnologia (1).png"
+import loginWallpaper from "@/public/icon-empresa.png"
 import Image from "next/image"
 import {
   Dialog,
@@ -21,7 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import PopupConfirmacao from "@/components/PopUp/page";
+import PopupConfirmacao from "@/components/PopUpConfirm";
 
 export default function PopUp() {
   return (
@@ -66,7 +66,7 @@ export default function PopUp() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center items-center shadow-2xl">
+        <CardFooter className="flex justify-center items-center ">
           <PopupConfirmacao/>
         </CardFooter>
       </Card>
