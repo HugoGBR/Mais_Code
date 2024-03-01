@@ -1,11 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
     CardFooter,
-    CardHeader,
-    CardTitle,
 } from "@/components/ui/card";
 import {
     Dialog,
@@ -14,12 +10,10 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-    DialogDescription,
 } from "@/components/ui/dialog"
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
