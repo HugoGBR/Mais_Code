@@ -1,9 +1,9 @@
-import { Component } from "react";
+import {Component} from "react";
 import React from "react";
 
 class Button extends Component<{ onClick: any, children: any }> {
     render() {
-        let { onClick, children } = this.props;
+        let {onClick, children} = this.props;
         return (
             <button onClick={onClick}>
                 {children}
@@ -32,15 +32,10 @@ export default function FileAvatar() {
     };
 
     return (
-        <div className='flex flex-col mb-10 items-center'>
-            <img src={'/icons/icon_perfil_preto.png'} className="w-20 mb-5" alt="Avatar" />
-            <input className="hidden"
-                id="fileInput"
-                type="file"
-                onChange={handleFileChange}
-            />
+        <div className='flex flex-col items-center opacity-80'>
             <Button onClick={handleButtonClick}>
-                <span className="font-semibold">Editar Foto</span>
+                <img src={'/icons/icon-perfil-preto.png'} className="w-20 mb-2" alt="Avatar"/>
+                <input className="hidden" id="fileInput" type="file" onChange={handleFileChange}/>
             </Button>
         </div>
     );
