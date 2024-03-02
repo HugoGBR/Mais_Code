@@ -116,10 +116,6 @@ export default function Gestao() {
                 <TabsContent value='Financeiro'>{renderGestao(3)}</TabsContent>
             </Tabs>
         </div>
-
-
-    )
-}
     
 
 

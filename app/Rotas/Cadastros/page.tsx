@@ -1,4 +1,4 @@
-'use cliente'
+'use client'
 import {Card} from "@/components/ui/card";
 import React from "react";
 
@@ -10,13 +10,35 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+    Menubar,
+    MenubarMenu,
+    MenubarTrigger,
+  } from "@/components/ui/menubar"
+  import { useRouter } from "next/navigation";
 
 
 export default function Contrato() {
     //Faça suas const aqui(constantes)
-
+    const routa = useRouter()
+    const RotaContrato = () => {
+    routa.push('/Rotas/Cadastros');
+  }
+    const RotaCliente = () => {
+    routa.push('/Rotas/Cadastros/Cliente');
+  }
     return (
         <div className="flex space-x-4">
+            <div>
+            <Menubar className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <MenubarMenu>
+                    <MenubarTrigger onClick={RotaContrato}>Contrato</MenubarTrigger>
+                </MenubarMenu>
+                <MenubarMenu>
+                    <MenubarTrigger onClick={RotaCliente}>Cliente</MenubarTrigger>
+                </MenubarMenu>
+            </Menubar>
+            </div>
             <div>
                 <Card className="p-10 drop-shadow-xl">
                     <form>
@@ -151,9 +173,6 @@ export default function Contrato() {
                 </Card>
 
             </div>
-            <h1 className="font-black text-red-600">Ainda precisa arrumar algumas coisas na parte de formas de pagamento, confio que
-                voce vai ter o
-                olhar clinico de ler o codigo e entender oque esta faltando. Assim que voce apagar o H1 a tela ira ficar no tamanho correto</h1>
         </div>
 
     )
