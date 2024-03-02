@@ -15,52 +15,41 @@ export default function Gestao() {
         tipo_Pessoa: "Pessoa Fisica",
         tipo_Cadastro: 1
     },
-
         {
-
             id: 2,
             nome: "Gustavo",
             telefone: "67888888888",
             tipo_Pessoa: "Pessoa Juridica",
             tipo_Cadastro: 2
         },
-
         {
-
             id: 3,
             nome: "Calebe",
             telefone: "67777777777",
             tipo_Pessoa: "Pessoa Fisica",
             tipo_Cadastro: 3
         },
-
         {
-
             id: 4,
             nome: "Rosa",
             telefone: "674444444444",
             tipo_Pessoa: "Pessoa Juridica",
             tipo_Cadastro: 2
         },
-
         {
-
             id: 5,
             nome: "Emilly",
             telefone: "67555555555",
             tipo_Pessoa: "Pessoa Fisica",
             tipo_Cadastro: 1
         },
-
         {
-
             id: 6,
             nome: "Julia",
             telefone: "67333333333333",
             tipo_Pessoa: "Pessoa Juridica",
             tipo_Cadastro: 2
         },
-
         {
             id: 7,
             nome: "Cris",
@@ -68,9 +57,7 @@ export default function Gestao() {
             tipo_Pessoa: "Pessoa Fisica",
             tipo_Cadastro: 3
         },
-
         {
-
             id: 8,
             nome: "Rafa",
             telefone: "679999999",
@@ -78,7 +65,6 @@ export default function Gestao() {
             tipo_Cadastro: 3
         }
     ];
-
 
     const renderGestao = (tipo_Cadastro: number) => {
         return (
@@ -116,7 +102,9 @@ export default function Gestao() {
                 <TabsContent value='Financeiro'>{renderGestao(3)}</TabsContent>
             </Tabs>
         </div>
-    
+    )
+}
+
 
 
 
