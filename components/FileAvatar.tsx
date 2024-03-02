@@ -34,7 +34,7 @@ export default function FileAvatar() {
     return (
         <div className='flex flex-col items-center opacity-80'>
             <Button onClick={handleButtonClick}>
-                <img src={'/icons/icon-perfil-preto.png'} className="w-20 mb-2" alt="Avatar"/>
+                <img src={'/icons/icon-upload.png'} className="w-20 mb-2" alt="Avatar"/>
                 <input className="hidden" id="fileInput" type="file" onChange={handleFileChange}/>
             </Button>
         </div>
