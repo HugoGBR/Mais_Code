@@ -1,7 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import loginWallpaper from "@/public/download.png"
-
 import {
   Card,
   CardContent,
@@ -157,7 +155,7 @@ const HomePage: React.FC = () => {
           <div className="flex justify-center items-center ">
             <Image
               className="opacity-100"
-              src={loginWallpaper}
+              src="{loginWallpaper}"
               alt="Imagem"
               sizes="10vw"
               style={
