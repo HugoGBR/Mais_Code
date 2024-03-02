@@ -38,7 +38,7 @@ export default function SideBar() {
             <div className="flex text-white">
                 <div className="flex h-screen flex-col col-auto justify-between bg-[#122F54] p-2">
                     <div className="mt-5">
-                        <Link href="" className="flex justify-center mb-14">
+                        <Link href="/Rotas/Home" className="flex justify-center mb-14">
                             <div className="flex items-center">
                                 <img src="/icon-logo.png" alt="Logo da Empresa" className="w-14"/>
                             </div>
