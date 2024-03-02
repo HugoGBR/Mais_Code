@@ -91,7 +91,7 @@ export default function Gestao() {
                     <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
                     <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
                 </TabsList>
-                <TabsContent value='' className='grid grid-cols-2 gap-5'>
+                <TabsContent value='' className='flex flex-col md:grid md:grid-cols-2 gap-5'>
                     {Lista.map((item) => (
                         // eslint-disable-next-line react/jsx-key
                         <CardUsuario dados={item}/>

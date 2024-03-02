@@ -14,35 +14,25 @@ import {
     Menubar,
     MenubarMenu,
     MenubarTrigger,
-  } from "@/components/ui/menubar"
-  import { useRouter } from "next/navigation";
+} from "@/components/ui/menubar"
+import {useRouter} from "next/navigation";
 
 
 export default function Contrato() {
     //Faça suas const aqui(constantes)
     const routa = useRouter()
     const RotaContrato = () => {
-    routa.push('/Rotas/Cadastros');
-  }
+        routa.push('/Rotas/Cadastros');
+    }
     const RotaCliente = () => {
-    routa.push('/Rotas/Cadastros/Cliente');
-  }
+        routa.push('/Rotas/Cadastros/Cliente');
+    }
     return (
-        <div className="flex space-x-4">
-            <div>
-            <Menubar className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                <MenubarMenu>
-                    <MenubarTrigger onClick={RotaContrato}>Contrato</MenubarTrigger>
-                </MenubarMenu>
-                <MenubarMenu>
-                    <MenubarTrigger onClick={RotaCliente}>Cliente</MenubarTrigger>
-                </MenubarMenu>
-            </Menubar>
-            </div>
+        <div className="flex flex-col items-center md:grid md:grid-cols-2 space-x-4">
             <div>
                 <Card className="p-10 drop-shadow-xl">
                     <form>
-                        <div className="flex justify-between mb-6 text-2xl font-bold">
+                        <div className="flex flex-col justify-between mb-6 text-2xl font-bold">
                             <h1>Contrato</h1>
                             <h1>Nº 00005</h1>
                         </div>
@@ -114,14 +104,14 @@ export default function Contrato() {
                         <div className="flex justify-center mb-6 text-2xl font-bold">
                             <h1>Forma de Pagamento</h1>
                         </div>
-                        <div className="flex mb-4 ">
+                        <div className="flex mb-4">
                             <label className="mr-4" htmlFor="teste">Valor da Entrada</label>
                             <input className="border-b-2 w-28 focus:outline-none focus:border-blue-500"
                                    placeholder="R$ 0000,00" type="text"/>
                         </div>
 
                         <div className="mb-5">
-                            <label className="text-sm " htmlFor="Nn">Status Cliente</label>
+                            <label className="text-sm" htmlFor="Nn">Status Cliente</label>
                             <Select>
                                 <SelectTrigger className="h-8 w-36 rounded-lg mt-2">
                                     <SelectValue placeholder="Tipo"/>
@@ -156,7 +146,6 @@ export default function Contrato() {
                             <input className="border-b-2 w-24" placeholder="N Parcelas" type="text"/>
                             <GoGear/>
                         </div>
-
                         <div className="flex justify-between mt-5">
                             <h1>Total à Pagar</h1>
                             <h1 className="font-bold">R$ 0000,00</h1>
