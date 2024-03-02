@@ -10,29 +10,11 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-<<<<<<< HEAD
 import {
     Menubar,
     MenubarMenu,
     MenubarTrigger,
 } from "@/components/ui/menubar"
-=======
-// import {
-//     Menubar,
-//     MenubarCheckboxItem,
-//     MenubarContent,
-//     MenubarItem,
-//     MenubarMenu,
-//     MenubarRadioGroup,
-//     MenubarRadioItem,
-//     MenubarSeparator,
-//     MenubarShortcut,
-//     MenubarSub,
-//     MenubarSubContent,
-//     MenubarSubTrigger,
-//     MenubarTrigger,
-// } from "@/components/ui/menubar"
->>>>>>> a78b158e9e99cdcc0ac58e0236ce67132588c3ef
 import * as React from "react";
 import {
     Card,
@@ -42,17 +24,12 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-<<<<<<< HEAD
-=======
-import urlimagem from "@/public/perfil.png"
->>>>>>> a78b158e9e99cdcc0ac58e0236ce67132588c3ef
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 export default function CardWithForm() {
     return (
-
-        <div className="flex flex-col justify-center  h-screen gap-5">
-            {/* <div className="flex" style={{marginLeft: '400px'}}>
-                <Menubar className="">
+        <div >
+            <div>
+                <Menubar>
                     <MenubarMenu>
                         <MenubarTrigger>Contrato</MenubarTrigger>
                     </MenubarMenu>
@@ -63,18 +40,11 @@ export default function CardWithForm() {
                         <MenubarTrigger>Usuario</MenubarTrigger>
                     </MenubarMenu>
                 </Menubar>
-            </div> */}
-            <div className="flex" style={{marginLeft: '200px'}}>
-                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black" type="button">Contrato</Button>
-
-                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black" type="button">Cliente</Button>
-
-                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black" type="button">Usuario</Button>
             </div>
-            <div className="flex justify-center mb-2" >
+            <div className="flex justify-center items-center h-screen" >
                 <Card className="w-[375px]Z\">
                     <CardHeader>
-                        <CardTitle>Usuario</CardTitle>
+                        <CardTitle>Cliente</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="flex justify-center items-center opacity-40">
@@ -99,24 +69,22 @@ export default function CardWithForm() {
                                     <Input className="rounded-none opacity-40" id="address" placeholder="Endereço" style={{ border: 'none', borderBottom: '1px solid #000' }} />
                                 </div>
                             </div>
-                            <br/>
-                            
                             <CardTitle>Cargo</CardTitle>
-                            <br/>
+
 
                             <div className=" flex flex-row">
                                 <RadioGroup defaultValue="option-one ">
-                                    <div>
+                                    <div className="">
                                         <RadioGroupItem value="option-one" id="option-one" />
-                                        <Label htmlFor="option-one"> Vendedor</Label>
+                                        <Label htmlFor="option-one">Vendedor</Label>
                                     </div>
-                                    <div>
+                                    <div className="">
                                         <RadioGroupItem value="option-two" id="option-two" />
-                                        <Label htmlFor="option-two"> Financeiro</Label>
+                                        <Label htmlFor="option-two">Financeiro</Label>
                                     </div>
-                                    <div>
+                                    <div className="">
                                         <RadioGroupItem value="option-three" id="option-three" />
-                                        <Label htmlFor="option-three"> Administrador</Label>
+                                        <Label htmlFor="option-three">Administrador</Label>
                                     </div>
                                 </RadioGroup>
                             </div>
@@ -133,14 +101,15 @@ export default function CardWithForm() {
                                 </DialogHeader>
                                 <DialogFooter className="flex justify-center items-center">
                                     <div className="space-x-4">
-                                        <Button className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white" type="button">Confirmar </Button>
-                                        <Button className="w-32 border  border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white" type="button"> Cancelar</Button>
+                                        <Button className="bg-green-500" type="button">Confirmar </Button>
+                                        <Button className="bg-red-500 " type="button"> Cancelar</Button>
                                     </div>
                                 </DialogFooter>
                             </DialogContent>
                         </Dialog>
                     </CardFooter>
-                </Card></div>
+                </Card>
+            </div>
         </div>
 
     );

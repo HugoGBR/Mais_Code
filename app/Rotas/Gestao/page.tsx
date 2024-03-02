@@ -31,8 +31,6 @@ export default function CardWithForm() {
         </div>
       </CardContent>
     </Card>
-
-
   );
 }
 
