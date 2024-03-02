@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label"
 
 export default function Detalhescomissao() {
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-start items-center h-screen">
             <Card className="w-[350px] shadow-xl ">
                 <CardHeader>
                     <CardTitle>Detalhes contrato</CardTitle>
