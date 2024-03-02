@@ -10,21 +10,6 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-// import {
-//     Menubar,
-//     MenubarCheckboxItem,
-//     MenubarContent,
-//     MenubarItem,
-//     MenubarMenu,
-//     MenubarRadioGroup,
-//     MenubarRadioItem,
-//     MenubarSeparator,
-//     MenubarShortcut,
-//     MenubarSub,
-//     MenubarSubContent,
-//     MenubarSubTrigger,
-//     MenubarTrigger,
-// } from "@/components/ui/menubar"
 import * as React from "react";
 import {
     Card,
@@ -40,28 +25,15 @@ export default function CardWithForm() {
     return (
 
         <div className="flex flex-col justify-center  h-screen gap-5">
-            {/* <div className="flex" style={{marginLeft: '400px'}}>
-                <Menubar className="">
-                    <MenubarMenu>
-                        <MenubarTrigger>Contrato</MenubarTrigger>
-                    </MenubarMenu>
-                    <MenubarMenu>
-                        <MenubarTrigger>Cliente</MenubarTrigger>
-                    </MenubarMenu>
-                    <MenubarMenu>
-                        <MenubarTrigger>Usuario</MenubarTrigger>
-                    </MenubarMenu>
-                </Menubar>
-            </div> */}
             <div className="flex" style={{marginLeft: '200px'}}>
-                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black" type="button">Contrato</Button>
+                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black shadow-xl" type="button">Contrato</Button>
 
-                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black" type="button">Cliente</Button>
+                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black shadow-xl" type="button">Cliente</Button>
 
-                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black" type="button">Usuario</Button>
+                <Button variant="outline" className="w-32 border  border-gray-100 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-gray-300 hover:text-black shadow-xl" type="button">Usuario</Button>
             </div>
             <div className="flex justify-center mb-2" >
-                <Card className="w-[375px]Z\">
+                <Card className="w-[375px]Z\ shadow-xl">
                     <CardHeader>
                         <CardTitle>Usuario</CardTitle>
                     </CardHeader>
