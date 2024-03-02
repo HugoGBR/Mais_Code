@@ -30,7 +30,7 @@ export default function Contrato() {
     return (
         <div className="flex space-x-4">
             <div>
-            <Menubar>
+            <Menubar className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 <MenubarMenu>
                     <MenubarTrigger onClick={RotaContrato}>Contrato</MenubarTrigger>
                 </MenubarMenu>

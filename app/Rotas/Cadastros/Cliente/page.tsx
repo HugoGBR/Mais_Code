@@ -36,7 +36,7 @@ export default function CardWithForm() {
    
     <div >
         <div className="flex justify-center items-center h-screen" ><Card className="w-[375px]Z\">
-        <Menubar>
+        <Menubar className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       <MenubarMenu>
         <MenubarTrigger onClick={RotaContrato}>Contrato</MenubarTrigger>
       </MenubarMenu>
