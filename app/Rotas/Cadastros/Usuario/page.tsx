@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -11,46 +10,29 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-    Menubar,
-    MenubarCheckboxItem,
-    MenubarContent,
-    MenubarItem,
-    MenubarMenu,
-    MenubarRadioGroup,
-    MenubarRadioItem,
-    MenubarSeparator,
-    MenubarShortcut,
-    MenubarSub,
-    MenubarSubContent,
-    MenubarSubTrigger,
-    MenubarTrigger,
-} from "@/components/ui/menubar"
+// import {
+//     Menubar,
+//     MenubarCheckboxItem,
+//     MenubarContent,
+//     MenubarItem,
+//     MenubarMenu,
+//     MenubarRadioGroup,
+//     MenubarRadioItem,
+//     MenubarSeparator,
+//     MenubarShortcut,
+//     MenubarSub,
+//     MenubarSubContent,
+//     MenubarSubTrigger,
+//     MenubarTrigger,
+// } from "@/components/ui/menubar"
 import * as React from "react";
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination"
 import Image from "next/image";
 import urlimagem from "@/public/perfil.png"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"

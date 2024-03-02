@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -13,65 +12,38 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
   Menubar,
-  MenubarCheckboxItem,
-  MenubarContent,
-  MenubarItem,
   MenubarMenu,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar"
 import * as React from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-  } from "@/components/ui/pagination"
 import Image from "next/image";
 import urlimagem from "@/public/icon-empresa.png"
+import { useRouter } from "next/navigation";
  
 export default function CardWithForm() {
+  const route = useRouter()
+  const RotaContrato = () => {
+    route.push('/Rotas/Cadastros');
+  }
   return (
    
     <div >
-          <div>
-      <Menubar>
+        <div className="flex justify-center items-center h-screen" ><Card className="w-[375px]Z\">
+        <Menubar>
       <MenubarMenu>
-        <MenubarTrigger>Contrato</MenubarTrigger>
+        <MenubarTrigger onClick={RotaContrato}>Contrato</MenubarTrigger>
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger>Cliente</MenubarTrigger>
       </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger>Usuario</MenubarTrigger>
-      </MenubarMenu>
-    </Menubar>
-    </div>
-        <div className="flex justify-center items-center h-screen" ><Card className="w-[375px]Z\">
+      </Menubar>
       <CardHeader>
         <CardTitle>Cliente</CardTitle>
       </CardHeader>
