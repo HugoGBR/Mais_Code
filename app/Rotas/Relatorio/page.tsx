@@ -43,7 +43,7 @@ import {
 const data: Payment[] = [
   {
     id: "m5gr84i9",
-    amount: 316,
+    quantia: 316,
     
     status: "Ativo",
     email: "ken99@yahoo.com",
@@ -51,25 +51,25 @@ const data: Payment[] = [
   },
   {
     id: "3u1reuv4",
-    amount: 242,
+    quantia: 242,
     status: "Concluido",
     email: "Abe45@gmail.com",
   },
   {
     id: "derv1ws0",
-    amount: 837,
+    quantia: 837,
     status: "Ativo",
     email: "Monserrat44@gmail.com",
   },
   {
     id: "5kma53ae",
-    amount: 874,
+    quantia: 874,
     status: "Concluido",
     email: "Silas22@gmail.com",
   },
   {
     id: "bhqecj4p",
-    amount: 721,
+    quantia: 721,
     status: "Inativo",
     email: "10/25/1998",
   },
@@ -77,7 +77,7 @@ const data: Payment[] = [
 
 export type Payment = {
   id: string
-  amount: number
+  quantia: number
   status:| "Ativo" | "Concluido" | "Inativo"
   email: string
 }
@@ -138,7 +138,7 @@ export const columns: ColumnDef<Payment>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Novo/Antigo
+           Novo/Antigo
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -161,16 +161,16 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">TITIN</div>,
+    accessorKey: "quantia",
+    header: () => <div className="text-right">Valor</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
+      const quantia = parseFloat(row.getValue("quantia"))
 
 
       const formatted = new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
-      }).format(amount)
+      }).format(quantia)
 
       return <div className="text-right font-medium">{formatted}</div>
     },
@@ -225,7 +225,7 @@ export default function DataTableDemo() {
       <div className="w-full shadow-xl">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter emails..."
+            placeholder="Pesquisa"
             value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("email")?.setFilterValue(event.target.value)
@@ -302,26 +302,22 @@ export default function DataTableDemo() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    Nenhum Reultado
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
         </div>
-        <div className="flex items-center justify-end space-x-2 py-4">
-          <div className="flex-1 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
-          </div>
-          <div className="space-x-2">
-            <Button
+        
+          <div className="space-x-3 flex justify-center items-center">
+            <Button 
               variant="outline"
               size="sm"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
-              Previous
+              Anterior
             </Button>
             <Button
               variant="outline"
@@ -329,11 +325,11 @@ export default function DataTableDemo() {
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
-              Next
+              Proximo
             </Button>
           </div>
         </div>
       </div>
-    </div>
+    
   )
 }
