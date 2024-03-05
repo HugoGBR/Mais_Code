@@ -37,181 +37,214 @@ import {
 } from "@/components/ui/table"
 
 const data: Payment[] = [
-    {
-        id: "m5gr84i9",
-        client: 316,
-        contrato: "success",
-        email: "ken99@yahoo.com",
-        tip: "ihjn",
-    },
-    {
-        id: "3u1reuv4",
-        client: 242,
-        contrato: "success",
-        email: "Abe45@gmail.com",
-        tip: "ihjn",
-    },
-    {
-        id: "derv1ws0",
-        client: 837,
-        contrato: "processing",
-        email: "Monserrat44@gmail.com",
-        tip: "ihjn",
-    },
-    {
-        id: "5kma53ae",
-        client: 874,
-        contrato: "failed",
-        email: "Silas22@gmail.com",
-        tip: "ihjn",
-    },
-    {
-        id: "bhqecj4p",
-        client: 721,
-        contrato: "failed",
-        email: "carmella@hotmail.com",
-        tip: "ihjn",
-    },
+  {
+    contrato: "#123",
+    data: "20/02/200",
+    client: "Carla",
+    tip: "ihjn",
+    parc: "36x",
+    val: 2000,
+    comis: 100,
+  },
+  {
+    contrato: "#124",
+    data: "10/05/2002",
+    client: "Felipe",
+    tip: "ihjn",
+    parc: "36x",
+    val: 2000,
+    comis: 100,
+  },
+  {
+    contrato: "#125",
+    data: "14/08/2000",
+    client: "Abrão",
+    tip: "ihjn",
+    parc: "36x",
+    val: 2000,
+    comis: 100,
+  },
+  {
+    contrato: "#126",
+    data: "25/07/2006",
+    client: "Paulo",
+    tip: "ihjn",
+    parc: "36x",
+    val: 2000,
+    comis: 100,
+  },
+  {
+    contrato: "#127",
+    data: "30/04/2009",
+    client: "Joel",
+    tip: "ihjn",
+    parc: "36x",
+    val: 2000,
+    comis: 100,
+  },
 ]
 
 export type Payment = {
-    id: string
-    client: number
-    contrato: "pending" | "processing" | "success" | "failed"
-    email: string
-    tip: string
+  
+  contrato: string
+  data: string
+  client: string
+  tip: string
+  parc: string
+  val: number
+  comis: number
 }
 
 export const columns: ColumnDef<Payment>[] = [
-    {
-        id: " ",
-        header: ({table}) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-            />
-        ),
-        cell: ({row}) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
+  {
+    id: " ",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "contrato",
+    header: "N. Contrato",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("contrato")}</div>
+    ),
+  },
+  {
+    accessorKey: "data",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Data
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      )
     },
-    {
-        accessorKey: "contrato",
-        header: "N. Contrato",
-        cell: ({row}) => (
-            <div className="capitalize">{row.getValue("contrato")}</div>
-        ),
-    },
-    {
-        accessorKey: "email",
-        header: ({column}) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Data
-                    <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
-            )
-        },
-        cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
-    },
-    {
-        accessorKey: "client",
-        header: () => <div className="text-right">Cliente</div>,
-        cell: ({row}) => {
-            const client = parseFloat(row.getValue("client"))
-        },
-    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("data")}</div>,
+  },
+  {
+    accessorKey: "client",
+    header: "Cliente",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("client")}</div>
+    ),
+  },
 
-    {
-        accessorKey: "tip",
-        header: "Tipo",
-        cell: ({row}) => (
-            <div className="capitalize">{row.getValue("tip")}</div>
-        ),
-    },
+  {
+    accessorKey: "tip",
+    header: "Tipo",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("tip")}</div>
+    ),
+  },
 
-    {
-        accessorKey: "parc",
-        header: "Parcelas",
-        cell: ({row}) => (
-            <div className="capitalize">{row.getValue("parc")}</div>
-        ),
-    },
+  {
+    accessorKey: "parc",
+    header: "Parcelas",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("parc")}</div>
+    ),
+  },
 
-    {
-        accessorKey: "status",
-        header: "N. Contrato",
-        cell: ({row}) => (
-            <div className="capitalize">{row.getValue("status")}</div>
-        ),
-    },
+  {
+    accessorKey: "val",
+    header: "Valor",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("val")}</div>
+    ),
+  },
 
-    {
-        accessorKey: "status",
-        header: "N. Contrato",
-        cell: ({row}) => (
-            <div className="capitalize">{row.getValue("status")}</div>
-        ),
-    },
+  {
+    accessorKey: "comis",
+    header: "Comissão",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("comis")}</div>
+    ),
+  },
 
-    {
-        id: "actions",
-        enableHiding: false,
-        cell: ({row}) => {
-            const payment = row.original
-        },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const payment = row.original
     },
 ]
 
 export default function DataTableDemo() {
-    const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-        []
-    )
-    const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({})
-    const [rowSelection, setRowSelection] = React.useState({})
-
-    const table = useReactTable({
-        data,
-        columns,
-        onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
-        onRowSelectionChange: setRowSelection,
-        state: {
-            sorting,
-            columnFilters,
-            columnVisibility,
-            rowSelection,
-        },
-    })
-
-    return (
-        <div className="w-full">
-            <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
+  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = React.useState({})
+ 
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  })
+ 
+  return (
+    <div className="w-full">
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Filtro por data..."
+          value={(table.getColumn("data")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("data")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Colunas <ChevronDownIcon className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
                     }
                     className="max-w-sm"
                 />
