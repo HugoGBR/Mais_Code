@@ -8,7 +8,7 @@ export default function RootLayout({
 }>) {
     return (
         <div className="flex flex-row">
-            <div className="h-screen relative flex flex-row gap-6">
+            <div className="h-screen relative hidden md:flex md:flex-row gap-6">
                 <div>
                     <SideBar/>
                 </div>

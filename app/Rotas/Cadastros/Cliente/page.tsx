@@ -1,98 +1,98 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Menubar,
-  MenubarMenu,
-  MenubarTrigger,
-} from "@/components/ui/menubar"
-import * as React from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import Image from "next/image";
-import urlimagem from "@/public/icon-empresa.png"
-import { useRouter } from "next/navigation";
- 
-export default function CardWithForm() {
-  const route = useRouter()
-  const RotaContrato = () => {
-    route.push('/Rotas/Cadastros');
-  }
-  return (
-   
-    <div >
-        <div className="flex justify-center items-center h-screen" ><Card className="w-[375px]Z\">
-        <Menubar className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      <MenubarMenu>
-        <MenubarTrigger onClick={RotaContrato}>Contrato</MenubarTrigger>
-      </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger>Cliente</MenubarTrigger>
-      </MenubarMenu>
-      </Menubar>
-      <CardHeader>
-        <CardTitle>Cliente</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex justify-center items-center opacity-40">
-        <Image src={urlimagem} style={{height: "25%", width: "25%"}} sizes="5vw" alt="imagem"/>
-        </div>
-       
-         
-        <form>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name"></Label>
-              <Input className="rounded-none opacity-40" id="name" placeholder="Nome" style={{ border: 'none', borderBottom: '1px solid #000' }} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="cnpj/cpf"></Label>
-            <Input className="rounded-none opacity-40" id="cpf" placeholder="CNPJ/CPF" style={{ border: 'none', borderBottom: '1px solid #000' }} />
-            </div>
-            <div className="flex flex-col space-y-1.5">              
-                <Label htmlFor="E-mail"></Label>
-                <Input className="rounded-none opacity-40" id="email" placeholder="Email" style={{ border: 'none', borderBottom: '1px solid #000' }} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="Endereço"></Label>
-            <Input className="rounded-none opacity-40" id="address" placeholder="Endereço" style={{ border: 'none', borderBottom: '1px solid #000' }} />
-            </div>
-          </div>
-        </form>
-      </CardContent>
-        <CardFooter className="flex justify-center items-center">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline"className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente </Button>
-            </DialogTrigger>
-            <DialogContent className="w-auto">
-              <DialogHeader>
-                <DialogTitle className="mt-3 text-center text-2xl">Confirmar alteração?</DialogTitle>
-              </DialogHeader>
-              <DialogFooter className="flex justify-center items-center">
-                <div className="space-x-4">
-                  <Button className="bg-green-500" type="button">Confirmar </Button>
-                  <Button className="bg-red-500 " type="button"> Cancelar</Button>
-                </div>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </CardFooter>
-    </Card></div>
-    </div>
 
-  );}
+import { Card } from "@/components/ui/card";
+import {useRouter} from "next/navigation";
+import Link from "next/link";
+import { z } from 'zod'
+import React from "react";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+
+const formulario = z.object({
+    nome: z.string().min(1, 'Campo Obrigatorio'),
+    cpf: z.string().min(1, 'Campo Obrigatorio'),
+    email: z.string().email("Campo Obrigatorio."),
+    address: z.string().min(1, 'Campo Obrigatorio')
+})
+
+type formulario = z.infer<typeof formulario>
+
+
+
+export default function CardWithForm() {
+
+    const {register, handleSubmit, formState: {errors}} = useForm<formulario>({
+        resolver: zodResolver(formulario)
+    })
+
+    function handleForm(dados: formulario) {
+        route.push('https://en.wikipedia.org/wiki/Monkey')
+        console.log(dados)
+    }
+    const route = useRouter()
+    const RotaContrato = () => {
+        route.push('/Rotas/Cadastros');
+    }
+    return (
+
+        <div className="flex flex-col gap-5">
+            <div className="flex gap-5">
+                <div>
+                    <Link href="/Rotas/Cadastros"
+                          className="focus:font-bold focus:text-blue-700 focus:border-b-2 focus:outline-none focus:border-blue-500">Contrato</Link>
+                </div>
+                <div>
+                    <Link href="/Rotas/Cadastros/Cliente"
+                          className="focus:font-bold focus:text-blue-700 focus:border-b-2 focus:outline-none focus:border-blue-500">Cliente</Link>
+                </div>
+            </div>
+            <div className="w-auto justify-center md:gap-3 md:flex md:w-7/8">
+                <div className="w-full">
+                    <Card className='p-10 drop-shadow-xl rounded-xl'>
+                        <form onSubmit={handleSubmit(handleForm)}>
+                            <div>
+                                <h1 className='font-bold pb-5 text-2xl'>Cliente</h1>
+                            </div>
+
+                            <div className="flex justify-center mb-5">
+                                <img src="/icons/icon-empresa.png" alt="icone"/>
+                            </div>
+
+                            <div className='pb-16 grid grid-cols-1 sm:grid-cols-2 gap-4'>
+                                <div>
+                                    <input type="text" placeholder='João da Silva'{...register('nome')}
+                                           className='border-b-2 mt-1 p-2 block w-full focus:outline-none focus:border-blue-500'/>
+                                    {errors.nome && (<div className='text-red-500 text-sm'>{errors.nome.message}</div>)}
+                                </div>
+
+                                <div>
+                                    <input type='text' placeholder='CPF/CNPJ'{...register('cpf')}
+                                           className='border-b-2 mt-1 p-2 block w-full focus:outline-none focus:border-blue-500'/>
+                                    {errors.cpf && (<div className='text-red-500 text-sm'>{errors.cpf.message}</div>)}
+                                </div>
+
+                                <div>
+                                    <input type='email' placeholder='joão@gmail.com' {...register('email')}
+                                           className='border-b-2 mt-1 p-2 block w-full focus:outline-none focus:border-blue-500'/>
+                                    {errors.email && (<div className='text-red-500 text-sm'>{errors.email.message}</div>)}
+                                </div>
+
+                                <div>
+                                    <input type='text' placeholder="Endereço" {...register('address')}
+                                           className='border-b-2 mt-1 p-2 block w-full focus:outline-none focus:border-blue-500'/>
+                                    {errors.address && (<div className='text-red-500 text-sm'>{errors.address.message}</div>)}
+                                </div>
+                            </div>
+
+                        </form>
+                        <div className="text-center">
+                            <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                CADASTRAR
+                            </button>
+                        </div>
+                    </Card>
+                </div>
+            </div>
+        </div>
+    );
+}

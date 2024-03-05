@@ -1,16 +1,10 @@
 "use client"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import PopupConfirmacao from '@/components/PopUpConfirmacao'
 import { z } from 'zod'
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button"
-import { Card,CardFooter, } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import FileAvatar from "@/components/FileAvatar"
-import {
-  Dialog,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import React from "react";
 
 const formulario = z.object({
