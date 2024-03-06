@@ -72,7 +72,7 @@ export default function SideBar() {
                                 </ul>
                             </div>
                         </Link>
-                        <Link href={'app/page.tsx'}
+                        <Link href={'../'}
                               className="flex text-lg p-3 font-medium hover:bg-white/10 rounded-lg">
                             <div className="flex items-center">
                                 <ul>
