@@ -5,9 +5,6 @@ import { z } from 'zod'
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card"
 import FileAvatar from "@/components/FileAvatar"
-<<<<<<< HEAD
-import React from "react";
-=======
 import {
   Dialog,
   DialogTrigger,
@@ -16,7 +13,6 @@ import { useState } from 'react'
 
 //pequisar rejex
 
->>>>>>> 7f613b3058adb625dd3022c00ffa135b53a6a172
 
 const formulario = z.object({
   //Números de restrição apenas para teste
