@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import loginWallpaper from "@/public/icon-empresa.png"
 import Image from "next/image"
 import {
   Dialog,
@@ -34,7 +33,7 @@ export default function ListaCadastro() {
           <div className="flex justify-center items-center ">
             <Image
               className="opacity-40"
-              src={loginWallpaper}
+              src={''}
               alt="Imagem"
               sizes="10vw"
               style={
