@@ -10,8 +10,8 @@ export default function CardCadastro() {
 
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
     return (
-        <div className="flex flex-col md:gap-3 md:flex md:flex-row">
-            <div className="w-full md:w-3/5">
+        <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
+            <div className="w-full lg:w-3/5">
                 <Card className="p-10 drop-shadow-xl">
                     <form>
                         <div className="flex justify-between mb-6 text-2xl font-bold">
@@ -83,8 +83,8 @@ export default function CardCadastro() {
                 </Card>
             </div>
 
-            <div className="w-full md:w-2/5">
-                <Card className="p-6 drop-shadow-xl">
+            <div className="w-full lg:w-2/5">
+                <Card className="p-10 drop-shadow-xl">
                     <form>
                         <div className="flex justify-center mb-6 text-2xl font-bold">
                             <h1>Forma de Pagamento</h1>
@@ -109,7 +109,7 @@ export default function CardCadastro() {
                         </div>
 
                         <h2 className="font-bold mb-5">Metodo de Pagamento</h2>
-                        <div className="space-y-4 lg:flex lg:gap-6 lg:items-center lg:w-96 lg:h-auto">
+                        <div className="space-y-4 md:flex md:justify-between md:w-full">
                             <div className="flex gap-3">
                                 <div className="flex items-center">
                                     <input id="pagamento-opcao-1" type="radio" name="forma-pagamento"
@@ -140,12 +140,12 @@ export default function CardCadastro() {
                             {mostrarParcelas && (
                                 <div className="flex space-x-4">
                                     <input
-                                        className="border-b-2 w-24 flex focus:outline-none focus:border-blue-500"
-                                        placeholder="N Parcelas"
+                                        className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
+                                        placeholder="36x"
                                         type="text"
                                     />
                                     <Link href="">
-                                        <GoGear/>
+                                        <GoGear className="w-8 h-8"/>
                                     </Link>
                                 </div>
                             )}

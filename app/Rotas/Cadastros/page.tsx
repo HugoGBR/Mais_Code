@@ -17,7 +17,9 @@ export default function Contrato() {
                           className="focus:font-bold focus:text-blue-700 focus:border-b-2 focus:outline-none focus:border-blue-500">Cliente</Link>
                 </div>
             </div>
-            <CardCadastro/>
+            <div>
+                <CardCadastro/>
+            </div>
         </div>
     )
 }
