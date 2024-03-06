@@ -2,21 +2,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { useRouter } from "next/navigation";
-import { Card } from "@/components/ui/card"
+import { Card, CardFooter } from "@/components/ui/card"
 import FileAvatar from "@/components/FileAvatar"
-<<<<<<< HEAD
-import React from "react";
-=======
-import {
-  Dialog,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { useState } from 'react'
-
-//pequisar rejex
-
->>>>>>> 7f613b3058adb625dd3022c00ffa135b53a6a172
+import React, { useState } from "react";
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog';
+import { DialogFooter, DialogHeader } from '@/components/ui/dialog';
 
 const formulario = z.object({
   //Números de restrição apenas para teste
@@ -35,15 +26,20 @@ export default function Perfil() {
     resolver: zodResolver(formulario)
   })
   const [isOpen, setIsOpen] = useState(false)
-function handleForm(dados: formulario) {
-  setIsOpen(true)
-  // route.push('')
+  function handleForm(dados: formulario) {
+    setIsOpen(true)
     console.log(dados)
+}
+const [inputsHabilitados, setInputHabilitados] = useState (false);
+const HabilitarEventos = () => {
+    setInputHabilitados(true);
   }
-  
-  
-  const route = useRouter();
 
+const [valorInputNome, setValorInputNome] = useState('João da Silva')
+const [valorInputCPF, setValorInputCPF] = useState('999.999.999-99')
+const [valorInputEmail, setValorInputEmail] = useState('João@gmail.com')
+const [valorInputSenha, setValorInputSenha] = useState('*************')
+  
     return (
 
       <div className='flex justify-center items-center h-screen bg-gray-100'>
@@ -57,69 +53,43 @@ function handleForm(dados: formulario) {
                       <FileAvatar/>
                   </div>
 
-                  <div className='pb-16 grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                      <div className=''>
-                          <input type="text" placeholder='João da Silva'{...register('nome')}
-                                 className='border-b-2 mt-1 p-2 block w-full focus:outline-none focus:border-blue-500'/>
-                          {errors.nome && (<div className='text-red-500 text-sm'>{errors.nome.message}</div>)}
-                      </div>
-
-                      <div>
-                          <input type='text' placeholder='999.999.999-99'{...register('cpf')}
-                                 className='border-b-2 mt-1 p-2 block w-full focus:outline-none focus:border-blue-500'/>
-                          {errors.cpf && (<div className='text-red-500 text-sm'>{errors.cpf.message}</div>)}
-                      </div>
-
-                      <div>
-                          <input type='email' placeholder='joão@gmail.com' {...register('email')}
-                                 className='border-b-2 mt-1 p-2 block w-full focus:outline-none focus:border-blue-500'/>
-                          {errors.email && (<div className='text-red-500 text-sm'>{errors.email.message}</div>)}
-                      </div>
-
-                      <div>
-                          <input type='password' placeholder='************' {...register('senha')}
-                                 className='border-b-2 mt-1 p-2 block w-full focus:outline-none focus:border-blue-500'/>
-                          {errors.senha && (<div className='text-red-500 text-sm'>{errors.senha.message}</div>)}
-                      </div>
-                  </div>
-
-              </form>
-              <div className="text-center">
-                  <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                      EDITAR
-                  </button>
-              </div>
-
             <div className='pb-16 grid grid-cols-1 sm:grid-cols-2 gap-4'>
               <div className=''>
                 <input type="text" placeholder='João da Silva' {...register('nome')} 
-                className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600 p-2 mt-1'/>
+                className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600 p-2 mt-1' 
+                onChange={(e) => setValorInputNome(e.target.value)} value={valorInputNome} disabled={!inputsHabilitados}/>
                 {errors.nome && (<div className='text-red-500'>{errors.nome.message}</div>)}
               </div>
 
               <div>
-                <input type='text' placeholder='999.999.999-99'{...register('cpf')} 
+                <input type='text' placeholder='999.999.999-99'{...register('cpf')}
+                onChange={(e) => setValorInputCPF(e.target.value)} value={valorInputCPF} disabled={!inputsHabilitados}
                 className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1' />
                 {errors.cpf && (<div className='text-red-500'>{errors.cpf.message}</div>)}
               </div>
 
               <div>
-                <input type='email' placeholder='joão@gmail.com' {...register('email')} 
+                <input type='email' placeholder='joão@gmail.com' {...register('email')}
+                onChange={(e) => setValorInputEmail(e.target.value)} value={valorInputEmail} disabled={!inputsHabilitados}
                 className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1' />
                 {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
               </div>
 
               <div>
-                <input type='password' placeholder='************' {...register('senha')} 
-                className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1'  />
+                <input type='password' placeholder='************' {...register('senha')}
+                onChange={(e) => setValorInputSenha(e.target.value)} value={valorInputSenha} disabled={!inputsHabilitados}
+                className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1'/>
                 {errors.senha && (<div className='text-red-500 '>{errors.senha.message}</div>)}
               </div>
             </div>
             <div className='flex justify-center'>
-                <Button variant="outline"className="transition duration-300 ease-in-out bg-blue-800 hover:bg-blue-400 text-white rounded-xl  md:w-56 shadow-xl ">Editar</Button>
+              {inputsHabilitados ? (
+                <Button onClick={()=>setIsOpen(true)} type='button' className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Alterar</Button>
+                ) : (
+                <Button type='button' onClick={() => HabilitarEventos()}  className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</Button>
+            )}
             </div>
             </form>
-            <CardFooter className="flex justify-center items-center">
               <Dialog open = {isOpen}>
                 <DialogTrigger asChild>
                 </DialogTrigger>
@@ -130,12 +100,11 @@ function handleForm(dados: formulario) {
                   <DialogFooter className="flex justify-center items-center">
                     <div className="space-x-7">
                       <Button className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white" type="button">Confirmar </Button>
-                      <Button className="w-32 border border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white" onClick={()=>setIsOpen(false)}  type="button"> Cancelar</Button>
+                      <Button onClick={()=>setIsOpen(false)} className="w-32 border border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white"  type="button"> Cancelar</Button>
                     </div>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-            </CardFooter>
         </Card>
       </div>
     )
