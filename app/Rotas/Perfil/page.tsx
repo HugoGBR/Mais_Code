@@ -42,21 +42,22 @@ const [valorInputSenha, setValorInputSenha] = useState('*************')
   
     return (
 
-      <div className='flex justify-center items-center h-screen bg-gray-100'>
+      <div className='flex justify-center items-center h-screen'>
         <Card className='p-6 drop-shadow-xl rounded-xl'>
             <form onSubmit={handleSubmit(handleForm)}>
             <div>
               <h1 className='font-bold pb-5 text-2xl'>Usuário</h1>
             </div>
 
-                  <div>
+                  <div className="mb-6">
                       <FileAvatar/>
                   </div>
 
             <div className='pb-16 grid grid-cols-1 sm:grid-cols-2 gap-4'>
               <div className=''>
-                <input type="text" placeholder='João da Silva' {...register('nome')} 
-                className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600 p-2 mt-1' 
+                <input type="text" placeholder='João da Silva' {...register('nome')}
+                className='border-b-2 focus:border-b-2
+                            focus:outline-none focus:border-blue-500'
                 onChange={(e) => setValorInputNome(e.target.value)} value={valorInputNome} disabled={!inputsHabilitados}/>
                 {errors.nome && (<div className='text-red-500'>{errors.nome.message}</div>)}
               </div>
@@ -64,21 +65,24 @@ const [valorInputSenha, setValorInputSenha] = useState('*************')
               <div>
                 <input type='text' placeholder='999.999.999-99'{...register('cpf')}
                 onChange={(e) => setValorInputCPF(e.target.value)} value={valorInputCPF} disabled={!inputsHabilitados}
-                className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1' />
+                className='border-b-2 focus:border-b-2
+                            focus:outline-none focus:border-blue-500'/>
                 {errors.cpf && (<div className='text-red-500'>{errors.cpf.message}</div>)}
               </div>
 
               <div>
                 <input type='email' placeholder='joão@gmail.com' {...register('email')}
                 onChange={(e) => setValorInputEmail(e.target.value)} value={valorInputEmail} disabled={!inputsHabilitados}
-                className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1' />
+                className='border-b-2 focus:border-b-2
+                            focus:outline-none focus:border-blue-500'/>
                 {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
               </div>
 
               <div>
                 <input type='password' placeholder='************' {...register('senha')}
                 onChange={(e) => setValorInputSenha(e.target.value)} value={valorInputSenha} disabled={!inputsHabilitados}
-                className='focus:outline-none border border-t-0 border-l-0 border-r-0 border-b-gray-600  p-2 mt-1'/>
+                className='border-b-2 focus:border-b-2
+                            focus:outline-none focus:border-blue-500'/>
                 {errors.senha && (<div className='text-red-500 '>{errors.senha.message}</div>)}
               </div>
             </div>

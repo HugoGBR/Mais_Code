@@ -1,66 +1,100 @@
-import * as React from "react";
-import Image from "next/image";
+"use client";
 
-import {Card, CardContent} from "@/components/ui/card";
-import {Label} from "@/components/ui/label";
+import React, {ReactNode} from 'react';
+import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
+import {TabsTrigger} from '@radix-ui/react-tabs';
+import CardUsuario from '@/components/CardUsuario';
 
+export default function Gestao() {
+  const Lista = [{
 
-export default function CardWithForm() {
+    id: 1,
+    nome: "Maria",
+    telefone: "6799999999",
+    tipo_Pessoa: "Pessoa Fisica",
+    tipo_Cadastro: 1
+  },
+    {
+      id: 2,
+      nome: "Gustavo",
+      telefone: "67888888888",
+      tipo_Pessoa: "Pessoa Juridica",
+      tipo_Cadastro: 2
+    },
+    {
+      id: 3,
+      nome: "Calebe",
+      telefone: "67777777777",
+      tipo_Pessoa: "Pessoa Fisica",
+      tipo_Cadastro: 3
+    },
+    {
+      id: 4,
+      nome: "Rosa",
+      telefone: "674444444444",
+      tipo_Pessoa: "Pessoa Juridica",
+      tipo_Cadastro: 2
+    },
+    {
+      id: 5,
+      nome: "Emilly",
+      telefone: "67555555555",
+      tipo_Pessoa: "Pessoa Fisica",
+      tipo_Cadastro: 1
+    },
+    {
+      id: 6,
+      nome: "Julia",
+      telefone: "67333333333333",
+      tipo_Pessoa: "Pessoa Juridica",
+      tipo_Cadastro: 2
+    },
+    {
+      id: 7,
+      nome: "Cris",
+      telefone: "67111111111111",
+      tipo_Pessoa: "Pessoa Fisica",
+      tipo_Cadastro: 3
+    },
+    {
+      id: 8,
+      nome: "Rafa",
+      telefone: "679999999",
+      tipo_Pessoa: "Pessoa Juridica",
+      tipo_Cadastro: 3
+    }
+  ];
+
+  const renderGestao = (tipo_Cadastro: number) => {
+    return (
+        <>
+          {Lista
+              .filter(item => item.tipo_Cadastro === tipo_Cadastro)
+              .map(item => (
+                  <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
+                    <div>
+                      <CardUsuario dados={item}/>
+                    </div>
+                  </div>
+              ))}
+        </>
+    );
+  }
+
 
   return (
-  <div className="flex justify-center items-center h-screen">
-    <button>
-    <div className="grid grid-cols-2 w-[220px] h-[75px] border rounded-lg">
-      <div className="flex ml-5 items-center">
-        <img src="/icons/icon_perfil_preto.png" alt="" className="w-12"/>
+      <div className="items-center py-10">
+          <div className='flex flex-col md:grid md:grid-cols-2 gap-5'>
+            {Lista.map((item) => (
+                // eslint-disable-next-line react/jsx-key
+                <CardUsuario dados={item}/>
+            ))}
+          </div>
       </div>
-
-      <div className="grid grid-rows-3 ">
-        <div>
-          <span className="font-semibold">Gustavo</span>
-        </div>
-        <div>
-          <span className="text-xs">Calebe@gmail.com</span>
-        </div>
-        <div>
-          <span className="text-blue-700 font-semibold">Admnistrador</span>
-        </div>
-      </div>
-    </div>
-    </button>
-    </div>
-    // <div className="flex justify-center items-center h-screen">
-    // <button>
-    //   <Card className="flex w-[230px] h-[75px] p-1 mr-[-2px]">
-    //     <CardContent>
-    //       <div className="flex items-center">
-    //         <div>
-    //           <Image
-    //             src="/icons/icon_perfil_preto.png"
-    //             alt="Imagem"
-    //             width={70}
-    //             height={70} 
-    //             className="rounded-2xl ml-[-19px]"
-    //           />
-    //         </div>
-    //         <div>
-    //             <Label htmlFor="nome" className="flex  ml-[-3px]">
-    //              <p>GUSTAVO</p> 
-    //             </Label>
-    //             <Label htmlFor="e-mail" className=" block text-xs ml-[-1px]  ">
-    //              <p> teste@gmail.com</p> 
-    //             </Label>
-    //             <Label
-    //               htmlFor="tipo-de-cadastro"
-    //               className=" flex text-xs text-sky-800 ml-[-4,5px] "
-    //             >
-    //               <p>VENDEDOR</p>
-    //             </Label>
-    //           </div>
-    //         </div>
-    //       </CardContent>
-    //     </Card>
-    //   </button>
-    // </div>
-  );
+  )
 }
+
+
+
+
+
