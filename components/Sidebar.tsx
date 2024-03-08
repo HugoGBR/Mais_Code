@@ -1,35 +1,42 @@
 "use client"
-
-import {User} from "lucide-react"
+import ajustes from "@/public/icons/icon-ajuste.png"
 import Link from "next/link"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
+import React from "react";
+import Image from "next/image";
 
 export default function SideBar() {
 
     const menuSuperior = [
         {
             nome: "Home",
-            href: "/Rotas/Home"
+            href: "/Rotas/Home",
+            icon: ajustes
         },
         {
             nome: "Cadastro",
-            href: "/Rotas/Cadastros"
+            href: "/Rotas/Cadastros",
+            icon: ajustes
         },
         {
             nome: "Relatorio",
-            href: "/Rotas/Relatorio"
+            href: "/Rotas/Relatorio",
+            icon: ajustes
         },
         {
             nome: "Financeiro",
-            href: "/Rotas/Financeiro"
+            href: "/Rotas/Financeiro",
+            icon: ajustes
         },
         {
             nome: "Gestão",
-            href: "/Rotas/Gestao"
+            href: "/Rotas/Gestao",
+            icon: ajustes
         },
         {
             nome: "Ajuste",
-            href: "/Rotas/Ajustes"
+            href: "/Rotas/Ajustes",
+            icon: ajustes
         },
     ]
 
@@ -48,10 +55,10 @@ export default function SideBar() {
                             <Link href={item.href}
                                   className="flex text-lg mb-4 p-1 font-medium hover:bg-white/10 rounded-lg">
                                 <div className="flex gap-3 justify-center items-center">
-                                    <User className="md:w-12 h-auto lg:w-10"/>
-                                    <div className="md:hidden lg:inline-block">
+                                    <Image src={item.icon} alt="sads" className="w-12 h-auto"/>
+                                    <p className="md:hidden lg:inline-block">
                                         {item.nome}
-                                    </div>
+                                    </p>
                                 </div>
                             </Link>
                         ))}
@@ -77,7 +84,7 @@ export default function SideBar() {
                             <div className="flex items-center">
                                 <ul>
                                     <li className="flex items-center gap-3">
-                                        <User className="md:w-12 h-auto lg:w-10"/>
+
                                         <span className="md:hidden lg:inline-block">Sair</span>
                                     </li>
                                 </ul>
