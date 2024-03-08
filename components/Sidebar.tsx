@@ -58,10 +58,13 @@ export default function SideBar() {
                         </Link>
                         {menuSuperior.map((item) => (
                             // eslint-disable-next-line react/jsx-key
-                            <Link href={item.href}
-                                  className="flex text-lg p-2 font-medium hover:bg-white/10 rounded-lg">
+                            <Link  href={item.href}
+                                  className="flex justify-center text-lg p-2 font-medium hover:bg-white/10 rounded-lg">
                                 <div className="flex gap-3 justify-center items-center">
-                                    <Image src={item.icon} alt="icones menu" className="w-10 h-auto"/>
+                                    <div>
+                                        <Image src={item.icon} alt="icones menu" className="w-10 h-auto"/>
+                                    </div>
+
                                     <p className="md:hidden lg:inline-block">
                                         {item.nome}
                                     </p>
