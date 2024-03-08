@@ -179,13 +179,13 @@ export const columns: ColumnDef<Payment>[] = [
       <div className="capitalize">{row.getValue("comis")}</div>
     ),
   },
-
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
+    cell: ({row}) => {
       const payment = row.original
-    },
+    }
+  }
 ]
 
 export default function DataTableDemo() {
@@ -220,87 +220,67 @@ export default function DataTableDemo() {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filtro por data..."
-          value={(table.getColumn("data")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("data")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
+            placeholder="Filtro por data..."
+            value={(table.getColumn("data")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+                table.getColumn("data")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Colunas <ChevronDownIcon className="ml-2 h-4 w-4" />
+              Colunas <ChevronDownIcon className="ml-2 h-4 w-4"/>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                    className="max-w-sm"
-                />
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto">
-                            Columns <ChevronDownIcon className="ml-2 h-4 w-4"/>
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        {table
-                            .getAllColumns()
-                            .filter((column) => column.getCanHide())
-                            .map((column) => {
-                                return (
-                                    <DropdownMenuCheckboxItem
-                                        key={column.id}
-                                        className="capitalize"
-                                        checked={column.getIsVisible()}
-                                        onCheckedChange={(value) =>
-                                            column.toggleVisibility(!!value)
-                                        }
-                                    >
-                                        {column.id}
-                                    </DropdownMenuCheckboxItem>
-                                )
-                            })}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </div>
-            <div className="rounded-md border">
-                <Table>
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                        </TableHead>
-                                    )
-                                })}
-                            </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody>
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    data-state={row.getIsSelected() && "selected"}
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                      <DropdownMenuCheckboxItem
+                          key={column.id}
+                          className="capitalize"
+                          checked={column.getIsVisible()}
+                          //onCheckedChange={(value) =>
+                              //column.toggleVisibility(!!value)
+                          //}
+                      >
+                        {column.id}
+                      </DropdownMenuCheckboxItem>
+                  );
+                })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                              )}
+                        </TableHead>
+                    )
+                  })}
+                </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                    <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>

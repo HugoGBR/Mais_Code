@@ -40,16 +40,18 @@ export default function SideBar() {
                     <div className="mt-5">
                         <Link href="/Rotas/Home" className="flex justify-center mb-14">
                             <div className="flex items-center">
-                                <img src="/icon-logo.png" alt="Logo da Empresa" className="w-14"/>
+                                <img src="/icon-logo.png" alt="Logo da Empresa" className="md:w-auto lg:w-20"/>
                             </div>
                         </Link>
                         {menuSuperior.map((item) => (
                             // eslint-disable-next-line react/jsx-key
                             <Link href={item.href}
-                                  className="flex text-lg p-2 font-medium hover:bg-white/10 rounded-lg">
-                                <div className="flex items-center">
-                                    <User className="mr-4 w-9 h-auto"/>
-                                    {item.nome}
+                                  className="flex text-lg mb-4 p-1 font-medium hover:bg-white/10 rounded-lg">
+                                <div className="flex gap-3 justify-center items-center">
+                                    <User className="md:w-12 h-auto lg:w-10"/>
+                                    <div className="md:hidden lg:inline-block">
+                                        {item.nome}
+                                    </div>
                                 </div>
                             </Link>
                         ))}
@@ -58,25 +60,25 @@ export default function SideBar() {
                     <div className="flex-col mb-4">
                         <Link href={'/Rotas/Perfil'}
                               className="flex text-lg p-3 font-medium hover:bg-white/10 rounded-lg">
-                            <div className="flex items-center">
+                            <div className="flex md:flex md:justify-center items-center">
                                 <ul>
-                                    <li className="flex items-center">
-                                        <Avatar className="mr-4 w-9 h-auto">
+                                    <li className="flex items-center gap-3">
+                                        <Avatar className="md:w-12 h-auto lg:w-10">
                                             <AvatarImage src="https://github.com/shadcn.png"/>
                                             <AvatarFallback>CN</AvatarFallback>
                                         </Avatar>
-                                        <span>Perfil</span>
+                                        <span className="md:hidden lg:inline-block">Perfil</span>
                                     </li>
                                 </ul>
                             </div>
                         </Link>
-                        <Link href={'app/page.tsx'}
+                        <Link href={'../'}
                               className="flex text-lg p-3 font-medium hover:bg-white/10 rounded-lg">
                             <div className="flex items-center">
                                 <ul>
-                                    <li className="flex items-center">
-                                        <User className="mr-4 w-9 h-auto"/>
-                                        <span>Sair</span>
+                                    <li className="flex items-center gap-3">
+                                        <User className="md:w-12 h-auto lg:w-10"/>
+                                        <span className="md:hidden lg:inline-block">Sair</span>
                                     </li>
                                 </ul>
                             </div>
