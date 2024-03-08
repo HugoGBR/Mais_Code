@@ -66,7 +66,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className=" md:w-full shadow-xl flex-container rounded-3xl p-4 shadow-xl">
+            <div className=" md:w-full shadow-xl flex-container rounded-3xl p-4">
                 <div className="flex items-center py-4 input-container">
                     <Input
                         placeholder="Pesquisa"
