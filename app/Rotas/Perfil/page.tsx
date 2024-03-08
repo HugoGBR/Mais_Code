@@ -65,7 +65,6 @@ export default function Perfil() {
                         </div>
 
                         <div>
-
                             <input
                                 type='text'
                                 maxLength={14}

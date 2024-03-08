@@ -1,5 +1,11 @@
 "use client"
+import home from "@/public/icons/icon-home.png"
+import cadastro from "@/public/icons/icon-cadastro.png"
+import relatorio from "@/public/icons/icon-relatorio.png"
+import financeiro from "@/public/icons/icon-financeiro.png"
+import gestao from "@/public/icons/icon-gestao.png"
 import ajustes from "@/public/icons/icon-ajuste.png"
+import { RxExit } from "react-icons/rx";
 import Link from "next/link"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import React from "react";
@@ -11,27 +17,27 @@ export default function SideBar() {
         {
             nome: "Home",
             href: "/Rotas/Home",
-            icon: ajustes
+            icon: home
         },
         {
             nome: "Cadastro",
             href: "/Rotas/Cadastros",
-            icon: ajustes
+            icon: cadastro
         },
         {
             nome: "Relatorio",
             href: "/Rotas/Relatorio",
-            icon: ajustes
+            icon: relatorio
         },
         {
             nome: "Financeiro",
             href: "/Rotas/Financeiro",
-            icon: ajustes
+            icon: financeiro
         },
         {
             nome: "Gestão",
             href: "/Rotas/Gestao",
-            icon: ajustes
+            icon: gestao
         },
         {
             nome: "Ajuste",
@@ -47,15 +53,15 @@ export default function SideBar() {
                     <div className="mt-5">
                         <Link href="/Rotas/Home" className="flex justify-center mb-14">
                             <div className="flex items-center">
-                                <img src="/icon-logo.png" alt="Logo da Empresa" className="md:w-auto lg:w-20"/>
+                                <img src="/icon-logo.png" alt="Logo da Empresa" className="md:w-auto lg:w-16"/>
                             </div>
                         </Link>
                         {menuSuperior.map((item) => (
                             // eslint-disable-next-line react/jsx-key
                             <Link href={item.href}
-                                  className="flex text-lg mb-4 p-1 font-medium hover:bg-white/10 rounded-lg">
+                                  className="flex text-lg p-2 font-medium hover:bg-white/10 rounded-lg">
                                 <div className="flex gap-3 justify-center items-center">
-                                    <Image src={item.icon} alt="sads" className="w-12 h-auto"/>
+                                    <Image src={item.icon} alt="icones menu" className="w-10 h-auto"/>
                                     <p className="md:hidden lg:inline-block">
                                         {item.nome}
                                     </p>
@@ -66,7 +72,7 @@ export default function SideBar() {
 
                     <div className="flex-col mb-4">
                         <Link href={'/Rotas/Perfil'}
-                              className="flex text-lg p-3 font-medium hover:bg-white/10 rounded-lg">
+                              className="flex text-lg p-2 font-medium hover:bg-white/10 rounded-lg">
                             <div className="flex md:flex md:justify-center items-center">
                                 <ul>
                                     <li className="flex items-center gap-3">
@@ -80,11 +86,11 @@ export default function SideBar() {
                             </div>
                         </Link>
                         <Link href={'../'}
-                              className="flex text-lg p-3 font-medium hover:bg-white/10 rounded-lg">
+                              className="flex text-lg p-2 font-medium hover:bg-white/10 rounded-lg">
                             <div className="flex items-center">
                                 <ul>
                                     <li className="flex items-center gap-3">
-
+                                        <RxExit className="w-10 h-auto"/>
                                         <span className="md:hidden lg:inline-block">Sair</span>
                                     </li>
                                 </ul>
