@@ -78,10 +78,10 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className='h-auto flex'>
+            <div className='sm:hidden md:inline-block'>
                 <CadastroLink/>   
-
             </div>
+            
 
         </div>
     );
