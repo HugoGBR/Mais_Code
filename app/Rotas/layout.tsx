@@ -17,8 +17,14 @@ export default function RootLayout({
                     <SideBar/>
                 </div>
             </div>
-            <main className="md:flex md:flex-col items-center p-10 justify-center w-full">
-                {children}
+
+            <main className="flex flex-col p-10 w-full">
+                <div className="w-full">
+                    <BtnVoltar/>
+                </div>
+                <div className="flex justify-center items-center">
+                    {children}
+                </div>
             </main>
         </div>
     );

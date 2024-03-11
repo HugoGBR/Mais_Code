@@ -26,7 +26,7 @@ import {Menubar} from "@/components/ui/menubar";
 export default function CardWithForm() {
     return (
 
-        <div className="flex flex-col justify-center  h-screen gap-5">
+        <div className="flex flex-col justify-center gap-5">
 
             <div className="flex justify-center mb-2">
                 <Card className=" shadow-xl">
