@@ -1,22 +1,27 @@
-"use client"
+
 
 import { Button } from "@/components/ui/button"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
+import { string } from "zod"
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+
 export type Payment = {
     id: string
     quantia: number
     status:| "Ativo" | "Concluido" | "Inativo"
     email: string
+    N_de_contrato:number
+    Novo_Antigo: string
+    Vendedor:string
+    Cliente:string
   }
 
 export const columns: ColumnDef<Payment>[] = [
     {
-        accessorKey: "N*Contrato",
+        accessorKey: "N_de_contrato",
         header: ({ column }) => {
+        
           return (
             <Button
               variant="ghost"
@@ -27,7 +32,7 @@ export const columns: ColumnDef<Payment>[] = [
             </Button>
           )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({ row }) => <div className="text-center">{row.getValue("N_de_contrato")}</div>,
       },
       {
         accessorKey: "email",
@@ -57,10 +62,10 @@ export const columns: ColumnDef<Payment>[] = [
             </Button>
           )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("Cliente")}</div>,
       },
       {
-        accessorKey: "Novo/Antigo",
+        accessorKey: "Novo_Antigo",
         header: ({ column }) => {
           return (
             <Button
@@ -72,7 +77,7 @@ export const columns: ColumnDef<Payment>[] = [
             </Button>
           )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({ row }) => <div className="text-center">{row.getValue("Novo_Antigo")}</div>,
       },
       {
         accessorKey: "Vendedor",
@@ -87,7 +92,7 @@ export const columns: ColumnDef<Payment>[] = [
             </Button>
           )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("Vendedor")}</div>,
       },
       {
         accessorKey: "quantia",
