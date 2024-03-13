@@ -5,7 +5,7 @@ import relatorio from "@/public/icons/icon-relatorio.png"
 import financeiro from "@/public/icons/icon-financeiro.png"
 import gestao from "@/public/icons/icon-gestao.png"
 import ajustes from "@/public/icons/icon-ajuste.png"
-import { RxExit } from "react-icons/rx";
+import {RxExit} from "react-icons/rx";
 import Link from "next/link"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import React from "react";
@@ -58,14 +58,11 @@ export default function SideBar() {
                         </Link>
                         {menuSuperior.map((item) => (
                             // eslint-disable-next-line react/jsx-key
-                            <Link  href={item.href}
-                                  className="flex justify-center text-lg p-2 font-medium hover:bg-white/10 rounded-lg">
-                                <div className="flex gap-3 justify-center items-center">
-                                    <div>
-                                        <Image src={item.icon} alt="icones menu" className="w-10 h-auto"/>
-                                    </div>
-
-                                    <p className="md:hidden lg:inline-block">
+                            <Link href={item.href}
+                                  className="flex w-full text-lg font-medium hover:bg-white/10 rounded-lg">
+                                <div className="flex gap-3 p-2 items-center">
+                                    <Image src={item.icon} alt="icones menu" className="w-10 h-auto"/>
+                                    <p className="md:hidden md:flex lg:inline-block">
                                         {item.nome}
                                     </p>
                                 </div>

@@ -4,7 +4,7 @@
 import React, { ReactNode } from 'react';
 import { Tabs, TabsContent, TabsList } from '@/components/ui/tabs';
 import { TabsTrigger } from '@radix-ui/react-tabs';
-import CardUsuario from '@/components/CardUsuario';
+import CardUsuario from '@/app/Rotas/Financeiro/CardUsuario';
 import { useRouter } from 'next/navigation';
 
 export default function Gestao() {

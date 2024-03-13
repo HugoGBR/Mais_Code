@@ -1,6 +1,6 @@
 import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
-import {Card, CardContent} from "./ui/card";
-import {Label} from "./ui/label";
+import {Card, CardContent} from "../../../components/ui/card";
+import {Label} from "../../../components/ui/label";
 import Link from "next/link";
 
 export default function CardUsuario({dados}: { dados: dadosUsuario }) {

@@ -42,7 +42,7 @@ export default function CardCliente() {
                     </div>
                 </form>
                 <div className="flex justify-center">
-                    <Button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">CADASTRAR
+                    <Button className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded">CADASTRAR
                         CLIENTE</Button>
                 </div>
             </Card>
