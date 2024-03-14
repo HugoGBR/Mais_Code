@@ -1,8 +1,8 @@
 'use client'
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 
-interface Cadastrado {
+
+interface Lista {
   id: number;
   nome: string;
   telefone: string;
@@ -10,11 +10,7 @@ interface Cadastrado {
   tipo_Cadastro: number;
 }
 
-export default function DetalheCadastro() {
-  const [userData, setUserData] = useState<Cadastrado[]>([]);
-  const navegation = useRouter();
-
-  const Lista = [
+const Lista = [
     {
       id: 1,
       nome: "Maria",
@@ -72,32 +68,19 @@ export default function DetalheCadastro() {
       tipo_Cadastro: 3,
     },
   ];
+  const getDados = async (id:number) => {
+    const resposta = await (Lista[id])
+    const dados = await resposta
+    return dados
+}
 
-  useEffect(() => {
-    const getDados = async () => {
-      // Simulando uma chamada assíncrona, você pode substituir por uma chamada à API real.
-      const dados: Cadastrado[] = Lista;
-      setUserData(dados);
-    };
-
-    getDados();
-  }, []);
-
+export default async function DetalheCadastro({params}: {params:{id:number}}) {
+  const usuario = await getDados(params.id)
+  
   return (
     <div>
-      <h1>Detalhes do Cadastro</h1>
-      <ul>
-        {userData.map((user) => (
-          <li key={user.id}>
-            <strong>ID:</strong> {user.id} <br />
-            <strong>Nome:</strong> {user.nome} <br />
-            <strong>Telefone:</strong> {user.telefone} <br />
-            <strong>Tipo de Pessoa:</strong> {user.tipo_Pessoa} <br />
-            <strong>Tipo de Cadastro:</strong> {user.tipo_Cadastro} <br />
-            <hr />
-          </li>
-        ))}
-      </ul>
+        {JSON.stringify(usuario)}
     </div>
-  );
+  )
+
 }
