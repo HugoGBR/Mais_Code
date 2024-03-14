@@ -2,7 +2,7 @@
 import React from "react";
 
 
-interface Lista {
+interface Lista { //exemplo de interface
   id: number;
   nome: string;
   telefone: string;
@@ -10,7 +10,7 @@ interface Lista {
   tipo_Cadastro: number;
 }
 
-const Lista = [
+const Lista = [ //Lista de TESTE
     {
       id: 1,
       nome: "Maria",
@@ -69,11 +69,11 @@ const Lista = [
     },
   ];
   const getDados = async (id:number) => {
-    const resposta = await (Lista[id])
+    const resposta = await (Lista[id]) //chamar o banco aqui 
     const dados = await resposta
     return dados
 }
-
+//falta apenas adicionar uma mascara
 export default async function DetalheCadastro({params}: {params:{id:number}}) {
   const usuario = await getDados(params.id)
   
