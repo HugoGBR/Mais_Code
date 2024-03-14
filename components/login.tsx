@@ -1,50 +1,47 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import "tailwindcss/tailwind.css";
 import { useRouter } from "next/navigation";
-
+import { useForm } from "react-hook-form";
+import {z} from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+const loginSchema = z.object({
+  user: z.string().min(1, "Campo Obrigatório"),
+  password: z.string().min(1, "Campo Obrigatório")
+})
+type LoginformSchema = z.infer<typeof loginSchema>
 // Defina o componente do formulário de login
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const route = useRouter()
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
-    setError('');
-  };
+  const route = useRouter();
 
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-    setError('');
-  };
+  const {register, handleSubmit, formState: { errors } } = useForm<LoginformSchema>({
+    resolver: zodResolver(loginSchema)
+  })
 
-  const handleLogin = () => {
-    if (!username || !password) {
-      setError('Campos obrigatórios. Preencha todos os campos.');
-    } else {
-      // Lógica de autenticação aqui
-      route.push('/Rotas/Home');
+  const handleFormSubmit = (data: LoginformSchema) => {
+    console.log(data)
+    route.push('/Rotas/Home')
+  }
 
-    }
-  };
+
 
   return (
       <div className="flex justify-center items-center p-10">
         <div className=" max-w-md">
           <h1 className="text-center mt-20 mb-16 text-3xl">FAÇA LOGIN</h1>
-          <form id="loginform" onSubmit={handleLogin}>
-            <input type="text" id="loginname" name="name" placeholder="Login" value={username} onChange={handleUsernameChange} className="bg-transparent block w-full border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 mb-4" />
-            <input type="password" id="loginpassword" name="password" placeholder="Senha" value={password} onChange={handlePasswordChange} className="bg-transparent block w-full border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 mb-1" />
+          <form id="loginform" onSubmit={handleSubmit(handleFormSubmit)}>
+            <input type="text" id="loginname" placeholder="Login" {...register("user")} className="bg-transparent block w-full border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 mb-4" />
+            {errors.user &&(<div className="text-red-500 font-bold p1">{errors.user.message}</div>)}
+            <input type="password" id="loginpassword" placeholder="Senha" {...register("password")} className="bg-transparent block w-full border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 mb-1" />
+            {errors.password &&(<div className="text-red-500 font-bold p1">{errors.password.message}</div>)}
             <label htmlFor="logincheck" className="text-sm block mb-7">
               <input type="checkbox" id="logincheck" name="logincheck" value="check" className="mr-2" />
               Lembrar-me
             </label>
-              <button type="button" id="loginenter" className="text-white bg-blue-500 w-full py-1 rounded-md hover:bg-blue-600 cursor-pointer" onClick={handleLogin}>
-               Entrar
-              </button>
+            <button type="submit" className="text-white bg-blue-500 w-full py-1 rounded-md hover:bg-blue-600 cursor-pointer">
+              Entrar
+            </button>
 
-            {error && <p className="text-red-500 mt-4 text-sm/[12px]">{error}</p>}
             <div className="flex justify-center mt-2">
               <a href="/esqueci-minha-senha" className="text-sm">
                 Esqueci minha senha
@@ -54,8 +51,6 @@ const LoginForm = () => {
         </div>
       </div>
   );
-
-
 };
 
 // página de login
