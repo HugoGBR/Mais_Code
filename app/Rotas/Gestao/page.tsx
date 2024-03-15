@@ -1,6 +1,6 @@
 "use client";
 
-import React, {ReactNode} from 'react';
+import React from 'react';
 import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
 import {TabsTrigger} from '@radix-ui/react-tabs';
 import CardUsuario from '@/app/Rotas/Financeiro/CardUsuario';
@@ -103,16 +103,13 @@ export default function Gestao() {
                         </button>
                     </div>
                 </TabsList>
-
-                <TabsContent value='' className='flex flex-col md:grid md:grid-cols-2 gap-5'>
-                    {Lista.map((item) => (
-                        // eslint-disable-next-line react/jsx-key
-                        <CardUsuario dados={item}/>
-                    ))}
+                
+                <TabsContent value='' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                    {renderGestao(1)}
                 </TabsContent>
-                <TabsContent value='Cliente'>{renderGestao(1)}</TabsContent>
-                <TabsContent value='Vendedor'>{renderGestao(2)}</TabsContent>
-                <TabsContent value='Financeiro'>{renderGestao(3)}</TabsContent>
+                <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4' >{renderGestao(1)}</TabsContent>
+                <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>{renderGestao(2)}</TabsContent>
+                <TabsContent value='Financeiro' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>{renderGestao(3)}</TabsContent>
             </Tabs>
         </div>
     )
