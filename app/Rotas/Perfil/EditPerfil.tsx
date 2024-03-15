@@ -1,13 +1,9 @@
-
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useForm} from 'react-hook-form'
 import {z} from 'zod'
-import {Card, CardFooter} from "@/components/ui/card"
+import {Card} from "@/components/ui/card"
 import FileAvatar from "@/components/FileAvatar"
 import React, {useState} from "react";
-import {Button} from '@/components/ui/button';
-import {Dialog, DialogContent, DialogTitle, DialogTrigger} from '@radix-ui/react-dialog';
-import {DialogFooter, DialogHeader} from '@/components/ui/dialog';
 
 const formulario = z.object({
     //Números de restrição apenas para teste
@@ -42,7 +38,6 @@ export default function Perfil() {
     const [valorInputSenha, setValorInputSenha] = useState('*************')
 
     return (
-
         <div className='flex justify-center items-center h-screen'>
             <Card className='p-6 drop-shadow-xl rounded-xl'>
                 <form onSubmit={handleSubmit(handleForm)}>
@@ -98,33 +93,14 @@ export default function Perfil() {
                     </div>
                     <div className='flex justify-center'>
                         {inputsHabilitados ? (
-                            <Button onClick={() => setIsOpen(true)} type='button'
-                                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Alterar</Button>
+                            <button onClick={() => setIsOpen(true)} type='button'
+                                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Alterar</button>
                         ) : (
-                            <Button type='button' onClick={() => HabilitarEventos()}
-                                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</Button>
+                            <button type='button' onClick={() => HabilitarEventos()}
+                                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
                         )}
                     </div>
                 </form>
-                <Dialog open={isOpen}>
-                    <DialogTrigger asChild>
-                    </DialogTrigger>
-                    <DialogContent className="w-auto rounded-lg">
-                        <DialogHeader>
-                            <DialogTitle className="mt-3 mb-4 text-center text-2xl">Confirmar alteração?</DialogTitle>
-                        </DialogHeader>
-                        <DialogFooter className="flex justify-center items-center">
-                            <div className="space-x-7">
-                                <Button
-                                    className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white"
-                                    type="button">Confirmar </Button>
-                                <Button onClick={() => setIsOpen(false)}
-                                        className="w-32 border border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white"
-                                        type="button"> Cancelar</Button>
-                            </div>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
             </Card>
         </div>
     )

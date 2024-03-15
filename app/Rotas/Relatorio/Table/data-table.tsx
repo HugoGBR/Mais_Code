@@ -21,11 +21,15 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Input } from "@/components/ui/input"
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { ChevronDownIcon } from "lucide-react"
-import { useState } from "react"
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import {Button} from "@/components/ui/button"
+import {ChevronDownIcon} from "lucide-react"
+import {useState} from "react"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -33,9 +37,9 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({
-    columns,
-    data,
-}: DataTableProps<TData, TValue>) {
+                                             columns,
+                                             data,
+                                         }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
@@ -66,20 +70,22 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className=" md:w-full shadow-xl flex-container rounded-3xl p-4">
+            <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
                 <div className="flex items-center py-4 input-container">
-                    <Input
-                        placeholder="Pesquisa"
+                    <input
+                        type="text"
+                        placeholder="Pesquisar..."
                         value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
                             table.getColumn("email")?.setFilterValue(event.target.value)
                         }
-                        className="max-w-sm"
+                        className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                     />
+
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="ml-auto">
-                                Filtros <ChevronDownIcon className="ml-2 h-4 w-4" />
+                                Filtros <ChevronDownIcon className="ml-2 h-4 w-4"/>
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -92,9 +98,9 @@ export function DataTable<TData, TValue>({
                                             key={column.id}
                                             className="capitalize"
                                             checked={column.getIsVisible()}
-                                            onCheckedChange={(value) =>
-                                                column.toggleVisibility(!!value)
-                                            }
+                                            //onCheckedChange={(value) =>
+                                            // column.toggleVisibility(!!value)
+                                            //}
                                         >
                                             {column.id}
                                         </DropdownMenuCheckboxItem>
@@ -104,7 +110,7 @@ export function DataTable<TData, TValue>({
                     </DropdownMenu>
                 </div>
                 <div className="rounded-3xl border">
-                    <Table >
+                    <Table>
                         <TableHeader>
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
@@ -154,7 +160,7 @@ export function DataTable<TData, TValue>({
                     </Table>
                 </div>
 
-                <div className="space-x-3 flex justify-center items-center">
+                <div className="space-x-3 mt-4 flex justify-center items-center">
                     <Button
                         variant="outline"
                         size="sm"

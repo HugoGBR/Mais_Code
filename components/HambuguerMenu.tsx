@@ -1,16 +1,11 @@
-import {Button} from "@/components/ui/button"
 import {
     Sheet,
-    SheetClose,
     SheetContent,
-    SheetFooter,
-    SheetHeader,
     SheetTrigger,
 } from "@/components/ui/sheet"
 import {IoMenuSharp} from "react-icons/io5";
 import Link from "next/link";
 import Image from "next/image";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {RxExit} from "react-icons/rx";
 import React from "react";
 import home from "@/public/icons/icon-home.png";
@@ -90,10 +85,7 @@ export function HambuguerMenu() {
                                 <div className="flex items-center">
                                     <ul>
                                         <li className="flex items-center gap-3">
-                                            <Avatar className="w-10 h-auto">
-                                                <AvatarImage src="https://github.com/shadcn.png"/>
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
+                                            <RxExit className="w-10 h-auto"/>
                                             <span className="md:hidden lg:inline-block">Perfil</span>
                                         </li>
                                     </ul>

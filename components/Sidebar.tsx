@@ -1,13 +1,11 @@
-"use client"
-import home from "@/public/icons/icon-home.png"
-import cadastro from "@/public/icons/icon-cadastro.png"
-import relatorio from "@/public/icons/icon-relatorio.png"
-import financeiro from "@/public/icons/icon-financeiro.png"
-import gestao from "@/public/icons/icon-gestao.png"
-import ajustes from "@/public/icons/icon-ajuste.png"
+import home from "@/public/icons/icon-home.png";
+import cadastro from "@/public/icons/icon-cadastro.png";
+import relatorio from "@/public/icons/icon-relatorio.png";
+import financeiro from "@/public/icons/icon-financeiro.png";
+import gestao from "@/public/icons/icon-gestao.png";
+import ajustes from "@/public/icons/icon-ajuste.png";
 import {RxExit} from "react-icons/rx";
 import Link from "next/link"
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import React from "react";
 import Image from "next/image";
 
@@ -76,10 +74,7 @@ export default function SideBar() {
                             <div className="flex md:flex md:justify-center items-center">
                                 <ul>
                                     <li className="flex items-center gap-3">
-                                        <Avatar className="md:w-12 h-auto lg:w-10">
-                                            <AvatarImage src="https://github.com/shadcn.png"/>
-                                            <AvatarFallback>CN</AvatarFallback>
-                                        </Avatar>
+                                        <RxExit className="w-10 h-auto"/>
                                         <span className="md:hidden lg:inline-block">Perfil</span>
                                     </li>
                                 </ul>
@@ -87,7 +82,7 @@ export default function SideBar() {
                         </Link>
                         <Link href={'../'}
                               className="flex text-lg p-2 font-medium hover:bg-white/10 rounded-lg">
-                            <div className="flex items-center">
+                        <div className="flex items-center">
                                 <ul>
                                     <li className="flex items-center gap-3">
                                         <RxExit className="w-10 h-auto"/>

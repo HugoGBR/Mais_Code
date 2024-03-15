@@ -1,8 +1,6 @@
 "use client";
 
 import React, {ReactNode} from 'react';
-import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
-import {TabsTrigger} from '@radix-ui/react-tabs';
 import CardUsuario from '@/app/Rotas/Financeiro/CardUsuario';
 
 export default function Gestao() {

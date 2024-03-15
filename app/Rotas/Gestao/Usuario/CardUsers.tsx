@@ -2,7 +2,7 @@ import React from "react";
 import {Card} from "@/components/ui/card";
 
 
-export default function CardCliente() {
+export default function CardUsers() {
 
     return (
         <div className="flex justify-center items-center bg-gray-100">
