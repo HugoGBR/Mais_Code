@@ -1,33 +1,98 @@
 "use client";
 
-import * as React from "react";
-import Image from "next/image";
+import React, {ReactNode} from 'react';
+import CardUsuario from '@/app/Rotas/Financeiro/CardUsuario';
 
-import {Card, CardContent} from "@/components/ui/card";
-import {Label} from "@/components/ui/label";
+export default function Gestao() {
+  const Lista = [{
 
-export default function CardWithForm() {
+    id: 1,
+    nome: "Maria",
+    telefone: "6799999999",
+    tipo_Pessoa: "Pessoa Fisica",
+    tipo_Cadastro: 1
+  },
+    {
+      id: 2,
+      nome: "Gustavo",
+      telefone: "67888888888",
+      tipo_Pessoa: "Pessoa Juridica",
+      tipo_Cadastro: 2
+    },
+    {
+      id: 3,
+      nome: "Calebe",
+      telefone: "67777777777",
+      tipo_Pessoa: "Pessoa Fisica",
+      tipo_Cadastro: 3
+    },
+    {
+      id: 4,
+      nome: "Rosa",
+      telefone: "674444444444",
+      tipo_Pessoa: "Pessoa Juridica",
+      tipo_Cadastro: 2
+    },
+    {
+      id: 5,
+      nome: "Emilly",
+      telefone: "67555555555",
+      tipo_Pessoa: "Pessoa Fisica",
+      tipo_Cadastro: 1
+    },
+    {
+      id: 6,
+      nome: "Julia",
+      telefone: "67333333333333",
+      tipo_Pessoa: "Pessoa Juridica",
+      tipo_Cadastro: 2
+    },
+    {
+      id: 7,
+      nome: "Cris",
+      telefone: "67111111111111",
+      tipo_Pessoa: "Pessoa Fisica",
+      tipo_Cadastro: 3
+    },
+    {
+      id: 8,
+      nome: "Rafa",
+      telefone: "679999999",
+      tipo_Pessoa: "Pessoa Juridica",
+      tipo_Cadastro: 3
+    }
+  ];
+
+  const renderGestao = (tipo_Cadastro: number) => {
     return (
-        <Card className="w-auto">
-
-            <CardContent>
-                <div className="flex items-center">
+        <>
+          {Lista
+              .filter(item => item.tipo_Cadastro === tipo_Cadastro)
+              .map(item => (
+                  <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
                     <div>
-                        <Image
-                            src="@/public/icons/icon_perfil_preto.svg"
-                            alt="Imagem"
-                            width={50}
-                            height={600}
-                            className="rounded-2xl"
-                        />
+                      <CardUsuario dados={item}/>
                     </div>
-                    <div className="ml-4">
-                        <Label htmlFor="nome" className=""> GUSTAVO</Label>
-                        <Label htmlFor="e-mail" className="block">teste@gmail.com</Label>
-                        <Label htmlFor="tipo de cadsatro" className=" text-sky-800 text-xs">VENDEDOR</Label>
-                    </div>
-                </div>
-            </CardContent>
-        </Card>
+                  </div>
+              ))}
+        </>
     );
+  }
+
+
+  return (
+      <div className="items-center py-10">
+          <div className='flex flex-col md:grid md:grid-cols-2 gap-5'>
+            {Lista.map((item) => (
+                // eslint-disable-next-line react/jsx-key
+                <CardUsuario dados={item}/>
+            ))}
+          </div>
+      </div>
+  )
 }
+
+
+
+
+

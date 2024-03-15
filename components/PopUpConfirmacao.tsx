@@ -1,5 +1,3 @@
-'use client'
-import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 import {
     Dialog,
@@ -12,11 +10,12 @@ import {
 
 
 export default function PopupConfirmacao() {
+    
     return (
         <CardFooter className="flex justify-center items-center">
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente</Button>
+                    <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente</button>
                 </DialogTrigger>
                 <DialogContent className="w-auto rounded-lg">
                     <DialogHeader>
@@ -24,8 +23,8 @@ export default function PopupConfirmacao() {
                     </DialogHeader>
                     <DialogFooter className="flex justify-center items-center">
                         <div className="space-x-2">
-                            <Button className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white" type="button">Confirmar </Button>
-                            <Button className="w-32 border border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white" type="button"> Cancelar</Button>
+                            <button className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white" type="button">Confirmar </button>
+                            <button className="w-32 border border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white" type="button"> Cancelar</button>
                         </div>
                     </DialogFooter>
                 </DialogContent>

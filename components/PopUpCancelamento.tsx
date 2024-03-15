@@ -1,13 +1,4 @@
-'use client'
-import CaracterLimit from "@/components/CaracterLimit";
-import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { CardFooter } from "@/components/ui/card";
 import {
     Dialog,
     DialogContent,
@@ -17,7 +8,6 @@ import {
     DialogTrigger,
     DialogDescription,
 } from "@/components/ui/dialog"
-import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react";
 
 
@@ -36,7 +26,7 @@ export default function PopUpCancelamento() {
         <CardFooter className="flex justify-center items-center shadow-xl">
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Confirmar</Button>
+                    <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Confirmar</button>
                 </DialogTrigger>
                 <DialogContent className="w-1/3 rounded-lg">
                     <DialogHeader>
@@ -66,8 +56,8 @@ export default function PopUpCancelamento() {
                     </div>
                     <DialogFooter className="flex justify-center items-center">
                         <div>
-                            <Button className="w-auto border border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out
-                             hover:bg-green-500 hover:text-white" type="button">Confirmar</Button>
+                            <button className="w-auto border border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out
+                             hover:bg-green-500 hover:text-white" type="button">Confirmar</button>
                         </div>
                     </DialogFooter>
                 </DialogContent>

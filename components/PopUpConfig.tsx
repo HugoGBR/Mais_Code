@@ -1,5 +1,3 @@
-'use client'
-import { Button } from "@/components/ui/button";
 import {
     CardFooter,
 } from "@/components/ui/card";
@@ -31,7 +29,7 @@ export default function ConfiguracoesParcela() {
         <CardFooter className="flex justify-center items-center shadow-xl">
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant="outline" className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar</Button>
+                    <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar</button>
                 </DialogTrigger>
                 <DialogContent className="w-[475px] h-3/4 rounded-lg">
                     <DialogHeader>
@@ -147,8 +145,8 @@ export default function ConfiguracoesParcela() {
                 </DialogHeader>
                 <DialogFooter className="flex justify-center items-center">
                     <div>
-                        <Button className="w-auto border border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out
-                             hover:bg-green-500 hover:text-white" type="button">Confirmar</Button>
+                        <button className="w-auto border border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out
+                             hover:bg-green-500 hover:text-white" type="button">Confirmar</button>
                     </div>
                 </DialogFooter>
             </DialogContent>

@@ -1,5 +1,6 @@
 import SideBar from "@/components/Sidebar";
 import BtnVoltar from "@/components/BtnVoltar";
+import {HambuguerMenu} from "@/components/HambuguerMenu";
 
 export default function RootLayout({
                                        children,
@@ -7,14 +8,23 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex flex-row">
-            <div className="h-screen relative flex flex-row gap-6">
-                <div>
+        <div className="md:flex md:flex-row h-screen w-full bg-[#F2F6F9]">
+            <div className="md:h-screen md:relative md:flex-row gap-6">
+                <div className="md:hidden">
+                    <HambuguerMenu/>
+                </div>
+                <div className="hidden md:flex md:flex-row">
                     <SideBar/>
                 </div>
             </div>
-            <main className="flex flex-col items-center justify-center w-full bg-[#F2F6F9]">
-                {children}
+
+            <main className="flex flex-col p-10 w-full">
+                <div className="w-full">
+                    <BtnVoltar/>
+                </div>
+                <div className="flex md:h-screen w-full md:justify-center md:items-center">
+                    {children}
+                </div>
             </main>
         </div>
     );
