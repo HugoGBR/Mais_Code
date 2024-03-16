@@ -14,24 +14,24 @@ const HomePage = () => {
     return (
         <div className="bg-gray-100 w-3/4">
             <div className='h-48 w-auto'>
-                <h1 className='text-2xl font-semibold'>Bem Vindo, Calebe</h1>
-                <p className=''>ficamos felizes em vê-lo novamente</p>
-                <div className='rounded-xl float-right bg-white drop-shadow-xl h-24 w-96 grid grid-cols-1 '>
-                    <h3 className='mt-3 ml-20 text-lg'>Remuneraçao</h3>
-                    <h1 className='text-4xl font-bold ml-20'>R$5000,00</h1>
+                <h1 className='text-2xl font-semibold min-[320px]:hidden max-[600px]:hidden lg:inline-block'>Bem Vindo, Calebe</h1>
+                <p className='min-[320px]:hidden max-[600px]:hidden lg:block'>ficamos felizes em vê-lo novamente</p>
+                <div className='rounded-xl float-right bg-white drop-shadow-xl h-24 justify-center items-center'>
+                    <h3 className='mt-3 ml-10 mr-10 text-lg'>Remuneraçao</h3>
+                    <h1 className='text-4xl font-bold ml-10 mr-10 '>R$5000,00</h1>
                 </div>
             </div>
 
             <div className='h-auto gap-3 w-full flex flex-col lg:flex lg:flex-row'>
                 <div className='h-auto w-full md:w-2/5 bg-white drop-shadow-xl grid grid-cols-1 items-center rounded-xl'>
                     <div className=''>
-                        <p className='underline text-lg md:text-6xl ml-20 font-bold text-yellow-500'>#1 Gustavo</p>
+                        <p className='underline text-lg lg:text-6xl ml-20 font-bold text-yellow-500'>#1 Gustavo</p>
                     </div>
                     <div className=''>
-                        <h2 className='underline ml-20 text-5xl font-bold text-gray-400'>#2 João</h2>
+                        <h2 className='underline ml-20 text-lg lg:text-5xl font-bold text-gray-400'>#2 João</h2>
                     </div>
                     <div className=''>
-                        <h3 className='underline ml-20 text-4xl font-bold text-amber-700'>#3 Hugo</h3>
+                        <h3 className='underline ml-20 text-lg lg:text-4xl font-bold text-amber-700'>#3 Hugo</h3>
                     </div>
                 </div>
                                                 
@@ -78,7 +78,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className='sm:hidden md:inline-block'>
+            <div className='min-[320px]:hidden max-[600px]:hidden lg:inline-block'>
                 <CadastroLink/>   
             </div>
             
