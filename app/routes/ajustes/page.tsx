@@ -1,8 +1,8 @@
 'use client'
 import * as React from "react";
-import ListaProdutos from "@/app/Rotas/Ajustes/ListaProdutos";
-import ListaTipoCliente from "@/app/Rotas/Ajustes/ListaTipoCliente";
-import ListaTipoContrato from "@/app/Rotas/Ajustes/ListaTipoContrato";
+import ListaProdutos from "@/app/routes/ajustes/ListaProdutos";
+import ListaTipoCliente from "@/app/routes/ajustes/ListaTipoCliente";
+import ListaTipoContrato from "@/app/routes/ajustes/ListaTipoContrato";
 
 export default function Ajuste() {
 

@@ -3,7 +3,7 @@
 import React from 'react';
 import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
 import {TabsTrigger} from '@radix-ui/react-tabs';
-import CardUsuario from '@/app/Rotas/Financeiro/CardUsuario';
+import CardUsuario from '@/app/routes/financeiro/CardUsuario';
 import {useRouter} from 'next/navigation';
 
 export default function Gestao() {
