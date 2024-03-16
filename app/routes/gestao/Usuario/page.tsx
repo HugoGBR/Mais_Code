@@ -2,7 +2,7 @@
 
 
 
-import CardUsers from "@/app/Rotas/Gestao/Usuario/CardUsers";
+import CardUsers from "@/app/routes/gestao/Usuario/CardUsers";
 
 export default function Users() {
     return (

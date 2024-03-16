@@ -1,7 +1,7 @@
 "use client";
 
 import React, {ReactNode} from 'react';
-import CardUsuario from '@/app/Rotas/Financeiro/CardUsuario';
+import CardUsuario from '@/app/routes/financeiro/CardUsuario';
 
 export default function Gestao() {
   const Lista = [{
