@@ -70,7 +70,7 @@ export default function ListaProdutos() {
                         <Link href="">
                             <RiCloseCircleLine size={25} color="red"/>
                         </Link>
-                        <Link href={'/Rotas/Ajustes/Produtos'}>
+                        <Link href={'/routes/ajustes/Produtos'}>
                             <PiPlusCircleBold size={25} color="#0762C8"/>
                         </Link>
                     </div>
@@ -89,13 +89,13 @@ export default function ListaProdutos() {
                             {invoices.map((item) => (
                                 <TableRow key={item.name}>
                                     <TableCell className="font-medium text-center border-l-4 border-l-blue-800"><Link
-                                        href={'/Rotas/Ajustes/Produtos'}>{item.name}</Link></TableCell>
+                                        href={'/routes/ajustes/Produtos'}>{item.name}</Link></TableCell>
                                     <TableCell className="text-center"><Link
-                                        href={'/Rotas/Ajustes/Produtos'}>{item.new}</Link></TableCell>
+                                        href={'/routes/ajustes/Produtos'}>{item.new}</Link></TableCell>
                                     <TableCell className="text-center"><Link
-                                        href={'/Rotas/Ajustes/Produtos'}>{item.old}</Link></TableCell>
+                                        href={'/routes/ajustes/Produtos'}>{item.old}</Link></TableCell>
                                     <TableCell className="text-center"><Link
-                                        href={'/Rotas/Ajustes/Produtos'}>{item.valor}</Link></TableCell>
+                                        href={'/routes/ajustes/Produtos'}>{item.valor}</Link></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

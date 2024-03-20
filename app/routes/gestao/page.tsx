@@ -9,7 +9,7 @@ import {useRouter} from 'next/navigation';
 export default function Gestao() {
     const Route = useRouter()
     const Rotanewuser = () => {
-        Route.push('/Rotas/Gestao/Usuario')
+        Route.push('/routes/gestao/Usuario')
     }
     const Lista = [{
 

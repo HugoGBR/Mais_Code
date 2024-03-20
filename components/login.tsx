@@ -21,7 +21,7 @@ const LoginPage = () => {
 
     const handleFormSubmit = (data: LoginFormSchema) => {
         console.log(data);
-        router.push('/Rotas/Home');
+        router.push('/routes/home');
     };
 
     const memoizedErrors = useMemo(() => ({

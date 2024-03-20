@@ -1,4 +1,4 @@
-'use cliente'
+'use client'
 
 import React from "react";
 import Link from "next/link";
@@ -11,12 +11,12 @@ export default function Contrato() {
         <div className="flex flex-col gap-5">
             <div className="flex gap-5">
                 <div>
-                    <Link href="" onClick={() => route.push("/Rotas/Cadastros")}
-                          className="font-bold text-blue-700 border-b-2 border-blue-700">Contrato</Link>
+                    <Link href="/routes/cadastros"
+                          className="focus:font-bold focus:text-blue-700 focus:border-b-2 focus:outline-none focus:border-blue-500">Contrato</Link>
                 </div>
                 <div>
-                    <Link href="" onClick={() => route.push("/Rotas/Cadastros/Cliente")}
-                          className="focus:font-bold focus:text-blue-700 focus:border-b-2 focus:outline-none focus:border-blue-500">Cliente</Link>
+                    <Link href="/routes/cadastros/Cliente"
+                          className="font-bold text-blue-700 border-b-2 border-blue-700">Cliente</Link>
                 </div>
             </div>
             <div>

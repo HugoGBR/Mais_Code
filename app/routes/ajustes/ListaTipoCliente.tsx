@@ -40,7 +40,7 @@ export default function ListaTipoCliente() {
                         <Link href="">
                             <RiCloseCircleLine size={25} color="red"/>
                         </Link>
-                        <Link href={'/Rotas/Ajustes/Produtos'}>
+                        <Link href={'/routes/ajustes/Produtos'}>
                             <PiPlusCircleBold size={25} color="#0762C8"/>
                         </Link>
                     </div>
@@ -58,7 +58,7 @@ export default function ListaTipoCliente() {
                                 <tr key={item.name}>
                                     <Link
                                         className="flex border bg-muted/50 hover:bg-[#0762C8] hover:text-white rounded-xl"
-                                        href={'/Rotas/Ajustes/Produtos'}>
+                                        href={'/routes/ajustes/Produtos'}>
                                         <td className="w-full p-1.5 text-center rounded-lg">{item.name}</td>
                                     </Link>
                                 </tr>
