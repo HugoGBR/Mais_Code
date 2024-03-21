@@ -1,15 +1,5 @@
-'use cliente'
-import {Card} from "@/components/ui/card";
-import React from "react";
 
-import {GoGear} from "react-icons/go";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import React from "react";
 import CardCadastro from "@/components/CardCadastro";
 
 

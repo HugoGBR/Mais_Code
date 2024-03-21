@@ -12,7 +12,7 @@ export default function CardUsuario({dados}: { dados: dadosUsuario }) {
                         <div className="">
                             <h1 className="text-sm">{dados.nome}</h1>
                             <h1>{dados.telefone}</h1>
-                            <h1 className="text-blue-800 font-bold">{dados.tipo_Pessoa}</h1>
+                            <h1 className="text-blue-800 font-bold">{dados.tipo_pessoa}</h1>
                         </div>
                     </div>
                 </div>

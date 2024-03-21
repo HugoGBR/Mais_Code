@@ -2,6 +2,6 @@ export interface dadosUsuario {
     id: number,
     nome: string,
     telefone: string,
-    tipo_Pessoa: string,
-    tipo_Cadastro: number
+    tipo_pessoa: string,
+    tipo_cadastro: number
 }

@@ -1,14 +1,20 @@
 import React, {useState} from "react";
 import {Card} from "@/components/ui/card";
 import {createNewUser} from "@/lib/controller/usuarioController";
+import {redirect, useRouter} from "next/navigation";
 
 
 export default function CardUsers() {
     const [nome, setNome] = useState("");
-
+    const route = useRouter();
     async function handleSubmit() {
-        const resposta = await createNewUser(nome)
-        alert(resposta)
+        const response = await fetch("/api/users", {
+            method: "POST",
+            body: JSON.stringify({nome})
+        });
+        const resultado = await response.json();
+        console.log(resultado)
+        route.replace("/routes/gestao")
     }
 
     return (
@@ -54,7 +60,7 @@ export default function CardUsers() {
 
                     <div className="flex justify-center">
                         <button
-                                className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded">CADASTRAR
+                            className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded">CADASTRAR
                             CLIENTE
                         </button>
                     </div>

@@ -4,7 +4,7 @@ import {NextResponse} from "next/server";
 export async function GET() {
     try {
         const results = await new Promise((resolve, reject) => {
-            banco.query("SELECT * FROM USERS", (error: any, results: any, fields: any) => {
+            banco.query("SELECT * FROM users", (error: any, results: any, fields: any) => {
                 if (error) {
                     reject("Erro ao obter usuários do banco de dados: " + error);
                 } else {
@@ -21,7 +21,7 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const {nome} = await request.json();
-        await banco.query("INSERT INTO usuario SET ?", {nome});
+        await banco.query("INSERT INTO users SET ?", {nome});
         return NextResponse.json({mensagem: "Criado com sucesso!"});
     } catch (error) {
         return NextResponse.json({mensagem: "Erro ao criar usuário: " + error});
