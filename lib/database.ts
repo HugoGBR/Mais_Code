@@ -5,7 +5,7 @@ const banco = mysql.createConnection(
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'mais_code'
+        database: 'backend'
     }
 );
 

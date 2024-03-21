@@ -21,7 +21,7 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const {nome} = await request.json();
-        await banco.query("INSERT INTO USERS SET ?", {nome});
+        await banco.query("INSERT INTO usuario SET ?", {nome});
         return NextResponse.json({mensagem: "Criado com sucesso!"});
     } catch (error) {
         return NextResponse.json({mensagem: "Erro ao criar usuário: " + error});
