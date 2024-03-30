@@ -1,46 +1,53 @@
 "use client";
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
 import {TabsTrigger} from '@radix-ui/react-tabs';
 import CardUsuario from '@/components/CardUsuario';
-import {useRouter} from 'next/navigation';
 import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
-
+import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 export default function Gestao() {
-    const [Lista, setLista] = useState<dadosUsuario[]>([]);
+    const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
     const [carregando, setCarregando] = useState(true);
-    const Route = useRouter();
+    const router = useRouter();
+
     const rotaNewUser = () => {
-        Route.push('/routes/gestao/Usuario')
+        router.push('/routes/gestao/Usuario');
     }
 
-    async function carregar() {
-        fetch("/api/users").then(async function (response) {
-            setLista(await response.json())
-        }).finally(function () {
+    async function carregarUsuarios() {
+        try {
+            const response = await fetch("/api/users");
+            const data = await response.json();
+            setListaUsuarios(data);
+        } catch (error) {
+            console.error("Erro ao carregar usuários:", error);
+        } finally {
             setCarregando(false);
-        })
+        }
     }
 
-    React.useEffect(function () {
-        carregar();
+    useEffect(() => {
+        carregarUsuarios();
     }, []);
-    console.log(Lista);
 
-    const renderGestao = (tipo_Cadastro: number) => {
+    const renderGestao = (tipoCadastro: number) => {
         return (
             <>
-                {Lista
-                    .filter(item => item.tipo_cadastro === tipo_Cadastro)
+                {listaUsuarios
+                    .filter(item => item.tipo_cadastro === tipoCadastro)
                     .map(item => (
-                        <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
-                            <div>
-                                <CardUsuario dados={item}/>
+                        <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
+                            <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
+                                <a className="block">
+                                    <CardUsuario dados={item}/>
+                                </a>
                             </div>
-                        </div>
-                    ))}
+                        </Link>
+                    ))
+                }
             </>
         );
     }
@@ -65,18 +72,16 @@ export default function Gestao() {
                 <TabsContent value='' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
                     {renderGestao(1)}
                 </TabsContent>
-                <TabsContent value='Cliente'
-                             className='flex flex-col md:grid md:grid-cols-2 space-x-4'>{renderGestao(1)}</TabsContent>
-                <TabsContent value='Vendedor'
-                             className='flex flex-col md:grid md:grid-cols-2 space-x-4'>{renderGestao(2)}</TabsContent>
-                <TabsContent value='Financeiro'
-                             className='flex flex-col md:grid md:grid-cols-2 space-x-4'>{renderGestao(3)}</TabsContent>
+                <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                    {renderGestao(1)}
+                </TabsContent>
+                <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                    {renderGestao(2)}
+                </TabsContent>
+                <TabsContent value='Financeiro' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                    {renderGestao(3)}
+                </TabsContent>
             </Tabs>
         </div>
     )
 }
-
-
-
-
-

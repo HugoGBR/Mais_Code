@@ -1,86 +1,73 @@
 'use client'
-import React from "react";
+
+import React, {useState} from "react";
+import {Card} from "@/components/ui/card";
+import {createNewUser} from "@/lib/controller/usuarioController";
+import {redirect, useRouter} from "next/navigation";
 
 
-interface Lista { //exemplo de interface
-  id: number;
-  nome: string;
-  telefone: string;
-  tipo_Pessoa: string;
-  tipo_Cadastro: number;
-}
+export default function CardUsers() {
+    const [nome, setNome] = useState("");
+    const route = useRouter();
+    async function handleSubmit() {
+        const response = await fetch("/api/users", {
+            method: "POST",
+            body: JSON.stringify({nome})
+        });
+        const resultado = await response.json();
+        console.log(resultado)
+        route.replace("/routes/gestao")
+    }
 
-const Lista = [ //Lista de TESTE
-    {
-      id: 1,
-      nome: "Maria",
-      telefone: "6799999999",
-      tipo_Pessoa: "Pessoa Fisica",
-      tipo_Cadastro: 1,
-    },
-    {
-      id: 2,
-      nome: "Gustavo",
-      telefone: "67888888888",
-      tipo_Pessoa: "Pessoa Juridica",
-      tipo_Cadastro: 2,
-    },
-    {
-      id: 3,
-      nome: "Calebe",
-      telefone: "67777777777",
-      tipo_Pessoa: "Pessoa Fisica",
-      tipo_Cadastro: 3,
-    },
-    {
-      id: 4,
-      nome: "Rosa",
-      telefone: "674444444444",
-      tipo_Pessoa: "Pessoa Juridica",
-      tipo_Cadastro: 2,
-    },
-    {
-      id: 5,
-      nome: "Emilly",
-      telefone: "67555555555",
-      tipo_Pessoa: "Pessoa Fisica",
-      tipo_Cadastro: 1,
-    },
-    {
-      id: 6,
-      nome: "Julia",
-      telefone: "67333333333333",
-      tipo_Pessoa: "Pessoa Juridica",
-      tipo_Cadastro: 2,
-    },
-    {
-      id: 7,
-      nome: "Cris",
-      telefone: "67111111111111",
-      tipo_Pessoa: "Pessoa Fisica",
-      tipo_Cadastro: 3,
-    },
-    {
-      id: 8,
-      nome: "Rafa",
-      telefone: "679999999",
-      tipo_Pessoa: "Pessoa Juridica",
-      tipo_Cadastro: 3,
-    },
-  ];
-  const getDados = async (id:number) => {
-    const resposta = await (Lista[id]) //chamar o banco aqui 
-    const dados = await resposta
-    return dados
-}
-//falta apenas adicionar uma mascara
-export default async function DetalheCadastro({params}: {params:{id:number}}) {
-  const usuario = await getDados(params.id)
-  
-  return (
-    <div>
-        {JSON.stringify(usuario)}
-    </div>
-  )
+    return (
+        <div className="flex justify-center items-center bg-gray-100">
+            <Card className="p-10 drop-shadow-xl rounded-xl">
+                <div className="h-12 mb-5">
+                    <h1 className="font-bold text-2xl">Cliente</h1>
+                </div>
+                <div className="flex justify-center items-center opacity-40 mb-10">
+                    <img src="/icons/icon-empresa.png" className="w-28" alt="imagem"/>
+                </div>
 
+                <form onSubmit={(event) => {
+                    event.preventDefault();
+                    handleSubmit();
+                }}>
+                    <div className="pb-16 grid grid-cols-1 sm:grid-cols-2 gap-10">
+                        <div className="flex flex-col space-y-1.5">
+                            <input type="text" className="border-b-2 focus:border-b-2
+                            focus:outline-none focus:border-blue-500" id="nome" placeholder="Nome"
+                                   onChange={(event) => setNome(event.target.value)}/>
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                            <input type="text"
+                                   className="border-b-2 focus:border-b-2
+                            focus:outline-none focus:border-blue-500"
+                                   id="cpfcnpj" placeholder="CPF/CNPJ"
+                                   onChange={(event) => setNome(event.target.value)}/>
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                            <input type="email"
+                                   className="border-b-2 focus:border-b-2
+                            focus:outline-none focus:border-blue-500"
+                                   id="email" placeholder="Email" onChange={(event) => setNome(event.target.value)}/>
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                            <input type="text"
+                                   className="border-b-2 focus:border-b-2
+                            focus:outline-none focus:border-blue-500"
+                                   id="address" placeholder="Endereço"/>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-center">
+                        <button
+                            className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded">CADASTRAR
+                            CLIENTE
+                        </button>
+                    </div>
+                </form>
+            </Card>
+        </div>
+    );
 }

@@ -1,14 +1,11 @@
-import React, { useMemo, useCallback } from "react";
-
+import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import {loginSchema} from "@/app/schemas/loginSchema";
 
-const loginSchema = z.object({
-    user: z.string().min(1, "Campo Obrigatório"),
-    password: z.string().min(1, "Campo Obrigatório")
-});
+
 
 type LoginFormSchema = z.infer<typeof loginSchema>;
 
@@ -20,8 +17,7 @@ const LoginPage = () => {
     });
 
     const handleFormSubmit = (data: LoginFormSchema) => {
-        console.log(data);
-        router.push('/routes/home');
+        router.push('/home');
     };
 
     const memoizedErrors = useMemo(() => ({
