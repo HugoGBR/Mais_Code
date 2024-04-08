@@ -17,7 +17,7 @@ const LoginPage = () => {
     });
 
     const handleFormSubmit = (data: LoginFormSchema) => {
-        router.push('/home');
+        router.push('routes/home');
     };
 
     const memoizedErrors = useMemo(() => ({
