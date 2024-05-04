@@ -18,32 +18,32 @@ import ajustes from "@/public/icons/icon-ajuste.png";
 const menuSuperior = [
     {
         nome: "Home",
-        href: "/Rotas/Home",
+        href: "/routes/home",
         icon: home
     },
     {
         nome: "Cadastro",
-        href: "/Rotas/Cadastros",
+        href: "/routes/cadastros",
         icon: cadastro
     },
     {
         nome: "Relatorio",
-        href: "/Rotas/Relatorio",
+        href: "/routes/relatorio",
         icon: relatorio
     },
     {
         nome: "Financeiro",
-        href: "/Rotas/Financeiro",
+        href: "/routes/financeiro",
         icon: financeiro
     },
     {
         nome: "Gestão",
-        href: "/Rotas/Gestao",
+        href: "/routes/gestao",
         icon: gestao
     },
     {
         nome: "Ajuste",
-        href: "/Rotas/Ajustes",
+        href: "/routes/ajustes",
         icon: ajustes
     },
 ]
@@ -80,7 +80,7 @@ export function HambuguerMenu() {
                         </div>
 
                         <div className="mb-10">
-                            <Link href={'/Rotas/Perfil'}
+                            <Link href={'/routes/perfil'}
                                   className="flex text-lg p-2 font-medium">
                                 <div className="flex items-center">
                                     <ul>

@@ -14,32 +14,32 @@ export default function SideBar() {
     const menuSuperior = [
         {
             nome: "Home",
-            href: "/Rotas/Home",
+            href: "/routes/home",
             icon: home
         },
         {
             nome: "Cadastro",
-            href: "/Rotas/Cadastros",
+            href: "/routes/cadastros",
             icon: cadastro
         },
         {
             nome: "Relatorio",
-            href: "/Rotas/Relatorio",
+            href: "/routes/relatorio",
             icon: relatorio
         },
         {
             nome: "Financeiro",
-            href: "/Rotas/Financeiro",
+            href: "/routes/financeiro",
             icon: financeiro
         },
         {
             nome: "Gestão",
-            href: "/Rotas/Gestao",
+            href: "/routes/gestao",
             icon: gestao
         },
         {
             nome: "Ajuste",
-            href: "/Rotas/Ajustes",
+            href: "/routes/ajustes",
             icon: ajustes
         },
     ]
@@ -49,7 +49,7 @@ export default function SideBar() {
             <div className="flex text-white">
                 <div className="flex h-screen flex-col col-auto justify-between bg-[#122F54] p-2">
                     <div className="mt-5">
-                        <Link href="/Rotas/Home" className="flex justify-center mb-14">
+                        <Link href="/routes/home" className="flex justify-center mb-14">
                             <div className="flex items-center">
                                 <img src="/icon-logo.png" alt="Logo da Empresa" className="md:w-auto lg:w-16"/>
                             </div>
@@ -69,7 +69,7 @@ export default function SideBar() {
                     </div>
 
                     <div className="flex-col mb-4">
-                        <Link href={'/Rotas/Perfil'}
+                        <Link href={'/routes/perfil'}
                               className="flex text-lg p-2 font-medium hover:bg-white/10 rounded-lg">
                             <div className="flex md:flex md:justify-center items-center">
                                 <ul>
