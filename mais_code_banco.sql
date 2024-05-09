@@ -28,6 +28,10 @@ CREATE TABLE `cargos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+insert into cargos(nome) values
+("administrador"),
+("vendedor"),
+("financeiro");
 /*Table structure for table `clientes` */
 
 DROP TABLE IF EXISTS `clientes`;
