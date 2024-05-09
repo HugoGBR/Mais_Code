@@ -19,4 +19,8 @@ switch ($acao){
         $mensagem = $userController->CreateNewUser(); 
         echo json_encode($mensagem);
         break; 
+
+    default:
+        // Ação não suportada.
+        return json_encode(["error" => "Ação não suportada."]);
 }
