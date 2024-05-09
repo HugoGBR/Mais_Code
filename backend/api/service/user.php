@@ -10,13 +10,13 @@ header("Access-Control-Allow-Methods: *");
 $acao = $_REQUEST["acao"];
 
 switch ($acao){
-    case "GetAllUsers": // ação desejada do endpoint
+    case "GetAllUsers":
         $users = $userController->getAllUsers();
         echo json_encode($users);
-        break; // <--- added semicolon
+        break;
     
     case "CreateNewUsers":
-        $mensagem = $userController->CreateNewUser(); // <--- fixed typo: $usersController -> $userController
+        $mensagem = $userController->CreateNewUser(); 
         echo json_encode($mensagem);
-        break; // <--- added semicolon
+        break; 
 }
