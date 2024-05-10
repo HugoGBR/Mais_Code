@@ -1,7 +1,9 @@
+
+
 export interface dadosUsuario {
     id: number,
+    cargo_id: number,
     nome: string,
-    telefone: string,
-    tipo_pessoa: string,
-    tipo_cadastro: number
+    senha: string,
+    email: string,
 }

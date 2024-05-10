@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import {loginSchema} from "@/app/schemas/loginSchema";
+import { loginSchema } from "@/app/schemas/loginSchema";
 
 
 

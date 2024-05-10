@@ -109,7 +109,6 @@ CREATE TABLE `usuarios` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `cargo_id` bigint(20) unsigned NOT NULL,
   `nome` varchar(255) NOT NULL,
-  `telefone` varchar(255) NOT NULL,
   `senha` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
