@@ -9,16 +9,33 @@ header("Access-Control-Allow-Methods: *");
 
 $acao = $_REQUEST["acao"];
 
-switch ($acao){
+switch ($acao) {
     case "GetAllUsers":
-        $users = $userController->getAllUsers();
-        echo json_encode($users);
+        if ($id != null) {
+            echo "Ação createNewUser não aceitar um ID";
+        } else {
+            $users = $userController->getAllUsers();
+            echo json_encode($users);
+        }
         break;
-    
+
     case "CreateNewUsers":
-        $mensagem = $userController->CreateNewUser(); 
-        echo json_encode($mensagem);
-        break; 
+        if ($id != null) {
+            echo "Ação createNewUser não aceitar um ID";
+        } else {
+            $mensagem = $userController->CreateNewUser();
+            echo json_encode($mensagem);
+        }
+        break;
+
+    case "getUserById":
+        if ($id != null) {
+            $user = $userController->getUserById($id);
+            echo json_encode($user);
+        } else {
+            echo "Ação getUseById necessita de um ID";
+        }
+        break;
 
     default:
         // Ação não suportada.
