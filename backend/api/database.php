@@ -8,16 +8,19 @@ class Database
 
     public function connect()
     {
-        try{
-            $conn = new PDO("mysql:host=".$this->server.";dbname=".$this->dbnome,
-            $this->user,$this->pass);
+        try {
+            $conn = new PDO(
+                "mysql:host=" . $this->server . ";dbname=" . $this->dbnome,
+                $this->user,
+                $this->pass
+            );
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conn;
-        }catch (\Exception $e){
-            echo "Database erro: ". $e->getMessage();
+        } catch (\Exception $e) {
+            echo "Database erro: " . $e->getMessage();
         }
     }
 }
 
-$objDB = NEW Database;
+$objDB = new Database;
 $objDB->connect();
