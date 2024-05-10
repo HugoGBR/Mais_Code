@@ -1,5 +1,5 @@
 <?php
-include "../controller/userController.php";
+include "../controller/userControler.php";
 
 $userController = new UserController();
 
@@ -12,7 +12,7 @@ $acao = $_REQUEST["acao"];
 switch ($acao) {
     case "GetAllUsers":
         if ($id != null) {
-            echo "Ação createNewUser não aceitar um ID";
+            echo "Banco não encontrado";
         } else {
             $users = $userController->getAllUsers();
             echo json_encode($users);
