@@ -54,4 +54,28 @@ class Usercontroller
             return null;
         }
     }
+
+    public function createNewUserGestao()
+    {
+        $user = json_decode(file_get_contents("php//input"));
+        $sql = "INSERT INTO usuarios(id,nome,cargo_id,telefone,senha,email) VALUES (:id,:nome,:cargo_id,:telefone,:senha,:email)";
+        $db = $this->conn->prepare($sql);
+        $db->bindParam(":id", $user->id);
+        $db->bindParam(":nome", $user->nome);
+        $db->bindParam("cargo_id", $user->cargo_id);
+        $db->bindParam(":telefone", $user->telefone);
+        $db->bindParam(":senha", $user->password_hash);
+        $db->bindParam(":email", $user->email);
+        $db->execute();
+
+        if ($db->execute()) {
+            $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
+        }
+
+        return $resposta;
+    }catch (Exception $e) {
+        echo 'Erro ao criar usuário: ' . $e->getMessage();
+        return null;
+    }
 }
+
