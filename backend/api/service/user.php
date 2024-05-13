@@ -36,7 +36,15 @@ switch ($acao) {
             echo "Ação getUseById necessita de um ID";
         }
         break;
-
+    
+    case "createNewUserGestao":
+        if ($id != null) {
+            echo "Ação createNewUser não aceitar um ID";
+        } else {
+            $mensagem = $userController->createNewUserGestao();
+            echo json_encode($mensagem);
+        }
+        break;
     default:
         // Ação não suportada.
         return json_encode(["error" => "Ação não suportada."]);
