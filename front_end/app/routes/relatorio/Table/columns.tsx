@@ -60,21 +60,6 @@ export const columns: ColumnDef<Payment>[] = [
         cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
     },
     {
-        accessorKey: "Novo/Antigo",
-        header: ({column}) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Novo/Antigo
-                    <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
-            )
-        },
-        cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
-    },
-    {
         accessorKey: "Vendedor",
         header: ({column}) => {
             return (
@@ -91,7 +76,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         accessorKey: "quantia",
-        header: () => <div className="text-right">Valor</div>,
+        header: () => <div className="text-center">Valor</div>,
         cell: ({row}) => {
             const quantia = parseFloat(row.getValue("quantia"))
 
@@ -101,14 +86,14 @@ export const columns: ColumnDef<Payment>[] = [
                 currency: "BRL",
             }).format(quantia)
 
-            return <div className="text-right font-medium">{formatted}</div>
+            return <div className="text-center">{formatted}</div>
         },
     },
     {
         accessorKey: "status",
-        header: "Status",
+        header: () => <div className="text-center">Status</div>,
         cell: ({row}) => (
-            <div className="capitalize">{row.getValue("status")}</div>
+            <div className="capitalize text-center">{row.getValue("status")}</div>
         ),
     },
     {
