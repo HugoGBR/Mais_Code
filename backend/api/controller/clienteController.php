@@ -46,6 +46,7 @@ class Clientecontroller
 
     public function createNewCliente()
     {
+        try {
         $user = json_decode(file_get_contents("php//input"));
         $sql = "INSERT INTO usuarios(id,nome,endereco,telefone,cpf_cnpj) VALUES (:id,:nome,:endereco,:telefone,:cpf_cnpj)";
         $db = $this->conn->prepare($sql);
@@ -66,4 +67,4 @@ class Clientecontroller
         return null;
     }
 }
-
+}
