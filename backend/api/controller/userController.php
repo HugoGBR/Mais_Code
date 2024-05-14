@@ -17,6 +17,7 @@ class Usercontroller
         $db = $this->conn->prepare($sql);
         $db->execute();
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
+        echo "Nada";
         return $users;
     }
 
@@ -49,7 +50,7 @@ class Usercontroller
             $user = $db->fetch(PDO::FETCH_ASSOC);
             return $user;
 
-        } catch (Exception $th) {
+        } catch (\Exception $th) {
             echo "Erro ao buscar o usuario: " . $th->getMessage();
             return null;
         }
@@ -71,7 +72,7 @@ class Usercontroller
 
             $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
             return $resposta;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo 'Erro ao criar usuário: ' . $e->getMessage();
             return null;
         }

@@ -8,20 +8,21 @@ header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
 $acao = $_REQUEST["acao"];
+$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
 
 switch ($acao) {
-    case "GetAllUsers":
+    case "getAllUsers":
         if ($id != null) {
-            echo "Ação createNewUser não aceitar um ID";
+            echo json_encode(["error" => "Ação GetAllUsers não aceita um ID"]);
         } else {
             $users = $userController->getAllUsers();
             echo json_encode($users);
         }
         break;
 
-    case "CreateNewUsers":
+    case "CreateNewUser":
         if ($id != null) {
-            echo "Ação createNewUser não aceitar um ID";
+            echo json_encode(["error" => "Ação CreateNewUser não aceita um ID"]);
         } else {
             $mensagem = $userController->CreateNewUser();
             echo json_encode($mensagem);
@@ -33,19 +34,20 @@ switch ($acao) {
             $user = $userController->getUserById($id);
             echo json_encode($user);
         } else {
-            echo "Ação getUseById necessita de um ID";
+            echo json_encode(["error" => "Ação getUserById necessita de um ID"]);
         }
         break;
     
     case "createNewUserGestao":
         if ($id != null) {
-            echo "Ação createNewUser não aceitar um ID";
+            echo json_encode(["error" => "Ação createNewUserGestao não aceita um ID"]);
         } else {
             $mensagem = $userController->createNewUserGestao();
             echo json_encode($mensagem);
         }
         break;
+    
     default:
-        // Ação não suportada.
-        return json_encode(["error" => "Ação não suportada."]);
+        echo json_encode(["error" => "Ação não suportada."]);
+        break;
 }

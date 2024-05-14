@@ -80,9 +80,9 @@ export default function cadastrarUsuarioGestao() {
                             <label><h1 className="font-bold">Cargo:</h1></label>
                             <select value={user.cargo_id} onChange={(event) => setUser({ ...user, cargo_id: parseInt(event.target.value) })}>
                                 <option value={0}>Selecione...</option>
-                                <option value={1}>Administrador</option>
-                                <option value={2}>Vendedor</option>
-                                <option value={3}>Financeiro</option>
+                                <option value={6}>Administrador</option>
+                                <option value={7}>Vendedor</option>
+                                <option value={8}>Financeiro</option>
                             </select>
                         </div>
                     </div>
