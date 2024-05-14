@@ -80,7 +80,7 @@ export function HambuguerMenu() {
                         </div>
 
                         <div className="mb-10">
-                            <Link href={'/Rotas/Perfil'}
+                            <Link href={'/routes/perfil'}
                                   className="flex text-lg p-2 font-medium">
                                 <div className="flex items-center">
                                     <ul>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import { createNewUserGestao } from "@/lib/usuarioController";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 
 // export default function CardUsers() {
 //     const [user, setUser] = useState({
@@ -76,14 +76,16 @@ export default function cadastrarUsuarioGestao() {
                             focus:outline-none focus:border-blue-500"
                                 id="senha" placeholder="Senha" value={user.senha} onChange={(event) => setSenha(event.target.value)} />
                         </div>
-                        <div className="flex flex-col space-y-1.5">
-                            <label><h1 className="font-bold">Cargo:</h1></label>
-                            <select value={user.cargo_id} onChange={(event) => setUser({ ...user, cargo_id: parseInt(event.target.value) })}>
-                                <option value={0}>Selecione...</option>
-                                <option value={6}>Administrador</option>
-                                <option value={7}>Vendedor</option>
-                                <option value={8}>Financeiro</option>
-                            </select>
+                        <div className="flex flex-col space-y-1.5 w-full">
+                            <Select>
+                                <SelectTrigger className="h-7 mt-1 rounded-lg">
+                                    <SelectValue placeholder="Selecione um Cargo"/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value={'0'}>Vendedor</SelectItem>
+                                    <SelectItem value={'1'}>Financeiro</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                     </div>
                     <div className="flex justify-center">
