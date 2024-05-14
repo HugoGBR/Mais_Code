@@ -2,7 +2,7 @@
 class Database
 {
     private $server = "localhost";
-    private $dbnome = "mais_code_laravel";
+    private $dbnome = "mais_code";
     private $user = "root";
     private $pass = "";
 
