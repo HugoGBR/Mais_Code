@@ -11,7 +11,7 @@ CREATE TABLE `cargos` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-)
+);
 
 insert into cargos(nome) values
 ("administrador"),
@@ -27,7 +27,7 @@ CREATE TABLE `clientes` (
   `telefone` varchar(255) NOT NULL,
   `cpf_cnpj` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) 
+); 
 
 
 CREATE TABLE `parcelas` (
@@ -35,7 +35,7 @@ CREATE TABLE `parcelas` (
   `numero_parcela` int(11) NOT NULL,
   `valor_parcela` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-) 
+); 
 
 
 CREATE TABLE `produtos` (
@@ -46,7 +46,7 @@ CREATE TABLE `produtos` (
   PRIMARY KEY (`id`),
   KEY `produtos_tipo_cliente_id_foreign` (`tipo_cliente_id`),
   CONSTRAINT `produtos_tipo_cliente_id_foreign` FOREIGN KEY (`tipo_cliente_id`) REFERENCES `tipo_cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-)
+);
 /*Table structure for table `tipo_cliente` */
 
 DROP TABLE IF EXISTS `tipo_cliente`;
@@ -56,7 +56,7 @@ CREATE TABLE `tipo_cliente` (
   `nome` varchar(255) NOT NULL,
   `porcentagem` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`)
-)
+);
 
 /*Table structure for table `tipo_contrato` */
 
@@ -66,7 +66,7 @@ CREATE TABLE `tipo_contrato` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-)
+);
 
 
 CREATE TABLE `usuarios` (
@@ -78,7 +78,7 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   KEY `usuarios_cargo_id_foreign` (`cargo_id`),
   CONSTRAINT `usuarios_cargo_id_foreign` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-)
+);
 
 
 CREATE TABLE `vendas` (
@@ -108,6 +108,6 @@ CREATE TABLE `vendas` (
   CONSTRAINT `vendas_produto_id_foreign` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_tipo_contrato_id_foreign` FOREIGN KEY (`tipo_contrato_id`) REFERENCES `tipo_contrato` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-)
+);
 
 

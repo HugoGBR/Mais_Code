@@ -2,14 +2,14 @@
 class Database
 {
     private $server = "localhost";
-    private $dbnome = "mais_code_laravel";
+    private $dbnome = "mais_code";
     private $user = "root";
     private $pass = "";
 
     public function connect()
     {
         try {
-            $conn = new PDO(
+                $conn = new PDO(
                 "mysql:host=" . $this->server . ";dbname=" . $this->dbnome,
                 $this->user,
                 $this->pass
