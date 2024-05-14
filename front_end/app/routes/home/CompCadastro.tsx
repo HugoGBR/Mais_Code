@@ -1,6 +1,5 @@
 "use client"
 
-import { User } from "lucide-react"
 import Link from "next/link"
 import Ajuste from "@/public/icons/icon-ajuste.png"
 import Image from "next/image"
