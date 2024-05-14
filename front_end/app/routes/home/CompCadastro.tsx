@@ -9,31 +9,31 @@ export default function CadastroLink() {
     const menuSuperior = [
         {
             nome: "Cadastro",
-            href: "/Rotas/Cadastro",
+            href: "/routes/cadastros",
             icon: Ajuste,
             description: "Aqui você pode visualizar tal coisa e fazer x coisa."
         },
         {
             nome: "Relatorio",
-            href: "/Rotas/Relatorio",
+            href: "/routes/relatorio",
             icon: Ajuste,
             description: "Aqui você pode visualizar tal coisa e fazer x coisa."
         },
         {
             nome: "Financeiro",
-            href: "/Rotas/Financeiro",
+            href: "/routes/financeiro",
             icon: Ajuste,
             description: "Aqui você pode visualizar tal coisa e fazer x coisa."
         },
         {
             nome: "Gestão",
-            href: "/Rotas/Gestao",
+            href: "/routes/gestao",
             icon: Ajuste,
             description: "Aqui você pode visualizar tal coisa e fazer x coisa."
         },
         {
             nome: "Ajuste",
-            href: "/Rotas/Ajustes",
+            href: "/routes/ajustes",
             icon: Ajuste,
             description: "Aqui você pode visualizar tal coisa e fazer x coisa."
 

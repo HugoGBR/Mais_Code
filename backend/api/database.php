@@ -21,6 +21,3 @@ class Database
         }
     }
 }
-
-$objDB = new Database;
-$objDB->connect();
