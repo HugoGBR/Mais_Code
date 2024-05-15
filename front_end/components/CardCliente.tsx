@@ -36,29 +36,30 @@ export default function CadastrarCliente() {
                         <img src="/icons/icon-empresa.png" className="w-28" alt="imagem" />
                     </div>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                         <div className="pb-16 grid grid-cols-1 sm:grid-cols-2 gap-10">
                             <div className="flex flex-col space-y-1.5">
                                 
-                            <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Nome" value={user.nome} onChange={(event) => setNome(event.target.value)}/>
+                            <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Nome" onChange={(e) => setNome(e.target.value)}/>
                             
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 
-                                    <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="CPF/CNPJ" value={user.cpf_cnpj} onChange={(event) => setCpf_cnpj(event.target.value)}/>
+                                    <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="CPF/CNPJ" onChange={(e) => setCpf_cnpj(e.target.value)}/>
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 
-                                    <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Email" value={user.email} onChange={(event) => setEmail(event.target.value)}/>
+                                    <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                    <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Telefone" value={user.telefone} onChange={(event) => setTelefone(event.target.value)}/>
+                                    <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Telefone"  onChange={(e) => setTelefone(e.target.value)}/>
                             </div>
                         </div>
                     </form>
                     <div className="flex justify-center">
                         <button
-                            className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded">CADASTRAR
+                            className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded"
+                            type="submit">CADASTRAR
                             CLIENTE
                         </button>
                     </div>

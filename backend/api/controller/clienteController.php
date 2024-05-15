@@ -48,9 +48,9 @@ class Clientecontroller
     {
         try {
         $user = json_decode(file_get_contents("php//input"));
-        $sql = "INSERT INTO usuarios(id,nome,endereco,telefone,cpf_cnpj) VALUES (:id,:nome,:endereco,:telefone,:cpf_cnpj)";
+        $sql = "INSERT INTO usuarios(nome,endereco,telefone,cpf_cnpj) VALUES (:nome,:endereco,:telefone,:cpf_cnpj)";
         $db = $this->conn->prepare($sql);
-        $db->bindParam(":id", $user->id);
+    
         $db->bindParam(":nome", $user->nome);
         $db->bindParam("endereco", $user->endereco);
         $db->bindParam(":telefone", $user->telefone);
