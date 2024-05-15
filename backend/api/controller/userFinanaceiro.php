@@ -1,7 +1,7 @@
 <?php
 include "../database.php"; 
 
-class Usercontroller
+class Financontroller
 {
     private $conn;
 
@@ -11,7 +11,7 @@ class Usercontroller
         $this->conn = $objDb->connect();
     }
 
-    public function getAllUsers()
+    public function getfinanceiro()
     {
         $sql = "SELECT * FROM usuarios";
         $db = $this->conn->prepare($sql);
