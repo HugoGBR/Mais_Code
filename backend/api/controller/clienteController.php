@@ -47,10 +47,15 @@ class Clientecontroller
     public function createNewCliente()
     {
         try {
+<<<<<<< Updated upstream
         $user = json_decode(file_get_contents("php//input"));
+        $sql = "INSERT INTO usuarios(id,nome,endereco,telefone,cpf_cnpj) VALUES (:id,:nome,:endereco,:telefone,:cpf_cnpj)";
+=======
+        $user = json_decode(file_get_contents("php://input"));
         $sql = "INSERT INTO usuarios(nome,endereco,telefone,cpf_cnpj) VALUES (:nome,:endereco,:telefone,:cpf_cnpj)";
+>>>>>>> Stashed changes
         $db = $this->conn->prepare($sql);
-    
+        $db->bindParam(":id", $user->id);
         $db->bindParam(":nome", $user->nome);
         $db->bindParam("endereco", $user->endereco);
         $db->bindParam(":telefone", $user->telefone);
@@ -60,11 +65,22 @@ class Clientecontroller
         if ($db->execute()) {
             $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
         }
-
+        } catch (Exception $e) {
+            echo 'Erro ao criar usuário: ' . $e->getMessage();
+            return null;            
+        }
         return $resposta;
-    }catch (Exception $e) {
-        echo 'Erro ao criar usuário: ' . $e->getMessage();
-        return null;
+
     }
+//---
+    public function getAllUsers()
+    {
+        $query = "SELECT * FROM CLIENTES";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
+//ME
 }
-}
+
