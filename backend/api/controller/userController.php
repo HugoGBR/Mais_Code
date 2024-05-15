@@ -58,24 +58,30 @@ class Usercontroller
 
     public function createNewUserGestao()
     {
-        try {
-            $user = json_decode(file_get_contents("php://input"));
-            $sql = "INSERT INTO usuarios (id, nome, cargo_id, telefone, senha, email) VALUES (:id, :nome, :cargo_id, :telefone, :senha, :email)";
-            $db = $this->conn->prepare($sql);
-            $db->bindParam(":id", $user->id);
-            $db->bindParam(":nome", $user->nome);
-            $db->bindParam(":cargo_id", $user->cargo_id);
-            $db->bindParam(":telefone", $user->telefone);
-            $db->bindParam(":senha", $user->password_hash);
-            $db->bindParam(":email", $user->email);
-            $db->execute();
+        $user = json_decode(file_get_contents("php://input"));
+        $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
+        $db = $this->conn->prepare($sql);
 
+        $db->bindParam(":nome", $user->nome);
+        $db->bindParam(":senha", $user->senha);
+        $db->bindParam(":email", $user->email);
+    
+        if ($db->execute()) {
             $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
-            return $resposta;
-        } catch (\Exception $e) {
-            echo 'Erro ao criar usuário: ' . $e->getMessage();
-            return null;
         }
+        return $resposta;
+        // echo 'Erro ao criar usuário: ' . $e->getMessage();
+        // return null;
+        
     }
 }
 
+private function checkUserExists(int $id)
+    {
+        $query = "SELECT COUNT(*) FROM USUARIOS WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }

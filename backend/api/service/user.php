@@ -10,6 +10,7 @@ header("Access-Control-Allow-Methods: *");
 $acao = $_REQUEST["acao"];
 $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
 
+
 switch ($acao) {
     case "getAllUsers":
         if ($id != null) {
