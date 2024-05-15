@@ -17,7 +17,6 @@ class Usercontroller
         $db = $this->conn->prepare($sql);
         $db->execute();
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
-        echo "Nada";
         return $users;
     }
 
@@ -60,13 +59,11 @@ class Usercontroller
     {
         try {
             $user = json_decode(file_get_contents("php://input"));
-            $sql = "INSERT INTO usuarios (id, nome, cargo_id, telefone, senha, email) VALUES (:id, :nome, :cargo_id, :telefone, :senha, :email)";
+            $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
             $db = $this->conn->prepare($sql);
-            $db->bindParam(":id", $user->id);
+
             $db->bindParam(":nome", $user->nome);
-            $db->bindParam(":cargo_id", $user->cargo_id);
-            $db->bindParam(":telefone", $user->telefone);
-            $db->bindParam(":senha", $user->password_hash);
+            $db->bindParam(":senha", $user->senha);
             $db->bindParam(":email", $user->email);
             $db->execute();
 
@@ -81,27 +78,27 @@ class Usercontroller
     public function UpdateUserById(int $id)
     {
         try {
-           $userExist = $this->UpdateUserById($id);
+            $userExist = $this->UpdateUserById($id);
 
-           if($userExist == 0){
-            return "Usuario nao encontrado";
-           }else{
-            $user = json_decode(file_get_contents("php://input"));
-            $sql = "UPDATE USUARIOS SET nome = :nome, cargo_id = :cargo_id, telefone = :telefone, senha = :senha,  email = :email WHERE id = :id";
-            $db = $this->conn->prepare($sql);
-            $db->bindParam(":id", $user->id);
-            $db->bindParam(":nome", $user->nome);
-            $db->bindParam(":cargo_id", $user->cargo_id);
-            $db->bindParam(":telefone", $user->telefone);
-            $db->bindParam(":senha", $user->password_hash);
-            $db->bindParam(":email", $user->email);
-            $db->execute();
+            if ($userExist == 0) {
+                return "Usuario nao encontrado";
+            } else {
+                $user = json_decode(file_get_contents("php://input"));
+                $sql = "UPDATE USUARIOS SET nome = :nome, cargo_id = :cargo_id, telefone = :telefone, senha = :senha,  email = :email WHERE id = :id";
+                $db = $this->conn->prepare($sql);
+                $db->bindParam(":id", $user->id);
+                $db->bindParam(":nome", $user->nome);
+                $db->bindParam(":cargo_id", $user->cargo_id);
+                $db->bindParam(":telefone", $user->telefone);
+                $db->bindParam(":senha", $user->password_hash);
+                $db->bindParam(":email", $user->email);
+                $db->execute();
 
-            return "Atualizado com sucesso";
-            
-           }
+                return "Atualizado com sucesso";
+
+            }
         } catch (Exception $th) {
-            echo "Erro ao buscar o usuario: ". $th->getMessage();
+            echo "Erro ao buscar o usuario: " . $th->getMessage();
         }
     }
 
@@ -115,5 +112,20 @@ class Usercontroller
         return $count > 0;
     }
 
-}
+    public function CreateTipoContrato()
+    {
+        $user = json_decode(file_get_contents("php://input"));
+        $sql = "INSERT INTO tipo_contrato(nome) VALUES (:nome)";
+        $db = $this->conn->prepare($sql);
+        $db->bindParam(":nome", $user->nome);
 
+
+        if ($db->execute()) {
+            $resposta = ["Mensagem" => "Tipo de Contrato Cadastrado com Sucesso!"];
+        }
+
+        return $resposta;
+    }
+
+
+}
