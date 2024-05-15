@@ -21,7 +21,7 @@ export default function cadastrarUsuarioGestao() {
 
     async function handleSubmit() {
         await createNewUserGestao(nome, email, senha);
-        route.push("/routes/gestao/Usuario")
+        route.push("/routes/gestao")
     }
 
 
@@ -40,7 +40,7 @@ export default function cadastrarUsuarioGestao() {
                         <div className="flex flex-col space-y-1.5">
                             <input type="text" className="border-b-2 focus:border-b-2
                             focus:outline-none focus:border-blue-500" id="nome" placeholder="Nome"
-                             onChange={(e) => setNome(e.target.value)} />
+                                onChange={(e) => setNome(e.target.value)} />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <input type="email"

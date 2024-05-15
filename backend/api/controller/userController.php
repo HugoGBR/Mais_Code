@@ -76,12 +76,12 @@ class Usercontroller
     }
 }
 
-private function checkUserExists(int $id)
-    {
-        $query = "SELECT COUNT(*) FROM USUARIOS WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        $count = $stmt->fetchColumn();
-        return $count > 0;
-    }
+// private function checkUserExists(int $id)
+//     {
+//         $query = "SELECT COUNT(*) FROM USUARIOS WHERE id = :id";
+//         $stmt = $this->conn->prepare($query);
+//         $stmt->bindParam(':id', $id);
+//         $stmt->execute();
+//         $count = $stmt->fetchColumn();
+//         return $count > 0;
+//     }
