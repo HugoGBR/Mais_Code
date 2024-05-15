@@ -26,7 +26,7 @@ export default function cadastrarUsuarioGestao() {
 
 
     return (
-        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+        <form onSubmit={(event) => { event.preventDefault(); handleSubmit(); }}>
             <div className="flex justify-center items-center bg-gray-100">
                 <Card className="p-10 drop-shadow-xl rounded-xl">
                     <div className="h-12 mb-5">
@@ -40,24 +40,24 @@ export default function cadastrarUsuarioGestao() {
                         <div className="flex flex-col space-y-1.5">
                             <input type="text" className="border-b-2 focus:border-b-2
                             focus:outline-none focus:border-blue-500" id="nome" placeholder="Nome"
-                                onChange={(e) => setNome(e.target.value)} />
+                                onChange={(event) => setNome(event.target.value)} />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <input type="email"
                                 className="border-b-2 focus:border-b-2
                             focus:outline-none focus:border-blue-500"
-                                id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                                id="email" placeholder="Email" onChange={(event) => setEmail(event.target.value)} />
 
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <input type="password"
                                 className="border-b-2 focus:border-b-2
                             focus:outline-none focus:border-blue-500"
-                                id="senha" placeholder="Senha" onChange={(e) => setSenha(e.target.value)} />
+                                id="senha" placeholder="Senha" onChange={(event) => setSenha(event.target.value)} />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <label><h1 className="font-bold">Cargo:</h1></label>
-                            <select value={user.cargo_id} onChange={(e) => setUser({ ...user, cargo_id: parseInt(e.target.value) })}>
+                            <select value={user.cargo_id} onChange={(event) => setUser({ ...user, cargo_id: parseInt(event.target.value) })}>
                                 <option value={0}>Selecione...</option>
                                 <option value={6}>Administrador</option>
                                 <option value={7}>Vendedor</option>

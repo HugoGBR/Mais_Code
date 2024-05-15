@@ -8,7 +8,8 @@ export default function CardCadastro() {
 
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
     return (
-        <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
+        <form>
+            <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
             <div className="w-full lg:w-3/5">
                 <Card className="p-10 drop-shadow-xl">
                     <form>
@@ -163,5 +164,7 @@ export default function CardCadastro() {
                 </Card>
             </div>
         </div>
+        </form>
+        
     )
 }

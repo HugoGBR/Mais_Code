@@ -1,7 +1,7 @@
 <?php
 include "../database.php"; //importando database
 
-class Usercontroller
+class RelatorioController
 {
     private $conn;
 

@@ -58,30 +58,42 @@ class Usercontroller
 
     public function createNewUserGestao()
     {
-        $user = json_decode(file_get_contents("php://input"));
-        $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
-        $db = $this->conn->prepare($sql);
+         try{
+        //     $userExists = $this->checkUserExists($id);
+        //     if (!$userExists) {
+        //         return ['status' => 0, 'message' => 'Usuário não encontrado.'];
+        //     }
+            $user = json_decode(file_get_contents("php://input"));
+            $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
+            $db = $this->conn->prepare($sql);
 
-        $db->bindParam(":nome", $user->nome);
-        $db->bindParam(":senha", $user->senha);
-        $db->bindParam(":email", $user->email);
+            $db->bindParam(":nome", $user->nome);
+            $db->bindParam(":senha", $user->senha);
+            $db->bindParam(":email", $user->email);
     
-        if ($db->execute()) {
-            $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
+            if ($db->execute()) {
+                $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
+            }
+            // if ($db->execute()) {
+            //     $response = ['status' => 1, 'message' => 'Registro atualizado com sucesso.'];
+            // } else {
+            //     $response = ['status' => 0, 'message' => 'Falha ao atualizar o registro.'];
+            // }
+            return $resposta;
+        }catch (Exception $e) {
+            echo 'Erro ao criar usuário: ' . $e->getMessage();
+            return null;
         }
-        return $resposta;
-        // echo 'Erro ao criar usuário: ' . $e->getMessage();
-        // return null;
-        
-    }
+    } 
 }
 
+
 // private function checkUserExists(int $id)
-//     {
-//         $query = "SELECT COUNT(*) FROM USUARIOS WHERE id = :id";
-//         $stmt = $this->conn->prepare($query);
-//         $stmt->bindParam(':id', $id);
-//         $stmt->execute();
-//         $count = $stmt->fetchColumn();
-//         return $count > 0;
-//     }
+// {
+//     $query = "SELECT COUNT(*) FROM USUARIOS WHERE id = :id";
+//     $stmt = $this->conn->prepare($query);
+//     $stmt->bindParam(':id', $id);
+//     $stmt->execute();
+//     $count = $stmt->fetchColumn();
+//     return $count > 0;
+// }

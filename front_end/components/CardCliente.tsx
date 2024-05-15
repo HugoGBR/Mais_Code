@@ -10,7 +10,7 @@ export default function CadastrarCliente() {
         telefone: "",
         email: "",
         cpf_cnpj: ""
-   });
+    });
 
 
     const [telefone, setTelefone] = useState("");
@@ -26,7 +26,8 @@ export default function CadastrarCliente() {
 
 
 
-        return (
+    return (
+        <form onSubmit={(event) => { event.preventDefault(); handleSubmit(); }}>
             <div className="flex justify-center items-center bg-gray-100">
                 <Card className="p-10 drop-shadow-xl rounded-xl">
                     <div className="h-12 mb-5">
@@ -36,26 +37,25 @@ export default function CadastrarCliente() {
                         <img src="/icons/icon-empresa.png" className="w-28" alt="imagem" />
                     </div>
 
-                    <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-                        <div className="pb-16 grid grid-cols-1 sm:grid-cols-2 gap-10">
-                            <div className="flex flex-col space-y-1.5">
-                                
-                            <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Nome" onChange={(e) => setNome(e.target.value)}/>
-                            
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
-                                
-                                    <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="CPF/CNPJ" onChange={(e) => setCpf_cnpj(e.target.value)}/>
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
-                                
-                                    <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
-                                    <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Telefone"  onChange={(e) => setTelefone(e.target.value)}/>
-                            </div>
+
+                    <div className="pb-16 grid grid-cols-1 sm:grid-cols-2 gap-10">
+                        <div className="flex flex-col space-y-1.5">
+
+                            <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Nome" onChange={(event) => setNome(event.target.value)} />
+
                         </div>
-                    </form>
+                        <div className="flex flex-col space-y-1.5">
+
+                            <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="CPF/CNPJ" onChange={(event) => setCpf_cnpj(event.target.value)} />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+
+                            <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Email" onChange={(event) => setEmail(event.target.value)} />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                            <input type="text" className="border-b-2 focus:border-b-2 focus:outline:" placeholder="Telefone" onChange={(event) => setTelefone(event.target.value)} />
+                        </div>
+                    </div>
                     <div className="flex justify-center">
                         <button
                             className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded"
@@ -65,6 +65,8 @@ export default function CadastrarCliente() {
                     </div>
                 </Card>
             </div>
-        );
-    }
+        </form>
+
+    );
+}
 
