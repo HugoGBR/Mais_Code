@@ -31,4 +31,8 @@ switch ($acao) {
     default:
         // Ação não suportada.
         return json_encode(["error" => "Ação não suportada."]);
+        
+
+        
 }
+

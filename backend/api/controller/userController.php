@@ -78,10 +78,10 @@ class Usercontroller
         }
     }
 
-    public function UpdateUser(int $id)
+    public function UpdateUserById(int $id)
     {
         try {
-           $userExist = $this->CheckUserExist($id);
+           $userExist = $this->UpdateUserById($id);
 
            if($userExist == 0){
             return "Usuario nao encontrado";
@@ -112,7 +112,7 @@ class Usercontroller
         $db->bindParam(":id",$id);
         $db->execute();
         $count = $db->fetchColumn();
-        return $count-> 0;
+        return $count > 0;
     }
 
 }

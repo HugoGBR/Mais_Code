@@ -15,7 +15,7 @@ class Clientecontroller
     public function updateClientByID(int $id)
     {
         try {
-            $userExists = $this->checkUserExists($id);
+            $userExists = $this->updateClientByID($id);
             if (!$userExists) {
                 return ['status' => 0, 'message' => 'Usuário não encontrado.'];
             }
@@ -46,24 +46,26 @@ class Clientecontroller
 
     public function createNewCliente()
     {
-        $user = json_decode(file_get_contents("php//input"));
-        $sql = "INSERT INTO usuarios(id,nome,endereco,telefone,cpf_cnpj) VALUES (:id,:nome,:endereco,:telefone,:cpf_cnpj)";
-        $db = $this->conn->prepare($sql);
-        $db->bindParam(":id", $user->id);
-        $db->bindParam(":nome", $user->nome);
-        $db->bindParam("endereco", $user->endereco);
-        $db->bindParam(":telefone", $user->telefone);
-        $db->bindParam(":cpf_cnpj", $user->cpf_cnpj);
-        $db->execute();
+        try {
+            $user = json_decode(file_get_contents("php//input"));
+            $sql = "INSERT INTO usuarios(id,nome,endereco,telefone,cpf_cnpj) VALUES (:id,:nome,:endereco,:telefone,:cpf_cnpj)";
+            $db = $this->conn->prepare($sql);
+            $db->bindParam(":id", $user->id);
+            $db->bindParam(":nome", $user->nome);
+            $db->bindParam("endereco", $user->endereco);
+            $db->bindParam(":telefone", $user->telefone);
+            $db->bindParam(":cpf_cnpj", $user->cpf_cnpj);
+            $db->execute();
 
         if ($db->execute()) {
             $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
         }
 
-        return $resposta;
-    }catch (Exception $e) {
-        echo 'Erro ao criar usuário: ' . $e->getMessage();
-        return null;
+            return $resposta;
+        }catch (Exception $e) {
+            echo 'Erro ao criar usuário: ' . $e->getMessage();
+            return null;
+        }
     }
 }
 
