@@ -7,14 +7,9 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-<<<<<<< Updated upstream
 $acao = isset($_REQUEST["acao"]) ? $_REQUEST["acao"] : null;
 $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
 
-=======
-$acao = $_REQUEST["acao"];
-$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
->>>>>>> Stashed changes
 switch ($acao) {
     case "updateClientByID":
         if ($id !== null) {
