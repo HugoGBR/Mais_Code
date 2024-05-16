@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import { createNewCliente } from "@/lib/MaskInput/clienteController";
+import { createNewCliente } from "@/lib/clienteController";
 
 export default function CadastrarCliente() {
     const [user, setUser] = useState({
@@ -20,8 +20,8 @@ export default function CadastrarCliente() {
     const route = useRouter();
 
     async function handleSubmit() {
-        const resposta = await createNewCliente(nome, telefone, cpf_cnpj, email)
-        route.push("/users")
+        const resposta = await createNewCliente( nome, email,  telefone, cpf_cnpj)
+        route.push("/routes/cadastros/Cliente")
     }
 
 
