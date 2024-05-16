@@ -11,7 +11,7 @@ class RelatorioController
         $this->conn = $objDb->connect();
     }
 
-    public function getAllUsers()
+    public function GetAllUser()
     {
         $sql = "SELECT Cliente.id ,cliente_id,Cliente.nome,Vendedor.id,Vendedor.nome FROM Contrato JOIN Cliente ON Cliente.id = Contrato.cliente_id JOIN Vendedor ON Vendedor.id = Contrato.vendedor_id;";
         $db = $this->conn->prepare($sql);

@@ -67,7 +67,7 @@ class Clientecontroller
 
     }
 //---
-    public function getAllUsers()
+    public function getAllClient()
     {
         $query = "SELECT * FROM CLIENTES";
         $stmt = $this->conn->prepare($query);

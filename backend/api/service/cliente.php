@@ -33,11 +33,11 @@ switch ($acao) {
         // Ação não suportada.
         return json_encode(["error" => "Ação não suportada."]);
 //--ME
-    case "GetAllUsers":
+    case "GetAllClient":
         if ($id !== null) {
-            echo "Ação 'GetAllUsers' não aceita um ID";
+            echo "Ação 'GetAllClient' não aceita um ID";
         } else {
-            $users = $clienteController->getAllUsers();
+            $users = $clienteController->getAllClient();
             echo json_encode($users); // Saída em formato JSON
         }
         break;

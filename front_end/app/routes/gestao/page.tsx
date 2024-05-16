@@ -9,7 +9,7 @@ import Link from "next/link";
 import {useRouter} from "next/navigation";
 
 export default function Gestao() {
-    const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
+    const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]); //-----------
     const [carregando, setCarregando] = useState(true);
     const router = useRouter();
 
@@ -18,15 +18,12 @@ export default function Gestao() {
     }
 
     async function carregarUsuarios() {
-        try {
-            const response = await fetch("/api/users");
-            const data = await response.json();
-            setListaUsuarios(data);
-        } catch (error) {
-            console.error("Erro ao carregar usuários:", error);
-        } finally {
-            setCarregando(false);
-        }
+        
+
+
+
+
+
     }
 
     useEffect(() => {

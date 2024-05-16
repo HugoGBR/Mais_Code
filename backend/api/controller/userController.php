@@ -11,7 +11,7 @@ class Usercontroller
         $this->conn = $objDb->connect();
     }
 
-    public function getAllUsers()
+    public function getAllUser()
     {
         $sql = "SELECT * FROM usuarios";
         $db = $this->conn->prepare($sql);
