@@ -1,8 +1,9 @@
 <?php
-include "../database.php"; 
+include "../database.php";
 
 class RelatorioComissaoController
 {
+
     private $conn;
 
     public function __construct()
@@ -11,25 +12,30 @@ class RelatorioComissaoController
         $this->conn = $objDb->connect();
     }
 
-    public function gerarRelatorioComissao()
+    public function gerarRelatorioComissao($termoBusca = null)
     {
-        $sql = "SELECT Contrato.id, Cliente.nome as nome_cliente, Contrato.status, Contrato.parcelas, Contrato.valor, Contrato.comissao,
-                TipoContrato.nome as tipo_contrato, Contrato.data
-                FROM Contrato
-                JOIN Cliente ON Cliente.id = Contrato.cliente_id
-                JOIN Vendedor ON Vendedor.id = Contrato.vendedor_id
-                JOIN TipoContrato ON TipoContrato.id = Contrato.tipo_contrato_id";
+
+        
+            $sql = "SELECT vendas.tipo_contrato_id,
+                vendas.inicio_contrato,
+                clientes.nome AS nome_cliente,
+                vendas.status,
+                vendas.parcela_id,
+                vendas.valor_total,
+                tipo_cliente.porcentagem
+            FROM 
+                vendas 
+            JOIN 
+                clientes ON vendas.cliente_id = clientes.id
+            JOIN 
+                produtos ON vendas.produto_id = produtos.id
+            JOIN 
+                tipo_cliente ON produtos.tipo_cliente_id = tipo_cliente.id;";
 
         $db = $this->conn->prepare($sql);
         $db->execute();
-
         $relatorioComissao = $db->fetchAll(PDO::FETCH_ASSOC);
 
-        header("Content-Type: application/json");
-
-        echo json_encode($relatorioComissao);
+        return $relatorioComissao;
     }
 }
-
-$relatorioController = new RelatorioComissaoController();
-$relatorioController->gerarRelatorioComissao();
