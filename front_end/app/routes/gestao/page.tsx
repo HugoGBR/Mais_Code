@@ -21,8 +21,8 @@ export default function Gestao() {
 
     const Setdata = async () => {
         const users = await getAllClient();
-        const users = await getAllClient();
-        const users = await getAllClient();
+        const vend = await getAllVendedor();
+        const fin = await getAllFinanceiro();
         setClient(users);
 
         const 
