@@ -28,7 +28,7 @@ CREATE TABLE `clientes` (
   `cpf_cnpj` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
-
+select * from clientes;
 
 CREATE TABLE `parcelas` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -76,8 +76,8 @@ CREATE TABLE `usuarios` (
   `senha` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  -- KEY `usuarios_cargo_id_foreign` (`cargo_id`),
-  -- CONSTRAINT `usuarios_cargo_id_foreign` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+   KEY `usuarios_cargo_id_foreign` (`cargo_id`),
+   CONSTRAINT `usuarios_cargo_id_foreign` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
