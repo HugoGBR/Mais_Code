@@ -11,13 +11,34 @@ class RelatorioController
         $this->conn = $objDb->connect();
     }
 
-    public function GetAllUser()
+    public function BuscaRelatorio()
     {
-        $sql = "SELECT Cliente.id ,cliente_id,Cliente.nome,Vendedor.id,Vendedor.nome FROM Contrato JOIN Cliente ON Cliente.id = Contrato.cliente_id JOIN Vendedor ON Vendedor.id = Contrato.vendedor_id;";
+        $sql = "SELECT 
+        vendas.id,
+        clientes.nome,
+        clientes.email,
+        produtos.nome as nome_P,
+        vendas.valor_total,
+        vendas.status,
+        tipo_cliente.nome as Tipo_cliente_nome
+        
+    FROM 
+        vendas
+    join 
+        clientes on vendas.cliente_id = clientes.id
+    join
+        produtos on vendas.produto_id = produtos.id
+    join
+        tipo_cliente on produtos.tipo_cliente_id = tipo_cliente.id
+    join
+        tipo_contrato on vendas.tipo_contrato_id = tipo_contrato.id
+    join 
+        parcelas on vendas.parcela_id = parcelas.id
+    join 
+        usuarios on vendas.usuario_id = usuarios.id";
         $db = $this->conn->prepare($sql);
         $db->execute();
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
         return $users;
     }
-
-}    
+}
