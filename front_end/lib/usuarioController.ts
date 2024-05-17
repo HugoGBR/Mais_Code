@@ -9,4 +9,10 @@ export async function createNewUserGestao(newNome: string, newEmail: string , ne
     console.log(response)
 
     return response.message
+
+}
+export async function getAllUsers(){
+    const resposta = await fetch("http://localhost/Mais_code/backend/api/service/user.php?acao=getAllUsers")
+    const dados=await resposta.json();
+    return dados;
 }
