@@ -4,42 +4,44 @@ import React, {useState, useEffect} from 'react';
 import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
 import {TabsTrigger} from '@radix-ui/react-tabs';
 import CardUsuario from '@/components/CardUsuario';
-import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
+import {dadosCliente, dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
+import { getAllClient } from '@/lib/GestaoControler';
+
 
 export default function Gestao() {
-    const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]); //-----------
     const [carregando, setCarregando] = useState(true);
+    const rota = useRouter();
+    // -- criar 3 interfaces
+    const [clientes, setClient] = useState<dadosCliente[]>([]); 
     const router = useRouter();
 
-    const rotaNewUser = () => {
-        router.push('/routes/gestao/Usuario');
-    }
-
-    async function carregarUsuarios() {
         
 
+    const Setdata = async () => {
+        const users = await getAllClient();
+        const users = await getAllClient();
+        const users = await getAllClient();
+        setClient(users);
 
-
-
-
+        const 
     }
 
     useEffect(() => {
-        carregarUsuarios();
+        Setdata();
     }, []);
 
-    const renderGestao = (tipoCadastro: number) => {
+    const renderCliente = () => {
         return (
             <>
-                {listaUsuarios
-                    .filter(item => item.tipo_cadastro === tipoCadastro)
+                {clientes
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
                             <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
                                 <a className="block">
-                                    <CardUsuario dados={item}/>
+                                    {item.nome}
+                                    {/* <CardUsuario dados={item}/> */}
                                 </a>
                             </div>
                         </Link>
@@ -59,10 +61,10 @@ export default function Gestao() {
                         <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
                     </div>
                     <div>
-                        <button type="button" id="Newuser"
+                        {/* <button type="button" id="Newuser"
                                 className="text-white bg-blue-500 w-full p-1 rounded-md hover:bg-blue-600 cursor-pointer"
                                 onClick={rotaNewUser}>Novo Usuario
-                        </button>
+                        </button> */}
                     </div>
                 </TabsList>
 
@@ -70,7 +72,7 @@ export default function Gestao() {
                     {renderGestao(1)}
                 </TabsContent>
                 <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
-                    {renderGestao(1)}
+                    {renderCliente()}
                 </TabsContent>
                 <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
                     {renderGestao(2)}
