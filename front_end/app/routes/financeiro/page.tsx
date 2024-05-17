@@ -6,6 +6,8 @@ import CardUsuario from '@/components/CardUsuario';
 import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
+import { getAllUsers } from '@/lib/usuarioController';
+
 
 export default function Gestao() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
@@ -16,22 +18,15 @@ export default function Gestao() {
         router.push('/routes/gestao/Usuario');
     }
 
-    async function carregarUsuarios() {
-        try {
-            const response = await fetch("/api/users");
-            const data = await response.json();
-            setListaUsuarios(data);
-        } catch (error) {
-            console.error("Erro ao carregar usuários:", error);
-        } finally {
-            setCarregando(false);
-        }
+    async function carregarUsuarios() { 
+        const usuario = await getAllUsers() 
+        setListaUsuarios(usuario)
     }
 
     useEffect(() => {
         carregarUsuarios();
     }, []);
-
+    
     const renderGestao = (tipoCadastro: number) => {
         return (
             <>

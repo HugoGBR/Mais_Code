@@ -56,9 +56,9 @@ export default function cadastrarUsuarioGestao() {
                                 id="senha" placeholder="Senha" onChange={(event) => setSenha(event.target.value)} />
                         </div>
                         <div className="flex flex-col space-y-1.5">
-                            <label><h1 className="font-bold">Cargo:</h1></label>
+                            
                             <select value={user.cargo_id} onChange={(event) => setUser({ ...user, cargo_id: parseInt(event.target.value) })}>
-                                <option value={0}>Selecione...</option>
+                                <option value={0}>Cargos...</option>
                                 <option value={6}>Administrador</option>
                                 <option value={7}>Vendedor</option>
                                 <option value={8}>Financeiro</option>
