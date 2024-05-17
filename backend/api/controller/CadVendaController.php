@@ -10,10 +10,12 @@ class Contratocontroller
         $this->conn = $objDb->connect();
     }
 
-    public function getClientById(int $id)
+    
+
+    public function getAllProductById(int $id)
     {
         try {
-            $sql = "SELECT * FROM clientes WHERE id = :id";
+            $sql = "SELECT * FROM produtos WHERE id = :id";
             $db = $this->conn->prepare($sql);
             $db->bindParam(":id", $id);
             $db->execute();
@@ -26,10 +28,12 @@ class Contratocontroller
         }
     }
 
-    public function CreateNewContract()
+
+
+    public function CreateNewSell()
     {
         $user = json_decode(file_get_contents("php//input"));
-        $sql = "INSERT INTO vendas(cargo_id,telefone,senha,email) VALUES (:nome,:cargo_id,:telefone,:senha,:email)";
+        $sql = "INSERT INTO vendas(tipo_contrato_id,parcela_id,inicio_contrato,final_contrato,valor_entrada,valor_total,nome_contato,email,telefone,metodo_pagamento) VALUES (:nome,:cargo_id,:telefone,:senha,:email)";
         $db = $this->conn->prepare($sql);
         $db->bindParam(":nome", $user->nome);
         $db->bindParam("cargo_id", $user->cargo_id);
@@ -44,36 +48,3 @@ class Contratocontroller
 
         return $resposta;
     }
-
-
-    // public function createNewUserGestao()
-    // {
-    //      try{
-    //     //     $userExists = $this->checkUserExists($id);
-    //     //     if (!$userExists) {
-    //     //         return ['status' => 0, 'message' => 'Usuário não encontrado.'];
-    //     //     }
-    //         $user = json_decode(file_get_contents("php://input"));
-    //         $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
-    //         $db = $this->conn->prepare($sql);
-
-    //         $db->bindParam(":nome", $user->nome);
-    //         $db->bindParam(":senha", $user->senha);
-    //         $db->bindParam(":email", $user->email);
-    
-    //         if ($db->execute()) {
-    //             $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
-    //         }
-    //         // if ($db->execute()) {
-    //         //     $response = ['status' => 1, 'message' => 'Registro atualizado com sucesso.'];
-    //         // } else {
-    //         //     $response = ['status' => 0, 'message' => 'Falha ao atualizar o registro.'];
-    //         // }
-    //         return $resposta;
-    //     }catch (Exception $e) {
-    //         echo 'Erro ao criar usuário: ' . $e->getMessage();
-    //         return null;
-    //     }
-    // } 
-}
-
