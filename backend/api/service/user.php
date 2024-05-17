@@ -16,7 +16,7 @@ switch ($acao) {
         if ($id != null) {
             echo json_encode(["error" => "Ação GetAllUsers não aceita um ID"]);
         } else {
-            $users = $userController->getAllUsers();
+            $users = $userController->getAllUser();
             echo json_encode($users);
         }
         break;
@@ -38,7 +38,7 @@ switch ($acao) {
             echo json_encode(["error" => "Ação getUserById necessita de um ID"]);
         }
         break;
-    
+
     case "createNewUserGestao":
         if ($id != null) {
             echo json_encode(["error" => "Ação createNewUserGestao não aceita um ID"]);
@@ -47,7 +47,7 @@ switch ($acao) {
             echo json_encode($mensagem);
         }
         break;
-    
+
     default:
         echo json_encode(["error" => "Ação não suportada."]);
         break;

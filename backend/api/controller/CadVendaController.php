@@ -48,3 +48,4 @@ class Contratocontroller
 
         return $resposta;
     }
+}
