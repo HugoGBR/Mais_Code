@@ -37,34 +37,36 @@ export default function CardCadastro() {
                             </div>
                         </div>
 
+                        <div className="grid grid-cols-2 " >
+                            <div className="grid grid-cols-1 mb-9 w-48">
+                                <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
+                                <Select>
+                                    <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
+                                        <SelectValue placeholder="Tipo Contrato"/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="teste">Pontual</SelectItem>
+                                        <SelectItem value="testee">Contínuo</SelectItem>
+                                    </SelectContent>
+                                </Select>
 
-                        <div className="grid grid-cols-2 mb-5">
-                            <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
-                            <Select>
-                                <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
-                                    <SelectValue placeholder="Tipo Contrato"/>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="teste">Pontual</SelectItem>
-                                    <SelectItem value="testee">Contínuo</SelectItem>
-                                </SelectContent>
-                            </Select>
-
-                            <div className="flex flex-col ml-5">
-                                <label className="text-sm" htmlFor="teste">Horas Trabalhadas</label>
-                                <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                       placeholder="Horas" type="number"/>
+                                
+                                <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
+                                <Select>
+                                    <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
+                                        <SelectValue placeholder="Produto"/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="teste">Python</SelectItem>
+                                        <SelectItem value="testee">php</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
-                            <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
-                            <Select>
-                                <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
-                                    <SelectValue placeholder="Produto"/>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="teste">Python</SelectItem>
-                                    <SelectItem value="testee">php</SelectItem>
-                                </SelectContent>
-                            </Select>
+                            <div className="flex flex-col ml-5">
+                                    <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
+                                    <input className="border-b-2 focus:outline-none focus:border-blue-500"
+                                        placeholder="Horas" type="number"/>
+                            </div>
                         </div>
 
                         <h2 className="font-bold">Dados do Contato</h2>
