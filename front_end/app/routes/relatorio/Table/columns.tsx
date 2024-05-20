@@ -7,15 +7,15 @@ import {ColumnDef} from "@tanstack/react-table"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Payment = {
-    id: string
-    quantia: number
-    status: | "Ativo" | "Concluido" | "Inativo"
+    id: number
+    valor_total: number
+    status: | "em andamento " | "Concluido" | "Inativo"
     email: string
 }
 
 export const columns: ColumnDef<Payment>[] = [
     {
-        accessorKey: "N*Contrato",
+        accessorKey: "id",
         header: ({column}) => {
             return (
                 <Button
@@ -23,11 +23,11 @@ export const columns: ColumnDef<Payment>[] = [
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     N*Contrato
-                    <CaretSortIcon className="ml-2 h-4 w-4 "/>
+                    <CaretSortIcon className="ml-2 h-4 w-4 " />
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({row}) => <div className="lowercase">{row.getValue("id")}</div>,
     },
     {
         accessorKey: "email",
@@ -45,7 +45,7 @@ export const columns: ColumnDef<Payment>[] = [
         cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
     },
     {
-        accessorKey: "Cliente",
+        accessorKey: "nome",
         header: ({column}) => {
             return (
                 <Button
@@ -57,13 +57,13 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({row}) => <div className="lowercase">{row.getValue("nome")}</div>,
     },
     {
-        accessorKey: "Vendedor",
+        accessorKey: "nome_vendedor",
         header: ({column}) => {
             return (
-                <Button
+                <Button 
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
@@ -72,7 +72,7 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({row}) => <div className="lowercase">{row.getValue("nome_vendedor")}</div>,
     },
     {
         accessorKey: "valor_total",
