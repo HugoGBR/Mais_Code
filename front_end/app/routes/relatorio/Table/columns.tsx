@@ -75,10 +75,10 @@ export const columns: ColumnDef<Payment>[] = [
         cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
     },
     {
-        accessorKey: "quantia",
+        accessorKey: "valor_total",
         header: () => <div className="text-center">Valor</div>,
         cell: ({row}) => {
-            const quantia = parseFloat(row.getValue("quantia"))
+            const quantia = parseFloat(row.getValue("valor_total"))
 
 
             const formatted = new Intl.NumberFormat("pt-BR", {
