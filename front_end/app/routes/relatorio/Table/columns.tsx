@@ -1,17 +1,22 @@
 "use client"
 
-import {Button} from "@/components/ui/button"
-import {CaretSortIcon} from "@radix-ui/react-icons"
-import {ColumnDef} from "@tanstack/react-table"
+import {Button} from "@/components/ui/button";
+import {CaretSortIcon} from "@radix-ui/react-icons";
+import {ColumnDef} from "@tanstack/react-table";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Payment = {
-    id: string
-    quantia: number
-    status: | "Ativo" | "Concluido" | "Inativo"
-    email: string
-}
+    id: string;
+    contrato: number;
+    data: string; 
+    cliente: string;
+    tipo: string;
+    parcelas: number;
+    valor: number;
+    comissao: number;
+};
+
 
 export const columns: ColumnDef<Payment>[] = [
     {
@@ -37,7 +42,7 @@ export const columns: ColumnDef<Payment>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Email
+                    Data
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
                 </Button>
             )
@@ -67,7 +72,7 @@ export const columns: ColumnDef<Payment>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Venderdor
+                    tipo
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
                 </Button>
             )
@@ -76,7 +81,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         accessorKey: "quantia",
-        header: () => <div className="text-center">Valor</div>,
+        header: () => <div className="text-center">Pacelas</div>,
         cell: ({row}) => {
             const quantia = parseFloat(row.getValue("quantia"))
 
@@ -91,7 +96,14 @@ export const columns: ColumnDef<Payment>[] = [
     },
     {
         accessorKey: "status",
-        header: () => <div className="text-center">Status</div>,
+        header: () => <div className="text-center">Valor</div>,
+        cell: ({row}) => (
+            <div className="capitalize text-center">{row.getValue("status")}</div>
+        ),
+    },
+    {
+        accessorKey: "status",
+        header: () => <div className="text-center">Comissão</div>,
         cell: ({row}) => (
             <div className="capitalize text-center">{row.getValue("status")}</div>
         ),

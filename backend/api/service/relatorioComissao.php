@@ -9,11 +9,10 @@ header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
 $acao = isset($_REQUEST["acao"]) ? $_REQUEST["acao"] : null;
-$termoBusca = isset($_REQUEST["termoBusca"]) ? $_REQUEST["termoBusca"] : null;
 
 switch ($acao) {
     case "gerarRelatorioComissao":
-        $relatorio = $relatorioController->gerarRelatorioComissao($termoBusca);
+        $relatorio = $relatorioController->gerarRelatorioComissao($acao);
         echo json_encode($relatorio);
         break;
 

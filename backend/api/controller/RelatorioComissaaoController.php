@@ -12,7 +12,7 @@ class RelatorioComissaoController
         $this->conn = $objDb->connect();
     }
 
-    public function gerarRelatorioComissao($termoBusca = null)
+    public function gerarRelatorioComissao($acao = null)
     {
 
         
