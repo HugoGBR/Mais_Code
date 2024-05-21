@@ -20,22 +20,24 @@ export type Payment = {
 
 export const columns: ColumnDef<Payment>[] = [
     {
-        accessorKey: "N*Contrato",
+        accessorKey: "tipo_contrato_id",
         header: ({column}) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    N*Contrato
+                    N. Contrato
                     <CaretSortIcon className="ml-2 h-4 w-4 "/>
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({row}) => <div className="lowercase">{row.getValue("tipo_contrato_id")}</div>,
     },
+
+
     {
-        accessorKey: "email",
+        accessorKey: "inicio_contrato",
         header: ({column}) => {
             return (
                 <Button
@@ -47,10 +49,12 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({row}) => <div className="lowercase">{row.getValue("inicio_contrato")}</div>,
     },
+
+
     {
-        accessorKey: "Cliente",
+        accessorKey: "nome_cliente",
         header: ({column}) => {
             return (
                 <Button
@@ -62,52 +66,54 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({row}) => <div className="lowercase">{row.getValue("nome_cliente")}</div>,
     },
+
+
     {
-        accessorKey: "Vendedor",
+        accessorKey: "nome_contrato",
         header: ({column}) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    tipo
+                    Tipo
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({row}) => <div className="lowercase">{row.getValue("nome_contrato")}</div>,
     },
+
+
     {
-        accessorKey: "quantia",
-        header: () => <div className="text-center">Pacelas</div>,
-        cell: ({row}) => {
-            const quantia = parseFloat(row.getValue("quantia"))
-
-
-            const formatted = new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-            }).format(quantia)
-
-            return <div className="text-center">{formatted}</div>
-        },
+        accessorKey: "numero_parcela",
+        header: () => <div className="text-center">Parcelas</div>,
+        cell: ({row}) => (
+            <div className="capitalize text-center">{row.getValue("numero_parcela")}</div>
+        ),
     },
+
+
     {
-        accessorKey: "status",
+        accessorKey: "valor_total",
         header: () => <div className="text-center">Valor</div>,
         cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("status")}</div>
+            <div className="capitalize text-center">{row.getValue("valor_total")}</div>
         ),
     },
+
+
     {
-        accessorKey: "status",
+        accessorKey: "porcentagem",
         header: () => <div className="text-center">Comissão</div>,
         cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("status")}</div>
+            <div className="capitalize text-center">{row.getValue("porcentagem")}</div>
         ),
     },
+
+    
     {
         id: "actions",
         enableHiding: false,
