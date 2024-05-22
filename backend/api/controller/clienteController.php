@@ -66,17 +66,15 @@ class Clientecontroller
         return $resposta;
 
     }
-//---
+
     public function getAllClient()
     {
-        $query = "SELECT * FROM CLIENTES";
+        $query = "SELECT * FROM USUARIOS";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $users;
     }
-//ME
-
 
     private function checkUserExists(int $id)
     {

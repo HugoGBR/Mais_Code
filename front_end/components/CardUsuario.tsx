@@ -2,6 +2,7 @@ import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
 
 export default function CardUsuario({dados}: { dados: dadosUsuario }) {
+    
     return (
         <div>
             <Link href="">
@@ -11,8 +12,8 @@ export default function CardUsuario({dados}: { dados: dadosUsuario }) {
                         {/* onClick */}
                         <div className="">
                             <h1 className="text-sm">{dados.nome}</h1>
-                            <h1>{dados.telefone}</h1>
-                            <h1 className="text-blue-800 font-bold">{dados.tipo_pessoa}</h1>
+                            <h1>{dados.email}</h1>
+                            <h1 className="text-blue-800 font-bold">{dados.cargo_id}</h1>
                         </div>
                     </div>
                 </div>
@@ -20,3 +21,5 @@ export default function CardUsuario({dados}: { dados: dadosUsuario }) {
         </div>
     )
 }
+
+// fazer o if pra nao aparecer o id 
