@@ -1,6 +1,6 @@
 <?php
 include "../database.php";
-class Contratocontroller
+class Vendacontroller
 {
     private $conn;
 
