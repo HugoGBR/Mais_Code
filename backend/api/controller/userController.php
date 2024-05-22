@@ -11,15 +11,16 @@ class Usercontroller
         $this->conn = $objDb->connect();
     }
 
-    public function getAllUser()
+    public function getAllUsers()
     {
         $sql = "SELECT * FROM usuarios";
         $db = $this->conn->prepare($sql);
         $db->execute();
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
-        echo "Nada";
         return $users;
     }
+
+    
 
     public function CreateNewUser()
     {

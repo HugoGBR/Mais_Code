@@ -13,6 +13,6 @@ export async function createNewUserGestao(newNome: string, newEmail: string , ne
 }
 export async function getAllUsers(){
     const resposta = await fetch("http://localhost/Mais_code/backend/api/service/user.php?acao=getAllUsers")
-    const dados=await resposta.json();
+    const dados = await resposta.json();
     return dados;
 }

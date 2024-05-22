@@ -7,6 +7,7 @@ import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import { getAllUsers } from '@/lib/usuarioController';
+import { getAllFinan } from '@/lib/Financeirocontroler';
 
 
 export default function Gestao() {
@@ -18,20 +19,21 @@ export default function Gestao() {
         router.push('/routes/gestao/Usuario');
     }
 
-    async function carregarUsuarios() { 
-        const usuario = await getAllUsers() 
+    async function carregarUfinan() { 
+        const usuario = await getAllFinan()     
+        console.log(usuario)
         setListaUsuarios(usuario)
     }
 
     useEffect(() => {
-        carregarUsuarios();
+        carregarUfinan();
     }, []);
     
-    const renderGestao = (tipoCadastro: number) => {
-        return (
-            <>
-                {listaUsuarios
-                    .filter(item => item.tipo_cadastro === tipoCadastro)
+    
+
+    return (
+        <div className="items-center py-10">
+            {listaUsuarios
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
                             <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
@@ -42,27 +44,6 @@ export default function Gestao() {
                         </Link>
                     ))
                 }
-            </>
-        );
-    }
-
-    return (
-        <div className="items-center py-10">
-            <Tabs defaultValue=''>
-
-                <TabsContent value='' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
-                    {renderGestao(1)}
-                </TabsContent>
-                <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
-                    {renderGestao(1)}
-                </TabsContent>
-                <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
-                    {renderGestao(2)}
-                </TabsContent>
-                <TabsContent value='Financeiro' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
-                    {renderGestao(3)}
-                </TabsContent>
-            </Tabs>
         </div>
     )
 }
