@@ -71,7 +71,7 @@ CREATE TABLE `tipo_contrato` (
 
 CREATE TABLE `usuarios` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  -- `cargo_id` bigint(20) unsigned NOT NULL,
+  `cargo_id` bigint(20) unsigned NOT NULL,
   `nome` varchar(255) NOT NULL,
   `senha` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
