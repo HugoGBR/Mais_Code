@@ -17,7 +17,6 @@ class Usercontroller
         $db = $this->conn->prepare($sql);
         $db->execute();
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
-        echo "Nada";
         return $users;
     }
 

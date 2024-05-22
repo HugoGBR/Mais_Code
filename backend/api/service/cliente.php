@@ -1,7 +1,9 @@
 <?php
 include "../controller/clienteController.php";
+include "../controller/userController.php";
 
 $clienteController = new Clientecontroller();
+$userController = new Usercontroller();
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
@@ -37,7 +39,7 @@ switch ($acao) {
         if ($id !== null) {
             echo "Ação 'GetAllClient' não aceita um ID";
         } else {
-            $users = $clienteController->getAllClient();
+            $users = $userController->getAllUser();
             echo json_encode($users); // Saída em formato JSON
         }
         break;

@@ -17,7 +17,7 @@ if(isset($_REQUEST["acao"])) {
             if ($id != null) {
                 echo json_encode(["error" => "Ação GetAllUsers não aceita um ID"]);
             } else {
-                $users = $userController->getAllUsers();
+                $users = $userController->getAllUser();
                 echo json_encode($users);
             }
             break;

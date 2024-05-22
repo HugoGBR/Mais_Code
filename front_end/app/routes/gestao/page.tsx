@@ -8,40 +8,47 @@ import {dadosCliente, dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import { getAllClient } from '@/lib/GestaoControler';
+import { getAllUsers } from '@/lib/usuarioController';
 
 
 export default function Gestao() {
-    const [carregando, setCarregando] = useState(true);
-    const rota = useRouter();
-    // -- criar 3 interfaces
-    const [clientes, setClient] = useState<dadosCliente[]>([]); 
+    const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
+    const [carregando, setCarregando] = useState(true)
     const router = useRouter();
 
         
 
-    const Setdata = async () => {
-        const users = await getAllClient();
-        const vend = await getAllVendedor();
-        const fin = await getAllFinanceiro();
-        setClient(users);
-
-        const 
+    const rotaNewUser = () => {
+        router.push('/routes/gestao/Usuario');
     }
 
+    async function  carregarUsuarios(){
+        const usuario = await getAllUsers()
+        console.log(usuario)
+        setListaUsuarios(usuario)
+        
+    }
     useEffect(() => {
-        Setdata();
+        carregarUsuarios();
     }, []);
 
-    const renderCliente = () => {
+    const renderGestao = (cargo_id:number) => {
         return (
             <>
-                {clientes
+            {/* {listaUsuarios
+            .filter(item => item.cargo_id == cargo_id)
+            .map((item) => (
+                <div>
+                    {item.nome}
+                </div>
+            ))} */}
+                {listaUsuarios
+                    .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
                             <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
                                 <a className="block">
-                                    {item.nome}
-                                    {/* <CardUsuario dados={item}/> */}
+                                    <CardUsuario dados={item}/>
                                 </a>
                             </div>
                         </Link>
@@ -68,11 +75,8 @@ export default function Gestao() {
                     </div>
                 </TabsList>
 
-                <TabsContent value='' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
-                    {renderGestao(1)}
-                </TabsContent>
                 <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
-                    {renderCliente()}
+                    {renderGestao(1)}
                 </TabsContent>
                 <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
                     {renderGestao(2)}
