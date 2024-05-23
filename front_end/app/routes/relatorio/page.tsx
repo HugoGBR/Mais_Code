@@ -1,11 +1,9 @@
 "use client"
-import {fetchData} from "@/lib/relatorioComissaoController";
-// import * as React from "react"
-import { useRouter } from "next/navigation";
+import * as React from "react"
+import {Payment, columns} from "./Table/columns"
+import {DataTable} from "./Table/data-table"
 import { useEffect, useState } from "react";
-import {Payment, columns} from "./Table/columns";
-import {DataTable} from "./Table/data-table";
-
+import { fetchData } from "@/lib/relatorioController";
 
 export default function Relatorio() {
     const [data, setData] = useState<Payment[]>([]);
@@ -26,4 +24,3 @@ export default function Relatorio() {
         </div>
     );
 }
-  

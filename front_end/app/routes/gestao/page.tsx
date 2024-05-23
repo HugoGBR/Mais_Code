@@ -4,40 +4,46 @@ import React, {useState, useEffect} from 'react';
 import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
 import {TabsTrigger} from '@radix-ui/react-tabs';
 import CardUsuario from '@/components/CardUsuario';
-import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
+import {dadosCliente, dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
+import { getAllClient } from '@/lib/GestaoControler';
+import { getAllUsers } from '@/lib/usuarioController';
+
 
 export default function Gestao() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
-    const [carregando, setCarregando] = useState(true);
+    const [carregando, setCarregando] = useState(true)
     const router = useRouter();
+
+        
 
     const rotaNewUser = () => {
         router.push('/routes/gestao/Usuario');
     }
 
-    async function carregarUsuarios() {
-        try {
-            const response = await fetch("/api/users");
-            const data = await response.json();
-            setListaUsuarios(data);
-        } catch (error) {
-            console.error("Erro ao carregar usuários:", error);
-        } finally {
-            setCarregando(false);
-        }
+    async function  carregarUsuarios(){
+        const usuario = await getAllUsers()
+        console.log(usuario)
+        setListaUsuarios(usuario)
+        
     }
-
     useEffect(() => {
         carregarUsuarios();
     }, []);
 
-    const renderGestao = (tipoCadastro: number) => {
+    const renderGestao = (cargo_id:number) => {
         return (
             <>
+            {/* {listaUsuarios
+            .filter(item => item.cargo_id == cargo_id)
+            .map((item) => (
+                <div>
+                    {item.nome}
+                </div>
+            ))} */}
                 {listaUsuarios
-                    .filter(item => item.tipo_cadastro === tipoCadastro)
+                    .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
                             <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
@@ -62,16 +68,13 @@ export default function Gestao() {
                         <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
                     </div>
                     <div>
-                        <button type="button" id="Newuser"
+                        {/* <button type="button" id="Newuser"
                                 className="text-white bg-blue-500 w-full p-1 rounded-md hover:bg-blue-600 cursor-pointer"
                                 onClick={rotaNewUser}>Novo Usuario
-                        </button>
+                        </button> */}
                     </div>
                 </TabsList>
 
-                <TabsContent value='' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
-                    {renderGestao(1)}
-                </TabsContent>
                 <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
                     {renderGestao(1)}
                 </TabsContent>

@@ -17,16 +17,16 @@ class Clientecontroller
         try {
             $userExists = $this->updateClientByID($id);
             if (!$userExists) {
-                return ['status' => 0, 'message' => 'Usuário não encontrado.'];
+                return ['status' => 0, 'message' => 'Cliente não encontrado.'];
             }
 
             $user = json_decode(file_get_contents('php://input'));
 
-            $sql = "UPDATE clientes SET nome = :nome, endereco = :endereco, telefone = :telefone, cpf_cnpj = :cpf_cnpj WHERE id = :id";
+            $sql = "UPDATE clientes SET nome = :nome, email = :email, telefone = :telefone, cpf_cnpj = :cpf_cnpj WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':nome', $user->nome);
-            $stmt->bindParam(':endereco', $user->endereco);
+            $stmt->bindParam(':email', $user->email);
             $stmt->bindParam(':telefone', $user->telefone);
             $stmt->bindParam(':cpf_cnpj', $user->cpf_cnpj);
 
@@ -38,7 +38,7 @@ class Clientecontroller
 
             return $response;
         } catch (Exception $e) {
-            echo 'Erro ao atualizar usuário: ' . $e->getMessage();
+            echo 'Erro ao atualizar Cliente: ' . $e->getMessage();
             return null;
         }
     }
@@ -47,25 +47,43 @@ class Clientecontroller
     public function createNewCliente()
     {
         try {
-            $user = json_decode(file_get_contents("php//input"));
-            $sql = "INSERT INTO usuarios(id,nome,endereco,telefone,cpf_cnpj) VALUES (:id,:nome,:endereco,:telefone,:cpf_cnpj)";
-            $db = $this->conn->prepare($sql);
-            $db->bindParam(":id", $user->id);
-            $db->bindParam(":nome", $user->nome);
-            $db->bindParam("endereco", $user->endereco);
-            $db->bindParam(":telefone", $user->telefone);
-            $db->bindParam(":cpf_cnpj", $user->cpf_cnpj);
-            $db->execute();
+        $user = json_decode(file_get_contents("php://input"));
+        $sql = "INSERT INTO clientes(nome,email,telefone,cpf_cnpj) VALUES (:nome,:email,:telefone,:cpf_cnpj)";
+        $db = $this->conn->prepare($sql);
+        $db->bindParam(":nome", $user->nome);
+        $db->bindParam("email", $user->email);
+        $db->bindParam(":telefone", $user->telefone);
+        $db->bindParam(":cpf_cnpj", $user->cpf_cnpj);
+        $db->execute();
 
         if ($db->execute()) {
-            $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
+            $resposta = ["Mensagem" => "Cliente Cadastrado com Sucesso!"];
         }
+        } catch (Exception $e) {
+            echo 'Erro ao criar cliente: ' . $e->getMessage();
+            return null;            
+        }
+        return $resposta;
 
-            return $resposta;
-        }catch (Exception $e) {
-            echo 'Erro ao criar usuário: ' . $e->getMessage();
-            return null;
-        }
+    }
+
+    public function getAllClient()
+    {
+        $query = "SELECT * FROM USUARIOS";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
+
+    private function checkUserExists(int $id)
+    {
+        $query = "SELECT COUNT(*) FROM clientes WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
     }
 }
 

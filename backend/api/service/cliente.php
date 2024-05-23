@@ -1,13 +1,16 @@
 <?php
 include "../controller/clienteController.php";
+include "../controller/userController.php";
 
 $clienteController = new Clientecontroller();
+$userController = new Usercontroller();
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-$acao = $_REQUEST["acao"];
+$acao = isset($_REQUEST["acao"]) ? $_REQUEST["acao"] : null;
+$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
 
 switch ($acao) {
     case "updateClientByID":
@@ -31,8 +34,15 @@ switch ($acao) {
     default:
         // Ação não suportada.
         return json_encode(["error" => "Ação não suportada."]);
-        
-
-        
+//--ME
+    case "GetAllClient":
+        if ($id !== null) {
+            echo "Ação 'GetAllClient' não aceita um ID";
+        } else {
+            $users = $userController->getAllUser();
+            echo json_encode($users); // Saída em formato JSON
+        }
+        break;
+//--
 }
 

@@ -20,6 +20,8 @@ class Usercontroller
         return $users;
     }
 
+    
+
     public function CreateNewUser()
     {
         $user = json_decode(file_get_contents("php//input"));
@@ -57,7 +59,11 @@ class Usercontroller
 
     public function createNewUserGestao()
     {
-        try {
+         try{
+        //     $userExists = $this->checkUserExists($id);
+        //     if (!$userExists) {
+        //         return ['status' => 0, 'message' => 'Usuário não encontrado.'];
+        //     }
             $user = json_decode(file_get_contents("php://input"));
             $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
             $db = $this->conn->prepare($sql);
@@ -65,67 +71,30 @@ class Usercontroller
             $db->bindParam(":nome", $user->nome);
             $db->bindParam(":senha", $user->senha);
             $db->bindParam(":email", $user->email);
-            $db->execute();
-
-            $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
+    
+            if ($db->execute()) {
+                $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
+            }
+            // if ($db->execute()) {
+            //     $response = ['status' => 1, 'message' => 'Registro atualizado com sucesso.'];
+            // } else {
+            //     $response = ['status' => 0, 'message' => 'Falha ao atualizar o registro.'];
+            // }
             return $resposta;
-        } catch (\Exception $e) {
+        }catch (Exception $e) {
             echo 'Erro ao criar usuário: ' . $e->getMessage();
             return null;
         }
-    }
-
-    public function UpdateUserById(int $id)
-    {
-        try {
-            $userExist = $this->UpdateUserById($id);
-
-            if ($userExist == 0) {
-                return "Usuario nao encontrado";
-            } else {
-                $user = json_decode(file_get_contents("php://input"));
-                $sql = "UPDATE USUARIOS SET nome = :nome, cargo_id = :cargo_id, telefone = :telefone, senha = :senha,  email = :email WHERE id = :id";
-                $db = $this->conn->prepare($sql);
-                $db->bindParam(":id", $user->id);
-                $db->bindParam(":nome", $user->nome);
-                $db->bindParam(":cargo_id", $user->cargo_id);
-                $db->bindParam(":telefone", $user->telefone);
-                $db->bindParam(":senha", $user->password_hash);
-                $db->bindParam(":email", $user->email);
-                $db->execute();
-
-                return "Atualizado com sucesso";
-
-            }
-        } catch (Exception $th) {
-            echo "Erro ao buscar o usuario: " . $th->getMessage();
-        }
-    }
-
-    private function CheckUserExist(int $id)
-    {
-        $sql = "SELECT COUNT(*) FROM usuarios WHERE id = :id";
-        $db = $this->conn->prepare($sql);
-        $db->bindParam(":id",$id);
-        $db->execute();
-        $count = $db->fetchColumn();
-        return $count > 0;
-    }
-
-    public function CreateTipoContrato()
-    {
-        $user = json_decode(file_get_contents("php://input"));
-        $sql = "INSERT INTO tipo_contrato(nome) VALUES (:nome)";
-        $db = $this->conn->prepare($sql);
-        $db->bindParam(":nome", $user->nome);
-
-
-        if ($db->execute()) {
-            $resposta = ["Mensagem" => "Tipo de Contrato Cadastrado com Sucesso!"];
-        }
-
-        return $resposta;
-    }
-
-
+    } 
 }
+
+
+// private function checkUserExists(int $id)
+// {
+//     $query = "SELECT COUNT(*) FROM USUARIOS WHERE id = :id";
+//     $stmt = $this->conn->prepare($query);
+//     $stmt->bindParam(':id', $id);
+//     $stmt->execute();
+//     $count = $stmt->fetchColumn();
+//     return $count > 0;
+// }

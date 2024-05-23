@@ -27,15 +27,15 @@ CREATE TABLE `clientes` (
   `telefone` varchar(255) NOT NULL,
   `cpf_cnpj` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-); 
-
+);
+select * from clientes;
 
 CREATE TABLE `parcelas` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `numero_parcela` int(11) NOT NULL,
   `valor_parcela` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-); 
+);
 
 
 CREATE TABLE `produtos` (
@@ -76,8 +76,8 @@ CREATE TABLE `usuarios` (
   `senha` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `usuarios_cargo_id_foreign` (`cargo_id`),
-  CONSTRAINT `usuarios_cargo_id_foreign` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+   KEY `usuarios_cargo_id_foreign` (`cargo_id`),
+   CONSTRAINT `usuarios_cargo_id_foreign` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
