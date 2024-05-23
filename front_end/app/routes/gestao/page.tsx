@@ -68,10 +68,10 @@ export default function Gestao() {
                         <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
                     </div>
                     <div>
-                        {/* <button type="button" id="Newuser"
+                        { <button type="button" id="Newuser"
                                 className="text-white bg-blue-500 w-full p-1 rounded-md hover:bg-blue-600 cursor-pointer"
                                 onClick={rotaNewUser}>Novo Usuario
-                        </button> */}
+                        </button>}
                     </div>
                 </TabsList>
 
