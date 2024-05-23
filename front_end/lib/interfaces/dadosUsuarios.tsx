@@ -3,7 +3,7 @@ export interface dadosUsuario {
     nome: string,
     senha: string,
     email: string,
-    cargo_id: number
+    cargo_nome: string
 }
 
 export interface dadosCliente {
