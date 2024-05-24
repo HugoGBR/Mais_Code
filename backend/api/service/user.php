@@ -53,7 +53,7 @@ if(isset($_REQUEST["acao"])) {
             echo json_encode(["error" => "Ação não suportada."]);
             break;
     }
-} else {
+    } else {
     echo json_encode(["error" => "Ação não especificada."]);
 }
 ?>
