@@ -1,3 +1,5 @@
+import { Cargos } from "./interfaces/dadosUsuarios";
+
 export async function createNewCliente(newNome: string, newEmail: string , newTelefone:string, newCpf_cnpj:string) {
     const request = await fetch("http://localhost/Mais_code/backend/api/service/cliente.php?acao=createNewCliente",
         {
@@ -33,3 +35,16 @@ export async function getAllClient() {
     return dados;
 }
 
+export function escolheTipoCliente(cargo_id:number){
+    switch(cargo_id){
+        case Cargos.Administrador:
+            return "Administrador"
+            break;
+        case Cargos.Vendedor:
+            return "Vendedor"
+            break
+        case Cargos.Financeiro:
+            return "Financeiro"
+            break
+    }
+}

@@ -3,9 +3,13 @@ export interface dadosUsuario {
     nome: string,
     senha: string,
     email: string,
-    cargo_nome: string
+    cargo_id: number
 }
-
+export enum Cargos{
+    Administrador = 1,
+    Vendedor = 2,
+    Financeiro = 3
+}
 export interface dadosCliente {
     id: number,
     nome: string,
