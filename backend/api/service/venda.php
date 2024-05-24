@@ -39,7 +39,7 @@ switch ($acao) {
         if ($id !== null) {
             echo "Ação 'GetAllClient' não aceita um ID";
         } else {
-            $users = $userController->getAllUser();
+            $users = $userController->getAllUsers();
             echo json_encode($users); // Saída em formato JSON
         }
         break;
@@ -49,7 +49,7 @@ switch ($acao) {
         if ($id != null) {
             echo json_encode(["error" => "Ação GetAllUsers não aceita um ID"]);
         } else {
-            $users = $userController->getAllUser();
+            $users = $userController->getAllUsers();
             echo json_encode($users);
         }
         break;
