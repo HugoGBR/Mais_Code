@@ -6,47 +6,18 @@ import {ColumnDef} from "@tanstack/react-table";
 
 export type Payment = {
     id: number
+    tipo_contrato_id: number
+    inicio_contrato: string
+    nome: string
+    tipo: string
+    parcelas: number
     valor_total: number
-    status: | "em andamento " | "Concluido" | "Inativo"
-    email: string
+    comissao: number
 }
 
 export const columns: ColumnDef<Payment>[] = [
     {
-        accessorKey: "tipo_contrato_id",
-        header: ({column}) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    N. Contrato
-                    <CaretSortIcon className="ml-2 h-4 w-4 "/>
-                </Button>
-            )
-        },
-        cell: ({row}) => <div className="lowercase">{row.getValue("tipo_contrato_id")}</div>,
-    },
-
-    {
-        accessorKey: "inicio_contrato",
-        header: ({column}) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Data
-                    <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
-            )
-        },
-        cell: ({row}) => <div className="lowercase">{row.getValue("inicio_contrato")}</div>,
-    },
-
-
-    {
-        accessorKey: "nome_cliente",
+        accessorKey: "nome",
         header: ({column}) => {
             return (
                 <Button
@@ -58,33 +29,39 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("nome_cliente")}</div>,
+        cell: ({row}) => <div className="lowercase">{row.getValue("nome")}</div>,
     },
 
     {
-        accessorKey: "nome_contrato",
+        accessorKey: "tipo_contrato_id",
         header: ({column}) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Tipo
+                    tipo_contrato_id
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("nome_contrato")}</div>,
+        cell: ({row}) => <div className="lowercase">#{row.getValue("tipo_contrato_id")}</div>,
     },
-
     {
         accessorKey: "numero_parcela",
-        header: () => <div className="text-center">Parcelas</div>,
-        cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("numero_parcela")}</div>
-        ),
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    tipo_cliente
+                    <CaretSortIcon className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => <div className="lowercase">X{row.getValue("numero_parcela")}</div>,
     },
-
     {
         accessorKey: "valor_total",
         header: () => <div className="text-center">Valor</div>,
@@ -93,27 +70,10 @@ export const columns: ColumnDef<Payment>[] = [
         ),
     },
     {
-        accessorKey: "porcentagem",
-        header: () => <div className="text-center">Comissão</div>,
+        accessorKey: "inicio_contrato",
+        header: () => <div className="text-center">Data</div>,
         cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("porcentagem")}</div>
-        ),
-    },
-
-    {
-        accessorKey: "numero_parcela",
-        header: () => <div className="text-center">Parcelas</div>,
-        cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("numero_parcela")}</div>
-        ),
-    },
-
-
-    {
-        accessorKey: "porcentagem",
-        header: () => <div className="text-center">Comissão</div>,
-        cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("porcentagem")}</div>
+            <div className="capitalize text-center">{row.getValue("inicio_contrato")}</div>
         ),
     },
 

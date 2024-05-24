@@ -1,12 +1,10 @@
 "use client";
 
 import React, {useState, useEffect} from 'react';
-import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
 import CardUsuario from '@/components/CardUsuario';
 import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
-import {getAllUsers} from '@/lib/usuarioController';
 import {getAllFinan} from '@/lib/Financeirocontroler';
 
 

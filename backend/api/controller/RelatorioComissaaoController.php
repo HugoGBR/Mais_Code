@@ -14,10 +14,10 @@ class RelatorioComissaoController
 
     public function gerarRelatorioComissao($acao = null)
     {
- $sql = "SELECT tipo_contrato.nome AS nome_contrato,
+ $sql = "SELECT tipo_contrato.nome,
             vendas.tipo_contrato_id,
             vendas.inicio_contrato,
-            clientes.nome AS nome_cliente,
+            clientes.nome,
             parcelas.numero_parcela,
             vendas.valor_total,
             tipo_cliente.porcentagem

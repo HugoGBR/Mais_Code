@@ -1,4 +1,4 @@
-export async function fetchData() {
+export async function fetchDataComissao() {
     try {
         const response = await fetch("http://localhost/Mais_Code/Backend/api/service/relatorioComissao.php?acao=gerarRelatorioComissao");
         if (!response.ok) {
