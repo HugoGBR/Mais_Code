@@ -44,7 +44,7 @@ const CadastroProduto: React.FC = () => {
                                     id="nomeProduto"
                                     name="nomeProduto"
                                     value={nomeProduto}
-                                    onChange={(e) => setNomeProduto(e.target.value)}
+                                    onChange={(event) => setNomeProduto(event.target.value)}
                                     placeholder="Nome do Produto"
                                     required
                                     className="border-b-2 mt-1 p-2 block w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -56,7 +56,7 @@ const CadastroProduto: React.FC = () => {
                                     id="valorProduto"
                                     name="valorProduto"
                                     value={valorProduto}
-                                    onChange={(e) => setValorProduto(e.target.value)}
+                                    onChange={(event) => setValorProduto(event.target.value)}
                                     placeholder="R$"
                                     required
                                     className="border-b-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"

@@ -13,7 +13,7 @@ if(isset($_REQUEST["acao"])) {
 
     switch ($acao) {
         case "getAllProduto":
-            if($id == null) {
+            if($id !== null) {
                 echo json_encode(["error" => "Ação GetAllProduto não aceita um ID"]);
             } else {
                 $produtos = $produtoController->getAllProduto();
@@ -21,8 +21,18 @@ if(isset($_REQUEST["acao"])) {
             }
             break;
 
+        case "getAllTipoCliente":
+            if($id !== null) {
+                echo json_encode(["error" => "Ação getAllTipoCliente não aceita um ID"]);
+            } else {
+                $tipo_cliente = $produtoController->getAllTipoCliente();
+                echo json_encode($tipo_cliente);
+            }
+                break;
+
+
         case "CreateNewProduto":
-            if($id == null) {
+            if($id !== null) {
                 echo json_encode(["error" => "Ação CreateNewProduto não aceita um ID"]);
             } else {
                 $mensagem = $produtoController->CreateNewProduto();
