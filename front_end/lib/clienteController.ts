@@ -35,16 +35,4 @@ export async function getAllClient() {
     return dados;
 }
 
-export function escolheTipoCliente(cargo_id:number){
-    switch(cargo_id){
-        case Cargos.Administrador:
-            return "Administrador"
-            break;
-        case Cargos.Vendedor:
-            return "Vendedor"
-            break
-        case Cargos.Financeiro:
-            return "Financeiro"
-            break
-    }
-}
+

@@ -1,8 +1,11 @@
 <?php
-include "../controller/userControler.php";
+// Inclua o arquivo de controlador de usuário corretamente
+include "../controller/UserController.php";
 
-$userController = new Usercontroller();
+// Instancie o controlador de usuário
+$userController = new UserController();
 
+// Defina os cabeçalhos para permitir acesso de qualquer origem
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
@@ -17,7 +20,7 @@ if(isset($_REQUEST["acao"])) {
             if ($id != null) {
                 echo json_encode(["error" => "Ação GetAllUsers não aceita um ID"]);
             } else {
-                $users = $userController->getAllUser();
+                $users = $userController->getAllUsers();
                 echo json_encode($users);
             }
             break;
@@ -56,4 +59,3 @@ if(isset($_REQUEST["acao"])) {
 } else {
     echo json_encode(["error" => "Ação não especificada."]);
 }
-?>

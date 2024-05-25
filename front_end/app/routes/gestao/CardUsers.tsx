@@ -1,29 +1,20 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-
-
+import { createNewUserGestao } from "@/lib/usuarioController";
 
 export default function cadastrarUsuarioGestao() {
-    const [user, setUser] = useState({
-        id: 0,
-        cargo_id: 0,
-        nome: "",
-        senha: "",
-        email: "",
-    });
 
-    const [nome, setNome] = useState("")
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [cargo_id, setCargoId] = useState("");
     const route = useRouter();
 
     async function handleSubmit() {
-        await createNewUserGestao(nome, email, senha);
-        route.push("/routes/gestao")
+        await createNewUserGestao(nome, Number(cargo_id), email, senha);
+        route.push("/routes/gestao");
     }
-
 
     return (
         <form onSubmit={(event) => { event.preventDefault(); handleSubmit(); }}>
@@ -56,12 +47,11 @@ export default function cadastrarUsuarioGestao() {
                                 id="senha" placeholder="Senha" onChange={(event) => setSenha(event.target.value)} />
                         </div>
                         <div className="flex flex-col space-y-1.5">
-                            
-                            <select value={user.cargo_id} onChange={(event) => setUser({ ...user, cargo_id: parseInt(event.target.value) })}>
-                                <option value={0}>Cargos...</option>
-                                <option value={6}>Administrador</option>
-                                <option value={7}>Vendedor</option>
-                                <option value={8}>Financeiro</option>
+                            <select id="cargo_id" onChange={(event) => setCargoId((event.target.value))}>
+                                <option value="">Cargos...</option>
+                                <option value={1}>Administrador</option>
+                                <option value={2}>Vendedor</option>
+                                <option value={3}>Financeiro</option>
                             </select>
                         </div>
                     </div>
@@ -75,6 +65,5 @@ export default function cadastrarUsuarioGestao() {
                 </Card>
             </div>
         </form>
-
     );
 }

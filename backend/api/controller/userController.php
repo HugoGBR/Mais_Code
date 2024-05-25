@@ -1,6 +1,5 @@
 <?php
 include "../database.php"; //importando database
-
 class Usercontroller
 {
     private $conn;
@@ -65,10 +64,11 @@ class Usercontroller
         //         return ['status' => 0, 'message' => 'Usuário não encontrado.'];
         //     }
             $user = json_decode(file_get_contents("php://input"));
-            $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
+            $sql = "INSERT INTO usuarios (nome,cargo_id, senha, email) VALUES (:nome, :cargo_id, :senha, :email)";
             $db = $this->conn->prepare($sql);
 
             $db->bindParam(":nome", $user->nome);
+            $db->bindParam("cargo_id", $user->cargo_id);
             $db->bindParam(":senha", $user->senha);
             $db->bindParam(":email", $user->email);
     

@@ -1,5 +1,6 @@
-import { escolheTipoCliente } from "@/lib/clienteController";
+
 import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
+import { escolheTipoCliente } from "@/lib/usuarioController";
 import Link from "next/link";
 
 export default function CardUsuario({dados}: { dados: dadosUsuario }) {
