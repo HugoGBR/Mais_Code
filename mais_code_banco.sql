@@ -38,7 +38,7 @@ CREATE TABLE `parcelas` (
 );
 
 
-CREATE TABLE `produtos` (
+CREATE TABLE `produtos` (produtos
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `tipo_cliente_id` bigint(20) unsigned NOT NULL,
   `nome` varchar(255) NOT NULL,
