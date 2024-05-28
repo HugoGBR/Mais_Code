@@ -27,7 +27,7 @@ class Usercontroller
         $sql = "INSERT INTO usuarios(nome,cargo_id,telefone,senha,email) VALUES (:nome,:cargo_id,:telefone,:senha,:email)";
         $db = $this->conn->prepare($sql);
         $db->bindParam(":nome", $user->nome);
-        $db->bindParam("cargo_id", $user->cargo_id);
+        $db->bindParam(":cargo_id", $user->cargo_id);
         $db->bindParam(":telefone", $user->telefone);
         $db->bindParam(":senha", $user->password_hash);
         $db->bindParam(":email", $user->email);
@@ -68,7 +68,7 @@ class Usercontroller
             $db = $this->conn->prepare($sql);
 
             $db->bindParam(":nome", $user->nome);
-            $db->bindParam("cargo_id", $user->cargo_id);
+            $db->bindParam(":cargo_id", $user->cargo_id);
             $db->bindParam(":senha", $user->senha);
             $db->bindParam(":email", $user->email);
     
