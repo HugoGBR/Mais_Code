@@ -4,15 +4,7 @@ import { useRouter } from "next/navigation";
 import { createNewCliente } from "@/lib/clienteController";
 
 export default function CadastrarCliente() {
-    const [user, setUser] = useState({
-        id: 0,
-        nome: "",
-        telefone: "",
-        email: "",
-        cpf_cnpj: ""
-    });
-
-
+   
     const [telefone, setTelefone] = useState("");
     const [nome, setNome] = useState("");
     const [cpf_cnpj, setCpf_cnpj] = useState("");
@@ -20,8 +12,8 @@ export default function CadastrarCliente() {
     const route = useRouter();
 
     async function handleSubmit() {
-        const resposta = await createNewCliente( nome, email,  telefone, cpf_cnpj)
-        route.push("/routes/cadastros/Cliente")
+        await createNewCliente( nome, email,  telefone, cpf_cnpj)
+        route.push("/routes/cadastros")
     }
 
 
