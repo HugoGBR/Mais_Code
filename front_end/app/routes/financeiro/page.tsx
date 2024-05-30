@@ -29,7 +29,7 @@ export default function Gestao() {
 
 
     return (
-        <div className="items-center py-10">
+        <div className="flex  md:grid md:grid-cols-2 space-x-4">
             {listaUsuarios
                 .map(item => (
                     <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
