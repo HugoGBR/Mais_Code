@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, FormEvent } from 'react';
 import {
     Select,
@@ -7,6 +8,9 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import CaracterLimit from '@/components/CaracterLimit';
+import { string } from 'zod';
+import { createNewProduto } from '@/lib/produtoControlle';
+import { useRouter } from 'next/navigation';
 
 const CadastroProduto: React.FC = () => {
     const [nomeProduto, setNomeProduto] = useState<string>('');
@@ -14,7 +18,7 @@ const CadastroProduto: React.FC = () => {
     const [condicaoProduto, setCondicaoProduto] = useState<string>(''); // Removido o estado inicial
     const [descricaoProduto, setDescricaoProduto] = useState<string>('');
     const descricaoLimiteCaracteres = 255;
-
+    const route = useRouter()
     const handleDescricaoChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const descricao = event.target.value;
         // Verifica se a descrição excede o limite de caracteres
@@ -23,10 +27,10 @@ const CadastroProduto: React.FC = () => {
         }
     };
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        // Aqui você pode adicionar lógica para enviar os dados do formulário para o servidor
-        console.log('Dados do formulário:', { nomeProduto, valorProduto, condicaoProduto, descricaoProduto });
+    async function handleSubmit() {
+        await createNewProduto (nomeProduto, valorProduto);
+        route.push("/routes/gestao");           
+        
     };
 
     return (
