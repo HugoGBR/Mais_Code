@@ -8,6 +8,8 @@ import {useRouter} from "next/navigation";
 import {getAllFinan} from '@/lib/Financeirocontroler';
 
 
+
+
 export default function Gestao() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
     const [carregando, setCarregando] = useState(true);
@@ -29,18 +31,18 @@ export default function Gestao() {
 
 
     return (
-        <div className="flex  md:grid md:grid-cols-2 space-x-4">
-            {listaUsuarios
-                .map(item => (
-                    <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                        <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
-                            <a className="block">
-                                <CardUsuario dados={item}/>
-                            </a>
-                        </div>
-                    </Link>
-                ))
-            }
+        
+        <div className="flex md:grid md:grid-cols-2 space-x-4">
+            {listaUsuarios.map(item => (
+                <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
+                    <div key={item.id} className='bg-gray-300 mb-4 rounded-lg' style={{width: '100%'}}>
+                        <a className="block">
+                            <CardUsuario dados={item}/>
+                        </a>
+                    </div>
+                </Link>
+            ))}
         </div>
     )
 }
+
