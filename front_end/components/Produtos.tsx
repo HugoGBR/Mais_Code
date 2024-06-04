@@ -1,24 +1,17 @@
 "use client"
 import React, { useState, FormEvent } from 'react';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import { createNewProduto } from '@/lib/produtoController';
 import { useRouter } from 'next/navigation';
 
 export default function CadastroProduto() {
     const [nomeProduto, setNomeProduto] = useState<string>('');
-    const [valorProduto, setValorProduto] = useState<string>('');
+    const [horasTrabalhadas, setHorasTrabalhadas] = useState<string>('');
     const [valorComissaoA, setValorComissaoA] = useState<string>('');
     const [valorComissaoB, setValorComissaoB] = useState<string>('');
-    
     const [descricaoProduto, setDescricaoProduto] = useState<string>('');
     const descricaoLimiteCaracteres = 255;
-    const route = useRouter()
+    const router = useRouter();
+
     const handleDescricaoChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const descricao = event.target.value;
         // Verifica se a descrição excede o limite de caracteres
@@ -27,19 +20,25 @@ export default function CadastroProduto() {
         }
     };
 
-    async function handleSubmit() {
-        await createNewProduto(nomeProduto, Number(valorProduto),Number(valorComissaoA), Number(valorComissaoB), descricaoProduto);
-        route.push("/routes/gestao");
-
+    const handleSubmit = async (event: FormEvent) => {
+        event.preventDefault();
+        await createNewProduto(
+            nomeProduto,
+            Number(horasTrabalhadas),
+            descricaoProduto,
+            Number(valorComissaoA),
+            Number(valorComissaoB),
+        );
+        router.push("routes/ajustes");
     };
 
     return (
         <div className="flex flex-col h-screen">
             {/* Card de Cadastro */}
-            <div className=" flex justify-center items-center flex-grow">
-                <div className=" max-w-lg w-full bg-white shadow-xl rounded-md p-8"> {/* Removida a classe text-center do card */}
-                    <h2 className="text-2xl font-semibold mb-4 text-center">Cadastro Produto</h2> {/* Centralizando apenas o título "Cadastro Produto" */}
-                    <form onSubmit={(event) => { event.preventDefault(); handleSubmit(); }}>
+            <div className="flex justify-center items-center flex-grow">
+                <div className="max-w-lg w-full bg-white shadow-xl rounded-md p-8">
+                    <h2 className="text-2xl font-semibold mb-4 text-center">Cadastro Produto</h2>
+                    <form onSubmit={handleSubmit}>
                         <div className="mb-4">
                             <input
                                 type="text"
@@ -49,49 +48,40 @@ export default function CadastroProduto() {
                                 onChange={(event) => setNomeProduto(event.target.value)}
                                 placeholder="Nome do Produto"
                                 required
-                                className="w-full border-b-2 focus:border-b-2
-                                focus:outline-none focus:border-blue-500"
+                                className="w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
                         </div>
                         <div className="space-x-4 mb-4 grid grid-cols-3 rounded-none">
                             <input
                                 type="text"
-                                id="valorProduto"
-                                name="valorProduto"
-                                value={valorProduto}
-                                onChange={(event) => setValorProduto(event.target.value)}
+                                id="horasTrabalhadas"
+                                name="horasTrabalhadas"
+                                value={horasTrabalhadas}
+                                onChange={(event) => setHorasTrabalhadas(event.target.value)}
                                 placeholder="R$"
                                 required
-                                className="border-b-2 focus:border-b-2
-                                focus:outline-none focus:border-blue-500"
+                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
-                            <div>
                             <input
                                 type="text"
-                                id="ValorComissaoA"
-                                name="ValorComissaoA"
+                                id="valorComissaoA"
+                                name="valorComissaoA"
                                 value={valorComissaoA}
                                 onChange={(event) => setValorComissaoA(event.target.value)}
-                                placeholder="A%"
+                                placeholder="Comissão A"
                                 required
-                                className="border-b-2 focus:border-b-2
-                                focus:outline-none focus:border-blue-500"
+                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
-                            </div>
-
-                            <div>
                             <input
                                 type="text"
-                                id="ValorComissaoB"
-                                name="ValorComissaoB"
+                                id="valorComissaoB"
+                                name="valorComissaoB"
                                 value={valorComissaoB}
                                 onChange={(event) => setValorComissaoB(event.target.value)}
-                                placeholder="B%"
+                                placeholder="Comissão B"
                                 required
-                                className="border-b-2 focus:border-b-2
-                                focus:outline-none focus:border-blue-500"
+                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
-                            </div>
                         </div>
 
                         <div className="mb-4 flex flex-col">
