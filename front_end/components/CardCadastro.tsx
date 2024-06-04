@@ -3,10 +3,28 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import Link from "next/link";
 import {GoGear} from "react-icons/go";
 import React, {useState} from "react";
+import { useRouter } from "next/navigation";
+import { CreateNewSell} from "@/lib/VendaController";
 
 export default function CardCadastro() {
 
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
+
+    // const [Cliente, setCliente] = useState("")
+    const [DataInicio, setDataInicio] = useState("");
+    const [DataFim, setDataFim] = useState("");
+    const [HoraTrabalhada, setHoraTrabalhada] = useState("");
+    const [NomeContato, setNomeContato] = useState("");
+    const [TelefoneContato, setTelefoneContato] = useState("");
+    const [EmailContato, setEmailContato] = useState("");
+    const [ValorEntrada, setValorEntrada] = useState("");
+    
+    const route = useRouter();
+
+    async function handleSubmit() {
+        await CreateNewSell( )
+        route.push("/routes/cadastros")
+    }
     return (
         <form>
             <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
@@ -20,20 +38,29 @@ export default function CardCadastro() {
 
                         <h2 className="mb-4 font-bold">Dados do Contrato</h2>
                         <div className="grid grid-cols-2 gap-5 mb-4">
-                            <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                   placeholder="Cliente"
-                                   type="text"/>
+                        <Select>
+                                    <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
+                                        <SelectValue placeholder="Cliente"/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="teste">Fulano</SelectItem>
+                                        <SelectItem value="testee">Siclano</SelectItem>
+                                        <SelectItem value="testeee">Beltrano</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             <input className="invisible border-b-2 focus:outline-none focus:border-blue-500"
                                    placeholder="Colaborador"
                                    type="text"/>
                             <div className="flex flex-col">
                                 <label className="text-sm" htmlFor="teste">Data Inicio</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                       placeholder="Data de inicio" type="date"/>
+                                       placeholder="Data de inicio" type="date"
+                                       onChange={(event) => setDataInicio(event.target.value)}/>
                             </div>
                             <div className="flex flex-col">
                                 <label className="text-sm" htmlFor="teste">Data Termino</label>
-                                <input className="border-b-2 focus:outline-none focus:border-blue-500" type="date"/>
+                                <input className="border-b-2 focus:outline-none focus:border-blue-500" type="date"
+                                onChange={(event) => setDataFim(event.target.value)}/>
                             </div>
                         </div>
 
@@ -50,7 +77,7 @@ export default function CardCadastro() {
                                     </SelectContent>
                                 </Select>
 
-                                
+
                                 <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
                                 <Select>
                                     <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
@@ -65,6 +92,7 @@ export default function CardCadastro() {
                             <div className="flex flex-col ml-5">
                                     <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
                                     <input className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    onChange={(event) => setHoraTrabalhada(event.target.value)}
                                         placeholder="Horas" type="number"/>
                             </div>
                         </div>
@@ -73,11 +101,12 @@ export default function CardCadastro() {
                         <div className="grid grid-cols-2 gap-5 mt-5">
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                    placeholder="Nome"
+                                   onChange={(event) => setNomeContato(event.target.value)}
                                    type="text"/>
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                   placeholder="(99) 99999-9999" type="tel"/>
+                                   placeholder="(99) 99999-9999" onChange={(event) => setTelefoneContato(event.target.value)} type="tel"/>
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                   placeholder="Email"
+                                   placeholder="Email" onChange={(event) => setEmailContato(event.target.value)}
                                    type="email"/>
                         </div>
                     </form>
@@ -93,7 +122,8 @@ export default function CardCadastro() {
                         <div className="flex mb-4 ">
                             <label className="mr-4" htmlFor="teste">Valor da Entrada</label>
                             <input className="border-b-2 w-28 focus:outline-none focus:border-blue-500"
-                                   placeholder="R$ 0000,00" type="text"/>
+                                   placeholder="R$ 0000,00" type="text"
+                                   onChange={(event) => setValorEntrada(event.target.value)}/>
                         </div>
 
                         <div className="mb-5">
