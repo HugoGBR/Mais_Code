@@ -32,20 +32,25 @@ class ProdutoController
     public function createNewProduto()
     {
         $produto = json_decode(file_get_contents("php://input"));
-        $sql = "INSERT INTO produtos(nome, tipo_cliente_id, horas_trabalhadas,descricao_produto) VALUES (:nome, :tipo_cliente_id, :horas_trabalhadas, :descricao_produto)";
+        
+        $sql = "INSERT INTO produtos(nome, tipo_cliente_id, horas_trabalhadas, descricao_produto) VALUES (:nome, :tipo_cliente_id, :horas_trabalhadas, :descricao_produto)";
+        
         $db = $this->conn->prepare($sql);
         $db->bindParam(":nome", $produto->nome);
         $db->bindParam(":tipo_cliente_id", $produto->tipo_cliente_id);
         $db->bindParam(":horas_trabalhadas", $produto->horas_trabalhadas);
         $db->bindParam(":descricao_produto", $produto->descricao_produto);
-        $db->execute();
-
+    
         if ($db->execute()) {
             $resposta = ["Mensagem" => "Produto Cadastrado com Sucesso!"];
+        } else {
+            $resposta = ["Mensagem" => "Erro ao cadastrar produto"];
         }
-
+    
         return $resposta;
+
     }
+ 
 
     public function getProdutoById(int $id)
     {
