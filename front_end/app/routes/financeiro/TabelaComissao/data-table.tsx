@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import {Button} from "@/components/ui/button"
 import {ChevronDownIcon} from "lucide-react"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -41,12 +41,23 @@ export function DataTableComissao<TData, TValue>({
                                              data,
                                          }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-        []
-    )
-    const [columnVisibility, setColumnVisibility] =
-        useState<VisibilityState>({})
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
+    const [totalPorcentagem, setTotalPorcentagem] = useState<number>(0);
+
+
+    useEffect(() => {
+        const calcularTotalPorcentagem = () => {
+          let total = 0;
+          data.forEach((item: any) => {
+            total += Number(item.porcentagem);
+          });
+          return total;
+        };
+
+        setTotalPorcentagem(calcularTotalPorcentagem());
+      }, [data]);
 
 
     const table = useReactTable({
@@ -159,6 +170,8 @@ export function DataTableComissao<TData, TValue>({
                         </TableBody>
                     </Table>
                 </div>
+                <div className="text-left">Total da Porcentagem:</div>
+                <div className="text-right">{totalPorcentagem}</div>
 
                 <div className="space-x-3 mt-4 flex justify-center items-center">
                     <Button
