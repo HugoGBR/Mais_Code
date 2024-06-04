@@ -45,6 +45,7 @@ const HomePage = () => {
                                 <TableHead className="w-1/4">N. Contrato</TableHead>
                                 <TableHead className="w-1/4">Data</TableHead>
                                 <TableHead className="w-1/4">Cliente</TableHead>
+                                <TableHead className="w-1/4">Valor</TableHead>
                                 <TableHead className="text-right w-1/4">Status</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -53,24 +54,28 @@ const HomePage = () => {
                                 <TableCell className="font-medium bg-gray-100 rounded-l-lg border-l-4 border-l-green-800">#1201</TableCell>
                                 <TableCell className="font-medium bg-gray-100">13/08/2023</TableCell>
                                 <TableCell className="font-medium bg-gray-100">Senac</TableCell>
+                                <TableCell className="font-medium bg-gray-100">R$1000,00</TableCell>
                                 <TableCell className="text-right font-medium bg-gray-100 rounded-r-lg">Ativo</TableCell>
                             </TableRow>
                             <TableRow className=''>
                                 <TableCell className="font-medium bg-gray-100 rounded-l-lg border-l-4 border-l-green-800">#1201</TableCell>
                                 <TableCell className="font-medium bg-gray-100">13/08/2023</TableCell>
                                 <TableCell className="font-medium bg-gray-100">Senac</TableCell>
+                                <TableCell className="font-medium bg-gray-100">R$1000,00</TableCell>
                                 <TableCell className="text-right font-medium bg-gray-100 rounded-r-lg">Ativo</TableCell>
                             </TableRow>
                             <TableRow className=''>
                                 <TableCell className="font-medium bg-gray-100 rounded-l-lg border-l-4 border-l-green-800">#1201</TableCell>
                                 <TableCell className="font-medium bg-gray-100">13/08/2023</TableCell>
                                 <TableCell className="font-medium bg-gray-100">Senac</TableCell>
+                                <TableCell className="font-medium bg-gray-100">R$1000,00</TableCell>
                                 <TableCell className="text-right font-medium bg-gray-100 rounded-r-lg">Ativo</TableCell>
                             </TableRow>
                             <TableRow className=''>
                                 <TableCell className="font-medium bg-gray-100 rounded-l-lg border-l-4 border-l-green-800">#1201</TableCell>
                                 <TableCell className="font-medium bg-gray-100">13/08/2023</TableCell>
                                 <TableCell className="font-medium bg-gray-100">Senac</TableCell>
+                                <TableCell className="font-medium bg-gray-100">R$1000,00</TableCell>
                                 <TableCell className="text-right font-medium bg-gray-100 rounded-r-lg">Ativo</TableCell>
                             </TableRow>
                         </TableBody>
