@@ -10,7 +10,7 @@ export async function createNewUserGestao(newNome: string, newCargoid: number, n
     const response = await request.json();
     console.log(response)
 
-    return response.message
+    return response
 
 }
 
