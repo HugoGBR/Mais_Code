@@ -11,7 +11,7 @@ export default function RootLayout({
 }>) {
     const pathname = usePathname();
     const isHome = pathname === '/routes/home';
-
+    
     return (
         <div className="md:flex md:flex-row h-screen w-full bg-[#F2F6F9]">
             <div className="md:h-screen md:relative md:flex-row gap-6">

@@ -10,6 +10,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
+
 // Verifica se a chave "acao" está definida em $_REQUEST
 if(isset($_REQUEST["acao"])) {
     $acao = $_REQUEST["acao"];
@@ -51,6 +52,18 @@ if(isset($_REQUEST["acao"])) {
                 echo json_encode($mensagem);
             }
             break;
+        
+            
+        case "validacaoLogin":
+            if ($id != null) {
+                    echo json_encode(["error" => "Ação ValidaçaoLogin não aceita um ID"]);
+            } else {
+                    $mensagem = $userController->validacaoLogin();
+                    echo json_encode($mensagem);
+            }
+            break;
+       
+        
         
         default:
             echo json_encode(["error" => "Ação não suportada."]);

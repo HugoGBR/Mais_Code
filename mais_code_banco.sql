@@ -43,6 +43,7 @@ CREATE TABLE `produtos` (produtos
   `tipo_cliente_id` bigint(20) unsigned NOT NULL,
   `nome` varchar(255) NOT NULL,
   `horas_trabalhadas` decimal(8,2) NOT NULL,
+  `descricao_produto` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `produtos_tipo_cliente_id_foreign` (`tipo_cliente_id`),
   CONSTRAINT `produtos_tipo_cliente_id_foreign` FOREIGN KEY (`tipo_cliente_id`) REFERENCES `tipo_cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

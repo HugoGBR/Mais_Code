@@ -1,5 +1,6 @@
 <?php
 include "../database.php"; //importando database
+
 class Usercontroller
 {
     private $conn;
@@ -16,10 +17,9 @@ class Usercontroller
         $db = $this->conn->prepare($sql);
         $db->execute();
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
+        echo "Nada";
         return $users;
     }
-
-    
 
     public function CreateNewUser()
     {
@@ -40,6 +40,26 @@ class Usercontroller
         return $resposta;
     }
 
+    public function validacaoLogin()
+    {
+        $user = json_decode(file_get_contents("php://input"));
+        $sql = "SELECT * FROM usuarios WHERE nome = :nome AND senha = :senha";
+        $db = $this->conn->prepare($sql);
+        $db->bindParam(":nome", $user->nome);
+        $db->bindParam(":senha", $user->senha);
+        $db->execute();
+        $users = $db->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($users) {
+            $resposta = 1;
+        }else{
+            $resposta = 0;
+        }
+
+        return $resposta;
+    }
+     
     public function getUserById(int $id)
     {
         try {
@@ -56,45 +76,42 @@ class Usercontroller
         }
     }
 
-    public function createNewUserGestao()
-    {
-         try{
-        //     $userExists = $this->checkUserExists($id);
-        //     if (!$userExists) {
-        //         return ['status' => 0, 'message' => 'Usuário não encontrado.'];
-        //     }
+    public function createNewUserGestao() {
+        try {
             $user = json_decode(file_get_contents("php://input"));
-            $sql = "INSERT INTO usuarios (nome,cargo_id, senha, email) VALUES (:nome, :cargo_id, :senha, :email)";
+
+            $userExists = $this->checkUserExists($user->nome);
+            if ($userExists) {
+                return json_encode(['status' => 0, 'message' => 'Usuário já existe.']);
+            }
+
+            $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
             $db = $this->conn->prepare($sql);
 
             $db->bindParam(":nome", $user->nome);
-            $db->bindParam(":cargo_id", $user->cargo_id);
             $db->bindParam(":senha", $user->senha);
             $db->bindParam(":email", $user->email);
-    
+
             if ($db->execute()) {
-                $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
+                $resposta = 1;
+            } else {
+                $resposta = 0;
             }
-            // if ($db->execute()) {
-            //     $response = ['status' => 1, 'message' => 'Registro atualizado com sucesso.'];
-            // } else {
-            //     $response = ['status' => 0, 'message' => 'Falha ao atualizar o registro.'];
-            // }
-            return $resposta;
-        }catch (Exception $e) {
-            echo 'Erro ao criar usuário: ' . $e->getMessage();
-            return null;
+
+            return json_encode($resposta);
+
+        } catch (\Exception $e) {
+            error_log('Erro ao criar usuário: ' . $e->getMessage());
+            return json_encode(['status' => 0, 'message' => 'Erro ao criar usuário.']);
         }
-    } 
+    }
+
+    private function checkUserExists(string $nome) {
+        $query = "SELECT COUNT(*) FROM usuarios WHERE nome = :nome";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':nome', $nome);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
 }
-
-
-// private function checkUserExists(int $id)
-// {
-//     $query = "SELECT COUNT(*) FROM USUARIOS WHERE id = :id";
-//     $stmt = $this->conn->prepare($query);
-//     $stmt->bindParam(':id', $id);
-//     $stmt->execute();
-//     $count = $stmt->fetchColumn();
-//     return $count > 0;
-// }

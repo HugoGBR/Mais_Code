@@ -152,7 +152,7 @@ export function DataTable<TData, TValue>({
                                         colSpan={columns.length}
                                         className="h-24 text-center"
                                     >
-                                        Nenhum Reultado
+                                        Nenhum Resultado
                                     </TableCell>
                                 </TableRow>
                             )}
@@ -175,7 +175,7 @@ export function DataTable<TData, TValue>({
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        Proximo
+                        Próximo
                     </Button>
                 </div>
             </div>

@@ -10,14 +10,30 @@ export default function cadastrarUsuarioGestao() {
     const [senha, setSenha] = useState("");
     const [cargo_id, setCargoId] = useState("");
     const route = useRouter();
+    const [camposPreenchidos, setCamposPreenchidos] = useState(false);
 
-    async function handleSubmit() {
-        await createNewUserGestao(nome, Number(cargo_id), email, senha);
-        route.push("/routes/gestao");
-    }
+    const handleSubmit = async () => {
+        if (nome.trim() !== '' && email.trim() !== '' && senha.trim() !== '' ) {
+            setCamposPreenchidos(true);
+
+            const response = await createNewUserGestao(nome, Number(cargo_id), email, senha);
+            
+            if (response == 1) {
+                alert('Usuário cadastrado com sucesso!');
+                route.push('/routes/gestao'); 
+            } else {
+                alert('Erro ao cadastrar o usuário. Por favor, tente novamente.');
+            }
+        } else {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+        }
+    };
+
+
 
     return (
         <form onSubmit={(event) => { event.preventDefault(); handleSubmit(); }}>
+            
             <div className="flex justify-center items-center bg-gray-100">
                 <Card className="p-10 drop-shadow-xl rounded-xl">
                     <div className="h-12 mb-5">

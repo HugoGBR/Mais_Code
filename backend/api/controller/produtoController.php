@@ -20,31 +20,29 @@ class ProdutoController
         return $produtos;
     }
 
-    public function getAllTipoCliente()
-    {
-        $sql = "SELECT * FROM tipo_cliente";
-        $db = $this->conn->prepare($sql);
-        $db->execute();
-        $tipo_cliente = $db->fetchAll(PDO::FETCH_ASSOC);
-        return $tipo_cliente;
-    }
-
     public function createNewProduto()
     {
         $produto = json_decode(file_get_contents("php://input"));
-        $sql = "INSERT INTO produtos(nome, tipo_cliente_id, horas_trabalhadas) VALUES (:nome, :tipo_cliente_id, :horas_trabalhadas)";
+        
+        $sql = "INSERT INTO produtos(nome, comissaoA, comissaoB, horas_trabalhadas, descricao_produto) VALUES (:nome, :comissaoA, :comissaoB, :horas_trabalhadas, :descricao_produto)";
+        
         $db = $this->conn->prepare($sql);
         $db->bindParam(":nome", $produto->nome);
-        $db->bindParam(":tipo_cliente_id", $produto->tipo_cliente_id);
         $db->bindParam(":horas_trabalhadas", $produto->horas_trabalhadas);
-        $db->execute();
-
+        $db->bindParam(":comissaoA", $produto->comissaoA);
+        $db->bindParam(":comissaoB", $produto->comissaoB);
+        $db->bindParam(":descricao_produto", $produto->descricao_produto);
+    
         if ($db->execute()) {
             $resposta = ["Mensagem" => "Produto Cadastrado com Sucesso!"];
+        } else {
+            $resposta = ["Mensagem" => "Erro ao cadastrar produto"];
         }
-
+    
         return $resposta;
+
     }
+ 
 
     public function getProdutoById(int $id)
     {
