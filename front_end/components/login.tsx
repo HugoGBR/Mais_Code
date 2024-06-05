@@ -27,8 +27,8 @@ const LoginPage = () => {
     };
 
     const memoizedErrors = useMemo(() => ({
-        user: errors.user && (<div className="text-red-500 font-bold p1">{errors.user.message}</div>),
-        password: errors.password && (<div className="text-red-500 font-bold p1">{errors.password.message}</div>)
+        user: errors.user && (<div className="text-red-500 text-sm">{errors.user.message}</div>),
+        password: errors.password && (<div className="text-red-500 text-sm">{errors.password.message}</div>)
     }), [errors.user, errors.password]);
 
     return (
