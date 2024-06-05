@@ -40,6 +40,26 @@ class Usercontroller
         return $resposta;
     }
 
+    public function validacaoLogin()
+    {
+        $user = json_decode(file_get_contents("php://input"));
+        $sql = "SELECT * FROM usuarios WHERE nome = :nome AND senha = :senha";
+        $db = $this->conn->prepare($sql);
+        $db->bindParam(":nome", $user->nome);
+        $db->bindParam(":senha", $user->senha);
+        $db->execute();
+        $users = $db->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($users) {
+            $resposta = 1;
+        }else{
+            $resposta = 0;
+        }
+
+        return $resposta;
+    }
+     
     public function getUserById(int $id)
     {
         try {
