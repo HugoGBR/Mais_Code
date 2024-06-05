@@ -38,7 +38,7 @@ CREATE TABLE `parcelas` (
 );
 
 
-CREATE TABLE `produtos` (produtos
+CREATE TABLE `produtos` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `horas_trabalhadas` decimal(8,2) NOT NULL,
@@ -97,5 +97,4 @@ CREATE TABLE `vendas` (
   CONSTRAINT `vendas_tipo_contrato_id_foreign` FOREIGN KEY (`tipo_contrato_id`) REFERENCES `tipo_contrato` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 
