@@ -40,26 +40,13 @@ CREATE TABLE `parcelas` (
 
 CREATE TABLE `produtos` (produtos
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `tipo_cliente_id` bigint(20) unsigned NOT NULL,
   `nome` varchar(255) NOT NULL,
   `horas_trabalhadas` decimal(8,2) NOT NULL,
+  `comissaoA` int NOT NULL,
+  `comissaoB` int NOT NULL,
   `descricao_produto` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `produtos_tipo_cliente_id_foreign` (`tipo_cliente_id`),
-  CONSTRAINT `produtos_tipo_cliente_id_foreign` FOREIGN KEY (`tipo_cliente_id`) REFERENCES `tipo_cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-/*Table structure for table `tipo_cliente` */
-
-DROP TABLE IF EXISTS `tipo_cliente`;
-
-CREATE TABLE `tipo_cliente` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `porcentagem` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`)
 );
-
-/*Table structure for table `tipo_contrato` */
 
 DROP TABLE IF EXISTS `tipo_contrato`;
 
