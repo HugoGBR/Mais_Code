@@ -10,9 +10,24 @@ export async function createNewUserGestao(newNome: string, newCargoid: number, n
     const response = await request.json();
     console.log(response)
 
-    return response.message
+    return response
 
 }
+
+export async function validacaoLogin(newNome: string, newSenha:string) {
+    const request = await fetch("http://localhost/Mais_code/backend/api/service/user.php?acao=validacaoLogin",
+        {
+            method: "POST",
+            body: JSON.stringify({ nome: newNome,senha:newSenha })
+        });
+
+    const response = await request.json();
+    console.log(response)
+
+    return response
+
+}
+
 export async function getAllUsers(){
     const resposta = await fetch("http://localhost/Mais_code/backend/api/service/user.php?acao=getAllUsers")
     const dados = await resposta.json();

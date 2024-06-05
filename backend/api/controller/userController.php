@@ -40,6 +40,26 @@ class Usercontroller
         return $resposta;
     }
 
+    public function validacaoLogin()
+    {
+        $user = json_decode(file_get_contents("php://input"));
+        $sql = "SELECT * FROM usuarios WHERE nome = :nome AND senha = :senha";
+        $db = $this->conn->prepare($sql);
+        $db->bindParam(":nome", $user->nome);
+        $db->bindParam(":senha", $user->senha);
+        $db->execute();
+        $users = $db->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($users) {
+            $resposta = 1;
+        }else{
+            $resposta = 0;
+        }
+
+        return $resposta;
+    }
+     
     public function getUserById(int $id)
     {
         try {
@@ -62,8 +82,9 @@ class Usercontroller
 
             $userExists = $this->checkUserExists($user->nome);
             if ($userExists) {
-                return ['status' => 0, 'message' => 'Usuário já existe.'];
+                return json_encode(['status' => 0, 'message' => 'Usuário já existe.']);
             }
+
             $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
             $db = $this->conn->prepare($sql);
 
@@ -72,16 +93,16 @@ class Usercontroller
             $db->bindParam(":email", $user->email);
 
             if ($db->execute()) {
-                $resposta = ["status" => 1, "message" => "Usuário cadastrado com sucesso!"];
+                $resposta = 1;
             } else {
-                $resposta = ["status" => 0, "message" => "Erro ao cadastrar o usuário."];
+                $resposta = 0;
             }
 
-            return $resposta;
+            return json_encode($resposta);
 
         } catch (\Exception $e) {
-            echo 'Erro ao criar usuário: ' . $e->getMessage();
-            return ['status' => 0, 'message' => 'Erro ao criar usuário.'];
+            error_log('Erro ao criar usuário: ' . $e->getMessage());
+            return json_encode(['status' => 0, 'message' => 'Erro ao criar usuário.']);
         }
     }
 
