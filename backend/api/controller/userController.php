@@ -80,6 +80,10 @@ class Usercontroller
         try {
             $user = json_decode(file_get_contents("php://input"));
 
+            if (!$user || !isset($user->nome) || !isset($user->senha) || !isset($user->email)) {
+                return json_encode(['status' => 0, 'message' => 'Dados incompletos.']);
+            }
+
             $userExists = $this->checkUserExists($user->nome);
             if ($userExists) {
                 return json_encode(['status' => 0, 'message' => 'Usuário já existe.']);
@@ -105,6 +109,8 @@ class Usercontroller
             return json_encode(['status' => 0, 'message' => 'Erro ao criar usuário.']);
         }
     }
+
+
 
     private function checkUserExists(string $nome) {
         $query = "SELECT COUNT(*) FROM usuarios WHERE nome = :nome";

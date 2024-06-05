@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardFooter } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { createNewUserGestao } from "@/lib/usuarioController";
 
