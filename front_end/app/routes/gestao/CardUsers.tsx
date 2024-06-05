@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { createNewUserGestao } from "@/lib/usuarioController";
 
@@ -20,7 +20,7 @@ export default function cadastrarUsuarioGestao() {
             
             if (response == 1) {
                 alert('Usuário cadastrado com sucesso!');
-                route.push('/routes/gestao'); 
+                route.push('/routes/gestao/Usuario'); 
             } else {
                 alert('Erro ao cadastrar o usuário. Por favor, tente novamente.');
             }
@@ -28,7 +28,7 @@ export default function cadastrarUsuarioGestao() {
             alert('Por favor, preencha todos os campos obrigatórios.');
         }
     };
-
+    
 
 
     return (
