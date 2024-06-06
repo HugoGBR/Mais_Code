@@ -4,7 +4,8 @@ import Link from "next/link";
 import {GoGear} from "react-icons/go";
 import React, {useState} from "react";
 import { useRouter } from "next/navigation";
-import { CreateNewSell} from "@/lib/VendaController";
+import { createNewSell } from "@/lib/VendaController";
+
 
 export default function CardCadastro() {
 
@@ -13,7 +14,6 @@ export default function CardCadastro() {
     // const [Cliente, setCliente] = useState("")
     const [DataInicio, setDataInicio] = useState("");
     const [DataFim, setDataFim] = useState("");
-    const [HoraTrabalhada, setHoraTrabalhada] = useState("");
     const [NomeContato, setNomeContato] = useState("");
     const [TelefoneContato, setTelefoneContato] = useState("");
     const [EmailContato, setEmailContato] = useState("");
@@ -22,7 +22,10 @@ export default function CardCadastro() {
     const route = useRouter();
 
     async function handleSubmit() {
-        await CreateNewSell( )
+        const datadoinicio = new Date (DataInicio)
+        const datadofim = new Date (DataFim)
+        
+        await createNewSell(datadoinicio, datadofim, NomeContato, Number(TelefoneContato), EmailContato, Number(ValorEntrada))
         route.push("/routes/cadastros")
     }
     return (
@@ -92,7 +95,7 @@ export default function CardCadastro() {
                             <div className="flex flex-col ml-5">
                                     <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
                                     <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    onChange={(event) => setHoraTrabalhada(event.target.value)}
+                                    // onChange={(event) => setHoraTrabalhada(event.target.value)}
                                         placeholder="Horas" type="number"/>
                             </div>
                         </div>
@@ -199,4 +202,8 @@ export default function CardCadastro() {
         </form>
         
     )
+}
+
+function CreateNewSell() {
+    throw new Error("Function not implemented.");
 }
