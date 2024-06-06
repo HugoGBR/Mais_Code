@@ -14,11 +14,11 @@ export async function createNewUserGestao(newNome: string, newCargoid: number, n
 
 }
 
-export async function validacaoLogin(newNome: string, newSenha:string) {
+export async function validacaoLogin(newEmail: string, newSenha:string) {
     const request = await fetch("http://localhost/Mais_code/backend/api/service/user.php?acao=validacaoLogin",
         {
             method: "POST",
-            body: JSON.stringify({ nome: newNome,senha:newSenha })
+            body: JSON.stringify({ email: newEmail,senha:newSenha })
         });
 
     const response = await request.json();

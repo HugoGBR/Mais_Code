@@ -43,9 +43,9 @@ class Usercontroller
     public function validacaoLogin()
     {
         $user = json_decode(file_get_contents("php://input"));
-        $sql = "SELECT * FROM usuarios WHERE nome = :nome AND senha = :senha";
+        $sql = "SELECT * FROM usuarios WHERE email = :email AND senha = :senha";
         $db = $this->conn->prepare($sql);
-        $db->bindParam(":nome", $user->nome);
+        $db->bindParam(":email", $user->email);
         $db->bindParam(":senha", $user->senha);
         $db->execute();
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
