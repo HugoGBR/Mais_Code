@@ -20,7 +20,7 @@ export default function cadastrarUsuarioGestao() {
             
             if (response == 1) {
                 alert('Usuário cadastrado com sucesso!');
-                route.push('/routes/gestao'); 
+                route.push('/routes/gestao/Usuario'); 
             } else {
                 alert('Erro ao cadastrar o usuário. Por favor, tente novamente.');
             }
@@ -28,7 +28,7 @@ export default function cadastrarUsuarioGestao() {
             alert('Por favor, preencha todos os campos obrigatórios.');
         }
     };
-
+    
 
 
     return (
