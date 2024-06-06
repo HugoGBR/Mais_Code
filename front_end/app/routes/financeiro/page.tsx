@@ -7,12 +7,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getAllFinan } from '@/lib/Financeirocontroler';
 
+  
+
 
 export default function Gestao() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
     const [carregando, setCarregando] = useState(true);
+    // cosnt [intens,setitens]=useState(0)
     const router = useRouter();
- b
+    // const começo = (actualPage - 1) * itensPerPage;
+    //  const final = actualPage * itensPerPage;
     const rotaNewUser = () => {
         router.push('/routes/gestao/Usuario');
     }
@@ -44,5 +48,6 @@ export default function Gestao() {
             </div>
            
         </div>
+        
     )
 }
