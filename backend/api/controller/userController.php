@@ -89,10 +89,11 @@ class Usercontroller
                 return json_encode(['status' => 0, 'message' => 'Usuário já existe.']);
             }
 
-            $sql = "INSERT INTO usuarios (nome, senha, email) VALUES (:nome, :senha, :email)";
+            $sql = "INSERT INTO usuarios (nome,cargo_id, senha, email) VALUES (:nome, :cargo_id, :senha, :email)";
             $db = $this->conn->prepare($sql);
 
             $db->bindParam(":nome", $user->nome);
+            $db->bindParam("cargo_id", $user->cargo_id);
             $db->bindParam(":senha", $user->senha);
             $db->bindParam(":email", $user->email);
 
