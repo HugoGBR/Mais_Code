@@ -27,9 +27,9 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import {Button} from "@/components/ui/button"
-import {ChevronDownIcon} from "lucide-react"
-import {useState} from "react"
+import { Button } from "@/components/ui/button"
+import { ChevronDownIcon } from "lucide-react"
+import { useState } from "react"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -37,9 +37,9 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({
-                                             columns,
-                                             data,
-                                         }: DataTableProps<TData, TValue>) {
+    columns,
+    data,
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
@@ -85,7 +85,7 @@ export function DataTable<TData, TValue>({
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="ml-auto">
-                                Filtros <ChevronDownIcon className="ml-2 h-4 w-4"/>
+                                Filtros <ChevronDownIcon className="ml-2 h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -98,9 +98,9 @@ export function DataTable<TData, TValue>({
                                             key={column.id}
                                             className="capitalize"
                                             checked={column.getIsVisible()}
-                                            //onCheckedChange={(value) =>
-                                            // column.toggleVisibility(!!value)
-                                            //}
+                                        //onCheckedChange={(value) =>
+                                        // column.toggleVisibility(!!value)
+                                        //}
                                         >
                                             {column.id}
                                         </DropdownMenuCheckboxItem>

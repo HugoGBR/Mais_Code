@@ -1,8 +1,8 @@
 "use client"
 
-import {Button} from "@/components/ui/button";
-import {CaretSortIcon} from "@radix-ui/react-icons";
-import {ColumnDef} from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
+import { CaretSortIcon } from "@radix-ui/react-icons";
+import { ColumnDef } from "@tanstack/react-table";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -16,7 +16,7 @@ export type Payment = {
 export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "id",
-        header: ({column}) => {
+        header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
@@ -27,65 +27,65 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("id")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("id")}</div>,
     },
 
 
     {
         accessorKey: "inicio_contrato",
-        header: ({column}) => {
+        header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Data
-                    <CaretSortIcon className="ml-2 h-4 w-4"/>
+                    <CaretSortIcon className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("inicio_contrato")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("inicio_contrato")}</div>,
     },
 
 
     {
         accessorKey: "nome",
-        header: ({column}) => {
+        header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Cliente
-                    <CaretSortIcon className="ml-2 h-4 w-4"/>
+                    <CaretSortIcon className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("nome")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("nome")}</div>,
     },
 
 
     {
         accessorKey: "nome_vendedor",
-        header: ({column}) => {
+        header: ({ column }) => {
             return (
-                <Button 
+                <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Tipo
-                    <CaretSortIcon className="ml-2 h-4 w-4"/>
+                    <CaretSortIcon className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("nome_vendedor")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("nome_vendedor")}</div>,
     },
 
 
     {
         accessorKey: "valor_total",
         header: () => <div className="text-center">Valor</div>,
-        cell: ({row}) => {
+        cell: ({ row }) => {
             const quantia = parseFloat(row.getValue("valor_total"))
 
 
@@ -100,7 +100,7 @@ export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "status",
         header: () => <div className="text-center">Status</div>,
-        cell: ({row}) => (
+        cell: ({ row }) => (
             <div className="capitalize text-center">{row.getValue("numero_parcela")}</div>
         ),
     },
@@ -109,7 +109,7 @@ export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "valor_total",
         header: () => <div className="text-center">Valor</div>,
-        cell: ({row}) => (
+        cell: ({ row }) => (
             <div className="capitalize text-center">{row.getValue("valor_total")}</div>
         ),
     },
@@ -118,16 +118,16 @@ export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "porcentagem",
         header: () => <div className="text-center">Comissão</div>,
-        cell: ({row}) => (
+        cell: ({ row }) => (
             <div className="capitalize text-center">{row.getValue("porcentagem")}</div>
         ),
     },
 
-    
+
     {
         id: "actions",
         enableHiding: false,
-        cell: ({row}) => {
+        cell: ({ row }) => {
             const payment = row.original
 
         },

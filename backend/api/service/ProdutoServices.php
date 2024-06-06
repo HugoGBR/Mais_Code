@@ -21,24 +21,27 @@ switch ($acao) {
         }
         break;
 
-    case "getAllTipoCliente":
-        if ($id != null) {
-            echo json_encode(["error" => "Ação getAllTipoCliente não aceita um ID"]);
-        } else {
-            $tipo_cliente = $produtoController->getAllTipoCliente();
-            echo json_encode($tipo_cliente);
-        }
-        break;
-
-
     case "createNewProduto":
         if ($id != null) {
             echo json_encode(["error" => "Ação CreateNewProduto não aceita um ID"]);
         } else {
-            
+
             $mensagem = $produtoController->CreateNewProduto();
             echo json_encode($mensagem);
         }
         break;
+
+    case "BuscarProdutos":
+        if ($id != null) {
+            echo "Ação 'BuscarProdutos' não aceita um ID";
+        } else {
+            $users = $produtoController->BuscarProdutos();
+            echo json_encode($users);
+        }
+        break;
+    default:
+        echo "Rota não encontrada";
+
+
 }
 ?>

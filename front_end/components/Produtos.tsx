@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, FormEvent } from 'react';
-import { createNewProduto } from '@/lib/produtoController';
+import { createNewProduto } from '@/lib/ProdutoController';
 import { useRouter } from 'next/navigation';
 
 export default function CadastroProduto() {
