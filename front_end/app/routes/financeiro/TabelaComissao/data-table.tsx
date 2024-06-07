@@ -1,5 +1,15 @@
 "use client"
 
+
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination"
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -30,6 +40,7 @@ import {
 import {Button} from "@/components/ui/button"
 import {ChevronDownIcon} from "lucide-react"
 import {useEffect, useState} from "react"
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -81,6 +92,16 @@ export function DataTableComissao<TData, TValue>({
 
     return (
         <div>
+            {/* <div className="bg-white max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500 text-right">
+                <div >{totalPorcentagem}</div>
+            </div> */}
+            <div className="flex justify-end pb-2 drop-shadow-lg ">
+                <div className="bg-white border boder-gray-300 rounded-md py-2 px-4 w-auto ">
+                    Remuneração R$ {totalPorcentagem}
+
+                </div>
+            </div>
+
             <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
                 <div className="flex items-center py-4 input-container">
                     <input
@@ -170,11 +191,9 @@ export function DataTableComissao<TData, TValue>({
                         </TableBody>
                     </Table>
                 </div>
-                <div className="text-left">Total da Porcentagem:</div>
-                <div className="text-right">{totalPorcentagem}</div>
 
                 <div className="space-x-3 mt-4 flex justify-center items-center">
-                    <Button
+                    {/* <Button
                         variant="outline"
                         size="sm"
                         onClick={() => table.previousPage()}
@@ -188,8 +207,24 @@ export function DataTableComissao<TData, TValue>({
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        Proximo
-                    </Button>
+                        Proximo 
+                    </Button> */}
+
+                    <Pagination>
+                <PaginationContent>
+                    <PaginationItem>
+                        <PaginationPrevious onClick={() => table.nextPage()} />
+                    </PaginationItem>
+              
+                    {/* <PaginationItem>
+                        <PaginationLink href="#">{paginaAtual}</PaginationLink>
+                    </PaginationItem> */}
+                    
+                    <PaginationItem>
+                        <PaginationNext onClick={() => table.nextPage()} />
+                    </PaginationItem>
+                </PaginationContent>
+            </Pagination>
                 </div>
             </div>
         </div>

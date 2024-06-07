@@ -1,84 +1,68 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
+import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
 import CardUsuario from '@/components/CardUsuario';
+import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
-import { useRouter } from "next/router"; 
-import { getAllFinan } from '@/lib/Financeirocontroler';
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination"
+import {useRouter} from "next/navigation";
+import { getAllUsers } from '@/lib/usuarioController';
+
 
 export default function Gestao() {
-    const [listaUsuarios, setListaUsuarios] = useState([]);
+    const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
     const [carregando, setCarregando] = useState(true);
-    const [paginaAtual, setPaginaAtual] = useState(1);
-    const itensPorPagina = 8;
- 
+    const router = useRouter();
 
-    async function carregarUsuarios() {
-        try {
-            const usuarios = await getAllFinan();
-            setListaUsuarios(usuarios);
-        } catch (error) {
-            console.error("Erro ao carregar usuários:", error);
-        } finally {
-            setCarregando(false);
-        }
+    const rotaNewUser = () => {
+        router.push('/routes/gestao/Usuario');
+    }
+
+    async function carregarUsuarios() { 
+        const usuario = await getAllUsers() 
+        setListaUsuarios(usuario)
     }
 
     useEffect(() => {
         carregarUsuarios();
     }, []);
-
-
-
-    const PaginaAnterior = () => {
-        setPaginaAtual(prevPage => Math.max(prevPage - 1, 1));
+    
+    const renderGestao = (tipoCadastro: number) => {
+        return (
+            <>
+                {listaUsuarios
+                    .filter(item => item.tipo_cadastro === tipoCadastro)
+                    .map(item => (
+                        <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
+                            <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
+                                <a className="block">
+                                    <CardUsuario dados={item}/>
+                                </a>
+                            </div>
+                        </Link>
+                    ))
+                }
+            </>
+        );
     }
-
-    const ProximaPagina = () => {
-        setPaginaAtual(prevPage => prevPage + 1);
-    }
-
-    const inicioIndex = (paginaAtual - 1) * itensPorPagina;
-    const finalIndex = inicioIndex + itensPorPagina;
 
     return (
-        <div>
-            <div className="flex md:grid md:grid-cols-2 space-x-4">
-                {listaUsuarios.slice(inicioIndex, finalIndex).map(item => (
-                    <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                        <div className='bg-gray-300 mb-4 rounded-lg' style={{ width: '100%' }}>
-                            <a className="block">
-                                <CardUsuario dados={item} />
-                            </a>
-                        </div>
-                    </Link>
-                ))}
-            </div>
-           
-            <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious onClick={PaginaAnterior} />
-                    </PaginationItem>
-              
-                    <PaginationItem>
-                        <PaginationLink href="#">{paginaAtual}</PaginationLink>
-                    </PaginationItem>
-                    
-                    <PaginationItem>
-                        <PaginationNext onClick={ProximaPagina}  />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+        <div className="items-center py-10">
+            <Tabs defaultValue=''>
+
+                <TabsContent value='' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                    {renderGestao(1)}
+                </TabsContent>
+                <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                    {renderGestao(1)}
+                </TabsContent>
+                <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                    {renderGestao(2)}
+                </TabsContent>
+                <TabsContent value='Financeiro' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                    {renderGestao(3)}
+                </TabsContent>
+            </Tabs>
         </div>
     )
 }
