@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import CardUsuario from '@/components/CardUsuario';
+import Cardfinanceiro from '@/components/Carduserfinanceiro';
 import Link from "next/link";
-import { useRouter } from "next/router"; 
 import { getAllFinan } from '@/lib/Financeirocontroler';
 import {
     Pagination,
@@ -15,12 +14,13 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 
+
 export default function Gestao() {
     const [listaUsuarios, setListaUsuarios] = useState([]);
     const [carregando, setCarregando] = useState(true);
     const [paginaAtual, setPaginaAtual] = useState(1);
     const itensPorPagina = 8;
- 
+
 
     async function carregarUsuarios() {
         try {
@@ -54,10 +54,10 @@ export default function Gestao() {
         <div>
             <div className="flex md:grid md:grid-cols-2 space-x-4">
                 {listaUsuarios.slice(inicioIndex, finalIndex).map(item => (
-                    <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
+                    <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
                         <div className='bg-gray-300 mb-4 rounded-lg' style={{ width: '100%' }}>
                             <a className="block">
-                                <CardUsuario dados={item} />
+                                <Cardfinanceiro dados={item} />
                             </a>
                         </div>
                     </Link>
