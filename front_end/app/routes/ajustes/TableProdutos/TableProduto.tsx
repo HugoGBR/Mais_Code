@@ -21,12 +21,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
+import { ChevronDownIcon } from "lucide-react"
 import { useState } from "react"
-import {RiCloseCircleLine} from "react-icons/ri";
-import {PiPlusCircleBold} from "react-icons/pi";
-import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -68,24 +71,43 @@ export function TableProduto<TData, TValue>({
   return (
     <div>
       <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
-        <div className="flex items-center justify-between py-4 input-container">
+        <div className="flex items-center py-4 input-container">
           <input
             type="text"
             placeholder="Pesquisar..."
-            value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("nome")?.setFilterValue(event.target.value)
+              table.getColumn("email")?.setFilterValue(event.target.value)
             }
             className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
           />
-          <div className="flex space-x-2">
-            <Link href="">
-              <RiCloseCircleLine size={25} color="red" />
-            </Link>
-            <Link href={'/routes/ajustes/Produtos'}>
-              <PiPlusCircleBold size={25} color="#0762C8" />
-            </Link>
-          </div>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Filtros <ChevronDownIcon className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                    //onCheckedChange={(value) =>
+                    // column.toggleVisibility(!!value)
+                    //}
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <div className="rounded-3xl border">
           <Table>

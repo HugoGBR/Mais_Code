@@ -30,6 +30,15 @@ switch ($acao) {
             echo json_encode($mensagem);
         }
         break;
+
+    case "BuscarProdutos":
+        if ($id != null) {
+            echo "Ação 'BuscarProdutos' não aceita um ID";
+        } else {
+            $users = $produtoController->BuscarProdutos();
+            echo json_encode($users);
+        }
+        break;
     default:
         echo "Rota não encontrada";
 

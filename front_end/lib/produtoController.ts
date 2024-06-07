@@ -1,7 +1,3 @@
-// arquivo: produtoService.ts
-
-import { backendURL } from "./URLS/backendURL";
-
 export async function createNewProduto(
   newNome: string,
   newHoras_Trabalhadas: number,
@@ -9,52 +5,45 @@ export async function createNewProduto(
   valorComissaoA: number,
   valorComissaoB: number
 ) {
-  try {
-    const response = await fetch(
-      `${backendURL()}/ProdutoServices.php?acao=createNewProduto`,
-      {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          nome: newNome,
-          horas_trabalhadas: newHoras_Trabalhadas,
-          comissaoA: valorComissaoA,
-          comissaoB: valorComissaoB,
-          descricao_produto: newDescricao_produto
-        }),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`Erro ao criar novo produto: ${response.statusText}`);
+  const request = await fetch(
+    "http://localhost/Mais_Code/backend/api/service/produto.php?acao=createNewProduto",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        nome: newNome,
+        horas_trabalhadas: newHoras_Trabalhadas,
+        comissaoA: valorComissaoA,
+        comissaoB: valorComissaoB,
+        descricao_produto: newDescricao_produto
+      }),
     }
+  );
 
-    const data = await response.json();
-    console.log(data);
+  const response = await request.json();
+  console.log(response);
 
-    return data;
-  } catch (error) {
-    console.error("Erro ao criar novo produto:", error);
-    throw error;
-  }
+  return response;
 }
 
 export async function getAllProduto() {
+  const resposta = await fetch(
+    "http://localhost/Mais_Code/backend/api/service/produto.php?acao=getAllProduto"
+  );
+  const dados = await resposta.json();
+  return dados;
+}
+
+export async function fetchData() {
   try {
-    const response = await fetch(
-      `${backendURL()}/ProdutoServices.php?acao=getAllProduto`
-    );
-
+    const response = await fetch("http://localhost/Mais_Code/backend/api/service/relatorio.php?acao=BuscarProdutos");
     if (!response.ok) {
-      throw new Error(`Erro ao buscar produtos: ${response.statusText}`);
+      throw new Error("Erro ao buscar os dados do relatório");
     }
+    const jsonData = await response.json();
+    console.log(jsonData)
+    return (jsonData);
 
-    const data = await response.json();
-    return data;
   } catch (error) {
-    console.error("Erro ao buscar todos os produtos:", error);
-    throw error;
+    console.error("Erro:", error);
   }
 }

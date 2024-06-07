@@ -19,6 +19,9 @@ switch ($acao) {
             echo json_encode($users); 
         }
         break;
+
+    
+        
     default:
         echo "Rota não encontrada";
 }
