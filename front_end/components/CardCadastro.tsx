@@ -41,16 +41,17 @@ export default function CardCadastro() {
 
                         <h2 className="mb-4 font-bold">Dados do Contrato</h2>
                         <div className="grid grid-cols-2 gap-5 mb-4">
-                        <Select>
-                                    <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
-                                        <SelectValue placeholder="Cliente"/>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="teste">Fulano</SelectItem>
-                                        <SelectItem value="testee">Siclano</SelectItem>
-                                        <SelectItem value="testeee">Beltrano</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                        <div className="grid grid-cols-2 gap-5 mt-5">
+                            <input className="border-b-2 focus:outline-none focus:border-blue-500"
+                                   placeholder="CPF/CNPJ do Cliente"
+                                // onChange={(event) => setNomeContato(event.target.value)}
+                                   type="text"/>
+
+                                    <button type="submit"
+                                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                BUSCAR
+                            </button>
+                        </div>
                             <input className="invisible border-b-2 focus:outline-none focus:border-blue-500"
                                    placeholder="Colaborador"
                                    type="text"/>
