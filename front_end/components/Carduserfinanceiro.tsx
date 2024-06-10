@@ -7,7 +7,7 @@ export default function Cardfinanceiro({dados}: { dados: dadosUsuario }) {
     const router = useRouter();
     
     return (
-        <div onClick={() => router.push(`/financeiro/${dados.id}`)} >
+        <div onClick={() => router.push(`/routes/financeiro/${dados.id}`)} >
             <Link href="">
                 <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full py-3 px-5" >
                     <div className="flex gap-6 items-center">
