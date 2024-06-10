@@ -52,7 +52,7 @@ export default function Gestao() {
 
     return (
         <div>
-            <div className="flex md:grid md:grid-cols-2 space-x-4">
+            <div className=" md:grid md:grid-cols-2 space-x-3">
                 {listaUsuarios.slice(inicioIndex, finalIndex).map(item => (
                     <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
                         <div className='bg-gray-300 mb-4 rounded-lg' style={{ width: '100%' }}>
@@ -60,13 +60,13 @@ export default function Gestao() {
                                 <Cardfinanceiro dados={item} />
                             </a>
                         </div>
-                    </Link>
+                    </Link> 
                 ))}
             </div>
            
             <Pagination>
                 <PaginationContent>
-                    <PaginationItem>
+                    <PaginationItem >
                         <PaginationPrevious onClick={PaginaAnterior} />
                     </PaginationItem>
               
@@ -75,7 +75,7 @@ export default function Gestao() {
                     </PaginationItem>
                     
                     <PaginationItem>
-                        <PaginationNext onClick={ProximaPagina}  />
+                        <PaginationNext onClick={ProximaPagina} className='blue-icon'  />
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>

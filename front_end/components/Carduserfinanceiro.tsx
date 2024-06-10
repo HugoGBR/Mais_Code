@@ -5,13 +5,11 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation';
 export default function Cardfinanceiro({dados}: { dados: dadosUsuario }) {
     const router = useRouter();
-    const rotauser = () => {
-        router.push('/routes/financeiro');
-         }
+    
     return (
-        <div onClick={rotauser}>
+        <div onClick={() => router.push(`/financeiro/${dados.id}`)} >
             <Link href="">
-                <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full py-3 px-5">
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full py-3 px-5" >
                     <div className="flex gap-6 items-center">
                         <img src="/icons/icon-perfil-preto.png" alt="Perfil" className="w-12 h-12 rounded-2xl" />
        
