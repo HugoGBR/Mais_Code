@@ -9,6 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import CadastroLink from './CompCadastro';
+import RelatorioHome from '@/components/relatorioHome';
 
 const HomePage = () => {
     return (
@@ -38,7 +39,9 @@ const HomePage = () => {
                 <div className='bg-white drop-shadow-xl w-full md:w-3/5 p-5 h-auto rounded-xl'>
                     <h1 className='flex justify-center'>Últimas Vendas</h1>
 
-                    <Table className='w-full'>
+                    <RelatorioHome/> 
+
+                     {/* <Table className='w-full'>
                         <TableCaption></TableCaption>
                         <TableHeader>
                             <TableRow>
@@ -79,7 +82,7 @@ const HomePage = () => {
                                 <TableCell className="text-right font-medium bg-gray-100 rounded-r-lg">Ativo</TableCell>
                             </TableRow>
                         </TableBody>
-                    </Table>
+                    </Table>  */}
                 </div>
             </div>
 

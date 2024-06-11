@@ -21,44 +21,25 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { ChevronDownIcon } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function DataTableComissao<TData, TValue>({
+export function DataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
+        []
+    )
+    const [columnVisibility, setColumnVisibility] =
+        useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
-    const [totalPorcentagem, setTotalPorcentagem] = useState<number>(0)
 
-    useEffect(() => {
-        const calcularTotalPorcentagem = () => {
-            let total = 0
-            if (Array.isArray(data)) {
-                data.forEach((item: any) => {
-                    total += Number(item.porcentagem)
-                })
-            }
-            return total
-        }
-
-        setTotalPorcentagem(calcularTotalPorcentagem())
-    }, [data])
 
     const table = useReactTable({
         data,
@@ -82,19 +63,10 @@ export function DataTableComissao<TData, TValue>({
     return (
         <div>
             <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
-                <div className="flex items-center py-4 input-container">
-                    <input
-                        type="text"
-                        placeholder="Pesquisar..."
-                        value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn("email")?.setFilterValue(event.target.value)
-                        }
-                        className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                    />
+               
 
-
-                </div>
+                   
+                
                 <div className="rounded-3xl border">
                     <Table>
                         <TableHeader>
@@ -116,14 +88,14 @@ export function DataTableComissao<TData, TValue>({
                             ))}
                         </TableHeader>
                         <TableBody>
-                            {Array.isArray(table.getRowModel()?.rows) && table.getRowModel().rows.length > 0 ? (
+                            {table.getRowModel().rows?.length ? (
                                 table.getRowModel().rows.map((row) => (
                                     <TableRow
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
                                     >
                                         {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id} className="bg-gray-50">
+                                            <TableCell key={cell.id} className="bg-gray-50 h-11">
                                                 {flexRender(
                                                     cell.column.columnDef.cell,
                                                     cell.getContext()
@@ -145,27 +117,8 @@ export function DataTableComissao<TData, TValue>({
                         </TableBody>
                     </Table>
                 </div>
-                <div className="text-left">Total da Porcentagem:</div>
-                <div className="text-right">{totalPorcentagem}</div>
 
-                <div className="space-x-3 mt-4 flex justify-center items-center">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}
-                    >
-                        Anterior
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}
-                    >
-                        Proximo
-                    </Button>
-                </div>
+               
             </div>
         </div>
     )
