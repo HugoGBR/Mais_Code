@@ -15,7 +15,7 @@ switch ($acao) {
         if ($id !== null) {
             echo "Ação 'BuscaRelatorio' não aceita um ID";
         } else {
-            $users = $relatorioManager->BuscaRelatorio();
+            $users = $relatorioManager->BuscaRelatorioVenda();
             echo json_encode($users); 
         }
         break;

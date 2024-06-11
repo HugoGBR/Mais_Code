@@ -9,10 +9,11 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import CadastroLink from './CompCadastro';
+import RelatorioHome from '@/components/relatorioHome';
 
 const HomePage = () => {
     return (
-        <div className="bg-gray-100  w-3/4 -mt-5">
+        <div className="bg-gray-100  w-11/12 -mt-5">
             <div className='h-48 w-auto -mb-3'>
                 <h1 className='text-2xl font-semibold min-[320px]:hidden max-[600px]:hidden lg:inline-block'>Bem Vindo, Calebe</h1>
                 <p className='min-[320px]:hidden max-[600px]:hidden lg:block'>ficamos felizes em vê-lo novamente</p>
@@ -35,10 +36,12 @@ const HomePage = () => {
                     </div>
                 </div>
                                                 
-                <div className='bg-white drop-shadow-xl w-full md:w-3/5 p-5 h-auto rounded-xl'>
+                <div className='bg-white drop-shadow-xl text-center w-full overflow-y-auto md:w-3/5 pt-5 h-auto rounded-xl'>
                     <h1 className='flex justify-center'>Últimas Vendas</h1>
-
-                    <Table className='w-full'>
+                        <div className='max-h-72'>
+                        <RelatorioHome/> 
+                        </div>                    
+                      {/* <Table className='w-full'>
                         <TableCaption></TableCaption>
                         <TableHeader>
                             <TableRow>
@@ -79,7 +82,7 @@ const HomePage = () => {
                                 <TableCell className="text-right font-medium bg-gray-100 rounded-r-lg">Ativo</TableCell>
                             </TableRow>
                         </TableBody>
-                    </Table>
+                    </Table>  */}
                 </div>
             </div>
 

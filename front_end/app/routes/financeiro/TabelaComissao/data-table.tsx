@@ -37,9 +37,9 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import {Button} from "@/components/ui/button"
-import {ChevronDownIcon} from "lucide-react"
-import {useEffect, useState} from "react"
+import { Button } from "@/components/ui/button"
+import { ChevronDownIcon } from "lucide-react"
+import { useEffect, useState } from "react"
 
 
 interface DataTableProps<TData, TValue> {
@@ -48,28 +48,28 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTableComissao<TData, TValue>({
-                                             columns,
-                                             data,
-                                         }: DataTableProps<TData, TValue>) {
+    columns,
+    data,
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
-    const [totalPorcentagem, setTotalPorcentagem] = useState<number>(0);
-
+    const [totalPorcentagem, setTotalPorcentagem] = useState<number>(0)
 
     useEffect(() => {
         const calcularTotalPorcentagem = () => {
-          let total = 0;
-          data.forEach((item: any) => {
-            total += Number(item.porcentagem);
-          });
-          return total;
-        };
+            let total = 0
+            if (Array.isArray(data)) {
+                data.forEach((item: any) => {
+                    total += Number(item.porcentagem)
+                })
+            }
+            return total
+        }
 
-        setTotalPorcentagem(calcularTotalPorcentagem());
-      }, [data]);
-
+        setTotalPorcentagem(calcularTotalPorcentagem())
+    }, [data])
 
     const table = useReactTable({
         data,
@@ -114,32 +114,7 @@ export function DataTableComissao<TData, TValue>({
                         className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                     />
 
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="ml-auto">
-                                Filtros <ChevronDownIcon className="ml-2 h-4 w-4"/>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            {table
-                                .getAllColumns()
-                                .filter((column) => column.getCanHide())
-                                .map((column) => {
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={column.id}
-                                            className="capitalize"
-                                            checked={column.getIsVisible()}
-                                            //onCheckedChange={(value) =>
-                                            // column.toggleVisibility(!!value)
-                                            //}
-                                        >
-                                            {column.id}
-                                        </DropdownMenuCheckboxItem>
-                                    )
-                                })}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+
                 </div>
                 <div className="rounded-3xl border">
                     <Table>
@@ -162,7 +137,7 @@ export function DataTableComissao<TData, TValue>({
                             ))}
                         </TableHeader>
                         <TableBody>
-                            {table.getRowModel().rows?.length ? (
+                            {Array.isArray(table.getRowModel()?.rows) && table.getRowModel().rows.length > 0 ? (
                                 table.getRowModel().rows.map((row) => (
                                     <TableRow
                                         key={row.id}
@@ -184,7 +159,7 @@ export function DataTableComissao<TData, TValue>({
                                         colSpan={columns.length}
                                         className="h-24 text-center"
                                     >
-                                        Nenhum Reultado
+                                        Nenhum Resultado
                                     </TableCell>
                                 </TableRow>
                             )}
