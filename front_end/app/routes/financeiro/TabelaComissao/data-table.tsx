@@ -37,28 +37,28 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTableComissao<TData, TValue>({
-                                             columns,
-                                             data,
-                                         }: DataTableProps<TData, TValue>) {
+    columns,
+    data,
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
-    const [totalPorcentagem, setTotalPorcentagem] = useState<number>(0);
-
+    const [totalPorcentagem, setTotalPorcentagem] = useState<number>(0)
 
     useEffect(() => {
         const calcularTotalPorcentagem = () => {
-          let total = 0;
-          data.forEach((item: any) => {
-            total += Number(item.porcentagem);
-          });
-          return total;
-        };
+            let total = 0
+            if (Array.isArray(data)) {
+                data.forEach((item: any) => {
+                    total += Number(item.porcentagem)
+                })
+            }
+            return total
+        }
 
-        setTotalPorcentagem(calcularTotalPorcentagem());
-      }, [data]);
-
+        setTotalPorcentagem(calcularTotalPorcentagem())
+    }, [data])
 
     const table = useReactTable({
         data,
@@ -96,7 +96,7 @@ export function DataTableComissao<TData, TValue>({
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="ml-auto">
-                                Filtros <ChevronDownIcon className="ml-2 h-4 w-4"/>
+                                Filtros <ChevronDownIcon className="ml-2 h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -141,7 +141,7 @@ export function DataTableComissao<TData, TValue>({
                             ))}
                         </TableHeader>
                         <TableBody>
-                            {table.getRowModel().rows?.length ? (
+                            {Array.isArray(table.getRowModel()?.rows) && table.getRowModel().rows.length > 0 ? (
                                 table.getRowModel().rows.map((row) => (
                                     <TableRow
                                         key={row.id}
@@ -163,7 +163,7 @@ export function DataTableComissao<TData, TValue>({
                                         colSpan={columns.length}
                                         className="h-24 text-center"
                                     >
-                                        Nenhum Reultado
+                                        Nenhum Resultado
                                     </TableCell>
                                 </TableRow>
                             )}
