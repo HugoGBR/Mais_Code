@@ -44,7 +44,8 @@ export default function Gestao() {
     }
 
     const ProximaPagina = () => {
-        setPaginaAtual(prevPage => prevPage + 1);
+        const totalPages = Math.ceil(listaUsuarios.length / itensPorPagina);
+        setPaginaAtual(prevPage => Math.min(prevPage + 1, totalPages));
     }
 
     const inicioIndex = (paginaAtual - 1) * itensPorPagina;
@@ -75,7 +76,7 @@ export default function Gestao() {
                     </PaginationItem>
                     
                     <PaginationItem>
-                        <PaginationNext onClick={ProximaPagina} className='blue-icon'  />
+                        <PaginationNext onClick={ProximaPagina}   />
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>
