@@ -15,52 +15,21 @@ export type Payment = {
 export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "NºContrato",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    NºContrato
-                </Button>
-            )
-        },
+        header: () => <div className="text-center w-auto max-w-12">NºContrato</div>,
         cell: ({ row }) => <div className="lowercase">{row.getValue("NºContrato")}</div>,
     },
 
     {
         accessorKey: "Data_Venda",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Data
-                </Button>
-            )
-        },
+        header: () => <div className="text-center w-auto min-w-24">Data</div>,
         cell: ({ row }) => <div className="lowercase">{row.getValue("Data_Venda")}</div>,
     },
 
-
     {
         accessorKey: "Cliente",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Cliente
-                    
-                </Button>
-            )
-        },
+        header: () => <div className="text-center min-w-24">Cliente</div>,
         cell: ({ row }) => <div className="lowercase">{row.getValue("Cliente")}</div>,
     },
-
-
 
     {
         accessorKey: "Valor",
@@ -77,18 +46,14 @@ export const columns: ColumnDef<Payment>[] = [
             return <div className="text-center">{formatted}</div>
         },
     },
-
     
     {
         accessorKey: "status",
-        header: () => <div className="text-center">Status</div>,
+        header: () => <div className="text-center min-w-28">Status</div>,
         cell: ({ row }) => (
             <div className="capitalize text-center">{row.getValue("status")}</div>
         ),
     },
-
-
-
 
     {
         id: "actions",
