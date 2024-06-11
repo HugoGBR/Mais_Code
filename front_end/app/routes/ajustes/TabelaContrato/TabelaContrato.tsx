@@ -24,20 +24,21 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import {RiCloseCircleLine} from "react-icons/ri";
-import {PiPlusCircleBold} from "react-icons/pi";
+import { RiCloseCircleLine } from "react-icons/ri";
+import { PiPlusCircleBold } from "react-icons/pi";
 import Link from "next/link";
+import { ScrollArea } from "@radix-ui/react-scroll-area"
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function TableProduto<TData, TValue>({
+export function TabelaContrato<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     []
   )
@@ -49,7 +50,6 @@ export function TableProduto<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
-    onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -58,7 +58,6 @@ export function TableProduto<TData, TValue>({
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     state: {
-      sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
@@ -69,15 +68,9 @@ export function TableProduto<TData, TValue>({
     <div>
       <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
         <div className="flex items-center justify-between py-4 input-container">
-          <input
-            type="text"
-            placeholder="Pesquisar..."
-            value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("nome")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-          />
+          <h1>
+            <b>Contrato</b>
+          </h1>
           <div className="flex space-x-2">
             <Link href="">
               <RiCloseCircleLine size={25} color="red" />
@@ -87,7 +80,8 @@ export function TableProduto<TData, TValue>({
             </Link>
           </div>
         </div>
-        <div className="rounded-3xl border">
+
+        <div className="rounded-lg border">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -107,6 +101,7 @@ export function TableProduto<TData, TValue>({
                 </TableRow>
               ))}
             </TableHeader>
+
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
@@ -124,7 +119,9 @@ export function TableProduto<TData, TValue>({
                     ))}
                   </TableRow>
                 ))
+
               ) : (
+
                 <TableRow>
                   <TableCell
                     colSpan={columns.length}
@@ -136,6 +133,7 @@ export function TableProduto<TData, TValue>({
               )}
             </TableBody>
           </Table>
+
         </div>
 
         <div className="space-x-3 mt-4 flex justify-center items-center">

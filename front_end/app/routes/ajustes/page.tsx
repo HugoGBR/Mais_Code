@@ -1,9 +1,11 @@
 'use client'
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { TableProduto } from "./TableProdutos/TableProduto";
+
 import { columns } from "./TableProdutos/Columns";
 import { getAllProduto } from "@/lib/ProdutoController";
+import { TableProduto } from "./TableProdutos/TableProduto";
+import { TabelaContrato } from "./TabelaContrato/TabelaContrato";
 
 
 export default function Ajuste() {
@@ -24,7 +26,7 @@ export default function Ajuste() {
                 <TableProduto columns={columns} data={data} />
             </div>
             <div className="gap-3 h-auto w-auto flex flex-col">
-                {/* <ListaTipoContrato/> */}
+                <TabelaContrato columns={columns} data={data}/>
             </div>
         </div>
     )
