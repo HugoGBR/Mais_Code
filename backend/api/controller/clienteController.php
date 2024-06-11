@@ -46,6 +46,9 @@ class ClienteController
     {
         try {
             $user = json_decode(file_get_contents("php://input"));
+            if (!$user || !isset($user->nome) || !isset($user->telefone) || !isset($user->cpf_cnpj) || !isset($user->email) ) {
+                return json_encode(['status' => 0, 'message' => 'Dados incompletos.']);
+            }
             $userExists = $this->checkClienteExist($user->nome);
             if ($userExists) {
                 return ['status' => 0, 'message' => 'Cliente já existe.'];
