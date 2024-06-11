@@ -9,6 +9,7 @@ import {useRouter} from "next/navigation";
 import { getAllUsers } from '@/lib/usuarioController';
 
 
+
 export default function Gestao() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
     const [carregando, setCarregando] = useState(true);

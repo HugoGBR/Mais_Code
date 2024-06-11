@@ -1,3 +1,4 @@
+import { criarCookie } from "./coockie";
 import { Cargos } from "./interfaces/dadosUsuarios";
 
 export async function createNewUserGestao(newNome: string, newCargoid: number, newEmail: string , newSenha:string) {
@@ -23,7 +24,8 @@ export async function validacaoLogin(newEmail: string, newSenha:string) {
 
     const response = await request.json();
     console.log(response)
-
+    if (response == 1)
+       await criarCookie("CookiCriado");
     return response
 
 }
@@ -47,3 +49,4 @@ export function escolheTipoCliente(cargo_id:number){
             break
     }
 }
+
