@@ -9,6 +9,7 @@ export default function Relatorio() {
     const [data, setData] = useState<Payment[]>([]);
 
     const getDados = async () => {
+        console.log("test")
         const Dados = await fetchData()
         setData(Dados)
     }
