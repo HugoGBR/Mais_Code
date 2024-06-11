@@ -14,7 +14,7 @@ class ClienteController
     public function updateClientByID(int $id)
     {
         try {
-            $userExists = $this->checkUserExists($id);
+            $userExists = $this->checkClienteExist($id);
             if (!$userExists) {
                 return ['status' => 0, 'message' => 'Cliente não encontrado.'];
             }
@@ -46,8 +46,9 @@ class ClienteController
     {
         try {
             $user = json_decode(file_get_contents("php://input"));
-            if (!$user) {
-                return ['status' => 0, 'message' => 'Dados do cliente inválidos.'];
+            $userExists = $this->checkClienteExist($user->nome);
+            if ($userExists) {
+                return ['status' => 0, 'message' => 'Cliente já existe.'];
             }
 
             $sql = "INSERT INTO clientes (nome, email, telefone, cpf_cnpj) VALUES (:nome, :email, :telefone, :cpf_cnpj)";
@@ -58,10 +59,11 @@ class ClienteController
             $stmt->bindParam(":cpf_cnpj", $user->cpf_cnpj);
 
             if ($stmt->execute()) {
-                return ["Mensagem" => "Cliente Cadastrado com Sucesso!"];
+                $resposta = 1;
             } else {
-                return ["status" => 0, "message" => "Falha ao cadastrar cliente."];
+                $resposta = 0;
             }
+
         } catch (Exception $e) {
             return ['status' => 0, 'message' => 'Erro ao criar cliente: ' . $e->getMessage()];
         }
@@ -80,14 +82,15 @@ class ClienteController
         }
     }
 
-    private function checkUserExists(int $id)
+    private function checkClienteExist(string $cpf_cnpj)
     {
-        $query = "SELECT COUNT(*) FROM clientes WHERE id = :id";
+        $query = "SELECT COUNT(*) FROM clientes WHERE cpf_cnpj = :cpf_cnpj";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':cpf_cnpj', $cpf_cnpj);
         $stmt->execute();
         $count = $stmt->fetchColumn();
         return $count > 0;
     }
 }
 ?>
+
