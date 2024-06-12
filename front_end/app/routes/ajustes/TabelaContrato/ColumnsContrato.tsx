@@ -10,7 +10,7 @@ export type Payment = {
   tipocontrato: String  
 }
 
-export const columns: ColumnDef<Payment>[] = [
+export const ColumnsContrato: ColumnDef<Payment>[] = [
   {
     accessorKey: "tipocontrato",
     header: ({ column }) => {

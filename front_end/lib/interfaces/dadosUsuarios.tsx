@@ -15,6 +15,17 @@ export interface dadosCliente {
     nome: string,
     email:string,
     telefone:string,
-    cpf_cnpj: string,
-};
-// ME
+    cpf_cnpj: string
+}
+
+export interface dadosContrato{
+    id: number,
+    nome: string
+}
+
+export interface Payment {
+    nome: String
+    comissaoA: number
+    comissaoB: number
+    horas_trabalhadas: number  
+  }
