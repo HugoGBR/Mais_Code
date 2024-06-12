@@ -1,19 +1,15 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
+import { Payment } from "@/lib/interfaces/dadosUsuarios";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 
 // Este tipo é usado para definir o formato dos nossos dados.
 // Você pode usar um esquema Zod aqui, se quiser.
-export type Payment = {
-  nome: String
-  comissaoA: number
-  comissaoB: number
-  horas_trabalhadas: number  
-}
 
-export const ColumnsContratos: ColumnDef<Payment>[] = [
+
+export const ColumnsProdutos: ColumnDef<Payment>[] = [
   {
     accessorKey: "nome",
     header: ({ column }) => {
