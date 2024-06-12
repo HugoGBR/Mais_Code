@@ -31,12 +31,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { ChevronDownIcon } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -92,9 +86,6 @@ export function DataTableComissao<TData, TValue>({
 
     return (
         <div>
-            {/* <div className="bg-white max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500 text-right">
-                <div >{totalPorcentagem}</div>
-            </div> */}
             <div className="flex justify-end pb-2 drop-shadow-lg ">
                 <div className="bg-white border boder-gray-300 rounded-md py-2 px-4 w-auto ">
                     Remuneração R$ {totalPorcentagem}
@@ -107,9 +98,9 @@ export function DataTableComissao<TData, TValue>({
                     <input
                         type="text"
                         placeholder="Pesquisar..."
-                        value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            table.getColumn("email")?.setFilterValue(event.target.value)
+                            table.getColumn("nome")?.setFilterValue(event.target.value)
                         }
                         className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                     />
@@ -137,7 +128,7 @@ export function DataTableComissao<TData, TValue>({
                             ))}
                         </TableHeader>
                         <TableBody>
-                            {Array.isArray(table.getRowModel()?.rows) && table.getRowModel().rows.length > 0 ? (
+                            {table.getRowModel().rows?.length ? (
                                 table.getRowModel().rows.map((row) => (
                                     <TableRow
                                         key={row.id}

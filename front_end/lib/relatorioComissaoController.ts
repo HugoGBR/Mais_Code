@@ -1,6 +1,8 @@
-export async function fetchDataComissao() {
+import { backendURL } from "./URLS/backendURL";
+
+export async function fetchDataComissao(id: Number) {
     try {
-        const response = await fetch("http://localhost/Mais_Code/Backend/api/service/relatorioComissao.php?acao=gerarRelatorioComissao");
+        const response = await fetch(`${backendURL()}/RelatorioComissaoServices.php?acao=gerarRelatorioComissao&id=${id}`,);
         if (!response.ok) {
             throw new Error("Erro ao buscar os dados do relatório");
         }

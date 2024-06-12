@@ -1,17 +1,17 @@
 "use client"
 import * as React from "react"
-import {Payment, columns} from "../TabelaComissao/columns"
+import {columns} from "../TabelaComissao/columns"
 import { useEffect, useState } from "react";
 
 import { DataTableComissao } from "../TabelaComissao/data-table";
 import { fetchDataComissao } from "@/lib/relatorioComissaoController";
 
 
-export default function Relatorio() {
-    const [data, setData] = useState<Payment[]>([]);
+export default function Relatorio({ params }: { params: { id: Number } }) {
+    const [data, setData] = useState([]);
 
     const getDados = async() => {
-        const Dados = await fetchDataComissao()
+        const Dados = await fetchDataComissao(params.id)
         setData(Dados)
     }
     useEffect(() => {
