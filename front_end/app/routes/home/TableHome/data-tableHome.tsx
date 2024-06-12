@@ -63,8 +63,6 @@ export function DataTable<TData, TValue>({
     return (
         <div>
 
-
-
             <Table >
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -85,7 +83,7 @@ export function DataTable<TData, TValue>({
                     ))}
                 </TableHeader>
 
-                <TableBody className="overflow-y-auto">
+                <TableBody>
                     {table.getRowModel().rows?.length ? (
                         table.getRowModel().rows.map((row) => (
                             <TableRow
@@ -93,7 +91,7 @@ export function DataTable<TData, TValue>({
                                 data-state={row.getIsSelected() && "selected"}
                             >
                                 {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id} className="font-medium bg-gray-100 w-1 max-h-2">
+                                    <TableCell key={cell.id} className="font-medium bg-gray-100">
                                         {flexRender(
                                             cell.column.columnDef.cell,
                                             cell.getContext()
