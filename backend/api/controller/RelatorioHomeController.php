@@ -35,12 +35,16 @@ class RelatorioHomeController
 
     public function getPodiumVendedor()
     {
-        $sql = "SELECT usuarios.nome,
-        COUNT(vendas.id)
-    FROM vendas
-    JOIN usuarios ON vendas.usuario_id = usuarios.id
-    GROUP BY usuarios.nome
-    ORDER BY Total_Vendas DESC
+        $sql = "SELECT 
+        usuarios.nome
+    FROM 
+        vendas
+    JOIN 
+        usuarios ON vendas.usuario_id = usuarios.id
+    GROUP BY 
+        usuarios.nome
+    ORDER BY 
+        SUM(vendas.valor_total) DESC
     LIMIT 3;";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();

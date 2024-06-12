@@ -1,8 +1,5 @@
 "use client"
 import * as React from "react"
-// import { Payment, columns } from "./TableHome/columnsHome" 
-
-// import { DataTable } from "./Table/data-tableHome"
 import { useEffect, useState } from "react";
 import { Payment, columns } from "@/app/routes/home/TableHome/columnsHome";
 import { DataTable } from "@/app/routes/home/TableHome/data-tableHome";
