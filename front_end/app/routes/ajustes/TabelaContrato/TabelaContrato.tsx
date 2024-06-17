@@ -75,7 +75,7 @@ export function TabelaContrato<TData, TValue>({
             <Link href="">
               <RiCloseCircleLine size={25} color="red" />
             </Link>
-            <Link href={'/routes/ajustes/Produtos'}>
+            <Link href={'/routes/ajustes/Modelo_Contrato'}>
               <PiPlusCircleBold size={25} color="#0762C8" />
             </Link>
           </div>
