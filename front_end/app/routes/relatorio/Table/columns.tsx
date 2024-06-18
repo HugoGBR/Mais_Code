@@ -26,7 +26,7 @@ export const columns: ColumnDef<Payment>[] = [
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     N*Contrato
-                    <CaretSortIcon className="ml-2 h-4 w-4 " />
+                    <CaretSortIcon className="ml-2 h-4 w-4 "/>
                 </Button>
                 </div>
             )

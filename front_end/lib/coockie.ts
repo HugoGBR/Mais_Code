@@ -9,3 +9,12 @@ export async function criarCookie(cookieName: string) {
         httpOnly: true,
     })
 }
+
+
+
+export async function getCookie(){
+    const Cookie = cookies().has('userController');
+    return Cookie
+
+
+}

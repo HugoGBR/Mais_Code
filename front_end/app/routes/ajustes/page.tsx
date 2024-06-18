@@ -6,6 +6,35 @@ import { columns } from "./TableProdutos/Columns";
 import { getAllProduto } from "@/lib/ProdutoController";
 import { TableProduto } from "./TableProdutos/TableProduto";
 import { TabelaContrato } from "./TabelaContrato/TabelaContrato";
+import { Cookie } from "next/font/google";
+import { useRouter } from "next/router";
+import { getCookie } from "@/lib/coockie";
+import { useSearchParams } from "next/navigation";
+
+// export default function EXP(){
+//     const searchParams = useSearchParams()
+//     const [pagina, setPaginas] = useState(1);
+//     const [itemPagina, setItemPagina] = useState(5);
+//     const [bloqueado,setBloqueado] = useState(true)
+//     const rota = useRouter()
+// }
+   
+
+
+
+//     async function OCookie(){
+//         const t = await getCookie()
+//             setBloqueado(false)
+
+//         if(t){
+
+//         }else{
+//             setBloqueado(true)
+//             rota.push("/")
+//     }
+
+// }
+
 
 
 export default function Ajuste() {
@@ -31,3 +60,7 @@ export default function Ajuste() {
         </div>
     )
 }
+// function setBloqueado(arg0: boolean) {
+//     throw new Error("Function not implemented.");
+// }
+
