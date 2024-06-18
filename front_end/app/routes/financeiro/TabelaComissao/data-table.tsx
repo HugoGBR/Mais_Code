@@ -93,7 +93,7 @@ export function DataTableComissao<TData, TValue>({
                 </div>
             </div>
 
-            <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
+            <div className="bg-white h-3/5 shadow-xl rounded-lg p-4">
                 <div className="flex items-center py-4 input-container">
                     <input
                         type="text"

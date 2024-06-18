@@ -10,16 +10,18 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey: "tipo_contrato_id",
         header: ({column}) => {
             return (
-                <Button
+                <div className="text-center">
+                    <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     N. Contrato
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
+                    </Button>
+                </div>
             )
         },
-        cell: ({row}) => <div className="lowercase">#{row.getValue("tipo_contrato_id")}</div>,
+        cell: ({row}) => <div className="lowercase  text-center">#{row.getValue("tipo_contrato_id")}</div>,
     },
     
     {
@@ -34,48 +36,54 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey: "nome_cliente",
         header: ({column}) => {
             return (
-                <Button
+                <div className="text-center">
+                    <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Cliente
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
+                    </Button>
+                </div>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("nome_cliente")}</div>,
+        cell: ({row}) => <div className="lowercase  text-center">{row.getValue("nome_cliente")}</div>,
     },
 
     {
         accessorKey: "nome",
         header: ({column}) => {
             return (
-                <Button
+                <div className="text-center">
+                    <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Tipo
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
+                    </Button>
+                </div>
             )
         },
-        cell: ({row}) => <div className="lowercase">{row.getValue("nome")}</div>,
+        cell: ({row}) => <div className="lowercase  text-center">{row.getValue("nome")}</div>,
     },
    
     {
         accessorKey: "numero_parcela",
         header: ({column}) => {
             return (
-                <Button
+                <div className="text-center">
+                    <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Parcelas
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
-                </Button>
+                    </Button>
+                </div>
             )
         },
-        cell: ({row}) => <div className="lowercase">X{row.getValue("numero_parcela")}</div>,
+        cell: ({row}) => <div className="lowercase  text-center">X{row.getValue("numero_parcela")}</div>,
     },
 
     {
