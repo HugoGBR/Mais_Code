@@ -1,6 +1,6 @@
 <?php
 
-include "../controller/RelatorioComissaaoController.php";
+include "../controller/RelatorioComissaoController.php";
 
 $relatorioController = new RelatorioComissaoController();
 
@@ -9,10 +9,12 @@ header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
 $acao = isset($_REQUEST["acao"]) ? $_REQUEST["acao"] : null;
+$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
+
 
 switch ($acao) {
     case "gerarRelatorioComissao":
-        $relatorio = $relatorioController->gerarRelatorioComissao($acao);
+        $relatorio = $relatorioController->gerarRelatorioComissao($id);
         echo json_encode($relatorio);
         break;
 

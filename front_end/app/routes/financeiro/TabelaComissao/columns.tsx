@@ -14,7 +14,7 @@ export const columns: ColumnDef<Payment>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    tipo_contrato_id
+                    N. Contrato
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
                 </Button>
             )
@@ -54,7 +54,7 @@ export const columns: ColumnDef<Payment>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    tipo_contrato
+                    Tipo
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
                 </Button>
             )
@@ -70,7 +70,7 @@ export const columns: ColumnDef<Payment>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    numero_parcela
+                    Parcelas
                     <CaretSortIcon className="ml-2 h-4 w-4"/>
                 </Button>
             )
@@ -88,14 +88,12 @@ export const columns: ColumnDef<Payment>[] = [
 
     {
         accessorKey: "porcentagem",
-        header: () => <div className="text-center">Porcentagem</div>,
+        header: () => <div className="text-center">Comissão</div>,
         cell: ({row}) => (
             <div className="capitalize text-center">{row.getValue("porcentagem")}</div>
         ),
     },
    
-
-
     {
         id: "actions",
         enableHiding: false,

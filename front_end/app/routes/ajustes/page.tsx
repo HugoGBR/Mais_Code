@@ -2,7 +2,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { columns } from "./TableProdutos/Columns";
+import { ColumnsContrato } from "./TabelaContrato/ColumnsContrato";
+import { ColumnsProdutos } from "./TableProdutos/ColumnsProdutos";
 import { getAllProduto } from "@/lib/ProdutoController";
 import { TableProduto } from "./TableProdutos/TableProduto";
 import { TabelaContrato } from "./TabelaContrato/TabelaContrato";
@@ -10,6 +11,7 @@ import { Cookie } from "next/font/google";
 import { useRouter } from "next/router";
 import { getCookie } from "@/lib/coockie";
 import { useSearchParams } from "next/navigation";
+import { getAllContratos } from "@/lib/ContratoController";
 
 // export default function EXP(){
 //     const searchParams = useSearchParams()
@@ -38,24 +40,35 @@ import { useSearchParams } from "next/navigation";
 
 
 export default function Ajuste() {
-
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({
+        produtos: [],
+        contratos: []
+    });
 
     const getDados = async () => {
-        const Dados = await getAllProduto()
-        setData(Dados)
+        try {
+            const [produtos, contratos] = await Promise.all([
+                getAllProduto(),
+                getAllContratos()
+            ]);
+            setData({ produtos, contratos });
+        } catch (error) {
+            console.error('Erro ao buscar dados:', error);
+        }
     }
+
     useEffect(() => {
         getDados();
     }, []);
 
+
     return (
         <div className="flex flex-col gap-3 md:flex md:flex-row">
             <div className="h-auto">
-                <TableProduto columns={columns} data={data} />
+                <TableProduto columns={ColumnsProdutos} data={data.produtos} />
             </div>
             <div className="gap-3 h-auto w-auto flex flex-col">
-                <TabelaContrato columns={columns} data={data}/>
+                <TabelaContrato columns={ColumnsContrato} data={data.contratos} />
             </div>
         </div>
     )

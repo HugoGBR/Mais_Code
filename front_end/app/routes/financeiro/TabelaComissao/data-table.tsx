@@ -1,5 +1,15 @@
 "use client"
 
+
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination"
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -21,15 +31,10 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { ChevronDownIcon } from "lucide-react"
 import { useEffect, useState } from "react"
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -81,14 +86,21 @@ export function DataTableComissao<TData, TValue>({
 
     return (
         <div>
+            <div className="flex justify-end pb-2 drop-shadow-lg ">
+                <div className="bg-white border boder-gray-300 rounded-md py-2 px-4 w-auto ">
+                    Remuneração R$ {totalPorcentagem}
+
+                </div>
+            </div>
+
             <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
                 <div className="flex items-center py-4 input-container">
                     <input
                         type="text"
                         placeholder="Pesquisar..."
-                        value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            table.getColumn("email")?.setFilterValue(event.target.value)
+                            table.getColumn("nome")?.setFilterValue(event.target.value)
                         }
                         className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                     />
@@ -116,7 +128,7 @@ export function DataTableComissao<TData, TValue>({
                             ))}
                         </TableHeader>
                         <TableBody>
-                            {Array.isArray(table.getRowModel()?.rows) && table.getRowModel().rows.length > 0 ? (
+                            {table.getRowModel().rows?.length ? (
                                 table.getRowModel().rows.map((row) => (
                                     <TableRow
                                         key={row.id}
@@ -145,11 +157,9 @@ export function DataTableComissao<TData, TValue>({
                         </TableBody>
                     </Table>
                 </div>
-                <div className="text-left">Total da Porcentagem:</div>
-                <div className="text-right">{totalPorcentagem}</div>
 
                 <div className="space-x-3 mt-4 flex justify-center items-center">
-                    <Button
+                    {/* <Button
                         variant="outline"
                         size="sm"
                         onClick={() => table.previousPage()}
@@ -163,8 +173,24 @@ export function DataTableComissao<TData, TValue>({
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        Proximo
-                    </Button>
+                        Proximo 
+                    </Button> */}
+
+                    <Pagination>
+                <PaginationContent>
+                    <PaginationItem>
+                        <PaginationPrevious onClick={() => table.nextPage()} />
+                    </PaginationItem>
+              
+                    {/* <PaginationItem>
+                        <PaginationLink href="#">{paginaAtual}</PaginationLink>
+                    </PaginationItem> */}
+                    
+                    <PaginationItem>
+                        <PaginationNext onClick={() => table.nextPage()} />
+                    </PaginationItem>
+                </PaginationContent>
+            </Pagination>
                 </div>
             </div>
         </div>

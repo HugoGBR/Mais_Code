@@ -20,21 +20,27 @@ export default function CardCadastro() {
     const route = useRouter();
 
     async function handleSubmit(event: FormEvent) {
-        console.log(
-            "teste"
-        )
-        event.preventDefault();
+        event.preventDefault()
         const datadoinicio = new Date(DataInicio)
         const datadofim = new Date(DataFim)
 
         await createNewSell(datadoinicio, datadofim, NomeContato, Number(TelefoneContato), EmailContato, Number(ValorEntrada))
         route.push("/routes/cadastros")
     }
+
+    async function handleSubmitCPF(event: FormEvent) {
+        event.preventDefault()
+        console.log(
+            "teste"
+        )
+        
+    }
+
     return (
         <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
             <div className="w-full lg:w-3/5">
                 <Card className="p-10 drop-shadow-xl">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmitCPF}>
                         <div className="flex justify-between mb-6 text-2xl font-bold">
                             <h1>Contrato</h1>
                             <h1>Nº 00005</h1>
@@ -119,7 +125,7 @@ export default function CardCadastro() {
 
             <div className="w-full lg:w-2/5">
                 <Card className="p-10 drop-shadow-xl">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="flex justify-center mb-6 text-2xl font-bold">
                             <h1>Forma de Pagamento</h1>
                         </div>
@@ -203,6 +209,4 @@ export default function CardCadastro() {
     )
 }
 
-function CreateNewSell() {
-    throw new Error("Function not implemented.");
-}
+

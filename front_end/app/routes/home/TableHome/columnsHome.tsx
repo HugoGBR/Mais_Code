@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 
 // This type is used to define the shape of our data.
@@ -8,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 export type Payment = {
     id: number
     valor_total: number
-    status: | "em andamento " | "Concluido" | "Inativo"
+    status: | "Em andamento " | "Concluido" | "Inativo"
     email: string
 }
 
@@ -55,12 +54,5 @@ export const columns: ColumnDef<Payment>[] = [
         ),
     },
 
-    {
-        id: "actions",
-        enableHiding: false,
-        cell: ({ row }) => {
-            const payment = row.original
-
-        },
-    },
+    
 ]
