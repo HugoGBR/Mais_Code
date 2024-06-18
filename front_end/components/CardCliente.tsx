@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation";
 import { createNewCliente } from "@/lib/clienteController";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { clientSchema } from "@/app/schemas/clientSchema";
+
 import { z } from "zod";
+import { clientSchema } from "@/app/schemas/clientSchema";
 
 type LoginFormSchema = z.infer<typeof clientSchema>;
 
