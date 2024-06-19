@@ -13,9 +13,10 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { dadosUsuario } from '@/lib/interfaces/dadosUsuarios';
 
 export default function Financeiro() {
-    const [listaUsuarios, setListaUsuarios] = useState([]);
+    const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
     const [carregando, setCarregando] = useState(true);
     const [paginaAtual, setPaginaAtual] = useState(1);
     const itensPorPagina = 8;
@@ -52,7 +53,7 @@ export default function Financeiro() {
             <div className="md:grid md:grid-cols-2 space-x-3">
                 {listaUsuarios.slice(inicioIndex, finalIndex).map(item => (
                     <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
-                        <div className='bg-gray-300 mb-4 rounded-lg' style={{ width: '100%' }}>
+                        <div className='bg-gray-300 mb-7 rounded-lg' style={{ width: '100%' }}>
                             <a className="block">
                                 <Cardfinanceiro dados={item} />
                             </a>
