@@ -49,7 +49,7 @@ class ClienteController
             if (!$user || !isset($user->nome) || !isset($user->telefone) || !isset($user->cpf_cnpj) || !isset($user->email) ) {
                 return json_encode(['status' => 0, 'message' => 'Dados incompletos.']);
             }
-            $userExists = $this->checkClienteExist($user->nome);
+            $userExists = $this->checkClienteExist($user->cpf_cnpj);
             if ($userExists) {
                 return ['status' => 0, 'message' => 'Cliente já existe.'];
             }
@@ -66,6 +66,8 @@ class ClienteController
             } else {
                 $resposta = 0;
             }
+
+            return $resposta;
 
         } catch (Exception $e) {
             return ['status' => 0, 'message' => 'Erro ao criar cliente: ' . $e->getMessage()];

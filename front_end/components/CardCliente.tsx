@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { createNewCliente } from "@/lib/clienteController";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
 import { z } from "zod";
 import { clientSchema } from "@/app/schemas/clientSchema";
 
@@ -23,11 +22,11 @@ export default function CadastrarCliente() {
 
         const response = await createNewCliente(nome, email, telefone, cpf_cnpj);
 
-        if (response === 1) {
+        if (response == 1) {
             alert('Cliente cadastrado com sucesso!');
             route.push("/routes/cadastros");
         } else {
-            alert('Erro ao cadastrar o cliente. Por favor, tente novamente.');
+            alert('Erro ao cadastrar o  cliente. Por favor, tente novamente.');
         }
     };
 
