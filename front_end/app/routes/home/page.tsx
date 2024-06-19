@@ -36,10 +36,10 @@ export default function HomePage() {
             </div>
 
             <div className='h-auto w-full bg-gray-100 space-y-3'>
-                <div className='h-auto w-full drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
+                <div className='h-auto w-full bg-white p-4 drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
                     <Chart
                         chartType="Bar"
-                        width="80%"
+                        width="100%"
                         height="400px"
                         data={data}
                         options={options}
