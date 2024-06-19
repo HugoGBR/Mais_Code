@@ -13,7 +13,7 @@ class UserFinanceiro
 
     public function getAllFinan()
     {
-        $sql = "SELECT * FROM usuarios" ;
+        $sql = "SELECT * FROM mais_code.usuarios WHERE cargo_id = 2 or cargo_id = 1" ;
         $db = $this->conn->prepare($sql);
         $db->execute();
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
