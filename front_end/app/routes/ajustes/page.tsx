@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { ColumnsContrato } from "./TabelaContrato/ColumnsContrato";
 import { ColumnsProdutos } from "./TableProdutos/ColumnsProdutos";
-import { getAllProduto } from "@/lib/ProdutoController";
+import {getAllProduto} from "@/lib/produtoController";
 import { TableProduto } from "./TableProdutos/TableProduto";
 import { TabelaContrato } from "./TabelaContrato/TabelaContrato";
 import { Cookie } from "next/font/google";

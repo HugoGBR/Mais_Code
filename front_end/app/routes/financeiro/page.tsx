@@ -13,9 +13,10 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 
 export default function Financeiro() {
-    const [listaUsuarios, setListaUsuarios] = useState([]);
+    const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
     const [carregando, setCarregando] = useState(true);
     const [paginaAtual, setPaginaAtual] = useState(1);
     const itensPorPagina = 8;
