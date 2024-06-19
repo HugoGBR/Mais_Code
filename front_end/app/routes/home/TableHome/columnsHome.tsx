@@ -15,7 +15,7 @@ export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "NºContrato",
         header: () => <div className="text-center w-auto max-w-12">NºContrato</div>,
-        cell: ({ row }) => <div className="lowercase">{row.getValue("NºContrato")}</div>,
+        cell: ({ row }) => <div className="lowercase">#{row.getValue("NºContrato")}</div>,
     },
 
     {
