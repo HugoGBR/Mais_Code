@@ -58,7 +58,6 @@ export default function Gestao() {
 
     const renderGestaoCliente = () => {
         if (!Array.isArray(listaCliente)) return null;
-        console.log("Não ta Retornando cliente")
         return (
             <>
                 {listaCliente.map(client => (
