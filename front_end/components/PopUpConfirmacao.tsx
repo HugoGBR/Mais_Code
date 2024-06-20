@@ -15,7 +15,7 @@ export default function PopupConfirmacao() {
         <CardFooter className="flex justify-center items-center">
             <Dialog>
                 <DialogTrigger asChild>
-                    <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar</button>
+                    <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Cadastrar cliente</button>
                 </DialogTrigger>
                 <DialogContent className="w-auto rounded-lg">
                     <DialogHeader>
@@ -23,8 +23,8 @@ export default function PopupConfirmacao() {
                     </DialogHeader>
                     <DialogFooter className="flex justify-center items-center">
                         <div className="space-x-2">
-                            <button className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white rounded-sm" type="button">Confirmar </button>
-                            <button className="w-32 border border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white rounded-sm" type="button"> Cancelar</button>
+                            <button className="w-32 border  border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-green-500 hover:text-white" type="button">Confirmar </button>
+                            <button className="w-32 border border-red-500 text-black font-semibold bg-white transition duration-500 ease-in-out hover:bg-red-500 hover:text-white" type="button"> Cancelar</button>
                         </div>
                     </DialogFooter>
                 </DialogContent>

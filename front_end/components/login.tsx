@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { loginSchema } from "@/app/schemas/loginSchema";
-import { validacaoLogin } from "@/lib/usuarioController";
 
 
 
@@ -17,18 +16,13 @@ const LoginPage = () => {
         resolver: zodResolver(loginSchema)
     });
 
-    const handleFormSubmit = async (data: LoginFormSchema) => {
-        const autenticado = await validacaoLogin(data.user,data.password)
-        if (autenticado == 1){
-            router.push('routes/home');
-        }else{
-            alert("Usuario não encontrado")
-        }
+    const handleFormSubmit = (data: LoginFormSchema) => {
+        router.push('routes/home');
     };
 
     const memoizedErrors = useMemo(() => ({
-        user: errors.user && (<div className="text-red-500 text-sm">{errors.user.message}</div>),
-        password: errors.password && (<div className="text-red-500 text-sm">{errors.password.message}</div>)
+        user: errors.user && (<div className="text-red-500 font-bold p1">{errors.user.message}</div>),
+        password: errors.password && (<div className="text-red-500 font-bold p1">{errors.password.message}</div>)
     }), [errors.user, errors.password]);
 
     return (

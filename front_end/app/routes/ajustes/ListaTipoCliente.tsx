@@ -1,12 +1,13 @@
 'use client'
-import { ScrollArea } from "@/components/ui/scroll-area"
+
+import {ScrollArea} from "@/components/ui/scroll-area"
 import Link from "next/link";
 import * as React from "react";
 import {RiCloseCircleLine} from "react-icons/ri";
 import {PiPlusCircleBold} from "react-icons/pi";
 
 
-export default function ListaTipoContrato() {
+export default function ListaTipoCliente() {
     const invoices = [
         {
             name: "INV001",
@@ -31,10 +32,10 @@ export default function ListaTipoContrato() {
         },
     ]
     return (
-        <div className="flex w-full shadow-lg bg-white rounded-xl p-5">
+        <div className="flex bg-white shadow-lg rounded-xl p-5">
             <div className="w-full space-y-4">
                 <div className="flex justify-between items-center h-auto">
-                    <h1 className="font-bold">Contratos</h1>
+                    <h1 className="font-bold">Status</h1>
                     <div className="flex space-x-2">
                         <Link href="">
                             <RiCloseCircleLine size={25} color="red"/>
@@ -43,6 +44,7 @@ export default function ListaTipoContrato() {
                             <PiPlusCircleBold size={25} color="#0762C8"/>
                         </Link>
                     </div>
+
                 </div>
 
                 <div>
@@ -51,7 +53,7 @@ export default function ListaTipoContrato() {
                     </div>
                     <table className="w-full">
                         <ScrollArea className="h-[150px] w-auto rounded-xl border-b-2">
-                            <tbody className="font-medium [&>tr]:last:border-b-0">
+                            <tbody className="  font-medium [&>tr]:last:border-b-0">
                             {invoices.map((item) => (
                                 <tr key={item.name}>
                                     <Link

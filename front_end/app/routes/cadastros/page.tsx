@@ -12,7 +12,7 @@ export default function Contrato() {
             <div className="flex gap-5">
                 <div>
                     <Link href="/routes/cadastros"
-                          className="focus:font-bold text-blue-700 border-b-2 border-blue-700">Contrato</Link>
+                          className="font-bold text-blue-700 border-b-2 border-blue-700">Contrato</Link>
                 </div>
                 <div>
                     <Link href="/routes/cadastros/Cliente"
