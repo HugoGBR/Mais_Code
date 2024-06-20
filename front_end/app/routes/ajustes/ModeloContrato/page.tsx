@@ -19,8 +19,8 @@ export default function ModeloContrato() {
         <div className="flex flex-col h-screen">
             {/* Card de Cadastro */}
             <div className="flex justify-center items-center flex-grow">
-                <div className="max-w-xl w-full bg-white shadow-xl rounded-2xl p-20">
-                    <h2 className="text-2xl font-semibold mb-4 text-center">Tipo de Contrato</h2>
+                <div className="max-w-xl w-full bg-white shadow-xl rounded-2xl p-8">
+                    <h2 className="text-2xl font-semibold mb-8 text-center">Tipo de Contrato</h2>
                     <form>
                         <div className="mb-4">
                             <input
@@ -35,7 +35,7 @@ export default function ModeloContrato() {
                             />
                         </div>                        
                         <div className="text-center">
-                            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10    rounded">
+                            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded w-full">
                                 CADASTRAR
                             </button>
                         </div>
