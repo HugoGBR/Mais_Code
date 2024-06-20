@@ -1,8 +1,7 @@
 <?php
-include "../database.php";
+include_once "../database.php";
 
-
-class Clientecontroller
+class ClienteController
 {
     private $conn;
 
@@ -15,55 +14,88 @@ class Clientecontroller
     public function updateClientByID(int $id)
     {
         try {
-            $userExists = $this->checkUserExists($id);
+            $userExists = $this->checkClienteExist($id);
             if (!$userExists) {
-                return ['status' => 0, 'message' => 'Usuário não encontrado.'];
+                return ['status' => 0, 'message' => 'Cliente não encontrado.'];
             }
 
             $user = json_decode(file_get_contents('php://input'));
+            if (!$user) {
+                return ['status' => 0, 'message' => 'Dados do cliente inválidos.'];
+            }
 
-            $sql = "UPDATE clientes SET nome = :nome, endereco = :endereco, telefone = :telefone, cpf_cnpj = :cpf_cnpj WHERE id = :id";
+            $sql = "UPDATE clientes SET nome = :nome, email = :email, telefone = :telefone, cpf_cnpj = :cpf_cnpj WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':nome', $user->nome);
-            $stmt->bindParam(':endereco', $user->endereco);
+            $stmt->bindParam(':email', $user->email);
             $stmt->bindParam(':telefone', $user->telefone);
             $stmt->bindParam(':cpf_cnpj', $user->cpf_cnpj);
 
             if ($stmt->execute()) {
-                $response = ['status' => 1, 'message' => 'Registro atualizado com sucesso.'];
+                return ['status' => 1, 'message' => 'Registro atualizado com sucesso.'];
             } else {
-                $response = ['status' => 0, 'message' => 'Falha ao atualizar o registro.'];
+                return ['status' => 0, 'message' => 'Falha ao atualizar o registro.'];
             }
-
-            return $response;
         } catch (Exception $e) {
-            echo 'Erro ao atualizar usuário: ' . $e->getMessage();
-            return null;
+            return ['status' => 0, 'message' => 'Erro ao atualizar Cliente: ' . $e->getMessage()];
         }
     }
-
 
     public function createNewCliente()
     {
-        $user = json_decode(file_get_contents("php//input"));
-        $sql = "INSERT INTO usuarios(id,nome,endereco,telefone,cpf_cnpj) VALUES (:id,:nome,:endereco,:telefone,:cpf_cnpj)";
-        $db = $this->conn->prepare($sql);
-        $db->bindParam(":id", $user->id);
-        $db->bindParam(":nome", $user->nome);
-        $db->bindParam("endereco", $user->endereco);
-        $db->bindParam(":telefone", $user->telefone);
-        $db->bindParam(":cpf_cnpj", $user->cpf_cnpj);
-        $db->execute();
+        try {
+            $user = json_decode(file_get_contents("php://input"));
+            if (!$user || !isset($user->nome) || !isset($user->telefone) || !isset($user->cpf_cnpj) || !isset($user->email) ) {
+                return json_encode(['status' => 0, 'message' => 'Dados incompletos.']);
+            }
+            $userExists = $this->checkClienteExist($user->cpf_cnpj);
+            if ($userExists) {
+                return ['status' => 0, 'message' => 'Cliente já existe.'];
+            }
 
-        if ($db->execute()) {
-            $resposta = ["Mensagem" => "Usuario Cadastrado com Sucesso!"];
+            $sql = "INSERT INTO clientes (nome, email, telefone, cpf_cnpj) VALUES (:nome, :email, :telefone, :cpf_cnpj)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(":nome", $user->nome);
+            $stmt->bindParam(":email", $user->email);
+            $stmt->bindParam(":telefone", $user->telefone);
+            $stmt->bindParam(":cpf_cnpj", $user->cpf_cnpj);
+
+            if ($stmt->execute()) {
+                $resposta = 1;
+            } else {
+                $resposta = 0;
+            }
+
+            return $resposta;
+
+        } catch (Exception $e) {
+            return ['status' => 0, 'message' => 'Erro ao criar cliente: ' . $e->getMessage()];
         }
+    }
 
-        return $resposta;
-    }catch (Exception $e) {
-        echo 'Erro ao criar usuário: ' . $e->getMessage();
-        return null;
+    public function getAllClient()
+    {
+        try {
+            $sql = "SELECT * FROM clientes";
+            $db = $this->conn->prepare($sql);
+            $db->execute();
+            $users = $db->fetchAll(PDO::FETCH_ASSOC);
+            return $users;
+        } catch (Exception $e) {
+            return ['status' => 0, 'message' => 'Erro ao buscar clientes: ' . $e->getMessage()];
+        }
+    }
+
+    private function checkClienteExist(string $cpf_cnpj)
+    {
+        $query = "SELECT COUNT(*) FROM clientes WHERE cpf_cnpj = :cpf_cnpj";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':cpf_cnpj', $cpf_cnpj);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
     }
 }
+?>
 

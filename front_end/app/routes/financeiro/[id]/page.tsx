@@ -1,17 +1,27 @@
+"use client"
+import * as React from "react"
+import {columns} from "../TabelaComissao/columns"
+import { useEffect, useState } from "react";
 
-import React from "react";
-import CardCadastro from "@/components/CardCadastro";
+import { DataTableComissao } from "../TabelaComissao/data-table";
+import { fetchDataComissao } from "@/lib/relatorioComissaoController";
 
 
-export default function Contrato() {
-    //Faça suas const aqui(constantes)
+export default function Relatorio({ params }: { params: { id: Number } }) {
+    const [data, setData] = useState([]);
+
+    const getDados = async() => {
+        const Dados = await fetchDataComissao(params.id)
+        setData(Dados)
+    }
+    useEffect(() => {
+        getDados();
+    }, []
+    );
 
     return (
-        <div className="flex space-x-4">
-            <div>
-                <CardCadastro/>
-            </div>
+        <div className="container mx-auto py-10">
+            <DataTableComissao columns={columns} data={data} />
         </div>
-
-    )
+    );
 }

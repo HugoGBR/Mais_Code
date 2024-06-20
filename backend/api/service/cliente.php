@@ -1,34 +1,45 @@
 <?php
-include "../controller/clienteController.php";
+include_once "../controller/clienteController.php";
 
-$clienteController = new Clientecontroller();
+$clienteController = new ClienteController();
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-$acao = $_REQUEST["acao"];
+$acao = isset($_REQUEST["acao"]) ? $_REQUEST["acao"] : null;
+$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
 
 switch ($acao) {
     case "updateClientByID":
-        if ($id !== null) {
-            $users = $clienteController->updateClientByID($id);
-            echo json_encode($users);
+        if ($id != null) {
+            $response = $clienteController->updateClientByID($id);
+            echo json_encode($response);
         } else {
-            echo "Ação 'updateClientByID' necessita de um ID";
+            echo json_encode(["error" => "Ação 'updateClientByID' necessita de um ID"]);
         }
         break;
-
 
     case "createNewCliente":
         if ($id != null) {
-            echo "Ação createNewCliente não aceitar um ID";
+            echo json_encode(["error" => "Ação 'createNewCliente' não aceita um ID"]);
         } else {
-            $mensagem = $clienteController->createNewCliente();
-            echo json_encode($mensagem);
+            $response = $clienteController->createNewCliente();
+            echo json_encode($response);
         }
         break;
+
+    case "getAllClient":
+        if ($id != null) {
+            echo json_encode(["error" => "Ação 'GetAllClient' não aceita um ID"]);
+        } else {
+            $response = $clienteController->getAllClient();
+            echo json_encode($response);
+        }
+        break;
+
     default:
-        // Ação não suportada.
-        return json_encode(["error" => "Ação não suportada."]);
+        echo json_encode(["error" => "Ação não suportada."]);
+        break;
 }
+?>

@@ -16,24 +16,34 @@ INSERT INTO cargos(nome) VALUES
 ("vendedor"),
 ("financeiro");
 
-/*Table structure for table `tipo_cliente` */
-DROP TABLE IF EXISTS `tipo_cliente`;
 
-CREATE TABLE `tipo_cliente` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(255) NOT NULL,
-  `porcentagem` DECIMAL(8,2) NOT NULL,
+
+CREATE TABLE `clientes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `telefone` varchar(255) NOT NULL,
+  `cpf_cnpj` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+select * from clientes;
+
+CREATE TABLE `parcelas` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `numero_parcela` int(11) NOT NULL,
+  `valor_parcela` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
+
 CREATE TABLE `produtos` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `tipo_cliente_id` BIGINT(20) UNSIGNED NOT NULL,
-  `nome` VARCHAR(255) NOT NULL,
-  `horas_trabalhadas` DECIMAL(8,2) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `produtos_tipo_cliente_id_foreign` (`tipo_cliente_id`),
-  CONSTRAINT `produtos_tipo_cliente_id_foreign` FOREIGN KEY (`tipo_cliente_id`) REFERENCES `tipo_cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `horas_trabalhadas` decimal(8,2) NOT NULL,
+  `comissaoA` int NOT NULL,
+  `comissaoB` int NOT NULL,
+  `descricao_produto` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `clientes` (
