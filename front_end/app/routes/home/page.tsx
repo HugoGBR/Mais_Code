@@ -30,9 +30,9 @@ import CadastroLink from './CompCadastro';
 export default function HomePage() {
     return (
 
-        <div className="bg-gray-100 items-center gap-6 w-9/12 -mt-5 flex flex-col ">
-            <div className=' w-full bg-yellow-400 sm:flex flex-col md:flex md:justify-between md:items-center mb-3'>
-                <div className='col-span-6'>
+        <div className="bg-gray-100 items-center w-8/12 flex flex-col ">
+            <div className=' w-full sm:flex md:justify-between md:items-center mb-3'>
+                <div className=' '>
                     <h1 className='text-2xl font-semibold min-[320px]:hidden max-[600px]:hidden lg:inline-block'>Bem Vindo, Calebe</h1>
                     <p className='min-[320px]:hidden max-[600px]:hidden lg:block'>Ficamos felizes em vê-lo novamente</p>
                 </div>
@@ -44,11 +44,11 @@ export default function HomePage() {
             </div>
 
             <div className='h-auto w-full bg-gray-100 space-y-3'>
-                <div className='h-auto w-full drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
+                <div className='h-80 w-full bg-white p-4 drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
                     <Chart
                         chartType="Bar"
-                        width="80%"
-                        height="400px"
+                        width="100%"
+                        height="300px"
                         data={data}
                         options={options}
                     />
@@ -56,7 +56,7 @@ export default function HomePage() {
 
                 <div className='rounded-xl bg-white drop-shadow-xl text-center overflow-y-auto pt-5 h-auto'>
                     <h1 className='flex justify-center'>Últimas Vendas</h1>
-                    <div className='max-h-72 w-full'>
+                    <div className='max-h-48 w-full'>
                         <RelatorioHome />
 =======
 const HomePage = () => {

@@ -49,14 +49,17 @@ export function DataTableComissao<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
-    const [totalPorcentagem, setTotalPorcentagem] = useState<number>(0)
+    const [comissaoTotal, setTotalPorcentagem] = useState<number>(0)
+    const [soma,setSoma] = useState(0)
 
     useEffect(() => {
         const calcularTotalPorcentagem = () => {
             let total = 0
             if (Array.isArray(data)) {
                 data.forEach((item: any) => {
-                    total += Number(item.porcentagem)
+                   
+                    
+                    total = total + (item.valor_total/item.porcentagem)
                 })
             }
             return total
@@ -88,7 +91,7 @@ export function DataTableComissao<TData, TValue>({
         <div>
             <div className="flex justify-end pb-2 drop-shadow-lg ">
                 <div className="bg-white border boder-gray-300 rounded-md py-2 px-4 w-auto ">
-                    Remuneração R$ {totalPorcentagem}
+                    <strong>Remuneração R$ {comissaoTotal}</strong>
 
                 </div>
             </div>
@@ -98,9 +101,9 @@ export function DataTableComissao<TData, TValue>({
                     <input
                         type="text"
                         placeholder="Pesquisar..."
-                        value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("nome_cliente")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            table.getColumn("nome")?.setFilterValue(event.target.value)
+                            table.getColumn("nome_cliente")?.setFilterValue(event.target.value)
                         }
                         className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                     />

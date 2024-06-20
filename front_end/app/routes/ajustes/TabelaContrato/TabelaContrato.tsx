@@ -3,7 +3,6 @@
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
@@ -27,7 +26,7 @@ import { useState } from "react"
 import { RiCloseCircleLine } from "react-icons/ri";
 import { PiPlusCircleBold } from "react-icons/pi";
 import Link from "next/link";
-import { ScrollArea } from "@radix-ui/react-scroll-area"
+
 
 
 interface DataTableProps<TData, TValue> {
@@ -75,7 +74,7 @@ export function TabelaContrato<TData, TValue>({
             <Link href="">
               <RiCloseCircleLine size={25} color="red" />
             </Link>
-            <Link href={'/routes/ajustes/Modelo_Contrato'}>
+            <Link href={'/routes/ajustes/ModeloContrato'}>
               <PiPlusCircleBold size={25} color="#0762C8" />
             </Link>
           </div>
