@@ -75,7 +75,7 @@ CREATE TABLE `vendas` (
   `email` varchar(255) NOT NULL,
   `telefone` varchar(255) NOT NULL,
   `metodo_pagamento` varchar(45) NOT NULL,
-  `numero_parcela` text() NOT NULL,
+  `numero_parcela` text(55) NOT NULL,
   `status` enum('concluido','em andamento','cancelado') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `vendas_cliente_id_foreign` (`cliente_id`),
