@@ -31,24 +31,4 @@ class RelatorioHomeController
         $relatorio_home = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $relatorio_home;
     }
-
-
-    public function getPodiumVendedor()
-    {
-        $sql = "SELECT 
-        usuarios.nome
-    FROM 
-        vendas
-    JOIN 
-        usuarios ON vendas.usuario_id = usuarios.id
-    GROUP BY 
-        usuarios.nome
-    ORDER BY 
-        SUM(vendas.valor_total) DESC
-    LIMIT 3;";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        $podium_home = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $podium_home;
-    }
 }
