@@ -41,14 +41,14 @@ export default function CardCadastro() {
             <div className="w-full lg:w-3/5">
                 <Card className="p-10 drop-shadow-xl">
                     <form onSubmit={handleSubmitCPF}>
-                        <div className="flex justify-between mb-6 text-2xl font-bold">
+                        <div className="flex justify-between mb-6 md:text-2xl font-bold">
                             <h1>Contrato</h1>
                             <h1>Nº 00005</h1>
                         </div>
 
-                        <h2 className="mb-4 font-bold">Dados do Contrato</h2>
-                        <div className="grid grid-cols-2 gap-5 mb-4">
-                            <div className="grid grid-cols-2 gap-5 mt-5">
+                        <h2 className="mb-5 font-bold">Dados do Contrato</h2>
+                        <div className="md:grid md:grid-cols-2 gap-5 mb-5">
+                            <div className="md:grid md:grid-cols-2 gap-5 mt-5">
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                     placeholder="CPF/CNPJ do Cliente"
                                     type="text" />
@@ -58,24 +58,24 @@ export default function CardCadastro() {
                                 </button>
                             </div>
 
-                            <input className="invisible border-b-2 focus:outline-none focus:border-blue-500"
+                            <input className="border-b-2 focus:outline-none focus:border-blue-500 mb-5 invisible"
                                 placeholder="Colaborador"
                                 type="text" />
-                            <div className="flex flex-col">
+                            <div className="flex flex-col mb-5">
                                 <label className="text-sm" htmlFor="teste">Data Inicio</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                     placeholder="Data de inicio" type="date"
                                     onChange={(event) => setDataInicio(event.target.value)} />
                             </div>
-                            <div className="flex flex-col">
+                            <div className="flex flex-col mb-5">
                                 <label className="text-sm" htmlFor="teste">Data Termino</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500" type="date"
                                     onChange={(event) => setDataFim(event.target.value)} />
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 " >
-                            <div className="grid grid-cols-1 mb-9 w-48">
+                        <div className="md:grid md:grid-cols-2 " >
+                            <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
                                 <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
                                 <Select>
                                     <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
@@ -99,7 +99,7 @@ export default function CardCadastro() {
                                     </SelectContent>
                                 </Select>
                             </div>
-                            <div className="flex flex-col ml-5">
+                            <div className="flex flex-col mb-5 md:ml-5">
                                 <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                     // onChange={(event) => setHoraTrabalhada(event.target.value)}
