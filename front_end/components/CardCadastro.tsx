@@ -193,7 +193,7 @@ export default function CardCadastro() {
                         </div>
 
                         <div className="flex justify-between mt-5 h-auto">
-                            <label className="font-bold" htmlFor="teste">Valor da Entrada</label>
+                            <label className="font-bold" htmlFor="teste">Valor total a pagar:</label>
                             <h1 className="font-bold">R$ 0000,00</h1>
                         </div>
                         <div className="mt-5 text-center">
