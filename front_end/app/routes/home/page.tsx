@@ -1,8 +1,26 @@
 'use client'
 import React from 'react';
 import RelatorioHome from '@/components/relatorioHome';
+<<<<<<< Updated upstream
 import { Chart } from 'react-google-charts';
 
+=======
+import TopVendedores from '@/components/PodioVendedor';
+import ValidarTela from '@/components/ValidarTela';
+
+const HomePage = () => {
+    return (
+        <ValidarTela>
+            <div className="bg-gray-100  w-11/12 -mt-5">
+            <div className='h-48 w-auto -mb-3'>
+                <h1 className='text-2xl font-semibold min-[320px]:hidden max-[600px]:hidden lg:inline-block'>Bem Vindo, Calebe</h1>
+                <p className='min-[320px]:hidden max-[600px]:hidden lg:block'>Ficamos felizes em vê-lo novamente</p>
+                <div className='rounded-xl float-right bg-white drop-shadow-xl h-24 justify-center items-center'>
+                    <h3 className='mt-3 ml-10 mr-10 text-lg'>Remuneraçao</h3>
+                    <h1 className='text-4xl font-bold ml-10 mr-10 '>R$5000,00</h1>
+                </div>
+            </div>
+>>>>>>> Stashed changes
 
 export const data = [
     ["Year", "Sales", "Expenses", "Profit"],
@@ -12,6 +30,7 @@ export const data = [
     ["2017", 1030, 540, 350],
 ];
 
+<<<<<<< Updated upstream
 export const options = {
     chart: {
         title: "Company Performance",
@@ -59,5 +78,15 @@ export default function HomePage() {
 
         </div>
     )
+=======
+            <div className='min-[320px]:hidden max-[600px]:hidden lg:inline-block'>
+                <CadastroLink/>   
+            </div>
+            
+
+        </div>
+        </ValidarTela>
+    );
+>>>>>>> Stashed changes
 };
 

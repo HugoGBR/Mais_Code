@@ -13,7 +13,11 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+<<<<<<< Updated upstream
 import { dadosUsuario } from '@/lib/interfaces/dadosUsuarios';
+=======
+import ValidarTela from '@/components/ValidarTela';
+>>>>>>> Stashed changes
 
 export default function Financeiro() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
@@ -49,7 +53,8 @@ export default function Financeiro() {
     const finalIndex = inicioIndex + itensPorPagina;
 
     return (
-        <div>
+        <ValidarTela>
+            <div>
             <div className="md:grid md:grid-cols-2 space-x-3">
                 {listaUsuarios.slice(inicioIndex, finalIndex).map(item => (
                     <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
@@ -76,5 +81,6 @@ export default function Financeiro() {
                 </PaginationContent>
             </Pagination>
         </div>
+        </ValidarTela>
     );
 }
