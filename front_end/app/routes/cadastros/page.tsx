@@ -1,14 +1,18 @@
 'use client'
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import CardCadastro from "@/components/CardCadastro";
 import {useRouter} from "next/navigation";
+import { getCookie } from "@/lib/coockie";
+import ValidarTela from "@/components/ValidarTela";
 
 export default function Contrato() {
     const route = useRouter()
+
     return (
-        <div className="flex flex-col gap-5">
+        <ValidarTela>
+            <div className="flex flex-col gap-5">
             <div className="flex gap-5">
                 <div>
                     <Link href="/routes/cadastros"
@@ -23,5 +27,8 @@ export default function Contrato() {
                 <CardCadastro/>
             </div>
         </div>
+            
+        </ValidarTela>
+
     )
 }
