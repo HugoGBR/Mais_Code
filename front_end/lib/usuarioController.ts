@@ -50,3 +50,22 @@ export function escolheTipoCliente(cargo_id:number){
     }
 }
 
+export async function getUserById(userId:number) {
+    const response = await fetch(`http://localhost/Mais_code/backend/api/service/user.php?acao=GetUserById&id=${userId}`);
+    const dados = await response.json();
+    console.log(dados);
+    return dados;
+}
+
+
+export async function updateUser(newNome: string, newCargoid: number, newEmail: string, newSenha: string, paramsId: number) {
+    const request = await fetch(`http://localhost/Mais_code/backend/api/service/user.php?acao=UpdateUserById&id=${paramsId}`, {
+        method: "POST",
+        body: JSON.stringify({ nome: newNome, cargo_id: newCargoid, senha: newSenha, email: newEmail })
+    });
+
+    const response = await request.json();
+    console.log(response);
+
+    return response.message;
+}

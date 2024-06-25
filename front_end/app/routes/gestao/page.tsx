@@ -95,7 +95,6 @@ export default function Gestao() {
     }
 
     return (
-       
          <div className="items-center py-10">
             <Tabs defaultValue=''>
                 <TabsList className='will-change-contents flex justify-between'>
@@ -127,6 +126,6 @@ export default function Gestao() {
                 </TabsContent>
             </Tabs>
         </div>
-       
+
     )
 }
