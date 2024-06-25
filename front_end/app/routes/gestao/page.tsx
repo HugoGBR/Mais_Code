@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { getAllClient } from '@/lib/GestaoControler';
 import { getAllUsers } from '@/lib/UsuarioController';
 import CardCliente from '@/components/CardClienteGestao';
+import ValidarTela from '@/components/ValidarTela';
 
 export default function Gestao() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
@@ -94,11 +95,12 @@ export default function Gestao() {
     }
 
     return (
-        <div className="items-center py-10">
+         <div className="items-center py-10">
             <Tabs defaultValue=''>
                 <TabsList className='will-change-contents flex justify-between'>
                     <div className='space-x-5'>
                         <TabsTrigger value="Cliente">Cliente</TabsTrigger>
+                        <TabsTrigger value="Administrador">Admin</TabsTrigger>
                         <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
                         <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
                     </div>
@@ -113,6 +115,9 @@ export default function Gestao() {
                 <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
                     {renderGestaoCliente()}
                 </TabsContent>
+                <TabsContent value='Administrador' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                    {renderGestao(1)}
+                </TabsContent>
                 <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
                     {renderGestao(2)}
                 </TabsContent>
@@ -121,5 +126,6 @@ export default function Gestao() {
                 </TabsContent>
             </Tabs>
         </div>
+
     )
 }

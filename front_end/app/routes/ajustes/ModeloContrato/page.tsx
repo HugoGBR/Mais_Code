@@ -11,7 +11,7 @@ export default function ModeloContrato() {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         await createNewTipoContrato(nomeContrato);
-        router.push("routes/ajustes");
+        router.push('/routes/ajustes');
     };
 
     return (

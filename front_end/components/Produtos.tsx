@@ -1,7 +1,7 @@
 "use client"
-import React, {useState, FormEvent} from 'react';
-import {useRouter} from 'next/navigation';
+import React, { useState, FormEvent } from 'react';
 import {createNewProduto} from "@/lib/produtoController";
+import { useRouter } from 'next/navigation';
 
 export default function CadastroProduto() {
     const [nomeProduto, setNomeProduto] = useState<string>('');
@@ -29,7 +29,7 @@ export default function CadastroProduto() {
             Number(valorComissaoA),
             Number(valorComissaoB),
         );
-        // router.push("routes/ajustes");
+        router.push('/routes/ajustes');
     };
 
     return (
@@ -103,8 +103,7 @@ export default function CadastroProduto() {
                             </div>
                         </div>
                         <div className="text-center">
-                            <button type="submit"
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 CADASTRAR
                             </button>
                         </div>

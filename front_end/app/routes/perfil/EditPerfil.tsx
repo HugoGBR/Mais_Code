@@ -4,6 +4,7 @@ import {z} from 'zod'
 import {Card} from "@/components/ui/card"
 import FileAvatar from "@/components/FileAvatar"
 import React, {useState} from "react";
+import ValidarTela from '@/components/ValidarTela'
 
 const formulario = z.object({
     //Números de restrição apenas para teste
@@ -38,7 +39,8 @@ export default function Perfil() {
     const [valorInputSenha, setValorInputSenha] = useState('*************')
 
     return (
-        <div className='flex justify-center items-center h-screen'>
+      
+          <div className='flex justify-center items-center h-screen'>
             <Card className='p-6 drop-shadow-xl rounded-xl'>
                 <form onSubmit={handleSubmit(handleForm)}>
                     <div>
@@ -103,5 +105,6 @@ export default function Perfil() {
                 </form>
             </Card>
         </div>
+      
     )
 }

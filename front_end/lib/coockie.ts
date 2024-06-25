@@ -11,10 +11,21 @@ export async function criarCookie(cookieName: string) {
 }
 
 
+export async function getCookie() {
+    const allCookies = cookies(); 
+    const userCookie = allCookies.get('userController'); 
 
-export async function getCookie(){
-    const Cookie = cookies().has('userController');
-    return Cookie
-
-
+    if (userCookie) {
+        return userCookie.value;
+    } else {
+        return null; 
+    }
 }
+
+
+
+
+
+
+
+
