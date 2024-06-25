@@ -29,17 +29,16 @@ class Vendacontroller
 
     // await createNewSell(datadoinicio, datadofim, NomeContato, Number(TelefoneContato), EmailContato, Number(ValorEntrada))
 
-    public function CreateNewSell()
+    public function createNewSell()
 {
     try {
         $user = json_decode(file_get_contents("php://input"));
-        $sql = "INSERT INTO vendas(cliente_id, tipo_contrato_id, parcela_id, produto_id, usuario_id, inicio_contrato, final_contrato, valor_entrada, valor_total, nome_contato, telefone, email, metodo_pagamento, status)
-                VALUES (:cliente_id, :tipo_contrato_id, :parcela_id, :produto_id, :usuario_id, :inicio_contrato, :final_contrato, :valor_entrada, :valor_total, :nome_contato, :telefone, :email, :metodo_pagamento, :status)";
+        $sql = "INSERT INTO vendas(cliente_id, tipo_contrato_id, produto_id, usuario_id, inicio_contrato, final_contrato, valor_entrada, valor_total, nome_contato, email, telefone,  metodo_pagamento, numero_parcela status)
+                VALUES (:cliente_id, :tipo_contrato_id, :produto_id, :usuario_id, :inicio_contrato, :final_contrato, :valor_entrada, :valor_total, :nome_contato, :email, :telefone,  :metodo_pagamento, :numero_parcela, :status)";
         
         $db = $this->conn->prepare($sql);
-        $db->bindParam(":cliente_id", $user->cliente_id);
+        $db->bindParam(":cliente_id", $user->cliente_id);   
         $db->bindParam(":tipo_contrato_id", $user->tipo_contrato_id);
-        $db->bindParam(":parcela_id", $user->parcela_id);
         $db->bindParam(":produto_id", $user->produto_id);
         $db->bindParam(":usuario_id", $user->usuario_id);
         $db->bindParam(":inicio_contrato", $user->inicio_contrato);
@@ -47,9 +46,10 @@ class Vendacontroller
         $db->bindParam(":valor_entrada", $user->valor_entrada);
         $db->bindParam(":valor_total", $user->valor_total);
         $db->bindParam(":nome_contato", $user->nome_contato);
-        $db->bindParam(":telefone", $user->telefone);
         $db->bindParam(":email", $user->email);
+        $db->bindParam(":telefone", $user->telefone);
         $db->bindParam(":metodo_pagamento", $user->metodo_pagamento);
+        $db->bindParam(":numero_parcela", $user->numero_parcela);
         $db->bindParam(":status", $user->status);
 
         $db->execute();
