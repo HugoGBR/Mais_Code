@@ -101,7 +101,7 @@ export default function Gestao() {
                 <TabsList className='will-change-contents flex justify-between'>
                     <div className='space-x-5'>
                         <TabsTrigger value="Cliente">Cliente</TabsTrigger>
-                        <TabsTrigger value="Administrador">Admin</TabsTrigger>
+                        <TabsTrigger value="Administrador">Administrador</TabsTrigger>
                         <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
                         <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
                     </div>
