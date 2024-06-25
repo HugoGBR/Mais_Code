@@ -26,14 +26,6 @@ CREATE TABLE `clientes` (
   `cpf_cnpj` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
-select * from clientes;
-
-CREATE TABLE `parcelas` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `numero_parcela` int(11) NOT NULL,
-  `valor_parcela` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id`)
-);
 
 
 CREATE TABLE `produtos` (
@@ -80,29 +72,27 @@ CREATE TABLE `usuarios` (
 );
 
 CREATE TABLE `vendas` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cliente_id` BIGINT(20) UNSIGNED NOT NULL,
-  `tipo_contrato_id` BIGINT(20) UNSIGNED NOT NULL,
-  `parcela_id` BIGINT(20) UNSIGNED NOT NULL,
-  `produto_id` BIGINT(20) UNSIGNED NOT NULL,
-  `usuario_id` BIGINT(20) UNSIGNED NOT NULL,
-  `inicio_contrato` DATE NOT NULL,
-  `final_contrato` DATE NOT NULL,
-  `valor_entrada` DECIMAL(8,2) NOT NULL,
-  `valor_total` DECIMAL(8,2) NOT NULL,
-  `nome_contato` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  `telefone` VARCHAR(255) NOT NULL,
-  `metodo_pagamento` ENUM('dinheiro', 'cartao', 'boleto') NOT NULL DEFAULT 'dinheiro',
-  `status` ENUM('concluido','em andamento','cancelado') NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `cliente_id` bigint(20) unsigned NOT NULL,
+  `tipo_contrato_id` bigint(20) unsigned NOT NULL,
+  `produto_id` bigint(20) unsigned NOT NULL,
+  `usuario_id` bigint(20) unsigned NOT NULL,
+  `inicio_contrato` date NOT NULL,
+  `final_contrato` date NOT NULL,
+  `valor_entrada` decimal(8,2) NOT NULL,
+  `valor_total` decimal(8,2) NOT NULL,
+  `nome_contato` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `telefone` varchar(255) NOT NULL,
+  `metodo_pagamento` varchar(45) NOT NULL,
+  `numero_parcela` text(55) NOT NULL,
+  `status` enum('concluido','em andamento','cancelado') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `vendas_cliente_id_foreign` (`cliente_id`),
   KEY `vendas_tipo_contrato_id_foreign` (`tipo_contrato_id`),
-  KEY `vendas_parcela_id_foreign` (`parcela_id`),
   KEY `vendas_produto_id_foreign` (`produto_id`),
   KEY `vendas_usuario_id_foreign` (`usuario_id`),
   CONSTRAINT `vendas_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `vendas_parcela_id_foreign` FOREIGN KEY (`parcela_id`) REFERENCES `parcelas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_produto_id_foreign` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_tipo_contrato_id_foreign` FOREIGN KEY (`tipo_contrato_id`) REFERENCES `tipo_contrato` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, FormEvent } from 'react';
-import { createNewProduto } from '@/lib/ProdutoController';
+import {createNewProduto} from "@/lib/produtoController";
 import { useRouter } from 'next/navigation';
 
 export default function CadastroProduto() {
@@ -29,7 +29,7 @@ export default function CadastroProduto() {
             Number(valorComissaoA),
             Number(valorComissaoB),
         );
-        // router.push("routes/ajustes");
+        router.push('/routes/ajustes');
     };
 
     return (

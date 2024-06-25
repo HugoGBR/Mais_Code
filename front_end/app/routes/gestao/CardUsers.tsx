@@ -10,7 +10,7 @@ import { userSchema } from "@/app/schemas/userSchema";
 
 type LoginFormSchema = z.infer<typeof userSchema>;
 
-export default function cadastrarUsuarioGestao() {
+export default function CadastrarUsuarioGestao() {
     const route = useRouter();
     const [camposPreenchidos, setCamposPreenchidos] = useState(false);
 
