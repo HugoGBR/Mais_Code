@@ -58,7 +58,7 @@ export default function CardCadastro() {
                                 </button>
                             </div>
 
-                            <input className="border-b-2 focus:outline-none focus:border-blue-500 mb-5 invisible"
+                            <input className="border-b-2 focus:outline-none focus:border-blue-500 mb-5"
                                 placeholder="Colaborador"
                                 type="text" />
                             <div className="flex flex-col mb-5">

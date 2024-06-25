@@ -22,9 +22,9 @@ export async function getAllProductById() {
 
 // Faz o insert
 export async function createNewSell(
-    new_cliente_id: number, new_tipo_contrato_id: number, new_parcela_id: number, new_produto_id: number, new_usuario_id: number,
-    final_contrato: Date, valor_entrada: number, valor_total: number, inicio_contrato: Date, metodo_pagamento: number,
-    email: string, telefone: string, nome_contato: string, status: undefined
+    new_cliente_id: number, new_tipo_contrato_id: number, new_produto_id: number, new_usuario_id: number,
+    final_contrato: Date, valor_entrada: number, valor_total: number, inicio_contrato: Date, metodo_pagamento: string,
+    email: string, telefone: string, nome_contato: string, numero_parcelo:number, status: undefined
 ) {
     const request = await fetch("http://localhost/Mais_code/backend/api/service/venda.php?acao=createNewSell", {
         method: "POST",
@@ -34,7 +34,7 @@ export async function createNewSell(
         body: JSON.stringify({
             cliente_id: new_cliente_id,
             tipo_contrato_id: new_tipo_contrato_id,
-            parcela_id: new_parcela_id,
+            numero_parcelo: numero_parcelo,
             produto_id: new_produto_id,
             usuario_id: new_usuario_id,
             final_contrato: final_contrato,
