@@ -35,7 +35,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
 
     {
-        accessorKey: "inicio_contrato",
+        accessorKey: "data_inicio",
         header: ({ column }) => {
             return (
                 <Button
@@ -47,11 +47,11 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("inicio_contrato")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("data_inicio")}</div>,
     },
 
     {
-        accessorKey: "Tipo_cliente_nome",
+        accessorKey: "nome_cliente",
         header: ({ column }) => {
             return (
                 <Button
@@ -63,11 +63,11 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("Tipo_cliente_nome")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("nome_cliente")}</div>,
     },
 
     {
-        accessorKey: "nome",
+        accessorKey: "nome_vendedor",
         header: ({ column }) => {
             return (
                 <Button
@@ -79,7 +79,7 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("nome")}</div>,
+        cell: ({ row }) => <div className="lowercase">{row.getValue("nome_vendedor")}</div>,
     },
 
     {

@@ -13,24 +13,25 @@ class RelatorioController
 
     public function BuscaRelatorioVenda()
     {
-        $sql = "SELECT 
-        vendas.id,
-        inicio_contrato,
-        clientes.nome,
+        $sql = "SELECT
+        vendas.id AS numero_contrato,
+        vendas.inicio_contrato AS data_inicio,
+        vendas.final_contrato AS data_fim,
+        clientes.nome AS nome_cliente,
+        usuarios.nome AS nome_vendedor,
         vendas.valor_total,
-        vendas.status,
-        tipo_cliente.nome as Tipo_cliente_nome
-        
-    FROM 
+        vendas.status
+    FROM
         vendas
-    JOIN 
+    JOIN
         clientes ON vendas.cliente_id = clientes.id
-    JOIN 
-        produtos ON vendas.produto_id = produtos.id
-    JOIN 
-        tipo_cliente ON produtos.tipo_cliente_id = tipo_cliente.id
-    JOIN 
-        usuarios ON vendas.usuario_id = usuarios.id;";
+    JOIN
+        usuarios ON vendas.usuario_id = usuarios.id
+    WHERE
+        vendas.status IN ('concluido', 'em andamento')
+    ORDER BY
+        vendas.inicio_contrato DESC
+    LIMIT 0, 1000;";
 
         $db = $this->conn->prepare($sql);
         $db->execute();
