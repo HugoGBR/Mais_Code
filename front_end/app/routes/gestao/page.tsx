@@ -63,9 +63,9 @@ export default function Gestao() {
             <>
                 {listaCliente.map(client => (
                     <Link href={`/routes/gestao/users/${client.id}`} key={client.id}>
-                        <div key={client.id} className='bg-gray-300 mb-4 rounded-lg'>
-                            <a className="block">
-                                <CardCliente dados={client} />
+                        <div key={client.id} className='bg-gray-300 mb-4 rounded-lg flex-grow'>
+                            <a className="block w-full">
+                                <CardCliente dados={client} />  
                             </a>
                         </div>
                     </Link>
@@ -82,8 +82,8 @@ export default function Gestao() {
                     .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                            <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
-                                <a className="block">
+                            <div key={item.id} className='bg-gray-300 mb-4 rounded-lg flex-grow'>
+                                <a className="block w-full">
                                     <CardUsuario dados={item} />
                                 </a>
                             </div>
@@ -95,6 +95,7 @@ export default function Gestao() {
     }
 
     return (
+       
          <div className="items-center py-10">
             <Tabs defaultValue=''>
                 <TabsList className='will-change-contents flex justify-between'>
@@ -112,20 +113,20 @@ export default function Gestao() {
                     </div>
                 </TabsList>
 
-                <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 gap-4'>
                     {renderGestaoCliente()}
                 </TabsContent>
-                <TabsContent value='Administrador' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                <TabsContent value='Administrador' className='flex flex-col md:grid md:grid-cols-2 gap-4'>
                     {renderGestao(1)}
                 </TabsContent>
-                <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 gap-4'>
                     {renderGestao(2)}
                 </TabsContent>
-                <TabsContent value='Financeiro' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                <TabsContent value='Financeiro' className='flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-4'>
                     {renderGestao(3)}
                 </TabsContent>
             </Tabs>
         </div>
-
+       
     )
 }
