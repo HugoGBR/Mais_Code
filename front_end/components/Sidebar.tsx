@@ -22,38 +22,38 @@ export default function SideBar() {
     ];
 
     return (
-        <div 
-            className={`flex text-white h-screen transition-all duration-300 ${isExpanded ? 'w-64' : 'w-30'}`} 
-            onMouseEnter={() => setIsExpanded(true)} 
+        <div
+            className={`flex text-white h-screen transition-all duration-300 ease-in-out ${isExpanded ? 'w-64' : 'w-20'}`}
+            onMouseEnter={() => setIsExpanded(true)}
             onMouseLeave={() => setIsExpanded(false)}
         >
             <div className="flex flex-col justify-between bg-[#122F54] p-4 w-full">
                 <div>
                     <Link href="/routes/home">
-                        <div className="flex justify-center mb-12">
+                        <div className={`flex justify-center mb-12 transform transition-transform duration-500 ${isExpanded ? 'rotate-360' : 'rotate-0'}`}>
                             <Image src="/icon-logo.png" alt="Logo da Empresa" width={50} height={50} />
                         </div>
                     </Link>
                     {menuSuperior.map((item) => (
                         <Link key={item.nome} href={item.href}>
-                            <div className="flex w-full text-lg font-medium hover:bg-white/10 rounded-lg p-3 items-center gap-3 transition-all duration-200">
-                                <Image src={item.icon} alt={`Ícone de ${item.nome}`} className="w-6 h-6 md:w-8 md:h-8" />
-                                {isExpanded && <p className="hidden md:block">{item.nome}</p>}
+                            <div className="flex w-full text-lg font-medium hover:bg-white/10 rounded-lg p-3 items-center gap-3 transition-all duration-200 ease-in-out transform hover:scale-105">
+                                <Image src={item.icon} alt={`Ícone de ${item.nome}`} width={30} height={30} />
+                                <p className={`transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'} hidden md:block`}>{item.nome}</p>
                             </div>
                         </Link>
                     ))}
                 </div>
                 <div className="flex flex-col space-y-2">
                     <Link href="/routes/perfil">
-                        <div className="flex text-lg font-medium hover:bg-white/10 rounded-lg p-3 items-center gap-3 transition-all duration-200">
-                            <Image src={"/icon-perfil-branco.png"} alt="Perfil_icone" width={30} height={30}/>
-                            {isExpanded && <span className="hidden md:block">Perfil</span>}
+                        <div className="flex text-lg font-medium hover:bg-white/10 rounded-lg p-3 items-center gap-3 transition-all duration-200 ease-in-out transform hover:scale-105">
+                            <Image src={"/icon-perfil-branco.png"} alt="Perfil ícone" width={30} height={30} />
+                            <span className={`transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'} hidden md:block`}>Perfil</span>
                         </div>
                     </Link>
                     <Link href="/">
-                        <div className="flex text-lg font-medium hover:bg-white/10 rounded-lg p-3 items-center gap-3 transition-all duration-200">
+                        <div className="flex text-lg font-medium hover:bg-white/10 rounded-lg p-3 items-center gap-3 transition-all duration-200 ease-in-out transform hover:scale-105">
                             <RxExit className="w-6 h-6 md:w-8 md:h-8" />
-                            {isExpanded && <span className="hidden md:block">Sair</span>}
+                            <span className={`transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'} hidden md:block`}>Sair</span>
                         </div>
                     </Link>
                 </div>

@@ -1,59 +1,36 @@
 'use client'
 import React from 'react';
 import RelatorioHome from '@/components/relatorioHome';
-<<<<<<< Updated upstream
 import { Chart } from 'react-google-charts';
 
-=======
-import TopVendedores from '@/components/PodioVendedor';
-import ValidarTela from '@/components/ValidarTela';
-
-const HomePage = () => {
-    return (
-        <ValidarTela>
-            <div className="bg-gray-100  w-11/12 -mt-5">
-            <div className='h-48 w-auto -mb-3'>
-                <h1 className='text-2xl font-semibold min-[320px]:hidden max-[600px]:hidden lg:inline-block'>Bem Vindo, Calebe</h1>
-                <p className='min-[320px]:hidden max-[600px]:hidden lg:block'>Ficamos felizes em vê-lo novamente</p>
-                <div className='rounded-xl float-right bg-white drop-shadow-xl h-24 justify-center items-center'>
-                    <h3 className='mt-3 ml-10 mr-10 text-lg'>Remuneraçao</h3>
-                    <h1 className='text-4xl font-bold ml-10 mr-10 '>R$5000,00</h1>
-                </div>
-            </div>
->>>>>>> Stashed changes
-
-export const data = [
-    ["Year", "Sales", "Expenses", "Profit"],
-    ["2014", 1000, 400, 200],
-    ["2015", 1170, 460, 250],
-    ["2016", 660, 1120, 300],
-    ["2017", 1030, 540, 350],
+const data = [
+    ["Vendas", "", ""],
+    ["Janeiro", 1000, 200],
+    ["Fevereiro", 1170, 250],
+    ["Março", 660, 300],
+    ["Abril", 1030, 350],
 ];
 
-<<<<<<< Updated upstream
-export const options = {
+const options = {
+    legend: { position: 'none' },
     chart: {
-        title: "Company Performance",
-        subtitle: "Sales, Expenses, and Profit: 2014-2017",
+        title: "Últimas vendas",
     },
-};
+}
 
 export default function HomePage() {
     return (
-
         <div className="bg-gray-100 items-center w-8/12 flex flex-col ">
             <div className=' w-full sm:flex md:justify-between md:items-center mb-3'>
                 <div className=' '>
                     <h1 className='text-2xl font-semibold min-[320px]:hidden max-[600px]:hidden lg:inline-block'>Bem Vindo, Calebe</h1>
                     <p className='min-[320px]:hidden max-[600px]:hidden lg:block'>Ficamos felizes em vê-lo novamente</p>
                 </div>
-
                 <div className='rounded-xl bg-white drop-shadow-xl p-2 col-span-2'>
                     <h3 className='text-center text-lg'>Remuneraçao</h3>
                     <h1 className='text-4xl text-center font-bold  '>R$5000,00</h1>
                 </div>
             </div>
-
             <div className='h-auto w-full bg-gray-100 space-y-3'>
                 <div className='h-80 w-full bg-white p-4 drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
                     <Chart
@@ -64,29 +41,13 @@ export default function HomePage() {
                         options={options}
                     />
                 </div>
-
                 <div className='rounded-xl bg-white drop-shadow-xl text-center overflow-y-auto pt-5 h-auto'>
                     <h1 className='flex justify-center'>Últimas Vendas</h1>
                     <div className='max-h-48 w-full'>
                         <RelatorioHome />
                     </div>
-
                 </div>
             </div>
-
-
-
         </div>
     )
-=======
-            <div className='min-[320px]:hidden max-[600px]:hidden lg:inline-block'>
-                <CadastroLink/>   
-            </div>
-            
-
-        </div>
-        </ValidarTela>
-    );
->>>>>>> Stashed changes
 };
-

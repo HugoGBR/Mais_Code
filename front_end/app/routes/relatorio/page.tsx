@@ -19,10 +19,10 @@ export default function Relatorio() {
     }, []);
 
     return (
-       <ValidarTela>
+       
          <div className="container mx-auto py-10">
             <DataTable columns={columns} data={data} />
         </div>
-       </ValidarTela>
+       
     );
 }

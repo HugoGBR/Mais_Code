@@ -28,14 +28,6 @@ CREATE TABLE `clientes` (
   `cpf_cnpj` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
-select * from clientes;
-
-CREATE TABLE `parcelas` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `numero_parcela` int(11) NOT NULL,
-  `valor_parcela` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id`)
-);
 
 
 CREATE TABLE `produtos` (
@@ -73,7 +65,6 @@ CREATE TABLE `vendas` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `cliente_id` bigint(20) unsigned NOT NULL,
   `tipo_contrato_id` bigint(20) unsigned NOT NULL,
-  `parcela_id` bigint(20) unsigned NOT NULL,
   `produto_id` bigint(20) unsigned NOT NULL,
   `usuario_id` bigint(20) unsigned NOT NULL,
   `inicio_contrato` date NOT NULL,
@@ -83,16 +74,15 @@ CREATE TABLE `vendas` (
   `nome_contato` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `telefone` varchar(255) NOT NULL,
-  `metodo_pagamento` tinyint(1) NOT NULL DEFAULT 1,
+  `metodo_pagamento` varchar(45) NOT NULL,
+  `numero_parcela` text(55) NOT NULL,
   `status` enum('concluido','em andamento','cancelado') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `vendas_cliente_id_foreign` (`cliente_id`),
   KEY `vendas_tipo_contrato_id_foreign` (`tipo_contrato_id`),
-  KEY `vendas_parcela_id_foreign` (`parcela_id`),
   KEY `vendas_produto_id_foreign` (`produto_id`),
   KEY `vendas_usuario_id_foreign` (`usuario_id`),
   CONSTRAINT `vendas_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `vendas_parcela_id_foreign` FOREIGN KEY (`parcela_id`) REFERENCES `parcelas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_produto_id_foreign` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_tipo_contrato_id_foreign` FOREIGN KEY (`tipo_contrato_id`) REFERENCES `tipo_contrato` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

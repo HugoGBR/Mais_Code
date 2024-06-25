@@ -39,7 +39,7 @@ export default function Perfil() {
     const [valorInputSenha, setValorInputSenha] = useState('*************')
 
     return (
-      <ValidarTela>
+      
           <div className='flex justify-center items-center h-screen'>
             <Card className='p-6 drop-shadow-xl rounded-xl'>
                 <form onSubmit={handleSubmit(handleForm)}>
@@ -105,6 +105,6 @@ export default function Perfil() {
                 </form>
             </Card>
         </div>
-      </ValidarTela>
+      
     )
 }
