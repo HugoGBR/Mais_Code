@@ -11,7 +11,7 @@ export default function Contrato() {
     const route = useRouter()
 
     return (
-        <ValidarTela>
+        
             <div className="flex flex-col gap-5">
             <div className="flex gap-5">
                 <div>
@@ -28,7 +28,7 @@ export default function Contrato() {
             </div>
         </div>
             
-        </ValidarTela>
+        
 
     )
 }

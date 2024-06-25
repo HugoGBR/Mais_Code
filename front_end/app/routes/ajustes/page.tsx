@@ -39,7 +39,7 @@ export default function Ajuste() {
 
 
     return (
-        <ValidarTela>
+        
             <div className="flex flex-col gap-3 md:flex md:flex-row">
                 <div className="h-auto">
                     <TableProduto columns={ColumnsProdutos} data={data.produtos} />
@@ -48,7 +48,7 @@ export default function Ajuste() {
                     <TabelaContrato columns={ColumnsContrato} data={data.contratos} />
                 </div>
             </div>
-        </ValidarTela>
+        
 
     )
 }
