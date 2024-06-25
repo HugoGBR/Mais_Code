@@ -29,7 +29,7 @@ export default function CadastroProduto() {
             Number(valorComissaoA),
             Number(valorComissaoB),
         );
-        // router.push("routes/ajustes");
+        router.push('/routes/ajustes');
     };
 
     return (
