@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 import { ColumnsContrato } from "./TabelaContrato/ColumnsContrato";
 import { ColumnsProdutos } from "./TableProdutos/ColumnsProdutos";
-import { getAllProduto } from "@/lib/ProdutoController";
 import { TableProduto } from "./TableProdutos/TableProduto";
 import { TabelaContrato } from "./TabelaContrato/TabelaContrato";
 import { Cookie } from "next/font/google";
@@ -12,6 +11,7 @@ import { useRouter } from "next/router";
 import { getCookie } from "@/lib/coockie";
 import { useSearchParams } from "next/navigation";
 import { getAllContratos } from "@/lib/ContratoController";
+import {getAllProduto} from "@/lib/produtoController";
 
 // export default function EXP(){
 //     const searchParams = useSearchParams()

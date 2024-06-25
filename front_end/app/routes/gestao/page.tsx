@@ -8,7 +8,7 @@ import { dadosCliente, dadosUsuario } from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getAllClient } from '@/lib/GestaoControler';
-import { getAllUsers } from '@/lib/usuarioController';
+import { getAllUsers } from '@/lib/UsuarioController';
 import CardCliente from '@/components/CardClienteGestao';
 
 export default function Gestao() {

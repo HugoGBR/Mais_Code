@@ -2,13 +2,13 @@
 
 import React, {useState} from "react";
 import {Card} from "@/components/ui/card";
-import {createNewUser} from "@/lib/controller/usuarioController";
-import {redirect, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 
 export default function CardUsers() {
     const [nome, setNome] = useState("");
     const route = useRouter();
+
     async function handleSubmit() {
         const response = await fetch("/api/users", {
             method: "POST",

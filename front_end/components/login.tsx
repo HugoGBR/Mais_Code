@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { loginSchema } from "@/app/schemas/loginSchema";
-import { validacaoLogin } from "@/lib/usuarioController";
+import { validacaoLogin } from "@/lib/UsuarioController";
 
 
 

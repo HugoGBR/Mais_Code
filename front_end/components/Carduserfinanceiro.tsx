@@ -1,6 +1,6 @@
 'use client'
 import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
-import { escolheTipoCliente } from "@/lib/usuarioController";
+import { escolheTipoCliente } from "@/lib/UsuarioController";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 export default function Cardfinanceiro({dados}: { dados: dadosUsuario }) {

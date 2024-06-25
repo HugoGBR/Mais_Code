@@ -27,7 +27,7 @@ export default function RootLayout({
                 <div className="w-full">
                     {!isHome && <BtnVoltar />}
                 </div>
-                <div className="flex md:h-screen w-full md:justify-center md:items-center">
+                <div className="flex h-screen w-full md:justify-center md:items-center">
                     {children}
                 </div>
             </main>

@@ -1,6 +1,6 @@
 import React from "react";
-import Chart from "react-apexcharts";
-import {ButtonProps} from "@/components/ui/button";
+import Chart from "react-apexcharts"; // Certifique-se de que a dependência está instalada corretamente
+import {ButtonProps} from "@/components/ui/button"; // Verifique se você realmente precisa de ButtonProps
 
 const data = {
     series: [
@@ -15,6 +15,9 @@ const data = {
             zoom: {
                 enabled: false,
             },
+            toolbar: {
+                show: false, // Desabilita o menu de opções
+            },
         },
         dataLabels: {
             enabled: false,
@@ -23,7 +26,7 @@ const data = {
             curve: "smooth",
         },
         title: {
-            text: "Product Trends by Month",
+            text: "Ultimas Vendas",
             align: "left",
         },
         grid: {
@@ -48,17 +51,15 @@ const data = {
     },
 };
 
-export default function ApexAreaChart(props: ButtonProps) {
+export default function ApexAreaChart() { // Verifique se ButtonProps é necessário
     return (
-        <>
-            <div className='w-full h-auto bg-white p-4 drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
-                <Chart
-                    options={data.options}
-                    series={data.series}
-                    type="area"
-                    height={250}
-                />
-            </div>
-        </>
+        <div className='w-full h-auto bg-white p-4 drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
+            <Chart
+                options={data.options}
+                series={data.series}
+                type="area"
+                height={250}
+            />
+        </div>
     );
 }
