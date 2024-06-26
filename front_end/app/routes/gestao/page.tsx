@@ -82,7 +82,7 @@ export default function Gestao() {
                     .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                            <div onClick={() => router.push(`/routes/gestao/${item.id}`)}key={item.id} className='bg-gray-300 mb-4 rounded-lg w-full'>
+                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)}key={item.id} className='bg-gray-300 mb-4 rounded-lg w-full'>
                                 <a className="block">
                                     <CardUsuario dados={item} />
                                 </a>
