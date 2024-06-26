@@ -9,13 +9,22 @@ import { createNewSell } from "@/lib/VendaController";
 export default function CardCadastro() {
 
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
-
+    const [new_cliente_id, setnew_cliente_id] = useState("");
+    const [new_tipo_contrato_id, setnew_tipo_contrato_id] = useState("");
+    const [new_produto_id, setnew_produto_id] = useState("");
+    const [new_usuario_id, setnew_usuario_id] = useState("");
+    const [valor_total, setvalortotal] = useState("");
+    const [valor_entrada, setValorEntrada] = useState("");
+    
+    
     const [DataInicio, setDataInicio] = useState("");
     const [DataFim, setDataFim] = useState("");
-    const [NomeContato, setNomeContato] = useState("");
-    const [TelefoneContato, setTelefoneContato] = useState("");
-    const [EmailContato, setEmailContato] = useState("");
-    const [ValorEntrada, setValorEntrada] = useState("");
+    const [nome_contato, setNomeContato] = useState("");
+    const [telefone, setTelefoneContato] = useState("");
+    const [email, setEmailContato] = useState("");
+
+    const [metodo_pagamento, setmetodo_pagamento] = useState("");
+    const [numero_parcelo, setnumero_parcelo] = useState("");
 
     const route = useRouter();
 
@@ -24,7 +33,7 @@ export default function CardCadastro() {
         const datadoinicio = new Date(DataInicio)
         const datadofim = new Date(DataFim)
 
-        await createNewSell(datadoinicio, datadofim, NomeContato, Number(TelefoneContato), EmailContato, Number(ValorEntrada))
+        await createNewSell(Number(new_cliente_id),Number(new_tipo_contrato_id),Number(new_produto_id),Number(new_usuario_id),datadofim,Number(valor_entrada),Number(valor_total),datadoinicio,metodo_pagamento,email,telefone,nome_contato,Number(numero_parcelo),"em andamento")
         route.push("/routes/cadastros")
     }
 
