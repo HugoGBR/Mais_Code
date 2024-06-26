@@ -13,7 +13,7 @@ export async function criarCookie(cookieName: string) {
 
 export async function getCookie() {
     const allCookies = cookies(); 
-    const userCookie = allCookies.get('userController'); 
+    const userCookie = allCookies.get('CookiCriado'); 
 
     if (userCookie) {
         return userCookie.value;
