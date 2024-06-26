@@ -82,7 +82,7 @@ export default function Gestao() {
                     .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                            <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
+                            <div onClick={() => router.push(`/routes/gestao/${item.id}`)}key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
                                 <a className="block">
                                     <CardUsuario dados={item} />
                                 </a>
@@ -100,7 +100,7 @@ export default function Gestao() {
                 <TabsList className='will-change-contents flex justify-between'>
                     <div className='space-x-5'>
                         <TabsTrigger value="Cliente">Cliente</TabsTrigger>
-                        <TabsTrigger value="Administrador">Admin</TabsTrigger>
+                        <TabsTrigger value="Administrador">Administrador</TabsTrigger>
                         <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
                         <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
                     </div>

@@ -67,7 +67,7 @@ export function TabelaContrato<TData, TValue>({
     <div>
       <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
         <div className="flex items-center justify-between py-4 input-container">
-          <h1>
+          <h1 className="text-lg">
             <b>Contrato</b>
           </h1>
           <div className="flex space-x-2">
