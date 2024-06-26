@@ -69,12 +69,12 @@ export function TableProduto<TData, TValue>({
     <div>
       <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
         <div className="flex items-center justify-between py-4 input-container">
-          <h1>
-            <b>Produto</b>
+          <h1 className="text-lg">
+            <b>Produtos</b>
           </h1>
           <div className="flex space-x-2">
             <Link href="">
-              <RiCloseCircleLine size={25} color="red" />
+              <RiCloseCircleLine size={25} color="red"/>
             </Link>
             <Link href={'/routes/ajustes/Produtos'}>
               <PiPlusCircleBold size={25} color="#0762C8" />
@@ -89,9 +89,9 @@ export function TableProduto<TData, TValue>({
             onChange={(event) =>
               table.getColumn("nome")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+            className="max-w-sm border border-gray-300 rounded-md py-2 px-16 mb-4 focus:outline-none focus:border-blue-500"
           />
-          <div className="rounded-3xl border">
+          <div className="rounded-lg border">
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
