@@ -64,7 +64,7 @@ export default function Gestao() {
                 {listaCliente.map(client => (
                     <Link href={`/routes/gestao/users/${client.id}`} key={client.id}>
                         <div key={client.id} className='bg-gray-300 mb-4 rounded-lg'>
-                            <a className="block">
+                            <a className="block h-full">
                                 <CardCliente dados={client} />
                             </a>
                         </div>
@@ -82,7 +82,7 @@ export default function Gestao() {
                     .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                            <div key={item.id} className='bg-gray-300 mb-4 rounded-lg'>
+                            <div key={item.id} className='bg-gray-300 mb-4 rounded-lg w-full'>
                                 <a className="block">
                                     <CardUsuario dados={item} />
                                 </a>
@@ -112,16 +112,16 @@ export default function Gestao() {
                     </div>
                 </TabsList>
 
-                <TabsContent value='Cliente' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                <TabsContent value='Cliente' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4ss'>
                     {renderGestaoCliente()}
                 </TabsContent>
-                <TabsContent value='Administrador' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                <TabsContent value='Administrador' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4ss'>
                     {renderGestao(1)}
                 </TabsContent>
-                <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                <TabsContent value='Vendedor' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4ss'>
                     {renderGestao(2)}
                 </TabsContent>
-                <TabsContent value='Financeiro' className='flex flex-col md:grid md:grid-cols-2 space-x-4'>
+                <TabsContent value='Financeiro' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4ss'>
                     {renderGestao(3)}
                 </TabsContent>
             </Tabs>
