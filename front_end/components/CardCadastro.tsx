@@ -9,23 +9,21 @@ import { createNewSell } from "@/lib/VendaController";
 export default function CardCadastro() {
 
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
-    const [new_cliente_id, setnew_cliente_id] = useState("");
-    const [new_tipo_contrato_id, setnew_tipo_contrato_id] = useState("");
-    const [new_produto_id, setnew_produto_id] = useState("");
-    const [new_usuario_id, setnew_usuario_id] = useState("");
-    const [valor_total, setvalortotal] = useState("");
     const [valor_entrada, setValorEntrada] = useState("");
-    
-    
     const [DataInicio, setDataInicio] = useState("");
     const [DataFim, setDataFim] = useState("");
     const [nome_contato, setNomeContato] = useState("");
     const [telefone, setTelefoneContato] = useState("");
     const [email, setEmailContato] = useState("");
-
+    
+    const [new_cliente_id, setnew_cliente_id] = useState("");
+    const [new_tipo_contrato_id, setnew_tipo_contrato_id] = useState("");
+    const [new_produto_id, setnew_produto_id] = useState("");
+    const [new_usuario_id, setnew_usuario_id] = useState("");
+    const [valor_total, setvalortotal] = useState("");
     const [metodo_pagamento, setmetodo_pagamento] = useState("");
     const [numero_parcelo, setnumero_parcelo] = useState("");
-
+    
     const route = useRouter();
 
     async function handleSubmit(event: FormEvent) {
