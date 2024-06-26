@@ -62,8 +62,8 @@ export default function Gestao() {
         return (
             <>
                 {listaCliente.map(client => (
-                    <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
-                        <div key={client.id} className='bg-gray-300 mb-4 rounded-lg'>
+                    <Link href={`/routes/gestao/users/${client.id}`} key={client.id}>
+                        <div key={client.id} className='bg-gray-300 mb-2 rounded-lg'>
                             <a className="block h-full">
                                 <CardCliente dados={client} />
                             </a>
@@ -82,7 +82,7 @@ export default function Gestao() {
                     .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)}key={item.id} className='bg-gray-300 mb-4 rounded-lg w-full mr-4'>
+                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)}key={item.id} className='bg-gray-300 mb-2 rounded-lg w-full'>
                                 <a className="block">
                                     <CardUsuario dados={item} />
                                 </a>
@@ -97,35 +97,38 @@ export default function Gestao() {
     return (
          <div className="items-center py-10">
             <Tabs defaultValue=''>
-                <TabsList className='will-change-contents flex justify-between'>
-                    <div className='space-x-5'>
+                <TabsList className='will-change-contents flex justify-between space-x-5'>
                         <TabsTrigger value="Cliente">Cliente</TabsTrigger>
                         <TabsTrigger value="Administrador">Administrador</TabsTrigger>
                         <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
                         <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
-                    </div>
-                    <div>
-                        {<button type="button" id="Newuser"
-                            className="text-white bg-blue-500 w-full p-1 rounded-md hover:bg-blue-600 cursor-pointer"
-                            onClick={rotaNewUser}>Novo Usuario
-                        </button>}
+                        <div>   
+                            <button
+                                type="button"
+                                id="Newuser"
+                                className="text-white bg-blue-500 w-full p-1 rounded-md hover:bg-blue-600 cursor-pointer"
+                                onClick={rotaNewUser}
+                            >
+                                Novo Usuario
+                            </button>
                     </div>
                 </TabsList>
 
-                <TabsContent value='Cliente' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4ss'>
+                <TabsContent value='Cliente' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-2'>
                     {renderGestaoCliente()}
                 </TabsContent>
-                <TabsContent value='Administrador' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4ss'>
+                <TabsContent value='Administrador' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-2'>
                     {renderGestao(1)}
                 </TabsContent>
-                <TabsContent value='Vendedor' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4ss'>
+                <TabsContent value='Vendedor' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-2'>
                     {renderGestao(2)}
                 </TabsContent>
-                <TabsContent value='Financeiro' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4ss'>
+                <TabsContent value='Financeiro' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-2'>
                     {renderGestao(3)}
                 </TabsContent>
             </Tabs>
         </div>
-
     )
+
+    
 }
