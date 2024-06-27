@@ -63,8 +63,8 @@ export default function Gestao() {
             <>
                 {listaCliente.map(client => (
                     <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
-                        <div key={client.id} className='bg-gray-300 mb-2 rounded-lg'>
-                            <a className="block h-full">
+                        <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300 mb-2 rounded-lg w-full'>
+                            <a className="block">
                                 <CardCliente dados={client} />
                             </a>
                         </div>
@@ -82,7 +82,7 @@ export default function Gestao() {
                     .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)}key={item.id} className='bg-gray-300 mb-2 rounded-lg w-full'>
+                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300 mb-2 rounded-lg w-full'>
                                 <a className="block">
                                     <CardUsuario dados={item} />
                                 </a>
@@ -95,22 +95,22 @@ export default function Gestao() {
     }
 
     return (
-         <div className="items-center py-10">
+        <div className="items-center py-10">
             <Tabs defaultValue=''>
                 <TabsList className='will-change-contents flex justify-between space-x-5'>
-                        <TabsTrigger value="Cliente">Cliente</TabsTrigger>
-                        <TabsTrigger value="Administrador">Administrador</TabsTrigger>
-                        <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
-                        <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
-                        <div>   
-                            <button
-                                type="button"
-                                id="Newuser"
-                                className="text-white bg-blue-500 w-full p-1 rounded-md hover:bg-blue-600 cursor-pointer"
-                                onClick={rotaNewUser}
-                            >
-                                Novo Usuario
-                            </button>
+                    <TabsTrigger value="Cliente">Cliente</TabsTrigger>
+                    <TabsTrigger value="Administrador">Administrador</TabsTrigger>
+                    <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
+                    <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
+                    <div>
+                        <button
+                            type="button"
+                            id="Newuser"
+                            className="text-white bg-blue-500 w-full p-1 rounded-md hover:bg-blue-600 cursor-pointer"
+                            onClick={rotaNewUser}
+                        >
+                            Novo Usuario
+                        </button>
                     </div>
                 </TabsList>
 
@@ -130,5 +130,5 @@ export default function Gestao() {
         </div>
     )
 
-    
+
 }
