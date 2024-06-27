@@ -9,7 +9,7 @@ import { TabelaContrato } from "./TabelaContrato/TabelaContrato";
 import { useRouter } from "next/navigation";
 import { getCookie } from "@/lib/coockie";
 import { getAllContratos } from "@/lib/ContratoController";
-import { getAllProduto } from "@/lib/produtoController";
+import { getAllProduto } from "@/lib/ProdutoController";
 import ValidarTela from "@/components/ValidarTela";
 
 
