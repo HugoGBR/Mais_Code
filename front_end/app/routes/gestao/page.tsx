@@ -19,7 +19,7 @@ export default function Gestao() {
     const router = useRouter();
 
     const rotaNewUser = () => {
-        router.push('/routes/gestao');
+        router.push('/routes/gestao/Usuario');
     }
 
     async function carregarCliente() {
