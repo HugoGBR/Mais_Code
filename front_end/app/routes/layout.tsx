@@ -13,8 +13,8 @@ export default function RootLayout({
     const isHome = pathname === '/routes/home';
     
     return (
-        <div className="md:flex md:flex-row h-screen w-full bg-[#F2F6F9]">
-            <div className="md:h-screen md:relative md:flex-row gap-6">
+        <div className="md:flex md:flex-row h-full w-full bg-[#F2F6F9]">
+            <div className="md:h-full md:relative md:flex-row gap-6">
                 <div className="md:hidden">
                     <HambuguerMenu />
                 </div>
@@ -23,11 +23,11 @@ export default function RootLayout({
                 </div>
             </div>
 
-            <main className="flex flex-col p-10 w-full">
+            <main className="flex flex-col p-10 h-full w-full overflow-y-auto">
                 <div className="w-full">
                     {!isHome && <BtnVoltar />}
                 </div>
-                <div className="flex h-screen w-full md:justify-center md:items-center">
+                <div className="flex h-full w-full justify-center items-center">
                     {children}
                 </div>
             </main>
