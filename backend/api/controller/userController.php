@@ -110,16 +110,19 @@ class Usercontroller
         }
     }
 
-
+    private function checkUserExists(string $email) {
+        $query = "SELECT COUNT(*) FROM usuarios WHERE email = :email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
     public function updateUserById(int $id){
         try {
             $user = json_decode(file_get_contents('php://input'));
     
 
-            if (!$user || !isset($user->nome) || !isset($user->cargo_id) || !isset($user->senha) || !isset($user->email)) {
-                return json_encode(['status' => 0, 'message' => 'Dados incompletos.']);
-            }
-    
             $userExists = $this->checkUserExistsById($id);
             if (!$userExists) {
                 return json_encode(['status' => 0, 'message' => 'Usuário não encontrado.']);
@@ -145,14 +148,7 @@ class Usercontroller
         }
     }
     
-    private function checkUserExists(string $email) {
-        $query = "SELECT COUNT(*) FROM usuarios WHERE email = :email";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        $count = $stmt->fetchColumn();
-        return $count > 0;
-    }
+
 
     private function checkUserExistsById(int $id){
         $query = "SELECT COUNT(*) FROM USUARIOS WHERE id = :id";
