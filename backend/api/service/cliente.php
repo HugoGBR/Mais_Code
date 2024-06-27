@@ -11,12 +11,12 @@ $acao = isset($_REQUEST["acao"]) ? $_REQUEST["acao"] : null;
 $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
 
 switch ($acao) {
-    case "updateClientByID":
+    case "getAllClient":
         if ($id != null) {
-            $response = $clienteController->updateClientByID($id);
-            echo json_encode($response);
+            echo json_encode(["error" => "Ação 'GetAllClient' não aceita um ID"]);
         } else {
-            echo json_encode(["error" => "Ação 'updateClientByID' necessita de um ID"]);
+            $response = $clienteController->getAllClient();
+            echo json_encode($response);
         }
         break;
 
@@ -27,16 +27,26 @@ switch ($acao) {
             $response = $clienteController->createNewCliente();
             echo json_encode($response);
         }
-        break;
+        break;        
 
-    case "getAllClient":
+    case "updateClientByID":
         if ($id != null) {
-            echo json_encode(["error" => "Ação 'GetAllClient' não aceita um ID"]);
-        } else {
-            $response = $clienteController->getAllClient();
+            $response = $clienteController->updateClientByID($id);
             echo json_encode($response);
+        } else {
+            echo json_encode(["error" => "Ação 'updateClientByID' necessita de um ID"]);
         }
         break;
+
+    case "GetClientById":
+        if ($id !== null) {
+            $cliente = $clienteController->getClientById($id);
+            echo json_encode($cliente);
+        } else {
+            echo json_encode(["error" => "Ação GetClientById necessita de um ID"]);
+        }
+        break;
+    
 
     default:
         echo json_encode(["error" => "Ação não suportada."]);

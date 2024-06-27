@@ -41,7 +41,15 @@ class ClienteController
             return ['status' => 0, 'message' => 'Erro ao atualizar Cliente: ' . $e->getMessage()];
         }
     }
-
+    private function checkClienteExistsById(int $id){
+        $query = "SELECT COUNT(*) FROM CLIENTES WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+    
     public function createNewCliente()
     {
         try {
@@ -97,5 +105,10 @@ class ClienteController
         return $count > 0;
     }
 }
+
+
+
+
+
 ?>
 
