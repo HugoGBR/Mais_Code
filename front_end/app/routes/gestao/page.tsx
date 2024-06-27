@@ -62,7 +62,7 @@ export default function Gestao() {
         return (
             <>
                 {listaCliente.map(client => (
-                    <Link href={`/routes/gestao/users/${client.id}`} key={client.id}>
+                    <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
                         <div key={client.id} className='bg-gray-300 mb-2 rounded-lg'>
                             <a className="block h-full">
                                 <CardCliente dados={client} />

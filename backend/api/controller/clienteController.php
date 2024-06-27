@@ -104,6 +104,23 @@ class ClienteController
         $count = $stmt->fetchColumn();
         return $count > 0;
     }
+
+    public function getClienteById(int $id)
+    {
+        try {
+            $sql = "SELECT * FROM clientes WHERE id = :id";
+            $db = $this->conn->prepare($sql);
+            $db->bindParam(":id", $id);
+            $db->execute();
+            $user = $db->fetch(PDO::FETCH_ASSOC);
+            return $user;
+
+        } catch (\Exception $th) {
+            echo "Erro ao buscar o cliente: " . $th->getMessage();
+            return null;
+        }
+    }
+
 }
 
 

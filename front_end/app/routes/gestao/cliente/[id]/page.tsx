@@ -2,35 +2,27 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getUserById, updateUser } from "@/lib/UsuarioController";
 import { Card } from "@/components/ui/card";
-
-
-
+import { getClienteById, updateClientByID } from "@/lib/clienteController";
 
 export default function App({ params }: { params: { id: number } }) {
-    const [dadosUsuario, setdadosUsuario] = useState({ nome: "", cargo_id: 0, senha: "", email: "" });
-    const [nome, setNome] = useState("");
+    const [dadosCliente, setDadosCliente] = useState({ nome: "", email: "", telefone: "", cpf_cnpj: "" });
     const router = useRouter();
 
-
-
     useEffect(() => {
-        const setdados = async () => {
-            const usuario = await getUserById(params.id);
-            setdadosUsuario(usuario);
+        const setDados = async () => {
+            const cliente = await getClienteById(params.id);
+            setDadosCliente(cliente);
         };
 
-        setdados();
+        setDados();
     }, [params.id]);
 
     const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, params.id);
+        await updateClientByID(dadosCliente.nome, dadosCliente.email, dadosCliente.telefone, dadosCliente.cpf_cnpj, params.id);
         router.push('/routes/gestao');
     };
-
-
 
     return (
         <div>
@@ -47,35 +39,35 @@ export default function App({ params }: { params: { id: number } }) {
                         <div className="pb-16 grid grid-cols-1 sm:grid-cols-2 gap-10">
                             <div className="flex flex-col space-y-1.5">
                                 <input type="text"
-                                    value={dadosUsuario.nome}
-                                    onChange={(e) => setdadosUsuario({ ...dadosUsuario, nome: e.target.value })}
+                                    value={dadosCliente.nome}
+                                    onChange={(e) => setDadosCliente({ ...dadosCliente, nome: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="nome" placeholder="Nome"
-                                    />
+                                />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                            <input type="text"
-                                    value={dadosUsuario.nome}
-                                    onChange={(e) => setdadosUsuario({ ...dadosUsuario, nome: e.target.value })}
+                                <input type="text"
+                                    value={dadosCliente.email}
+                                    onChange={(e) => setDadosCliente({ ...dadosCliente, email: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                    id="nome" placeholder="Nome"
-                                    />
+                                    id="email" placeholder="Email"
+                                />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                            <input type="text"
-                                    value={dadosUsuario.nome}
-                                    onChange={(e) => setdadosUsuario({ ...dadosUsuario, nome: e.target.value })}
+                                <input type="text"
+                                    value={dadosCliente.telefone}
+                                    onChange={(e) => setDadosCliente({ ...dadosCliente, telefone: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                    id="nome" placeholder="Nome"
-                                    />
+                                    id="telefone" placeholder="Telefone"
+                                />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                            <input type="text"
-                                    value={dadosUsuario.nome}
-                                    onChange={(e) => setdadosUsuario({ ...dadosUsuario, nome: e.target.value })}
+                                <input type="text"
+                                    value={dadosCliente.cpf_cnpj}
+                                    onChange={(e) => setDadosCliente({ ...dadosCliente, cpf_cnpj: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                    id="nome" placeholder="Nome"
-                                    />
+                                    id="cpf_cnpj" placeholder="CPF/CNPJ"
+                                />
                             </div>
                         </div>
                         <div className="flex justify-center">
@@ -84,8 +76,6 @@ export default function App({ params }: { params: { id: number } }) {
                     </Card>
                 </div>
             </form>
-
         </div>
     );
 }
-

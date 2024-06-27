@@ -38,9 +38,9 @@ switch ($acao) {
         }
         break;
 
-    case "GetClientById":
+    case "getClienteById":
         if ($id !== null) {
-            $cliente = $clienteController->getClientById($id);
+            $cliente = $clienteController->getClienteById($id);
             echo json_encode($cliente);
         } else {
             echo json_encode(["error" => "Ação GetClientById necessita de um ID"]);
