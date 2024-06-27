@@ -14,7 +14,7 @@ class ClienteController
     public function updateClientByID(int $id)
     {
         try {
-            $userExists = $this->checkClienteExist($id);
+            $userExists = $this->checkClienteExistsById($id);
             if (!$userExists) {
                 return ['status' => 0, 'message' => 'Cliente não encontrado.'];
             }
