@@ -34,10 +34,11 @@ CREATE TABLE `produtos` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `horas_trabalhadas` decimal(8,2) NOT NULL,
-  `comissaoA` int NOT NULL,
-  `comissaoB` int NOT NULL,
   `descricao_produto` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  `tipo_cliente_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `tipo_cliente_id_foreign` FOREIGN KEY (`tipo_cliente_id`) REFERENCES `tipo_cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  
 );
 
 DROP TABLE IF EXISTS `tipo_contrato`;
@@ -45,6 +46,13 @@ DROP TABLE IF EXISTS `tipo_contrato`;
 CREATE TABLE `tipo_contrato` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `tipo_cliente` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `porcentagem` int NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -67,6 +75,7 @@ CREATE TABLE `vendas` (
   `tipo_contrato_id` bigint(20) unsigned NOT NULL,
   `produto_id` bigint(20) unsigned NOT NULL,
   `usuario_id` bigint(20) unsigned NOT NULL,
+  `status_clinte` int NOT NULL,
   `inicio_contrato` date NOT NULL,
   `final_contrato` date NOT NULL,
   `valor_entrada` decimal(8,2) NOT NULL,

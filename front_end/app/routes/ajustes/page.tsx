@@ -47,13 +47,12 @@ export default function Ajuste() {
                 <div className="gap-3 h-auto w-auto flex flex-col">
                     <TabelaContrato columns={ColumnsContrato} data={data.contratos} />
                 </div>
+           
             </div>
         
 
     )
 }
-
-
 
 function setIsCarregando(arg0: boolean) {
     throw new Error("Function not implemented.");
