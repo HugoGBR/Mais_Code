@@ -15,6 +15,7 @@ export default function CardCadastro() {
     const [nome_contato, setNomeContato] = useState("");
     const [telefone, setTelefoneContato] = useState("");
     const [email, setEmailContato] = useState("");
+    
     const [new_cliente_id, setnew_cliente_id] = useState("");
     const [new_tipo_contrato_id, setnew_tipo_contrato_id] = useState("");
     const [new_produto_id, setnew_produto_id] = useState("");
@@ -30,7 +31,7 @@ export default function CardCadastro() {
         const datadoinicio = new Date(DataInicio)
         const datadofim = new Date(DataFim)
 
-        await createNewSell(Number(new_cliente_id),Number(new_tipo_contrato_id),Number(new_produto_id),Number(new_usuario_id),datadofim,Number(valor_entrada),Number(valor_total),datadoinicio,metodo_pagamento,email,telefone,nome_contato,Number(numero_parcelo),"em andamento")
+        await createNewSell(Number(new_cliente_id),Number(new_tipo_contrato_id),Number(new_produto_id),Number(new_usuario_id),datadofim,Number(valor_entrada),Number(valor_total),datadoinicio,metodo_pagamento,email,telefone,nome_contato,Number(numero_parcelo),2) // passando 2 para status de em andamento
         route.push("/routes/cadastros")
     }
 
