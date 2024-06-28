@@ -1,5 +1,3 @@
-// arquivo: produtoService.ts
-
 import { backendURL } from "./URLS/backendURL";
 
 export async function createNewProduto(

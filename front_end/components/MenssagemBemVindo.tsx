@@ -4,7 +4,7 @@ export default function MenssagemBemVindo() {
 
 
     return (
-        <div >
+        <div>
             <h1 className='text-2xl font-semibold lg:inline-block'>
                 Bem Vindo, Calebe
             </h1>

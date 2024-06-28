@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Tabs, TabsContent, TabsList } from '@/components/ui/tabs';
-import { TabsTrigger } from '@radix-ui/react-tabs';
+import React, {useState, useEffect} from 'react';
+import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
+import {TabsTrigger} from '@radix-ui/react-tabs';
 import CardUsuario from '@/components/CardUsuario';
-import { dadosCliente, dadosUsuario } from "@/lib/interfaces/dadosUsuarios";
+import {dadosCliente, dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { getAllClient } from '@/lib/GestaoControler';
-import { getAllUsers } from '@/lib/UsuarioController';
+import {useRouter} from "next/navigation";
+import {getAllClient} from '@/lib/GestaoControler';
+import {getAllUsers} from '@/lib/UsuarioController';
 import CardCliente from '@/components/CardClienteGestao';
 import ValidarTela from '@/components/ValidarTela';
 
@@ -63,9 +63,10 @@ export default function Gestao() {
             <>
                 {listaCliente.map(client => (
                     <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
-                        <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300 mb-2 rounded-lg w-full'>
+                        <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id}
+                             className='bg-gray-300 mb-2 rounded-lg w-full'>
                             <a className="block">
-                                <CardCliente dados={client} />
+                                <CardCliente dados={client}/>
                             </a>
                         </div>
                     </Link>
@@ -82,9 +83,10 @@ export default function Gestao() {
                     .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300 mb-2 rounded-lg w-full'>
+                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id}
+                                 className='bg-gray-300 mb-2 rounded-lg w-full'>
                                 <a className="block">
-                                    <CardUsuario dados={item} />
+                                    <CardUsuario dados={item}/>
                                 </a>
                             </div>
                         </Link>

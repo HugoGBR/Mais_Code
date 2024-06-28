@@ -24,7 +24,12 @@ export default function CadastrarUsuarioGestao() {
     const handleFormSubmit = async (data: LoginFormSchema) => {
         const {nome, email, password, cargo} = data;
 
-        const response = await createNewUserGestao(nome, Number(cargo), email, password);
+        const response = await createNewUserGestao(
+            nome,
+            Number(cargo),
+            email,
+            password
+        );
 
         if (response == 1) {
             alert('Usuário cadastrado com sucesso!');

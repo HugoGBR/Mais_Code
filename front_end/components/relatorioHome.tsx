@@ -3,7 +3,7 @@ import * as React from "react"
 import { useEffect, useState } from "react";
 import { Payment, columns } from "@/app/routes/home/TableHome/columnsHome";
 import { DataTable } from "@/app/routes/home/TableHome/data-tableHome";
-import { fetchRelatorio } from "@/lib/relatorioHomeController";
+import { fetchRelatorio } from "@/lib/RelatorioHomeController";
 
 export default function RelatorioHome() {
     const [data, setData] = useState<Payment[]>([]);

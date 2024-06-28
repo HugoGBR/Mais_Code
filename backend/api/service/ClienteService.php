@@ -1,5 +1,5 @@
 <?php
-include_once "../controller/clienteController.php";
+include_once "../controller/ClienteController.php";
 
 $clienteController = new ClienteController();
 

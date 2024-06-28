@@ -1,17 +1,13 @@
 <?php
-// Inclua o arquivo de controlador de usuário corretamente
 include "../controller/UserController.php";
 
-// Instancie o controlador de usuário
 $userController = new UserController();
 
-// Defina os cabeçalhos para permitir acesso de qualquer origem
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
 
-// Verifica se a chave "acao" está definida em $_REQUEST
 if (isset($_REQUEST["acao"])) {
     $acao = $_REQUEST["acao"];
     $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;

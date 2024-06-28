@@ -1,10 +1,10 @@
-import { Card } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {Card} from "@/components/ui/card";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import Link from "next/link";
-import { GoGear } from "react-icons/go";
-import React, { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
-import { createNewSell } from "@/lib/VendaController";
+import {GoGear} from "react-icons/go";
+import React, {FormEvent, useState} from "react";
+import {useRouter} from "next/navigation";
+import {createNewSell} from "@/lib/VendaController";
 
 export default function CardCadastro() {
 
@@ -22,7 +22,7 @@ export default function CardCadastro() {
     const [valor_total, setvalortotal] = useState("");
     const [metodo_pagamento, setmetodo_pagamento] = useState("");
     const [numero_parcelo, setnumero_parcelo] = useState("");
-    
+
     const route = useRouter();
 
     async function handleSubmit(event: FormEvent) {
@@ -30,17 +30,27 @@ export default function CardCadastro() {
         const datadoinicio = new Date(DataInicio)
         const datadofim = new Date(DataFim)
 
-        await createNewSell(Number(new_cliente_id),Number(new_tipo_contrato_id),Number(new_produto_id),Number(new_usuario_id),datadofim,
-        Number(valor_entrada),Number(valor_total),datadoinicio,metodo_pagamento,email,telefone,nome_contato,Number(numero_parcelo),2)
+        await createNewSell(
+            Number(new_cliente_id),
+            Number(new_tipo_contrato_id),
+            Number(new_produto_id),
+            Number(new_usuario_id),
+            datadofim,
+            Number(valor_entrada),
+            Number(valor_total),
+            datadoinicio,
+            metodo_pagamento,
+            email,
+            telefone,
+            nome_contato,
+            Number(numero_parcelo),
+            2
+        )
         route.push("/routes/cadastros")
     }
 
     async function handleSubmitCPF(event: FormEvent) {
         event.preventDefault()
-        console.log(
-            "teste"
-        )
-        
     }
 
     return (
@@ -57,36 +67,36 @@ export default function CardCadastro() {
                         <div className="md:grid md:grid-cols-2 gap-5 mb-5">
                             <div className="md:grid md:grid-cols-2 gap-5 mt-5">
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="CPF/CNPJ do Cliente"
-                                    type="text" />
+                                       placeholder="CPF/CNPJ do Cliente"
+                                       type="text"/>
                                 <button type="submit"
-                                    className=" mt-5 w-28 px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                        className=" mt-5 w-28 px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                     BUSCAR
                                 </button>
                             </div>
 
                             <input className="border-b-2 focus:outline-none focus:border-blue-500 mb-5 invisible"
-                                placeholder="Colaborador"
-                                type="text" />
+                                   placeholder="Colaborador"
+                                   type="text"/>
                             <div className="flex flex-col mb-5">
                                 <label className="text-sm" htmlFor="teste">Data Inicio</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="Data de inicio" type="date"
-                                    onChange={(event) => setDataInicio(event.target.value)} />
+                                       placeholder="Data de inicio" type="date"
+                                       onChange={(event) => setDataInicio(event.target.value)}/>
                             </div>
                             <div className="flex flex-col mb-5">
                                 <label className="text-sm" htmlFor="teste">Data Termino</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500" type="date"
-                                    onChange={(event) => setDataFim(event.target.value)} />
+                                       onChange={(event) => setDataFim(event.target.value)}/>
                             </div>
                         </div>
 
-                        <div className="md:grid md:grid-cols-2 " >
+                        <div className="md:grid md:grid-cols-2 ">
                             <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
                                 <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
                                 <Select>
                                     <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
-                                        <SelectValue placeholder="Tipo Contrato" />
+                                        <SelectValue placeholder="Tipo Contrato"/>
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="teste">Pontual</SelectItem>
@@ -98,7 +108,7 @@ export default function CardCadastro() {
                                 <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
                                 <Select>
                                     <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
-                                        <SelectValue placeholder="Produto" />
+                                        <SelectValue placeholder="Produto"/>
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="teste">Python</SelectItem>
@@ -110,21 +120,22 @@ export default function CardCadastro() {
                                 <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                     // onChange={(event) => setHoraTrabalhada(event.target.value)}
-                                    placeholder="Horas" type="number" />
+                                       placeholder="Horas" type="number"/>
                             </div>
                         </div>
 
                         <h2 className="font-bold">Dados do Contato</h2>
                         <div className="grid grid-cols-2 gap-5 mt-5">
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="Nome"
-                                onChange={(event) => setNomeContato(event.target.value)}
-                                type="text" />
+                                   placeholder="Nome"
+                                   onChange={(event) => setNomeContato(event.target.value)}
+                                   type="text"/>
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="(99) 99999-9999" onChange={(event) => setTelefoneContato(event.target.value)} type="tel" />
+                                   placeholder="(99) 99999-9999"
+                                   onChange={(event) => setTelefoneContato(event.target.value)} type="tel"/>
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="Email" onChange={(event) => setEmailContato(event.target.value)}
-                                type="email" />
+                                   placeholder="Email" onChange={(event) => setEmailContato(event.target.value)}
+                                   type="email"/>
                         </div>
                     </form>
                 </Card>
@@ -139,15 +150,15 @@ export default function CardCadastro() {
                         <div className="flex mb-4 ">
                             <label className="mr-4" htmlFor="teste">Valor da Entrada</label>
                             <input className="border-b-2 w-28 focus:outline-none focus:border-blue-500"
-                                placeholder="R$ 0000,00" type="text"
-                                onChange={(event) => setValorEntrada(event.target.value)} />
+                                   placeholder="R$ 0000,00" type="text"
+                                   onChange={(event) => setValorEntrada(event.target.value)}/>
                         </div>
 
                         <div className="mb-5">
                             <label className="text-sm" htmlFor="Nn">Status Cliente</label>
                             <Select>
                                 <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
-                                    <SelectValue placeholder="Tipo" />
+                                    <SelectValue placeholder="Tipo"/>
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="teste">Novo</SelectItem>
@@ -161,25 +172,25 @@ export default function CardCadastro() {
                             <div className="flex gap-3">
                                 <div className="flex items-center">
                                     <input id="pagamento-opcao-1" type="radio" name="forma-pagamento"
-                                        value="À vista"
-                                        className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                        aria-labelledby="pagamento-opcao-1"
-                                        aria-describedby="pagamento-opcao-1"
-                                        onClick={() => setMostrarParcelas(false)} />
+                                           value="À vista"
+                                           className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                           aria-labelledby="pagamento-opcao-1"
+                                           aria-describedby="pagamento-opcao-1"
+                                           onClick={() => setMostrarParcelas(false)}/>
                                     <label htmlFor="pagamento-opcao-1"
-                                        className="block ml-2 text-sm font-medium text-gray-900">
+                                           className="block ml-2 text-sm font-medium text-gray-900">
                                         À vista
                                     </label>
                                 </div>
                                 <div className="flex items-center">
                                     <input id="pagamento-opcao-2" type="radio" name="forma-pagamento"
-                                        value="Parcelado"
-                                        className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                        aria-labelledby="pagamento-opcao-2"
-                                        aria-describedby="pagamento-opcao-2"
-                                        onClick={() => setMostrarParcelas(true)} />
+                                           value="Parcelado"
+                                           className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                           aria-labelledby="pagamento-opcao-2"
+                                           aria-describedby="pagamento-opcao-2"
+                                           onClick={() => setMostrarParcelas(true)}/>
                                     <label htmlFor="pagamento-opcao-2"
-                                        className="block ml-2 text-sm font-medium text-gray-900">
+                                           className="block ml-2 text-sm font-medium text-gray-900">
                                         Parcelado
                                     </label>
                                 </div>
@@ -193,7 +204,7 @@ export default function CardCadastro() {
                                         type="text"
                                     />
                                     <Link href="">
-                                        <GoGear className="w-8 h-8" />
+                                        <GoGear className="w-8 h-8"/>
                                     </Link>
                                 </div>
                             )}
@@ -205,7 +216,7 @@ export default function CardCadastro() {
                         </div>
                         <div className="mt-5 text-center">
                             <button type="submit"
-                                className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                 CADASTRAR
                             </button>
                         </div>

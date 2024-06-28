@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
-import { getClienteById, updateClientByID } from "@/lib/clienteController";
+import { getClienteById, updateClientByID } from "@/lib/ClienteController";
 
 export default function App({ params }: { params: { id: number } }) {
     const [dadosCliente, setDadosCliente] = useState({ nome: "", email: "", telefone: "", cpf_cnpj: "" });

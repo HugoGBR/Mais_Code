@@ -1,6 +1,5 @@
 import React from "react";
-import Chart from "react-apexcharts"; // Certifique-se de que a dependência está instalada corretamente
-import {ButtonProps} from "@/components/ui/button"; // Verifique se você realmente precisa de ButtonProps
+import Chart from "react-apexcharts";
 
 const data = {
     series: [

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createNewProduto, getAllTiposClientes } from '@/lib/produtoController';
+import { createNewProduto, getAllTiposClientes } from '@/lib/ProdutoController';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { dadosTipo_cliente } from '@/lib/interfaces/dadosUsuarios';
 
