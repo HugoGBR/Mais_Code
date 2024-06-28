@@ -1,14 +1,15 @@
 "use client"
 import React, { useState, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createNewProduto, getAllTiposClientes } from '@/lib/ProdutoController';
+import { createNewProduto, getAllTiposClientes } from '@/lib/produtoController';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { dadosTipo_cliente } from '@/lib/interfaces/dadosUsuarios';
 
 export default function CadastroProduto() {
     const [nomeProduto, setNomeProduto] = useState<string>('');
     const [horasTrabalhadas, setHorasTrabalhadas] = useState<string>('');
     const [descricaoProduto, setDescricaoProduto] = useState<string>('');
-    const [tiposClientes, setTiposClientes] = useState([]);
+    const [tiposClientes, setTiposClientes] = useState<dadosTipo_cliente[]>([]);
     const descricaoLimiteCaracteres = 255;
     const router = useRouter();
 
@@ -76,7 +77,7 @@ export default function CadastroProduto() {
                                 </SelectTrigger>
                                 <SelectContent>
                                     {tiposClientes.map((tipo) => (
-                                        <SelectItem key={tipo.id} value={tipo.id}>{tipo.nome}</SelectItem>
+                                        <SelectItem key={tipo.id} value={tipo.nome}>{tipo.nome}</SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>
@@ -86,7 +87,7 @@ export default function CadastroProduto() {
                                 </SelectTrigger>
                                 <SelectContent>
                                     {tiposClientes.map((tipo) => (
-                                        <SelectItem key={tipo.id} value={tipo.id}>{tipo.nome}</SelectItem>
+                                        <SelectItem key={tipo.id} value={tipo.nome}>{tipo.nome}</SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>

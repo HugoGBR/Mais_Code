@@ -57,7 +57,7 @@ export async function getAllProduto() {
 export async function getAllTiposClientes() {
   try {
       const response = await fetch(
-          `${backendURL()}/ProdutoService.php?acao=getAllTiposClientes`
+          `${backendURL()}/ProdutoServices.php?acao=getAllTiposClientes`
       );
 
       if (!response.ok) {
