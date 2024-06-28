@@ -1,3 +1,5 @@
+import { EnumLike } from "zod";
+
 // Retorna os clientes 
 export async function getAllClient() {
     const response = await fetch("http://localhost/Mais_code/backend/api/service/venda.php?acao=getAllClient");
@@ -24,7 +26,7 @@ export async function getAllProductById() {
 export async function createNewSell(
     new_cliente_id: number, new_tipo_contrato_id: number, new_produto_id: number, new_usuario_id: number,
     final_contrato: Date, valor_entrada: number, valor_total: number, inicio_contrato: Date, metodo_pagamento: string,
-    email: string, telefone: string, nome_contato: string, numero_parcelo:number, status: undefined
+    email: string, telefone: string, nome_contato: string, numero_parcelo:number, new_status: number
 ) {
     const request = await fetch("http://localhost/Mais_code/backend/api/service/venda.php?acao=createNewSell", {
         method: "POST",
@@ -45,7 +47,7 @@ export async function createNewSell(
             email: email,
             telefone: telefone,
             nome_contato: nome_contato,
-            status: status
+            status: new_status
         })
     });
 
