@@ -24,13 +24,11 @@ class ProdutoController
     {
         $produto = json_decode(file_get_contents("php://input"));
 
-        $sql = "INSERT INTO produtos(nome, comissaoA, comissaoB, horas_trabalhadas, descricao_produto) VALUES (:nome, :comissaoA, :comissaoB, :horas_trabalhadas, :descricao_produto)";
+        $sql = "INSERT INTO produtos(nome, horas_trabalhadas, descricao_produto) VALUES (:nome, :horas_trabalhadas, :descricao_produto)";
 
         $db = $this->conn->prepare($sql);
         $db->bindParam(":nome", $produto->nome);
         $db->bindParam(":horas_trabalhadas", $produto->horas_trabalhadas);
-        $db->bindParam(":comissaoA", $produto->comissaoA);
-        $db->bindParam(":comissaoB", $produto->comissaoB);
         $db->bindParam(":descricao_produto", $produto->descricao_produto);
 
         if ($db->execute()) {
@@ -57,5 +55,13 @@ class ProdutoController
             echo "Erro ao buscar o produto: " . $th->getMessage();
             return null;
         }
+    }
+    public function getAllTiposClientes()
+    {
+        $sql = "SELECT * FROM tipo_cliente";
+        $db = $this->conn->prepare($sql);
+        $db->execute();
+        $produtos = $db->fetchAll(PDO::FETCH_ASSOC);
+        return $produtos;
     }
 }

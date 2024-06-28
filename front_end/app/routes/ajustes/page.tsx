@@ -11,6 +11,9 @@ import { getCookie } from "@/lib/coockie";
 import { getAllContratos } from "@/lib/ContratoController";
 import { getAllProduto } from "@/lib/ProdutoController";
 import ValidarTela from "@/components/ValidarTela";
+import { TabelaTipoCliente } from "./TabelaTipoCliente/TabelaTipoCliente";
+import { getAllTipoCliente } from "@/lib/TipoClienteController";
+import { ColumnsTipoCliente } from "./TabelaTipoCliente/ColumnsTipoCliente";
 
 
 
@@ -18,16 +21,18 @@ import ValidarTela from "@/components/ValidarTela";
 export default function Ajuste() {
     const [data, setData] = useState({
         produtos: [],
-        contratos: []
+        contratos: [],
+        tipoCliente: []
     });
-    
+
     const getDados = async () => {
         try {
-            const [produtos, contratos] = await Promise.all([
+            const [produtos, contratos, tipoCliente] = await Promise.all([
                 getAllProduto(),
-                getAllContratos()
+                getAllContratos(),
+                getAllTipoCliente()
             ]);
-            setData({ produtos, contratos });
+            setData({ produtos, contratos, tipoCliente });
         } catch (error) {
             console.error('Erro ao buscar dados:', error);
         }
@@ -39,18 +44,18 @@ export default function Ajuste() {
 
 
     return (
-        
-            <div className="flex flex-col gap-3 md:flex md:flex-row">
-                <div className="h-auto">
-                    <TableProduto columns={ColumnsProdutos} data={data.produtos} />
-                </div>
-                <div className="gap-3 h-auto w-auto flex flex-col">
-                    <TabelaContrato columns={ColumnsContrato} data={data.contratos} />
-                </div>
-           
+        <div className="flex flex-col gap-3 md:flex md:flex-row">
+            <div className="h-auto">
+                <TableProduto columns={ColumnsProdutos} data={data.produtos} />
             </div>
-        
+            <div className="gap-3 h-auto w-auto flex flex-col">
+                <TabelaContrato columns={ColumnsContrato} data={data.contratos} />
+            </div>
+            <div className="gap-3 h-auto w-auto flex flex-col">
+                <TabelaTipoCliente columns={ColumnsTipoCliente} data={data.tipoCliente} />
+            </div>
 
+        </div>
     )
 }
 

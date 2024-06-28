@@ -1,5 +1,4 @@
 "use client"
-
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -11,7 +10,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-
 import {
   Table,
   TableBody,
@@ -20,21 +18,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { RiCloseCircleLine } from "react-icons/ri";
 import { PiPlusCircleBold } from "react-icons/pi";
 import Link from "next/link";
 
-
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function TabelaContrato<TData, TValue>({
+export function TabelaTipoCliente<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -68,13 +63,13 @@ export function TabelaContrato<TData, TValue>({
       <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
         <div className="flex items-center justify-between py-4 input-container">
           <h1 className="text-lg">
-            <b>Contrato</b>
+            <b>Tipo Cliente</b>
           </h1>
           <div className="flex space-x-2">
             <Link href="">
               <RiCloseCircleLine size={25} color="red" />
             </Link>
-            <Link href={'/routes/ajustes/ModeloContrato'}>
+            <Link href={'/routes/ajustes/TipoCliente'}>
               <PiPlusCircleBold size={25} color="#0762C8" />
             </Link>
           </div>
@@ -132,26 +127,6 @@ export function TabelaContrato<TData, TValue>({
               )}
             </TableBody>
           </Table>
-
-        </div>
-
-        <div className="space-x-3 mt-4 flex justify-center items-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Próximo
-          </Button>
         </div>
       </div>
     </div>
