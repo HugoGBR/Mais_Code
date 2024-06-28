@@ -28,31 +28,38 @@ export async function createNewSell(
     final_contrato: Date, valor_entrada: number, valor_total: number, inicio_contrato: Date, metodo_pagamento: string,
     email: string, telefone: string, nome_contato: string, numero_parcelo:number, new_status: number
 ) {
-    const request = await fetch("http://localhost/Mais_code/backend/api/service/venda.php?acao=createNewSell", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            cliente_id: new_cliente_id,
-            tipo_contrato_id: new_tipo_contrato_id,
-            numero_parcelo: numero_parcelo,
-            produto_id: new_produto_id,
-            usuario_id: new_usuario_id,
-            final_contrato: final_contrato,
-            valor_entrada: valor_entrada,
-            valor_total: valor_total,
-            inicio_contrato: inicio_contrato,
-            metodo_pagamento: metodo_pagamento,
-            email: email,
-            telefone: telefone,
-            nome_contato: nome_contato,
-            status: new_status
-        })
-    });
+    try {
+        const response = await fetch("http://localhost/Mais_code/backend/api/service/venda.php?acao=createNewSell", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cliente_id: new_cliente_id,
+                tipo_contrato_id: new_tipo_contrato_id,
+                numero_parcelo: numero_parcelo,
+                produto_id: new_produto_id,
+                usuario_id: new_usuario_id,
+                final_contrato: final_contrato,
+                valor_entrada: valor_entrada,
+                valor_total: valor_total,
+                inicio_contrato: inicio_contrato,
+                metodo_pagamento: metodo_pagamento,
+                email: email,
+                telefone: telefone,
+                nome_contato: nome_contato,
+                status: status
+            })
+        });
 
-    const response = await request.json();
-    console.log(response);
-    return response;
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
 }
-// teste só 
