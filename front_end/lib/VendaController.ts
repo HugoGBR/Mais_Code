@@ -48,7 +48,7 @@ export async function createNewSell(
                 email: email,
                 telefone: telefone,
                 nome_contato: nome_contato,
-                status: status
+                status: new_status
             })
         });
 

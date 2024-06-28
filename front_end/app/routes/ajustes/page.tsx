@@ -9,10 +9,10 @@ import { TabelaContrato } from "./TabelaContrato/TabelaContrato";
 import { useRouter } from "next/navigation";
 import { getCookie } from "@/lib/coockie";
 import { getAllContratos } from "@/lib/ContratoController";
-import { getAllProduto } from "@/lib/ProdutoController";
+import { getAllProduto } from "@/lib/produtoController";
 import ValidarTela from "@/components/ValidarTela";
 import { TabelaTipoCliente } from "./TabelaTipoCliente/TabelaTipoCliente";
-import { getAllTipoCliente } from "@/lib/TipoClienteController";
+import { getAllTiposClientes } from "@/lib/TipoClienteController";
 import { ColumnsTipoCliente } from "./TabelaTipoCliente/ColumnsTipoCliente";
 
 
@@ -30,7 +30,7 @@ export default function Ajuste() {
             const [produtos, contratos, tipoCliente] = await Promise.all([
                 getAllProduto(),
                 getAllContratos(),
-                getAllTipoCliente()
+                getAllTiposClientes()
             ]);
             setData({ produtos, contratos, tipoCliente });
         } catch (error) {

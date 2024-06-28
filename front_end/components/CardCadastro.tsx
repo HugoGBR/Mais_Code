@@ -30,7 +30,8 @@ export default function CardCadastro() {
         const datadoinicio = new Date(DataInicio)
         const datadofim = new Date(DataFim)
 
-        await createNewSell(Number(new_cliente_id),Number(new_tipo_contrato_id),Number(new_produto_id),Number(new_usuario_id),datadofim,Number(valor_entrada),Number(valor_total),datadoinicio,metodo_pagamento,email,telefone,nome_contato,Number(numero_parcelo),"em andamento")
+        await createNewSell(Number(new_cliente_id),Number(new_tipo_contrato_id),Number(new_produto_id),Number(new_usuario_id),datadofim,
+        Number(valor_entrada),Number(valor_total),datadoinicio,metodo_pagamento,email,telefone,nome_contato,Number(numero_parcelo),2)
         route.push("/routes/cadastros")
     }
 
@@ -64,7 +65,7 @@ export default function CardCadastro() {
                                 </button>
                             </div>
 
-                            <input className="border-b-2 focus:outline-none focus:border-blue-500 mb-5"
+                            <input className="border-b-2 focus:outline-none focus:border-blue-500 mb-5 invisible"
                                 placeholder="Colaborador"
                                 type="text" />
                             <div className="flex flex-col mb-5">
