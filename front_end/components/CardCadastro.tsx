@@ -2,12 +2,17 @@ import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
 import { GoGear } from "react-icons/go";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createNewSell } from "@/lib/VendaController";
+import { dadosModelo_contrato, dadosProduto, dadosTipo_cliente } from "@/lib/interfaces/dadosUsuarios";
+import { getAllProduto, getAllTiposClientes } from "@/lib/ProdutoController";
+import { getAllContratos } from "@/lib/ContratoController";
 
 export default function CardCadastro() {
-
+    const [TiposClientes, setTiposClientes] = useState<dadosTipo_cliente[]>([]);
+    const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
+    const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
     const [valor_entrada, setValorEntrada] = useState("");
     const [DataInicio, setDataInicio] = useState("");
@@ -49,6 +54,19 @@ export default function CardCadastro() {
         route.push("/routes/cadastros")
     }
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const tipos_cliente = await getAllTiposClientes();
+            setTiposClientes(tipos_cliente);
+            const tipos_contrato = await getAllContratos();
+            setModeloContrato(tipos_contrato);
+            const tipo_Produto = await getAllProduto();
+            setTipoProduto(tipo_Produto);
+        };
+
+        fetchData();
+    }, []);
+    
     async function handleSubmitCPF(event: FormEvent) {
         event.preventDefault()
     }
@@ -99,8 +117,9 @@ export default function CardCadastro() {
                                         <SelectValue placeholder="Tipo Contrato" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="teste">Pontual</SelectItem>
-                                        <SelectItem value="testee">Contínuo</SelectItem>
+                                    {ModeloContrato.map((tipos_contrato) => (
+                                        <SelectItem key={tipos_contrato.id} value={tipos_contrato.nome}>{tipos_contrato.nome}</SelectItem>
+                                    ))}
                                     </SelectContent>
                                 </Select>
 
@@ -110,8 +129,9 @@ export default function CardCadastro() {
                                         <SelectValue placeholder="Produto" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="teste">Python</SelectItem>
-                                        <SelectItem value="testee">php</SelectItem>
+                                    {TiposProduto.map((tipo_Produto) => (
+                                        <SelectItem key={tipo_Produto.id} value={tipo_Produto.nome}>{tipo_Produto.nome}</SelectItem>
+                                    ))}
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -157,11 +177,12 @@ export default function CardCadastro() {
                             <label className="text-sm" htmlFor="Nn">Status Cliente</label>
                             <Select>
                                 <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
-                                    <SelectValue placeholder="Tipo" />
+                                    <SelectValue placeholder="Tipo Cliente" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="teste">Novo</SelectItem>
-                                    <SelectItem value="testee">Antigo</SelectItem>
+                                    {TiposClientes.map((tipos_cliente) => (
+                                        <SelectItem key={tipos_cliente.id} value={tipos_cliente.nome}>{tipos_cliente.nome}</SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                         </div>
