@@ -62,8 +62,8 @@ export default function Gestao() {
         return (
             <>
                 {listaCliente.map(client => (
-                    <Link href={`/routes/gestao/users/${client.id}`} key={client.id}>
-                        <div key={client.id} className='bg-gray-300 mb-4 rounded-lg flex-grow'>
+                    <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
+                        <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300 mb-4 rounded-lg flex-grow'>
                             <a className="block w-full">
                                 <CardCliente dados={client} />  
                             </a>
@@ -81,8 +81,8 @@ export default function Gestao() {
                 {listaUsuarios
                     .filter(item => item.cargo_id == cargo_id)
                     .map(item => (
-                        <Link href={`/routes/gestao/users/${item.id}`} key={item.id}>
-                            <div key={item.id} className='bg-gray-300 mb-4 rounded-lg flex-grow'>
+                        <Link href={`/routes/gestao/user/${item.id}`} key={item.id}>
+                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300 mb-4 rounded-lg flex-grow'>
                                 <a className="block w-full">
                                     <CardUsuario dados={item} />
                                 </a>
