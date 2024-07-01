@@ -74,7 +74,7 @@ CREATE TABLE `vendas` (
   `tipo_contrato_id` BIGINT(20) UNSIGNED NOT NULL,
   `produto_id` BIGINT(20) UNSIGNED NOT NULL,
   `usuario_id` BIGINT(20) UNSIGNED NOT NULL,
-  `status_clinte` INT NOT NULL,
+  `status_clinte` BIGINT(20) UNSIGNED NOT NULL,
   `inicio_contrato` DATE NOT NULL,
   `final_contrato` DATE NOT NULL,
   `valor_entrada` DECIMAL(8,2) NOT NULL,
@@ -86,6 +86,7 @@ CREATE TABLE `vendas` (
   `numero_parcela` TEXT(55) NOT NULL,
   `status` ENUM('concluido','em andamento','cancelado') NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `vendas_status_cliente_id_foreigm` (`status_clinte`),
   KEY `vendas_cliente_id_foreign` (`cliente_id`),
   KEY `vendas_tipo_contrato_id_foreign` (`tipo_contrato_id`),
   KEY `vendas_produto_id_foreign` (`produto_id`),
@@ -93,5 +94,6 @@ CREATE TABLE `vendas` (
   CONSTRAINT `vendas_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_produto_id_foreign` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_tipo_contrato_id_foreign` FOREIGN KEY (`tipo_contrato_id`) REFERENCES `tipo_contrato` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `vendas_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `vendas_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `vendas_status_cliente_id_foreigm` FOREIGN KEY (`status_clinte`) REFERENCES `tipo_cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
