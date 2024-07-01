@@ -16,7 +16,6 @@ const formulario = z.object({
 
 type formulario = z.infer<typeof formulario>
 
-
 export default function Perfil() {
     const {register, handleSubmit, formState: {errors}} = useForm<formulario>({
         resolver: zodResolver(formulario)
@@ -39,8 +38,7 @@ export default function Perfil() {
     const [valorInputSenha, setValorInputSenha] = useState('*************')
 
     return (
-      
-          <div className='flex justify-center items-center h-screen'>
+        <div className='flex justify-center items-center h-screen'>
             <Card className='p-6 drop-shadow-xl rounded-xl'>
                 <form onSubmit={handleSubmit(handleForm)}>
                     <div>
@@ -105,6 +103,5 @@ export default function Perfil() {
                 </form>
             </Card>
         </div>
-      
     )
 }

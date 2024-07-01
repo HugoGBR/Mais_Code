@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Cardfinanceiro from '@/components/Carduserfinanceiro';
 import Link from "next/link";
-import { getAllFinan } from '@/lib/Financeirocontroler';
+import {getAllFinan} from '@/lib/FinanceiroController';
 import {
     Pagination,
     PaginationContent,
@@ -50,35 +50,32 @@ export default function Financeiro() {
     const finalIndex = inicioIndex + itensPorPagina;
 
     return (
-    
         <div>
             <div className="md:grid md:grid-cols-2 space-x-3">
                 {listaUsuarios.slice(inicioIndex, finalIndex).map(item => (
                     <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
-                        <div className='bg-gray-300 mb-4 rounded-lg' style={{ width: '100%' }}>
+                        <div className='bg-gray-300 mb-4 rounded-lg' style={{width: '100%'}}>
                             <a className="block">
-                                <Cardfinanceiro dados={item} />
+                                <Cardfinanceiro dados={item}/>
                             </a>
                         </div>
                     </Link>
                 ))}
             </div>
-           
+
             <Pagination>
                 <PaginationContent>
                     <PaginationItem>
-                        <PaginationPrevious onClick={PaginaAnterior} />
+                        <PaginationPrevious onClick={PaginaAnterior}/>
                     </PaginationItem>
                     <PaginationItem>
                         <PaginationLink href="#">{paginaAtual}</PaginationLink>
                     </PaginationItem>
                     <PaginationItem>
-                        <PaginationNext onClick={ProximaPagina} />
+                        <PaginationNext onClick={ProximaPagina}/>
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>
         </div>
-    
-       
     );
 }

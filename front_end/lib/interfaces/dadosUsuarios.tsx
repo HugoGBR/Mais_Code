@@ -29,3 +29,19 @@ export interface Payment {
     comissaoB: number
     horas_trabalhadas: number  
   }
+
+  export interface dadosTipo_cliente{
+    id: number,
+    nome: string
+  }
+
+
+  export interface dadosModelo_contrato{
+    id: number,
+    nome: string
+  }
+
+  export interface dadosProduto{
+    id: number,
+    nome: string
+  }

@@ -21,6 +21,15 @@ switch ($acao) {
         }
         break;
 
+        case "getAllTiposClientes":
+            if ($id != null) {
+                echo json_encode(["error" => "Ação GetAllProduto não aceita um ID"]);
+            } else {
+                $tipoClientes = $produtoController->getAllTiposClientes();
+                echo json_encode($tipoClientes);
+            }
+            break;
+    
     case "createNewProduto":
         if ($id != null) {
             echo json_encode(["error" => "Ação CreateNewProduto não aceita um ID"]);

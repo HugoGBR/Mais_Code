@@ -2,20 +2,31 @@ import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
 import { GoGear } from "react-icons/go";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createNewSell } from "@/lib/VendaController";
+import { dadosModelo_contrato, dadosProduto, dadosTipo_cliente } from "@/lib/interfaces/dadosUsuarios";
+import { getAllProduto, getAllTiposClientes } from "@/lib/ProdutoController";
+import { getAllContratos } from "@/lib/ContratoController";
 
 export default function CardCadastro() {
-
+    const [TiposClientes, setTiposClientes] = useState<dadosTipo_cliente[]>([]);
+    const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
+    const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
-
+    const [valor_entrada, setValorEntrada] = useState("");
     const [DataInicio, setDataInicio] = useState("");
     const [DataFim, setDataFim] = useState("");
-    const [NomeContato, setNomeContato] = useState("");
-    const [TelefoneContato, setTelefoneContato] = useState("");
-    const [EmailContato, setEmailContato] = useState("");
-    const [ValorEntrada, setValorEntrada] = useState("");
+    const [nome_contato, setNomeContato] = useState("");
+    const [telefone, setTelefoneContato] = useState("");
+    const [email, setEmailContato] = useState("");
+    const [new_cliente_id, setnew_cliente_id] = useState("");
+    const [new_tipo_contrato_id, setnew_tipo_contrato_id] = useState("");
+    const [new_produto_id, setnew_produto_id] = useState("");
+    const [new_usuario_id, setnew_usuario_id] = useState("");
+    const [valor_total, setvalortotal] = useState("");
+    const [metodo_pagamento, setmetodo_pagamento] = useState("");
+    const [numero_parcelo, setnumero_parcelo] = useState("");
 
     const route = useRouter();
 
@@ -24,16 +35,40 @@ export default function CardCadastro() {
         const datadoinicio = new Date(DataInicio)
         const datadofim = new Date(DataFim)
 
-        await createNewSell(datadoinicio, datadofim, NomeContato, Number(TelefoneContato), EmailContato, Number(ValorEntrada))
+        await createNewSell(
+            Number(new_cliente_id),
+            Number(new_tipo_contrato_id),
+            Number(new_produto_id),
+            Number(new_usuario_id),
+            datadofim,
+            Number(valor_entrada),
+            Number(valor_total),
+            datadoinicio,
+            metodo_pagamento,
+            email,
+            telefone,
+            nome_contato,
+            Number(numero_parcelo),
+            2
+        )
         route.push("/routes/cadastros")
     }
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const tipos_cliente = await getAllTiposClientes();
+            setTiposClientes(tipos_cliente);
+            const tipos_contrato = await getAllContratos();
+            setModeloContrato(tipos_contrato);
+            const tipo_Produto = await getAllProduto();
+            setTipoProduto(tipo_Produto);
+        };
+
+        fetchData();
+    }, []);
+    
     async function handleSubmitCPF(event: FormEvent) {
         event.preventDefault()
-        console.log(
-            "teste"
-        )
-        
     }
 
     return (
@@ -49,16 +84,16 @@ export default function CardCadastro() {
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
                         <div className="md:grid md:grid-cols-2 gap-5 mb-5">
                             <div className="md:grid md:grid-cols-2 gap-5 mt-5">
-                                <input className="border-b-2 focus:outline-none focus:border-blue-500"
+                                <input className="border-b-2 h-6 mt-auto focus:outline-none focus:border-blue-500"
                                     placeholder="CPF/CNPJ do Cliente"
                                     type="text" />
                                 <button type="submit"
-                                    className=" mt-5 w-28 px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                    className="w-28 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                     BUSCAR
                                 </button>
                             </div>
 
-                            <input className="border-b-2 focus:outline-none focus:border-blue-500 mb-5 invisible"
+                            <input className="border-b-2 mt-auto focus:outline-none focus:border-blue-500 invisible"
                                 placeholder="Colaborador"
                                 type="text" />
                             <div className="flex flex-col mb-5">
@@ -74,7 +109,7 @@ export default function CardCadastro() {
                             </div>
                         </div>
 
-                        <div className="md:grid md:grid-cols-2 " >
+                        <div className="md:grid md:grid-cols-2 ">
                             <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
                                 <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
                                 <Select>
@@ -82,11 +117,11 @@ export default function CardCadastro() {
                                         <SelectValue placeholder="Tipo Contrato" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="teste">Pontual</SelectItem>
-                                        <SelectItem value="testee">Contínuo</SelectItem>
+                                    {ModeloContrato.map((tipos_contrato) => (
+                                        <SelectItem key={tipos_contrato.id} value={tipos_contrato.nome}>{tipos_contrato.nome}</SelectItem>
+                                    ))}
                                     </SelectContent>
                                 </Select>
-
 
                                 <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
                                 <Select>
@@ -94,8 +129,9 @@ export default function CardCadastro() {
                                         <SelectValue placeholder="Produto" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="teste">Python</SelectItem>
-                                        <SelectItem value="testee">php</SelectItem>
+                                    {TiposProduto.map((tipo_Produto) => (
+                                        <SelectItem key={tipo_Produto.id} value={tipo_Produto.nome}>{tipo_Produto.nome}</SelectItem>
+                                    ))}
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -114,7 +150,8 @@ export default function CardCadastro() {
                                 onChange={(event) => setNomeContato(event.target.value)}
                                 type="text" />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="(99) 99999-9999" onChange={(event) => setTelefoneContato(event.target.value)} type="tel" />
+                                placeholder="(99) 99999-9999"
+                                onChange={(event) => setTelefoneContato(event.target.value)} type="tel" />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                 placeholder="Email" onChange={(event) => setEmailContato(event.target.value)}
                                 type="email" />
@@ -140,11 +177,12 @@ export default function CardCadastro() {
                             <label className="text-sm" htmlFor="Nn">Status Cliente</label>
                             <Select>
                                 <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
-                                    <SelectValue placeholder="Tipo" />
+                                    <SelectValue placeholder="Tipo Cliente" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="teste">Novo</SelectItem>
-                                    <SelectItem value="testee">Antigo</SelectItem>
+                                    {TiposClientes.map((tipos_cliente) => (
+                                        <SelectItem key={tipos_cliente.id} value={tipos_cliente.nome}>{tipos_cliente.nome}</SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                         </div>

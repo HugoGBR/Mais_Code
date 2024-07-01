@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { loginSchema } from "@/app/schemas/loginSchema";
-import { validacaoLogin } from "@/lib/usuarioController";
+import { validacaoLogin } from "@/lib/UsuarioController";
 
 
 
@@ -64,7 +64,7 @@ const LoginPage = () => {
                                     className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Entrar
                                 </button>
                                 <div className="flex justify-center mt-2">
-                                    <a href="/esqueci-minha-senha" className="text-sm">
+                                    <a href="/redefinirSenha" className="text-sm">
                                         Esqueci minha senha
                                     </a>
                                 </div>

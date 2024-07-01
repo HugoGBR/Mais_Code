@@ -1,6 +1,4 @@
-// arquivo: produtoService.ts
-
-import { backendURL } from "./URLS/backendURL";
+import {backendURL} from "./URLS/backendURL";
 
 export async function createNewTipoContrato(
     newNome: string

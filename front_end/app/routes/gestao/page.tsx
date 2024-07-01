@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Tabs, TabsContent, TabsList } from '@/components/ui/tabs';
-import { TabsTrigger } from '@radix-ui/react-tabs';
+import React, {useState, useEffect} from 'react';
+import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
+import {TabsTrigger} from '@radix-ui/react-tabs';
 import CardUsuario from '@/components/CardUsuario';
-import { dadosCliente, dadosUsuario } from "@/lib/interfaces/dadosUsuarios";
+import {dadosCliente, dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { getAllClient } from '@/lib/GestaoControler';
-import { getAllUsers } from '@/lib/usuarioController';
+import {useRouter} from "next/navigation";
+import {getAllClient} from '@/lib/GestaoControler';
+import {getAllUsers} from '@/lib/UsuarioController';
 import CardCliente from '@/components/CardClienteGestao';
 import ValidarTela from '@/components/ValidarTela';
 
@@ -106,10 +106,14 @@ export default function Gestao() {
                         <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
                     </div>
                     <div>
-                        {<button type="button" id="Newuser"
+                        <button
+                            type="button"
+                            id="Newuser"
                             className="text-white bg-blue-500 w-full p-1 rounded-md hover:bg-blue-600 cursor-pointer"
-                            onClick={rotaNewUser}>Novo Usuario
-                        </button>}
+                            onClick={rotaNewUser}
+                        >
+                            Novo Usuario
+                        </button>
                     </div>
                 </TabsList>
 
@@ -129,4 +133,6 @@ export default function Gestao() {
         </div>
        
     )
+
+
 }

@@ -25,7 +25,7 @@ class RelatorioHomeController
         clientes on vendas.cliente_id = clientes.id
     order by 
         vendas.inicio_contrato desc
-    limit 10;";
+    limit 4;";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $relatorio_home = $stmt->fetchAll(PDO::FETCH_ASSOC);
