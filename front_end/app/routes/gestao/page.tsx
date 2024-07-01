@@ -126,7 +126,7 @@ export default function Gestao() {
                 <TabsContent value='Vendedor' className='flex flex-col md:grid md:grid-cols-2 gap-4'>
                     {renderGestao(2)}
                 </TabsContent>
-                <TabsContent value='Financeiro' className='flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                <TabsContent value='Financeiro' className='flex flex-col md:grid md:grid-cols-2 lg:grid-cols-2 gap-4'>
                     {renderGestao(3)}
                 </TabsContent>
             </Tabs>
