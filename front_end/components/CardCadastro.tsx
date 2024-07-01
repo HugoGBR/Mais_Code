@@ -112,7 +112,7 @@ export default function CardCadastro() {
                         <div className="md:grid md:grid-cols-2 ">
                             <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
                                 <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
-                                <Select>
+                                <Select onValueChange={(value) => setnew_tipo_contrato_id(value)}>
                                     <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
                                         <SelectValue placeholder="Tipo Contrato" />
                                     </SelectTrigger>
@@ -124,7 +124,7 @@ export default function CardCadastro() {
                                 </Select>
 
                                 <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
-                                <Select>
+                                <Select onValueChange={(value) => setnew_produto_id(value)}>
                                     <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
                                         <SelectValue placeholder="Produto" />
                                     </SelectTrigger>
@@ -246,5 +246,3 @@ export default function CardCadastro() {
         </div>
     )
 }
-
-
