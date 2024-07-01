@@ -31,9 +31,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { ChevronDownIcon } from "lucide-react"
-import { useEffect, useState } from "react"
+import {Button} from "@/components/ui/button"
+import {ChevronDownIcon} from "lucide-react"
+import {useEffect, useState} from "react"
 
 
 interface DataTableProps<TData, TValue> {
@@ -42,24 +42,24 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTableComissao<TData, TValue>({
-    columns,
-    data,
-}: DataTableProps<TData, TValue>) {
+                                                     columns,
+                                                     data,
+                                                 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
     const [comissaoTotal, setTotalPorcentagem] = useState<number>(0)
-    const [soma,setSoma] = useState(0)
+    const [soma, setSoma] = useState(0)
 
     useEffect(() => {
         const calcularTotalPorcentagem = () => {
             let total = 0
             if (Array.isArray(data)) {
                 data.forEach((item: any) => {
-                   
-                    
-                    total = total + (item.valor_total/item.porcentagem)
+
+
+                    total = total + (item.valor_total / item.porcentagem)
                 })
             }
             return total
@@ -180,20 +180,20 @@ export function DataTableComissao<TData, TValue>({
                     </Button> */}
 
                     <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious onClick={() => table.nextPage()} />
-                    </PaginationItem>
-              
-                    {/* <PaginationItem>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <PaginationPrevious onClick={() => table.nextPage()}/>
+                            </PaginationItem>
+
+                            {/* <PaginationItem>
                         <PaginationLink href="#">{paginaAtual}</PaginationLink>
                     </PaginationItem> */}
-                    
-                    <PaginationItem>
-                        <PaginationNext onClick={() => table.nextPage()} />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+
+                            <PaginationItem>
+                                <PaginationNext onClick={() => table.nextPage()}/>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ import {columns} from "../TabelaComissao/columns"
 import { useEffect, useState } from "react";
 
 import { DataTableComissao } from "../TabelaComissao/data-table";
-import { fetchDataComissao } from "@/lib/relatorioComissaoController";
+import { fetchDataComissao } from "@/lib/RelatorioComissaoController";
 
 
 export default function Relatorio({ params }: { params: { id: Number } }) {

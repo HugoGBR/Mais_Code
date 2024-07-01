@@ -19,31 +19,36 @@ INSERT INTO cargos(nome) VALUES
 
 
 CREATE TABLE `clientes` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `telefone` varchar(255) NOT NULL,
-  `cpf_cnpj` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-);
-
-
-CREATE TABLE `produtos` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `horas_trabalhadas` decimal(8,2) NOT NULL,
-  `comissaoA` int NOT NULL,
-  `comissaoB` int NOT NULL,
-  `descricao_produto` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `clientes` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `telefone` VARCHAR(255) NOT NULL,
   `cpf_cnpj` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE `tipo_cliente` (
+  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  `porcentagem` INT NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `produtos` (
+  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
+  `horas_trabalhadas` DECIMAL(8,2) NOT NULL,
+  `descricao_produto` VARCHAR(255) NOT NULL,
+  `tipo_cliente_id` BIGINT(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `tipo_cliente_id_foreign` FOREIGN KEY (`tipo_cliente_id`) REFERENCES `tipo_cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+);
+
+DROP TABLE IF EXISTS `tipo_contrato`;
+
+CREATE TABLE `tipo_contrato` (
+  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -60,6 +65,7 @@ CREATE TABLE `tipo_contrato` (
   PRIMARY KEY (`id`)
 );
 
+
 CREATE TABLE `usuarios` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `cargo_id` BIGINT(20) UNSIGNED NOT NULL,
@@ -72,21 +78,22 @@ CREATE TABLE `usuarios` (
 );
 
 CREATE TABLE `vendas` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `cliente_id` bigint(20) unsigned NOT NULL,
-  `tipo_contrato_id` bigint(20) unsigned NOT NULL,
-  `produto_id` bigint(20) unsigned NOT NULL,
-  `usuario_id` bigint(20) unsigned NOT NULL,
-  `inicio_contrato` date NOT NULL,
-  `final_contrato` date NOT NULL,
-  `valor_entrada` decimal(8,2) NOT NULL,
-  `valor_total` decimal(8,2) NOT NULL,
-  `nome_contato` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `telefone` varchar(255) NOT NULL,
-  `metodo_pagamento` varchar(45) NOT NULL,
-  `numero_parcela` text(55) NOT NULL,
-  `status` enum('concluido','em andamento','cancelado') NOT NULL,
+  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cliente_id` BIGINT(20) UNSIGNED NOT NULL,
+  `tipo_contrato_id` BIGINT(20) UNSIGNED NOT NULL,
+  `produto_id` BIGINT(20) UNSIGNED NOT NULL,
+  `usuario_id` BIGINT(20) UNSIGNED NOT NULL,
+  `status_clinte` INT NOT NULL,
+  `inicio_contrato` DATE NOT NULL,
+  `final_contrato` DATE NOT NULL,
+  `valor_entrada` DECIMAL(8,2) NOT NULL,
+  `valor_total` DECIMAL(8,2) NOT NULL,
+  `nome_contato` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `telefone` VARCHAR(255) NOT NULL,
+  `metodo_pagamento` VARCHAR(45) NOT NULL,
+  `numero_parcela` TEXT(55) NOT NULL,
+  `status` ENUM('concluido','em andamento','cancelado') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `vendas_cliente_id_foreign` (`cliente_id`),
   KEY `vendas_tipo_contrato_id_foreign` (`tipo_contrato_id`),

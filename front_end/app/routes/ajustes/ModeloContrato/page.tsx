@@ -15,31 +15,28 @@ export default function ModeloContrato() {
     };
 
     return (
-        <div className="flex flex-col h-screen">
-            {/* Card de Cadastro */}
-            <div className="flex justify-center items-center flex-grow">
-                <div className="max-w-xl w-full bg-white shadow-xl rounded-2xl p-8">
-                    <h2 className="text-2xl font-semibold mb-8 text-center">Tipo de Contrato</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
-                            <input
-                                type="text"
-                                id="tipoContrato"
-                                name="tipoContrato"
-                                value={nomeContrato}
-                                onChange={(event) => setNomeContrato(event.target.value)}
-                                placeholder="Tipo de Contrato"
-                                required
-                                className="w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                            />
-                        </div>
-                        <div className="text-center">
-                            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded w-full">
-                                CADASTRAR
-                            </button>
-                        </div>
-                    </form>
-                </div>
+        <div className="flex h-full justify-center items-center">
+            <div className="w-full bg-white shadow-xl rounded-2xl p-8">
+                <h2 className="text-2xl font-semibold mb-8 text-center">Tipo de Contrato</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            id="tipoContrato"
+                            name="tipoContrato"
+                            value={nomeContrato}
+                            onChange={(event) => setNomeContrato(event.target.value)}
+                            placeholder="Tipo de Contrato"
+                            required
+                            className="w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                        />
+                    </div>
+                    <div className="text-center">
+                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded w-full">
+                            CADASTRAR
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

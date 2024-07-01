@@ -1,14 +1,15 @@
 "use client"
-import React, { useState, FormEvent } from 'react';
-import {createNewProduto} from "@/lib/produtoController";
+import React, { useState, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { createNewProduto, getAllTiposClientes } from '@/lib/ProdutoController';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { dadosTipo_cliente } from '@/lib/interfaces/dadosUsuarios';
 
 export default function CadastroProduto() {
     const [nomeProduto, setNomeProduto] = useState<string>('');
     const [horasTrabalhadas, setHorasTrabalhadas] = useState<string>('');
-    const [valorComissaoA, setValorComissaoA] = useState<string>('');
-    const [valorComissaoB, setValorComissaoB] = useState<string>('');
     const [descricaoProduto, setDescricaoProduto] = useState<string>('');
+    const [tiposClientes, setTiposClientes] = useState<dadosTipo_cliente[]>([]);
     const descricaoLimiteCaracteres = 255;
     const router = useRouter();
 
@@ -20,14 +21,21 @@ export default function CadastroProduto() {
         }
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const tipos = await getAllTiposClientes();
+            setTiposClientes(tipos);
+        };
+
+        fetchData();
+    }, []);
+
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         await createNewProduto(
             nomeProduto,
             Number(horasTrabalhadas),
-            descricaoProduto,
-            Number(valorComissaoA),
-            Number(valorComissaoB),
+            descricaoProduto
         );
         router.push('/routes/ajustes');
     };
@@ -51,7 +59,7 @@ export default function CadastroProduto() {
                                 className="w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
                         </div>
-                        <div className="space-x-4 mb-4 grid grid-cols-3 rounded-none">
+                        <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
                             <input
                                 type="text"
                                 id="horasTrabalhadas"
@@ -62,26 +70,27 @@ export default function CadastroProduto() {
                                 required
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
-                            <input
-                                type="text"
-                                id="valorComissaoA"
-                                name="valorComissaoA"
-                                value={valorComissaoA}
-                                onChange={(event) => setValorComissaoA(event.target.value)}
-                                placeholder="Comissão A"
-                                required
-                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                            />
-                            <input
-                                type="text"
-                                id="valorComissaoB"
-                                name="valorComissaoB"
-                                value={valorComissaoB}
-                                onChange={(event) => setValorComissaoB(event.target.value)}
-                                placeholder="Comissão B"
-                                required
-                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                            />
+
+                            <Select>
+                                <SelectTrigger className="col-span-1 rounded-lg">
+                                    <SelectValue placeholder="Tipo Cliente" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {tiposClientes.map((tipo) => (
+                                        <SelectItem key={tipo.id} value={tipo.nome}>{tipo.nome}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            <Select>
+                                <SelectTrigger className="col-span-1 w-full rounded-lg">
+                                    <SelectValue placeholder="Tipo Cliente" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {tiposClientes.map((tipo) => (
+                                        <SelectItem key={tipo.id} value={tipo.nome}>{tipo.nome}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         <div className="mb-4 flex flex-col">
