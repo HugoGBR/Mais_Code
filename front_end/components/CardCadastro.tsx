@@ -78,7 +78,7 @@ export default function CardCadastro() {
                     <form onSubmit={handleSubmitCPF}>
                         <div className="flex justify-between mb-6 md:text-2xl font-bold">
                             <h1>Contrato</h1>
-                            <h1>Nº 00005</h1>
+                            <h1 className="hidden">Nº 00005</h1>
                         </div>
 
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
@@ -118,7 +118,7 @@ export default function CardCadastro() {
                                     </SelectTrigger>
                                     <SelectContent>
                                     {ModeloContrato.map((tipos_contrato) => (
-                                        <SelectItem key={tipos_contrato.id} value={tipos_contrato.nome}>{tipos_contrato.nome}</SelectItem>
+                                        <SelectItem key={tipos_contrato.id} value={tipos_contrato.id.toString()}>{tipos_contrato.nome}</SelectItem>
                                     ))}
                                     </SelectContent>
                                 </Select>
@@ -130,7 +130,7 @@ export default function CardCadastro() {
                                     </SelectTrigger>
                                     <SelectContent>
                                     {TiposProduto.map((tipo_Produto) => (
-                                        <SelectItem key={tipo_Produto.id} value={tipo_Produto.nome}>{tipo_Produto.nome}</SelectItem>
+                                        <SelectItem key={tipo_Produto.id} value={tipo_Produto.id.toString()}>{tipo_Produto.nome}</SelectItem>
                                     ))}
                                     </SelectContent>
                                 </Select>
