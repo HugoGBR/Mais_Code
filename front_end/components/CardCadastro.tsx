@@ -5,14 +5,17 @@ import { GoGear } from "react-icons/go";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createNewSell } from "@/lib/VendaController";
-import { dadosModelo_contrato, dadosProduto, dadosTipo_cliente } from "@/lib/interfaces/dadosUsuarios";
+import { dadosCliente, dadosModelo_contrato, dadosProduto, dadosTipo_cliente } from "@/lib/interfaces/dadosUsuarios";
 import { getAllProduto, getAllTiposClientes } from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
+import { getAllClient } from "@/lib/ClienteController";
+import CardCliente from '@/components/CardClienteGestao';
 
 export default function CardCadastro() {
     const [TiposClientes, setTiposClientes] = useState<dadosTipo_cliente[]>([]);
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
+    const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
     const [valor_entrada, setValorEntrada] = useState("");
     const [DataInicio, setDataInicio] = useState("");
@@ -27,13 +30,15 @@ export default function CardCadastro() {
     const [valor_total, setvalortotal] = useState("");
     const [metodo_pagamento, setmetodo_pagamento] = useState("");
     const [numero_parcelo, setnumero_parcelo] = useState("");
+    const [cpf_cnpj_input, setCpfCnpjInput] = useState("");
+    const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
 
     const route = useRouter();
 
     async function handleSubmit(event: FormEvent) {
-        event.preventDefault()
-        const datadoinicio = new Date(DataInicio)
-        const datadofim = new Date(DataFim)
+        event.preventDefault();
+        const datadoinicio = new Date(DataInicio);
+        const datadofim = new Date(DataFim);
 
         await createNewSell(
             Number(new_cliente_id),
@@ -50,8 +55,8 @@ export default function CardCadastro() {
             nome_contato,
             Number(numero_parcelo),
             2
-        )
-        route.push("/routes/cadastros")
+        );
+        route.push("/routes/cadastros");
     }
 
     useEffect(() => {
@@ -62,20 +67,37 @@ export default function CardCadastro() {
             setModeloContrato(tipos_contrato);
             const tipo_Produto = await getAllProduto();
             setTipoProduto(tipo_Produto);
+            const LCliente = await getAllClient();
+            setListaCliente(LCliente);
         };
 
         fetchData();
     }, []);
-    
-    async function handleSubmitCPF(event: FormEvent) {
-        event.preventDefault()
+
+    async function handleSearchCPF(event: FormEvent) {
+        event.preventDefault();
+        const clienteEncontrado = listaCliente.find(client => client.cpf_cnpj === cpf_cnpj_input);
+        setFoundCliente(clienteEncontrado || null);
     }
+
+    const renderGestaoCliente = () => {
+        if (!foundCliente) return null;
+        return (
+            <Link href={`/routes/gestao/cliente/${foundCliente.id}`} key={foundCliente.id}>
+                <div onClick={() => route.push(`/routes/gestao/cliente/${foundCliente.id}`)} className='bg-gray-300 mb-4 rounded-lg flex-grow'>
+                    <a className="block w-full">
+                        <CardCliente dados={foundCliente} />  
+                    </a>
+                </div>
+            </Link>
+        );
+    };
 
     return (
         <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
             <div className="w-full lg:w-3/5">
                 <Card className="p-10 drop-shadow-xl">
-                    <form onSubmit={handleSubmitCPF}>
+                    <form onSubmit={handleSearchCPF}>
                         <div className="flex justify-between mb-6 md:text-2xl font-bold">
                             <h1>Contrato</h1>
                             <h1 className="hidden">Nº 00005</h1>
@@ -84,10 +106,15 @@ export default function CardCadastro() {
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
                         <div className="md:grid md:grid-cols-2 gap-5 mb-5">
                             <div className="md:grid md:grid-cols-2 gap-5 mt-5">
-                                <input className="border-b-2 h-6 mt-auto focus:outline-none focus:border-blue-500"
+                                <input 
+                                    className="border-b-2 h-6 mt-auto focus:outline-none focus:border-blue-500"
                                     placeholder="CPF/CNPJ do Cliente"
-                                    type="text" />
-                                <button type="submit"
+                                    type="text"
+                                    value={cpf_cnpj_input}
+                                    onChange={(e) => setCpfCnpjInput(e.target.value)}
+                                />
+                                <button 
+                                    type="submit"
                                     className="w-28 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                     BUSCAR
                                 </button>
@@ -157,6 +184,7 @@ export default function CardCadastro() {
                                 type="email" />
                         </div>
                     </form>
+                    {renderGestaoCliente()}
                 </Card>
             </div>
 
@@ -244,5 +272,5 @@ export default function CardCadastro() {
                 </Card>
             </div>
         </div>
-    )
+    );
 }

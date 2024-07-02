@@ -10,7 +10,6 @@ import {useRouter} from "next/navigation";
 import {getAllClient} from '@/lib/GestaoControler';
 import {getAllUsers} from '@/lib/UsuarioController';
 import CardCliente from '@/components/CardClienteGestao';
-import ValidarTela from '@/components/ValidarTela';
 
 export default function Gestao() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
