@@ -184,7 +184,6 @@ export default function CardCadastro() {
                                 type="email" />
                         </div>
                     </form>
-                    {renderGestaoCliente()}
                 </Card>
             </div>
 
@@ -270,6 +269,7 @@ export default function CardCadastro() {
                         </div>
                     </form>
                 </Card>
+                {renderGestaoCliente()}
             </div>
         </div>
     );
