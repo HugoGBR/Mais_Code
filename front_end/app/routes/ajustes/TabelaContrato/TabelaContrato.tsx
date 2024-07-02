@@ -80,7 +80,7 @@ export function TabelaContrato<TData, TValue>({
           </div>
         </div>
 
-        <div className="rounded-lg border">
+        <div className="rounded-lg border overflow-hidden h-44">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -102,56 +102,38 @@ export function TabelaContrato<TData, TValue>({
             </TableHeader>
 
             <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="bg-gray-50">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
+              <div className="hover:overflow-y-scroll hover:h-32 hover:scroll-auto">
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id} className="w-full">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+
+                ) : (
+
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="text-center"
+                    >
+                      Nenhum Resultado
+                    </TableCell>
                   </TableRow>
-                ))
-
-              ) : (
-
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="text-center"
-                  >
-                    Nenhum Resultado
-                  </TableCell>
-                </TableRow>
-              )}
+                )}
+              </div>
             </TableBody>
           </Table>
-
-        </div>
-
-        <div className="space-x-3 mt-4 flex justify-center items-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Próximo
-          </Button>
         </div>
       </div>
     </div>

@@ -52,7 +52,7 @@
 //                     <table className="w-full">
 //                         <ScrollArea className="h-[150px] w-auto rounded-xl border-b-2">
 //                             <tbody className="font-medium [&>tr]:last:border-b-0">
-//                             {invoices.map((item) => (
+//                             {invoices.map((item) =>
 //                                 <tr key={item.name}>
 //                                     <Link
 //                                         className="flex border bg-muted/50 hover:bg-[#0762C8] hover:text-white rounded-xl"
