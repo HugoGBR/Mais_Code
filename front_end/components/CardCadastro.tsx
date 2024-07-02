@@ -29,11 +29,17 @@ export default function CardCadastro() {
     const [new_usuario_id, setnew_usuario_id] = useState("");
     const [valor_total, setvalortotal] = useState("");
     const [metodo_pagamento, setmetodo_pagamento] = useState("");
-    const [numero_parcelo, setnumero_parcelo] = useState("");
+    const [numero_parcelo, setnumero_parcelo] = useState("1");
     const [cpf_cnpj_input, setCpfCnpjInput] = useState("");
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
 
     const route = useRouter();
+
+    useEffect(() => {
+        if (foundCliente) {
+            setnew_cliente_id(foundCliente.id.toString());
+        }
+    }, [foundCliente]);
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -86,7 +92,7 @@ export default function CardCadastro() {
             <Link href={`/routes/gestao/cliente/${foundCliente.id}`} key={foundCliente.id}>
                 <div onClick={() => route.push(`/routes/gestao/cliente/${foundCliente.id}`)} className='bg-gray-300 mb-4 rounded-lg flex-grow'>
                     <a className="block w-full">
-                        <CardCliente dados={foundCliente} />  
+                        <CardCliente dados={foundCliente} />
                     </a>
                 </div>
             </Link>
@@ -106,14 +112,14 @@ export default function CardCadastro() {
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
                         <div className="md:grid md:grid-cols-2 gap-5 mb-5">
                             <div className="md:grid md:grid-cols-2 gap-5 mt-5">
-                                <input 
+                                <input
                                     className="border-b-2 h-6 mt-auto focus:outline-none focus:border-blue-500"
                                     placeholder="CPF/CNPJ do Cliente"
                                     type="text"
                                     value={cpf_cnpj_input}
                                     onChange={(e) => setCpfCnpjInput(e.target.value)}
                                 />
-                                <button 
+                                <button
                                     type="submit"
                                     className="w-28 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                     BUSCAR
@@ -144,9 +150,9 @@ export default function CardCadastro() {
                                         <SelectValue placeholder="Tipo Contrato" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                    {ModeloContrato.map((tipos_contrato) => (
-                                        <SelectItem key={tipos_contrato.id} value={tipos_contrato.id.toString()}>{tipos_contrato.nome}</SelectItem>
-                                    ))}
+                                        {ModeloContrato.map((tipos_contrato) => (
+                                            <SelectItem key={tipos_contrato.id} value={tipos_contrato.id.toString()}>{tipos_contrato.nome}</SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
 
@@ -156,9 +162,9 @@ export default function CardCadastro() {
                                         <SelectValue placeholder="Produto" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                    {TiposProduto.map((tipo_Produto) => (
-                                        <SelectItem key={tipo_Produto.id} value={tipo_Produto.id.toString()}>{tipo_Produto.nome}</SelectItem>
-                                    ))}
+                                        {TiposProduto.map((tipo_Produto) => (
+                                            <SelectItem key={tipo_Produto.id} value={tipo_Produto.id.toString()}>{tipo_Produto.nome}</SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -223,7 +229,11 @@ export default function CardCadastro() {
                                         className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                         aria-labelledby="pagamento-opcao-1"
                                         aria-describedby="pagamento-opcao-1"
-                                        onClick={() => setMostrarParcelas(false)} />
+                                        onClick={() => {
+                                            setmetodo_pagamento("À vista");
+                                            setnumero_parcelo("1");
+                                            setMostrarParcelas(false);
+                                        }} />
                                     <label htmlFor="pagamento-opcao-1"
                                         className="block ml-2 text-sm font-medium text-gray-900">
                                         À vista
@@ -235,7 +245,10 @@ export default function CardCadastro() {
                                         className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                         aria-labelledby="pagamento-opcao-2"
                                         aria-describedby="pagamento-opcao-2"
-                                        onClick={() => setMostrarParcelas(true)} />
+                                        onClick={() => {
+                                            setmetodo_pagamento("Parcelado");
+                                            setMostrarParcelas(true);
+                                        }} />
                                     <label htmlFor="pagamento-opcao-2"
                                         className="block ml-2 text-sm font-medium text-gray-900">
                                         Parcelado
@@ -249,6 +262,7 @@ export default function CardCadastro() {
                                         className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
                                         placeholder="36x"
                                         type="text"
+                                        onChange={(event) => setnumero_parcelo(event.target.value)}
                                     />
                                     <Link href="">
                                         <GoGear className="w-8 h-8" />
@@ -269,7 +283,9 @@ export default function CardCadastro() {
                         </div>
                     </form>
                 </Card>
-                {renderGestaoCliente()}
+                <div className="flex flex-col mb-5 py-3">
+                    {renderGestaoCliente()}
+                </div>
             </div>
         </div>
     );

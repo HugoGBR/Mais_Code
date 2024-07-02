@@ -28,22 +28,15 @@ CREATE TABLE `clientes` (
   `cpf_cnpj` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
-CREATE TABLE `tipo_cliente` (
-  `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(255) NOT NULL,
-  `porcentagem` INT NOT NULL,
-  PRIMARY KEY (`id`)
-);
 
 CREATE TABLE `produtos` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255) NOT NULL,
   `horas_trabalhadas` DECIMAL(8,2) NOT NULL,
   `descricao_produto` VARCHAR(255) NOT NULL,
-  `tipo_cliente_id` BIGINT(20) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `tipo_cliente_id_foreign` FOREIGN KEY (`tipo_cliente_id`) REFERENCES `tipo_cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-
+  `comissao_antiga` INT NOT NULL,
+  `comissao_nova` INT not null,
+  PRIMARY KEY (`id`)
 );
 
 DROP TABLE IF EXISTS `tipo_contrato`;
