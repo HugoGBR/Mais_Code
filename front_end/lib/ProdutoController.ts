@@ -4,6 +4,8 @@ export async function createNewProduto(
   newNome: string,
   newHoras_Trabalhadas: number,
   newDescricao_produto: string,
+  newTiposClientesPrimario: number,
+  newTiposClientesSecundario: number
 ) {
   try {
     const response = await fetch(
@@ -16,7 +18,9 @@ export async function createNewProduto(
         body: JSON.stringify({
           nome: newNome,
           horas_trabalhadas: newHoras_Trabalhadas,
-          descricao_produto: newDescricao_produto
+          descricao_produto: newDescricao_produto,
+          tipo_cliente_idA: newTiposClientesPrimario,
+          tipo_cliente_idB: newTiposClientesSecundario
         }),
       }
     );
@@ -54,18 +58,18 @@ export async function getAllProduto() {
 }
 export async function getAllTiposClientes() {
   try {
-      const response = await fetch(
-          `${backendURL()}/ProdutoServices.php?acao=getAllTiposClientes`
-      );
+    const response = await fetch(
+      `${backendURL()}/ProdutoServices.php?acao=getAllTiposClientes`
+    );
 
-      if (!response.ok) {
-          throw new Error(`Erro ao buscar Tipo Cliente: ${response.statusText}`);
-      }
+    if (!response.ok) {
+      throw new Error(`Erro ao buscar Tipo Cliente: ${response.statusText}`);
+    }
 
-      const data = await response.json();
-      return data;
+    const data = await response.json();
+    return data;
   } catch (error) {
-      console.error("Erro ao buscar todos os Tipo Cliente:", error);
-      throw error;
+    console.error("Erro ao buscar todos os Tipo Cliente:", error);
+    throw error;
   }
 }
