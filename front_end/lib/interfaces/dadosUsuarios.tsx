@@ -10,6 +10,10 @@ export enum Cargos{
     Vendedor = 2,
     Financeiro = 3
 }
+export interface DadosCargos{
+  id: number,
+  nome : string
+}
 export interface dadosCliente {
     id: number,
     nome: string,

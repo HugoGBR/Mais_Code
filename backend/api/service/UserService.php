@@ -21,6 +21,14 @@ if (isset($_REQUEST["acao"])) {
                 echo json_encode($users);
             }
             break;
+        case "getAllCargo":
+                if ($id !== null) {
+                    echo json_encode(["error" => "Ação GetAllUsers não aceita um ID"]);
+                } else {
+                    $users = $userController->getAllCargo();
+                    echo json_encode($users);
+                }
+                break;
 
         case "CreateNewUser":
             if ($id !== null) {

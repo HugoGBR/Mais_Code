@@ -50,6 +50,12 @@ export async function getAllUsers() {
     return dados;
 }
 
+export async function getAllCargo() {
+    const resposta = await fetch(`${backendURL()}/UserService.php?acao=getAllCargo`)
+    const dados = await resposta.json();
+    return dados;
+}
+
 export function escolheTipoCliente(cargo_id: number) {
     switch (cargo_id) {
         case Cargos.Administrador:

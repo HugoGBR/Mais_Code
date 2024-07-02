@@ -19,6 +19,14 @@ class Usercontroller
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
         return $users;
     }
+    public function getAllCargo()
+    {
+        $sql = "SELECT * FROM cargos";
+        $db = $this->conn->prepare($sql);
+        $db->execute();
+        $users = $db->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+    }
 
     public function CreateNewUser()
     {
