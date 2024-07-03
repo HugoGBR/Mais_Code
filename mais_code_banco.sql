@@ -67,7 +67,7 @@ CREATE TABLE `vendas` (
   `tipo_contrato_id` BIGINT(20) UNSIGNED NOT NULL,
   `produto_id` BIGINT(20) UNSIGNED NOT NULL,
   `usuario_id` BIGINT(20) UNSIGNED NOT NULL,
-  `status_cliente` varchar(55) NOT NULL,
+  `status_cliente` INT NOT NULL,
   `inicio_contrato` DATE NOT NULL,
   `final_contrato` DATE NOT NULL,
   `valor_entrada` DECIMAL(8,2),
