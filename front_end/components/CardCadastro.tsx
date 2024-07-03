@@ -5,8 +5,8 @@ import { GoGear } from "react-icons/go";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createNewSell } from "@/lib/VendaController";
-import { dadosCliente, dadosModelo_contrato, dadosProduto} from "@/lib/interfaces/dadosUsuarios";
-import { getAllProduto} from "@/lib/ProdutoController";
+import { dadosCliente, dadosModelo_contrato, dadosProduto } from "@/lib/interfaces/dadosUsuarios";
+import { getAllProduto } from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
 import { getAllClient } from "@/lib/ClienteController";
 import CardCliente from '@/components/CardClienteGestao';
@@ -26,12 +26,13 @@ export default function CardCadastro() {
     const [new_tipo_contrato_id, setnew_tipo_contrato_id] = useState("");
     const [new_produto_id, setnew_produto_id] = useState("");
     const [new_usuario_id, setnew_usuario_id] = useState("");
-    const [valor_total, setvalortotal] = useState("");
+    const [valor_total, setvalortotal] = useState(0);
     const [metodo_pagamento, setmetodo_pagamento] = useState("");
     const [numero_parcelo, setnumero_parcelo] = useState("1");
     const [cpf_cnpj_input, setCpfCnpjInput] = useState("");
     const [statusCliente, setstatusCliente] = useState("");
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
+    const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
 
     const route = useRouter();
 
@@ -40,6 +41,29 @@ export default function CardCadastro() {
             setnew_cliente_id(foundCliente.id.toString());
         }
     }, [foundCliente]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const tipos_contrato = await getAllContratos();
+            setModeloContrato(tipos_contrato);
+            const tipo_Produto = await getAllProduto();
+            setTipoProduto(tipo_Produto);
+            const LCliente = await getAllClient();
+            setListaCliente(LCliente);
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (new_produto_id && horas_trabalhadas) {
+            const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
+            if (selectedProduct) {
+                const valorEntradaNumerico = parseFloat(valor_entrada) || 0;
+                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valorEntradaNumerico);
+            }
+        }
+    }, [new_produto_id, horas_trabalhadas, valor_entrada]);
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -54,7 +78,7 @@ export default function CardCadastro() {
             statusCliente,
             datadofim,
             Number(valor_entrada),
-            Number(valor_total),
+            valor_total,
             datadoinicio,
             metodo_pagamento,
             email,
@@ -65,19 +89,6 @@ export default function CardCadastro() {
         );
         route.push("/routes/cadastros");
     }
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const tipos_contrato = await getAllContratos();
-            setModeloContrato(tipos_contrato);
-            const tipo_Produto = await getAllProduto();
-            setTipoProduto(tipo_Produto);
-            const LCliente = await getAllClient();
-            setListaCliente(LCliente);
-        };
-
-        fetchData();
-    }, []);
 
     async function handleSearchCPF(event: FormEvent) {
         event.preventDefault();
@@ -125,9 +136,11 @@ export default function CardCadastro() {
                                 </button>
                             </div>
 
-                            <input className="border-b-2 mt-auto focus:outline-none focus:border-blue-500 invisible"
+                            <input className="border-b-2 mt-auto focus:outline-none focus:border-blue-500"
                                 placeholder="Colaborador"
-                                type="text" />
+                                type="text" 
+                                onChange={(e) => setnew_usuario_id(e.target.value)}
+                                />
                             <div className="flex flex-col mb-5">
                                 <label className="text-sm" htmlFor="teste">Data Inicio</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
@@ -169,9 +182,12 @@ export default function CardCadastro() {
                             </div>
                             <div className="flex flex-col mb-5 md:ml-5">
                                 <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
-                                <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    // onChange={(event) => setHoraTrabalhada(event.target.value)}
-                                    placeholder="Horas" type="number" />
+                                <input
+                                    className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    placeholder="Horas"
+                                    type="number"
+                                    onChange={(event) => setHorasTrabalhadas(Number(event.target.value))}
+                                />
                             </div>
                         </div>
 
@@ -227,7 +243,7 @@ export default function CardCadastro() {
                                         className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                         aria-labelledby="pagamento-opcao-1"
                                         aria-describedby="pagamento-opcao-1"
-                                        onClick={() => {
+                                        onClick={(e) => {
                                             setmetodo_pagamento("À vista");
                                             setnumero_parcelo("1");
                                             setMostrarParcelas(false);
@@ -271,7 +287,7 @@ export default function CardCadastro() {
 
                         <div className="flex justify-between mt-5 h-auto">
                             <label className="font-bold" htmlFor="teste">Valor total a pagar:</label>
-                            <h1 className="font-bold">R$ 0000,00</h1>
+                            <h1 className="font-bold">{`R$ ${valor_total.toFixed(2)}`}</h1>
                         </div>
                         <div className="mt-5 text-center">
                             <button type="submit"
