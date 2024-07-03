@@ -19,14 +19,14 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Nome
-          <CaretSortIcon className="ml-2 h-4 w-4 "  />
+          <CaretSortIcon className="h-4 w-4 "  />
         </Button>
       )
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("nome")}</div>,
   },
   {
-    accessorKey: "comissa_nova",
+    accessorKey: "comissao_nova",
     header: ({ column }) => {
       return (
         <Button
@@ -34,11 +34,11 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Novo
-          <CaretSortIcon className="ml-2 h-4 w-4 "  />
+          <CaretSortIcon className="h-4 w-4 " />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("comissa_nova")}</div>,
+    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("comissao_nova")}</div>,
   },
   {
     accessorKey: "comissao_antiga",
@@ -49,11 +49,11 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Antigo
-          <CaretSortIcon className="ml-2 h-4 w-4 "  />
+          <CaretSortIcon className="h-4 w-4 " />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("comissao_antiga")}</div>,
+    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("comissao_antiga")}</div>,
   },
   {
     accessorKey: "horas_trabalhadas",
@@ -64,7 +64,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Valor
-          <CaretSortIcon className="ml-2 h-4 w-4 "  />
+          <CaretSortIcon className="h-4 w-4 " />
         </Button>
       )
     },
@@ -76,7 +76,6 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original
-
     },
   },
 ]
