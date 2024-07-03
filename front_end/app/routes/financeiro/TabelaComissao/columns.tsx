@@ -7,7 +7,7 @@ import { Payment } from "../../relatorio/Table/columns";
 
 export const columns: ColumnDef<Payment>[] = [
     {
-        accessorKey: "tipo_contrato_id",
+        accessorKey: "numero_contrato",
         header: ({column}) => {
             return (
                 <div className="text-center">
@@ -21,7 +21,7 @@ export const columns: ColumnDef<Payment>[] = [
                 </div>
             )
         },
-        cell: ({row}) => <div className="lowercase  text-center">#{row.getValue("tipo_contrato_id")}</div>,
+        cell: ({row}) => <div className="lowercase  text-center">#{row.getValue("numero_contrato")}</div>,
     },
     
     {
@@ -51,7 +51,7 @@ export const columns: ColumnDef<Payment>[] = [
     },
 
     {
-        accessorKey: "nome",
+        accessorKey: "tipo_contrato",
         header: ({column}) => {
             return (
                 <div className="text-center">
@@ -65,7 +65,7 @@ export const columns: ColumnDef<Payment>[] = [
                 </div>
             )
         },
-        cell: ({row}) => <div className="lowercase  text-center">{row.getValue("nome")}</div>,
+        cell: ({row}) => <div className="lowercase  text-center">{row.getValue("tipo_contrato")}</div>,
     },
    
     {
@@ -95,10 +95,10 @@ export const columns: ColumnDef<Payment>[] = [
     },
 
     {
-        accessorKey: "porcentagem",
+        accessorKey: "comissao_produtoA",
         header: () => <div className="text-center">Comissão</div>,
         cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("porcentagem")}</div>
+            <div className="capitalize text-center">{row.getValue("comissao_produtoA")}</div>
         ),
     },
    
