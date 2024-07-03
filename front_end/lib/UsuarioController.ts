@@ -39,7 +39,8 @@ export async function validacaoLogin(
         });
     const response = await request.json();
     if (response != 0)
-        await criarCookie("CookiCriado",response);
+        await criarCookie("CookiCriado",response[0].id);
+        await criarCookie("UserName",response[0].nome);
     return response
 
 }

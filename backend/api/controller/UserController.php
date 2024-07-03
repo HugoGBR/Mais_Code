@@ -59,10 +59,7 @@ class Usercontroller
 
 
         if ($users) {
-            $resposta = [
-                "id" => $users[0]['id']
-            ];
-            
+            $resposta = $users;
         }else{
             $resposta = 0;
         }

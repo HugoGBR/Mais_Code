@@ -10,12 +10,12 @@ export async function criarCookie(cookieName: string, values:string) {
     })
 }
 
-export async function getCookie(cookieName: string): Promise<string | null> {
+export async function getCookie() {
     const allCookies = cookies();
-    const userCookie = allCookies.get(cookieName);
+    const userCookie = allCookies.get('CookiCriado');
 
     if (userCookie) {
-        return userCookie.value; // Retorna o valor do cookie como uma string
+        return userCookie.value;
     } else {
         return null;
     }
