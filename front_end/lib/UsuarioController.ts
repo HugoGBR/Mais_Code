@@ -38,8 +38,8 @@ export async function validacaoLogin(
             )
         });
     const response = await request.json();
-    if (response == 1)
-        await criarCookie("CookiCriado");
+    if (response != 0)
+        await criarCookie("CookiCriado",response);
     return response
 
 }
