@@ -5,14 +5,13 @@ import { GoGear } from "react-icons/go";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createNewSell } from "@/lib/VendaController";
-import { dadosCliente, dadosModelo_contrato, dadosProduto, dadosTipo_cliente } from "@/lib/interfaces/dadosUsuarios";
-import { getAllProduto, getAllTiposClientes } from "@/lib/ProdutoController";
+import { dadosCliente, dadosModelo_contrato, dadosProduto} from "@/lib/interfaces/dadosUsuarios";
+import { getAllProduto} from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
 import { getAllClient } from "@/lib/ClienteController";
 import CardCliente from '@/components/CardClienteGestao';
 
 export default function CardCadastro() {
-    const [TiposClientes, setTiposClientes] = useState<dadosTipo_cliente[]>([]);
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
@@ -31,6 +30,7 @@ export default function CardCadastro() {
     const [metodo_pagamento, setmetodo_pagamento] = useState("");
     const [numero_parcelo, setnumero_parcelo] = useState("1");
     const [cpf_cnpj_input, setCpfCnpjInput] = useState("");
+    const [statusCliente, setstatusCliente] = useState("");
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
 
     const route = useRouter();
@@ -51,6 +51,7 @@ export default function CardCadastro() {
             Number(new_tipo_contrato_id),
             Number(new_produto_id),
             Number(new_usuario_id),
+            statusCliente,
             datadofim,
             Number(valor_entrada),
             Number(valor_total),
@@ -67,8 +68,6 @@ export default function CardCadastro() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const tipos_cliente = await getAllTiposClientes();
-            setTiposClientes(tipos_cliente);
             const tipos_contrato = await getAllContratos();
             setModeloContrato(tipos_contrato);
             const tipo_Produto = await getAllProduto();
@@ -208,14 +207,13 @@ export default function CardCadastro() {
 
                         <div className="mb-5">
                             <label className="text-sm" htmlFor="Nn">Status Cliente</label>
-                            <Select>
+                            <Select onValueChange={(value) => setstatusCliente(value)}>
                                 <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
                                     <SelectValue placeholder="Tipo Cliente" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {TiposClientes.map((tipos_cliente) => (
-                                        <SelectItem key={tipos_cliente.id} value={tipos_cliente.nome}>{tipos_cliente.nome}</SelectItem>
-                                    ))}
+                                    <SelectItem value={"antigo"}>Antigo</SelectItem>
+                                    <SelectItem value={"novo"}>Novo</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
