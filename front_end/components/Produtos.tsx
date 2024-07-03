@@ -9,9 +9,8 @@ export default function CadastroProduto() {
     const [nomeProduto, setNomeProduto] = useState<string>('');
     const [horasTrabalhadas, setHorasTrabalhadas] = useState<string>('');
     const [descricaoProduto, setDescricaoProduto] = useState<string>('');
-    const [tiposClientes, setTiposClientes] = useState<dadosTipo_cliente[]>([]);
-    const [tipoClienteSelecionadoPrimario, setTipoClienteSelecionadoPrimario] = useState<number | null>(null);
-    const [tipoClienteSelecionadoSecundario, setTipoClienteSelecionadoSecundario] = useState<number | null>(null);
+    const [comissaoNovo, setComissaoNovo] = useState<string>('');
+    const [comissaoAntigo, setComissaoAntigo] = useState<string>('');
     const descricaoLimiteCaracteres = 255;
     const router = useRouter();
 
@@ -22,27 +21,16 @@ export default function CadastroProduto() {
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const tiposClientesData = await getAllTiposClientes();
-            setTiposClientes(tiposClientesData);
-        };
 
-        fetchData();
-    }, []);
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        if (tipoClienteSelecionadoPrimario === null || tipoClienteSelecionadoSecundario === null) {
-            alert("Por favor, selecione ambos os tipos de cliente.");
-            return;
-        }
         await createNewProduto(
             nomeProduto,
             Number(horasTrabalhadas),
             descricaoProduto,
-            tipoClienteSelecionadoPrimario,
-            tipoClienteSelecionadoSecundario
+            Number(comissaoNovo),
+            Number(comissaoAntigo)
         );
         router.push('/routes/ajustes');
     };
@@ -76,26 +64,26 @@ export default function CadastroProduto() {
                                 required
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
-                            <Select onValueChange={(value) => setTipoClienteSelecionadoPrimario(Number(value))}>
-                                <SelectTrigger className="col-span-1 rounded-lg">
-                                    <SelectValue placeholder="Tipo Cliente" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {tiposClientes.map((tipo) => (
-                                        <SelectItem key={tipo.id} value={tipo.id.toString()}>{tipo.nome}</SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            <Select onValueChange={(value) => setTipoClienteSelecionadoSecundario(Number(value))}>
-                                <SelectTrigger className="col-span-1 rounded-lg">
-                                    <SelectValue placeholder="Tipo Cliente" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {tiposClientes.map((tipo) => (
-                                        <SelectItem key={tipo.id} value={tipo.id.toString()}>{tipo.nome}</SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            <input
+                                type="number"
+                                id="comissaoNovo"
+                                name="comissaoNovo"
+                                value={comissaoNovo}
+                                onChange={(event) => setComissaoNovo(event.target.value)}
+                                placeholder="10%"
+                                required
+                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                            />
+                            <input
+                                type="number"
+                                id="comissaoAntigo"
+                                name="comissaoAntigo"
+                                value={comissaoAntigo}
+                                onChange={(event) => setComissaoAntigo(event.target.value)}
+                                placeholder="20%"
+                                required
+                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                            />
                         </div>
 
                         <div className="mb-4 flex flex-col">

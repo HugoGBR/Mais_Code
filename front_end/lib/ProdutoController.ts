@@ -4,8 +4,8 @@ export async function createNewProduto(
   newNome: string,
   newHoras_Trabalhadas: number,
   newDescricao_produto: string,
-  newTiposClientesPrimario: number,
-  newTiposClientesSecundario: number
+  newComissaoNovo: number,
+  newComissaoAntigo: number
 ) {
   try {
     const response = await fetch(
@@ -19,8 +19,8 @@ export async function createNewProduto(
           nome: newNome,
           horas_trabalhadas: newHoras_Trabalhadas,
           descricao_produto: newDescricao_produto,
-          tipo_cliente_idA: newTiposClientesPrimario,
-          tipo_cliente_idB: newTiposClientesSecundario
+          comissaoNovo: newComissaoNovo,
+          comissaoAntigo: newComissaoAntigo
         }),
       }
     );

@@ -25,6 +25,51 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("nome")}</div>,
   },
+  {
+    accessorKey: "comissa_nova",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Novo
+          <CaretSortIcon className="ml-2 h-4 w-4 "  />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("comissa_nova")}</div>,
+  },
+  {
+    accessorKey: "comissao_antiga",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Antigo
+          <CaretSortIcon className="ml-2 h-4 w-4 "  />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("comissao_antiga")}</div>,
+  },
+  {
+    accessorKey: "horas_trabalhadas",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Valor
+          <CaretSortIcon className="ml-2 h-4 w-4 "  />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("horas_trabalhadas")}</div>,
+  },
 
   {
     id: "actions",
