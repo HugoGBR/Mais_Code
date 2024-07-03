@@ -47,5 +47,6 @@ export interface Payment {
 
   export interface dadosProduto{
     id: number,
-    nome: string
+    nome: string,
+    horas_trabalhadas: number
   }
