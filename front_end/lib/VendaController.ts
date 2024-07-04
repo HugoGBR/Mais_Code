@@ -28,7 +28,7 @@ export async function createNewSell(
     new_tipo_contrato_id: number,
     new_produto_id: number,
     new_usuario_id: number,
-    newstatus_cliente: string,
+    newstatus_cliente: number,
     final_contrato: Date,
     valor_entrada: number,
     valor_total: number,

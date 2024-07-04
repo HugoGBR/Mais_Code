@@ -10,6 +10,7 @@ import { getAllProduto } from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
 import { getAllClient } from "@/lib/ClienteController";
 import CardCliente from '@/components/CardClienteGestao';
+import { getCookie } from "@/lib/coockie";
 
 export default function CardCadastro() {
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
@@ -31,8 +32,10 @@ export default function CardCadastro() {
     const [numero_parcelo, setnumero_parcelo] = useState("1");
     const [cpf_cnpj_input, setCpfCnpjInput] = useState("");
     const [statusCliente, setstatusCliente] = useState("");
+    const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
+    const [teste, setTeste] = useState(0);
 
     const route = useRouter();
 
@@ -41,6 +44,14 @@ export default function CardCadastro() {
             setnew_cliente_id(foundCliente.id.toString());
         }
     }, [foundCliente]);
+
+    useEffect(() => {
+        async function fetchUsername() {
+            const user = await getCookie("CookiCriado");
+            setnew_usuario_id(user || "Usuário");
+        }
+        fetchUsername();
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -65,6 +76,37 @@ export default function CardCadastro() {
         }
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
 
+    useEffect(() => {
+        if (new_produto_id) {
+            const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
+            // console.log(selectedProduct)
+            // console.log(selectedProduct?.comissao_antiga)
+            // console.log(selectedProduct?.comissao_nova)
+            // const novo = selectedProduct?.comissao_nova
+            // const antiga = selectedProduct?.comissao_antiga
+            // console.log(antiga)
+            // console.log(novo)
+            // console.log(statusCliente)   
+            // setstatusClienteValor(antiga?.toString())
+            // console.log(statusClienteValor)
+            if (selectedProduct) {
+                if (statusCliente == "antigo") {
+                    console.log(selectedProduct.comissao_antiga)
+                    const teste = selectedProduct.comissao_antiga
+                    setTeste(selectedProduct.comissao_antiga)
+                    setstatusClienteValor(teste);
+                    console.log(statusClienteValor)
+
+                } else if (statusCliente ==  "novo") {
+                    setstatusClienteValor(selectedProduct.comissao_nova);
+                }
+            }
+
+        }
+    }, [statusCliente]);
+
+    
+
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
         const datadoinicio = new Date(DataInicio);
@@ -75,7 +117,7 @@ export default function CardCadastro() {
             Number(new_tipo_contrato_id),
             Number(new_produto_id),
             Number(new_usuario_id),
-            statusCliente,
+            statusClienteValor,
             datadofim,
             Number(valor_entrada),
             valor_total,
@@ -136,11 +178,6 @@ export default function CardCadastro() {
                                 </button>
                             </div>
 
-                            <input className="border-b-2 mt-auto focus:outline-none focus:border-blue-500"
-                                placeholder="Colaborador"
-                                type="text" 
-                                onChange={(e) => setnew_usuario_id(e.target.value)}
-                                />
                             <div className="flex flex-col mb-5">
                                 <label className="text-sm" htmlFor="teste">Data Inicio</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500"
@@ -226,7 +263,7 @@ export default function CardCadastro() {
                             <Select onValueChange={(value) => setstatusCliente(value)}>
                                 <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
                                     <SelectValue placeholder="Tipo Cliente" />
-                                </SelectTrigger>
+                                </SelectTrigger>    
                                 <SelectContent>
                                     <SelectItem value={"antigo"}>Antigo</SelectItem>
                                     <SelectItem value={"novo"}>Novo</SelectItem>
