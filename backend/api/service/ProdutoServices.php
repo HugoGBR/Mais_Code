@@ -39,6 +39,31 @@ switch ($acao) {
             echo json_encode($mensagem);
         }
         break;
+    case "checkProdutoExistsById":
+        if ($id !== null) {
+            $user = $produtoController->checkProdutoExistsById($id);
+            echo json_encode($user);
+        } else {
+            echo json_encode(["error" => "Ação checkProdutoExistsById necessita de um ID"]);
+        }
+        break;
+
+    case "updateProdutoById":
+        if ($id !== null) {
+            $user = $produtoController->updateProdutoById($id);
+            echo json_encode($user);
+        } else {
+            echo json_encode(["error" => "Ação updateProdutoById necessita de um ID"]);
+        }
+        break;
+    case "getProdutoById":
+        if ($id !== null) {
+            $user = $produtoController->getProdutoById($id);
+            echo json_encode($user);
+        } else {
+            echo json_encode(["error" => "Ação GetUserById necessita de um ID"]);
+        }
+        break;
     default:
         echo "Rota não encontrada";
 
