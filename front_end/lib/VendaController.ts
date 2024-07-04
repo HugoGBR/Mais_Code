@@ -37,7 +37,7 @@ export async function createNewSell(
     email: string,
     telefone: string,
     nome_contato: string,
-    newnumero_parcelo: number,
+    newnumero_parcela: string,
     new_status: number
 ) {
     try {
@@ -49,7 +49,6 @@ export async function createNewSell(
             body: JSON.stringify({
                 cliente_id: new_cliente_id,
                 tipo_contrato_id: new_tipo_contrato_id,
-                numero_parcelo: newnumero_parcelo,
                 produto_id: new_produto_id,
                 usuario_id: new_usuario_id,
                 status_cliente: newstatus_cliente,
@@ -61,6 +60,7 @@ export async function createNewSell(
                 email: email,
                 telefone: telefone,
                 nome_contato: nome_contato,
+                numero_parcela: newnumero_parcela,
                 status: new_status
             })
         });

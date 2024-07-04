@@ -36,7 +36,6 @@ export default function CardCadastro() {
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
-    const [teste, setTeste] = useState(0);
 
     const route = useRouter();
 
@@ -80,33 +79,12 @@ export default function CardCadastro() {
     useEffect(() => {
         if (new_produto_id) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
-            // console.log(selectedProduct)
-            // console.log(selectedProduct?.comissao_antiga)
-            // console.log(selectedProduct?.comissao_nova)
-            // const novo = selectedProduct?.comissao_nova
-            // const antiga = selectedProduct?.comissao_antiga
-            // console.log(antiga)
-            // console.log(novo)
-            // console.log(statusCliente)   
-            // setstatusClienteValor(antiga?.toString())
-            // console.log(statusClienteValor)
             if (selectedProduct) {
-                if (statusCliente == "antigo") {
-                    console.log(selectedProduct.comissao_antiga)
-                    const teste = selectedProduct.comissao_antiga
-                    setTeste(selectedProduct.comissao_antiga)
-                    setstatusClienteValor(teste);
-                    console.log(statusClienteValor)
-
-                } else if (statusCliente ==  "novo") {
-                    setstatusClienteValor(selectedProduct.comissao_nova);
-                }
+                const comissao = statusCliente === "antigo" ? selectedProduct.comissao_antiga : selectedProduct.comissao_nova;
+                setstatusClienteValor(comissao);
             }
-
         }
-    }, [statusCliente]);
-
-    
+    }, [statusCliente, new_produto_id]);
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -127,10 +105,10 @@ export default function CardCadastro() {
             email,
             telefone,
             nome_contato,
-            Number(numero_parcelo),
+            numero_parcelo,
             2
         );
-        route.push("/routes/cadastros");
+        route.push("/routes/home");
     }
 
     async function handleSearchCPF(event: FormEvent) {
@@ -281,7 +259,7 @@ export default function CardCadastro() {
                                         className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                         aria-labelledby="pagamento-opcao-1"
                                         aria-describedby="pagamento-opcao-1"
-                                        onClick={(e) => {
+                                        onClick={() => {
                                             setmetodo_pagamento("À vista");
                                             setnumero_parcelo("1");
                                             setMostrarParcelas(false);
@@ -313,7 +291,7 @@ export default function CardCadastro() {
                                     <input
                                         className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
                                         placeholder="36x"
-                                        type="text"
+                                        type="number"
                                         onChange={(event) => setnumero_parcelo(event.target.value)}
                                     />
                                     <Link href="">
