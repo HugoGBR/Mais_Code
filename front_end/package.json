@@ -30,6 +30,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.1",
+    "date-fns": "^3.6.0",
     "lucide-react": "^0.336.0",
     "mysql": "^2.18.1",
     "next": "^14.2.3",

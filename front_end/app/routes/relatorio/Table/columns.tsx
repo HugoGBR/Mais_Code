@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
-
+import { format, parseISO } from 'date-fns';
 
 export type Payment = {
     id: number
@@ -47,7 +47,10 @@ export const columns: ColumnDef<Payment>[] = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("data_inicio")}</div>,
+        cell: ({ row }) => {
+            const dataFormatada = format(parseISO(row.getValue("data_inicio")), 'dd-MM-yyyy');
+            return <div className="lowercase">{dataFormatada}</div>;
+          },
     },
 
     {

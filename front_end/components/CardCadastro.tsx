@@ -10,6 +10,7 @@ import { getAllProduto } from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
 import { getAllClient } from "@/lib/ClienteController";
 import CardCliente from '@/components/CardClienteGestao';
+import PopUpConfig from "./PopUpConfig";
 
 export default function CardCadastro() {
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
@@ -279,7 +280,7 @@ export default function CardCadastro() {
                                         onChange={(event) => setnumero_parcelo(event.target.value)}
                                     />
                                     <Link href="">
-                                        <GoGear className="w-8 h-8" />
+                                    <PopUpConfig/>
                                     </Link>
                                 </div>
                             )}
