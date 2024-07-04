@@ -17,7 +17,7 @@ export default function HomePage() {
                 </div>
             </div>
 
-            <div className='h-auto w-full  space-y-3'>
+            <div className='h-auto w-full space-y-3'>
                 <div>
                     <ApexAreaChart/>
                 </div>
