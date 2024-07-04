@@ -1,36 +1,57 @@
 'use client'
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { getUserById, updateUser } from "@/lib/UsuarioController";
+import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
+import { getAllCargo, getUserById, updateUser } from "@/lib/UsuarioController";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { userSchema } from "@/app/schemas/userSchema";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { DadosCargos } from "@/lib/interfaces/dadosUsuarios";
+import { z } from "zod";
 
-
-
+type LoginFormSchema = z.infer<typeof userSchema>;
 
 export default function App({ params }: { params: { id: number } }) {
     const [dadosUsuario, setdadosUsuario] = useState({ nome: "", cargo_id: 0, senha: "", email: "" });
-    const [nome, setNome] = useState("");
     const router = useRouter();
+    const [listaCargo, setListaCargo] = useState<DadosCargos[]>([]);
+    const { setValue } = useForm<LoginFormSchema>({
+        resolver: zodResolver(userSchema)
+    });
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const Lcargo = await getAllCargo();
+            setListaCargo(Lcargo);
+        };
 
+        fetchData();
+    }, []);
 
     useEffect(() => {
         const setdados = async () => {
             const usuario = await getUserById(params.id);
             setdadosUsuario(usuario);
+            setValue('cargo', usuario.cargo_id.toString());
         };
 
         setdados();
-    }, [params.id]);
+    }, [params.id, setValue]);
 
     const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, params.id);
         router.push('/routes/gestao');
     };
-
-
 
     return (
         <div>
@@ -59,7 +80,6 @@ export default function App({ params }: { params: { id: number } }) {
                                     onChange={(e) => setdadosUsuario({ ...dadosUsuario, email: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="email" placeholder="Email" />
-
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <input type="password"
@@ -69,16 +89,20 @@ export default function App({ params }: { params: { id: number } }) {
                                     id="senha" placeholder="Senha" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                <select
-                                    id="cargo_id"
-                                    value={dadosUsuario.cargo_id}
-                                    onChange={(e) => setdadosUsuario({ ...dadosUsuario, cargo_id: parseInt(e.target.value) })}
-                                >
-                                    <option value="">Cargos...</option>
-                                    <option value={1}>Administrador</option>
-                                    <option value={2}>Vendedor</option>
-                                    <option value={3}>Financeiro</option>
-                                </select>
+                                <Select 
+                                    value={dadosUsuario.cargo_id.toString()} 
+                                    onValueChange={(value) => setdadosUsuario({ ...dadosUsuario, cargo_id: parseInt(value) })}>
+                                    <SelectTrigger className="w-[220px]">
+                                        <SelectValue placeholder="Cargos..." />
+                                    </SelectTrigger>
+                                    <SelectContent id="cargo_id">
+                                        <SelectGroup>
+                                            {listaCargo.map((Lcargo) => (
+                                                <SelectItem key={Lcargo.id} value={Lcargo.id.toString()}>{Lcargo.nome}</SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </div>
                         <div className="flex justify-center">
@@ -91,8 +115,6 @@ export default function App({ params }: { params: { id: number } }) {
                     </Card>
                 </div>
             </form>
-
         </div>
     );
 }
-
