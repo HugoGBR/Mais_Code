@@ -22,12 +22,12 @@ export const columns: ColumnDef<Payment>[] = [
             return (
                 <div className="text-center">
                     <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    N*Contrato
-                    <CaretSortIcon className="ml-2 h-4 w-4 "/>
-                </Button>
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        N*Contrato
+                        <CaretSortIcon className="ml-2 h-4 w-4 " />
+                    </Button>
                 </div>
             )
         },
@@ -43,7 +43,7 @@ export const columns: ColumnDef<Payment>[] = [
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Data
-                    <CaretSortIcon className="ml-2 h-4 w-4" />
+                    <CaretSortIcon className="ml-2 h-4 w-4 text-center" />
                 </Button>
             )
         },

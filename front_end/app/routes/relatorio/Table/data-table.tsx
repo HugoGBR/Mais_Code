@@ -70,68 +70,66 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="bg-white h-3/5 shadow-xl rounded-lg p-4">
-                <div className="flex items-center py-4 input-container">
-                    <input
-                        type="text"
-                        placeholder="Pesquisar..."
-                        value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn("nome")?.setFilterValue(event.target.value)
-                        }
-                        className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
-                    />
-                </div>
-                <div className="rounded-3xl border">
-                    <Table>
-                        <TableHeader>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => {
-                                        return (
-                                            <TableHead key={header.id}>
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : flexRender(
-                                                        header.column.columnDef.header,
-                                                        header.getContext()
-                                                    )}
-                                            </TableHead>
-                                        )
-                                    })}
-                                </TableRow>
-                            ))}
-                        </TableHeader>
-                        <TableBody>
-                            {table.getRowModel().rows?.length ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        data-state={row.getIsSelected() && "selected"}
-                                    >
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id} className="bg-gray-50">
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext()
+            <div className="flex flex-col items-end py-5 input-container">
+                <input
+                    type="text"
+                    placeholder="Pesquisar..."
+                    value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) =>
+                        table.getColumn("nome")?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm border shadow-gray-400 shadow-md rounded-xl py-2 px-4 focus:outline-none focus:border-blue-500"
+                />
+            </div>
+            <div className="bg-white h-3/5 shadow-xl shadow-gray-400 rounded-lg p-4">
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <TableHead key={header.id}>
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
                                                 )}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell
-                                        colSpan={columns.length}
-                                        className="h-24 text-center"
-                                    >
-                                        Nenhum Resultado
-                                    </TableCell>
+                                        </TableHead>
+                                    )
+                                })}
+                            </TableRow>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && "selected"}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id} className="bg-gray-100 text-center">
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center"
+                                >
+                                    Nenhum Resultado
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
 
                 <div className="space-x-3 mt-4 flex justify-center items-center">
                     <Button
