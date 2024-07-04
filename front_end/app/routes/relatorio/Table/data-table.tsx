@@ -66,7 +66,6 @@ export function DataTable<TData, TValue>({
   
     return (
       <div>
-        <div className="bg-white h-3/5 shadow-xl rounded-lg p-4">
           <div className="flex items-center py-4 input-container">
             <input
               type="text"
@@ -78,7 +77,7 @@ export function DataTable<TData, TValue>({
               className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
             />
           </div>
-          <div className="rounded-3xl border">
+        <div className="bg-white h-3/5 shadow-xl rounded-lg p-4">
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -143,7 +142,6 @@ export function DataTable<TData, TValue>({
               </Button>
             </div>
           </div>
-        </div>
       </div>
     );
   }
