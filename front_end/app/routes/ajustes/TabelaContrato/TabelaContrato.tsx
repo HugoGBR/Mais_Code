@@ -80,7 +80,7 @@ export function TabelaContrato<TData, TValue>({
           </div>
         </div>
 
-        <div className="rounded-lg border overflow-hidden h-44">
+        <div className="rounded-lg border h-96">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -100,38 +100,33 @@ export function TabelaContrato<TData, TValue>({
                 </TableRow>
               ))}
             </TableHeader>
-
-            <TableBody>
-              <div className="hover:overflow-y-scroll hover:h-32 hover:scroll-auto">
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id} className="w-full">
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-
-                ) : (
-
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="text-center"
-                    >
-                      Nenhum Resultado
-                    </TableCell>
+            <TableBody className="w-full">
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="w-full">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
                   </TableRow>
-                )}
-              </div>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    Nenhum Resultado
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>

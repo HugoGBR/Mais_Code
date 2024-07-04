@@ -21,7 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { RiCloseCircleLine } from "react-icons/ri";
@@ -62,15 +62,7 @@ export function TableProduto<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
-    },
-
-    ///const handleClick = (row) => {
-    //console.log("Button clicked!", row);
-    // Adicione a lógica desejada aqui
-    //};  
-
-
-
+    },  
   })
 
   return (
@@ -120,40 +112,38 @@ export function TableProduto<TData, TValue>({
                 ))}
               </TableHeader>
               <TableBody className="w-full">
-  {table.getRowModel().rows?.length ? (
-    table.getRowModel().rows.map((row) => (
-      <TableRow
-        key={row.id}
-        data-state={row.getIsSelected() && "selected"}
-        onClick={() => router.push(`/routes/ajustes/Produtos/${row.id}`)}  // Adiciona o evento de clique
-        className="cursor-pointer" // Adiciona um ponteiro de cursor para indicar que a linha é clicável
-      >
-        {row.getVisibleCells().map((cell) => (
-          <TableCell key={cell.id} className="w-full">
-            {flexRender(
-              cell.column.columnDef.cell,
-              cell.getContext()
-            )}
-          </TableCell>
-        ))}
-      </TableRow>
-    ))
-  ) : (
-    <TableRow>
-      <TableCell
-        colSpan={columns.length}
-        className="h-24 text-center"
-      >
-        Nenhum Resultado
-      </TableCell>
-    </TableRow>
-  )}
-</TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                      onClick={() => router.push(`/routes/ajustes/Produtos/${Number(row.id) + 1}`)}
+                      className="cursor-pointer"
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id} className="w-full">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      Nenhum Resultado
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
             </Table>
           </div>
         </div>
-
-
         <div className="space-x-3 mt-4 flex justify-center items-center">
           <Button
             variant="outline"
