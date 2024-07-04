@@ -21,7 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
+import {useRouter} from "next/navigation";
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { RiCloseCircleLine } from "react-icons/ri";
@@ -45,7 +45,7 @@ export function TableProduto<TData, TValue>({
     useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
 
-
+  const router = useRouter();
   const table = useReactTable({
     data,
     columns,
@@ -63,6 +63,14 @@ export function TableProduto<TData, TValue>({
       columnVisibility,
       rowSelection,
     },
+
+    ///const handleClick = (row) => {
+    //console.log("Button clicked!", row);
+    // Adicione a lógica desejada aqui
+    //};  
+
+
+
   })
 
   return (
@@ -111,36 +119,36 @@ export function TableProduto<TData, TValue>({
                   </TableRow>
                 ))}
               </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <button className="w-full">
-                      <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                      >
-                        {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id} className="w-full">
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    </button>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
-                    >
-                      Nenhum Resultado
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
+              <TableBody className="w-full">
+  {table.getRowModel().rows?.length ? (
+    table.getRowModel().rows.map((row) => (
+      <TableRow
+        key={row.id}
+        data-state={row.getIsSelected() && "selected"}
+        onClick={() => router.push(`/routes/ajustes/Produtos/${row.id}`)}  // Adiciona o evento de clique
+        className="cursor-pointer" // Adiciona um ponteiro de cursor para indicar que a linha é clicável
+      >
+        {row.getVisibleCells().map((cell) => (
+          <TableCell key={cell.id} className="w-full">
+            {flexRender(
+              cell.column.columnDef.cell,
+              cell.getContext()
+            )}
+          </TableCell>
+        ))}
+      </TableRow>
+    ))
+  ) : (
+    <TableRow>
+      <TableCell
+        colSpan={columns.length}
+        className="h-24 text-center"
+      >
+        Nenhum Resultado
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
             </Table>
           </div>
         </div>

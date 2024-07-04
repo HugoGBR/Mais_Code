@@ -34,7 +34,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Novo
-          <CaretSortIcon className="h-4 w-4 " />
+          <CaretSortIcon className="h-4 w-4"/>
         </Button>
       )
     },
@@ -49,7 +49,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Antigo
-          <CaretSortIcon className="h-4 w-4 " />
+          <CaretSortIcon className="h-4 w-4"/>
         </Button>
       )
     },
@@ -64,7 +64,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Valor
-          <CaretSortIcon className="h-4 w-4 " />
+          <CaretSortIcon className="h-4 w-4"/>
         </Button>
       )
     },

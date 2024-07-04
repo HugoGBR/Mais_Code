@@ -45,6 +45,48 @@ class ProdutoController
         return $resposta;
     }
 
+    public function updateProdutoById(int $id)
+    {
+        try {
+            $produto = json_decode(file_get_contents("php://input"));
+    
+            $produtoExists = $this->checkProdutoExistsById($id);
+            if (!$produtoExists) {
+                return json_encode(['status' => 0, 'message' => 'Produto não encontrado.']);
+            }
+    
+            $sql = "UPDATE produtos SET nome = :nome, horas_trabalhadas = :horas_trabalhadas, descricao_produto = :descricao_produto,
+                    comissao_antiga = :comissao_antiga, comissao_nova = :comissao_nova WHERE id = :id";
+            $db = $this->conn->prepare($sql);
+            $db->bindParam(':id', $id);
+            $db->bindParam(":nome", $produto->nome);
+            $db->bindParam(":horas_trabalhadas", $produto->horas_trabalhadas);
+            $db->bindParam(":descricao_produto", $produto->descricao_produto);
+            $db->bindParam(":comissao_antiga", $produto->comissaoAntiga);
+            $db->bindParam(":comissao_nova", $produto->comissaoNova);
+    
+            if ($db->execute()) {
+                return json_encode(['status' => 1, 'message' => 'Registro atualizado com sucesso.']);
+            } else {
+                return json_encode(['status' => 0, 'message' => 'Falha ao atualizar o registro.']);
+            }
+    
+        } catch (\Exception $e) {
+            error_log('Erro ao atualizar produto: ' . $e->getMessage());
+            return json_encode(['status' => 0, 'message' => 'Erro ao atualizar produto.']);
+        }
+    }
+    
+    private function checkProdutoExistsById(int $id)
+    {
+        $query = "SELECT COUNT(*) FROM produtos WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+    
     public function getProdutoById(int $id)
     {
         try {
@@ -52,10 +94,10 @@ class ProdutoController
             $db = $this->conn->prepare($sql);
             $db->bindParam(":id", $id);
             $db->execute();
-            $produtos = $db->fetch(PDO::FETCH_ASSOC);
-            return $produtos;
-        } catch (\Exception $th) {
-            echo "Erro ao buscar o produto: " . $th->getMessage();
+            $produto = $db->fetch(PDO::FETCH_ASSOC);
+            return $produto;
+        } catch (\Exception $e) {
+            error_log("Erro ao buscar o produto: " . $e->getMessage());
             return null;
         }
     }

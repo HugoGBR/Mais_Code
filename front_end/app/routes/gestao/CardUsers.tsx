@@ -87,7 +87,7 @@ export default function CadastrarUsuarioGestao() {
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Select onValueChange={(value) => setValue('cargo', value)}>
-                                <SelectTrigger className="w-[200px]">
+                                <SelectTrigger className="w-[220px]">
                                     <SelectValue placeholder="Cargos..." />
                                 </SelectTrigger>
                                 <SelectContent id="cargo_id">
