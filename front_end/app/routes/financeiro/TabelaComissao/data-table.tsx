@@ -31,9 +31,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {Button} from "@/components/ui/button"
-import {ChevronDownIcon} from "lucide-react"
-import {useEffect, useState} from "react"
+import { Button } from "@/components/ui/button"
+import { ChevronDownIcon } from "lucide-react"
+import { useEffect, useState } from "react"
 
 
 interface DataTableProps<TData, TValue> {
@@ -42,9 +42,9 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTableComissao<TData, TValue>({
-                                                     columns,
-                                                     data,
-                                                 }: DataTableProps<TData, TValue>) {
+    columns,
+    data,
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -182,7 +182,7 @@ export function DataTableComissao<TData, TValue>({
                     <Pagination>
                         <PaginationContent>
                             <PaginationItem>
-                                <PaginationPrevious onClick={() => table.nextPage()}/>
+                                <PaginationPrevious onClick={() => table.nextPage()} />
                             </PaginationItem>
 
                             {/* <PaginationItem>
@@ -190,7 +190,7 @@ export function DataTableComissao<TData, TValue>({
                     </PaginationItem> */}
 
                             <PaginationItem>
-                                <PaginationNext onClick={() => table.nextPage()}/>
+                                <PaginationNext onClick={() => table.nextPage()} />
                             </PaginationItem>
                         </PaginationContent>
                     </Pagination>
