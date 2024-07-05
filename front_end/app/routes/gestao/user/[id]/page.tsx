@@ -23,6 +23,11 @@ type LoginFormSchema = z.infer<typeof userSchema>;
 export default function App({ params }: { params: { id: number } }) {
     const [dadosUsuario, setdadosUsuario] = useState({ nome: "", cargo_id: 0, senha: "", email: "" });
     const router = useRouter();
+    const [inputsHabilitados, setInputHabilitados] = useState(false);
+
+    const HabilitarEventos = () => {
+        setInputHabilitados(true);
+    }
     const [listaCargo, setListaCargo] = useState<DadosCargos[]>([]);
     const { setValue } = useForm<LoginFormSchema>({
         resolver: zodResolver(userSchema)
@@ -52,6 +57,14 @@ export default function App({ params }: { params: { id: number } }) {
         await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, params.id);
         router.push('/routes/gestao');
     };
+    const handleButtonClick = async () => {
+        if (inputsHabilitados) {
+            await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, params.id);
+            router.push('/routes/gestao');
+        } else {
+            HabilitarEventos();
+        }
+    };
 
     return (
         <div>
@@ -72,6 +85,7 @@ export default function App({ params }: { params: { id: number } }) {
                                     onChange={(e) => setdadosUsuario({ ...dadosUsuario, nome: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="nome" placeholder="Nome"
+                                    disabled={!inputsHabilitados}
                                 />
                             </div>
                             <div className="flex flex-col space-y-1.5">
@@ -79,18 +93,22 @@ export default function App({ params }: { params: { id: number } }) {
                                     value={dadosUsuario.email}
                                     onChange={(e) => setdadosUsuario({ ...dadosUsuario, email: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                    id="email" placeholder="Email" />
+                                    id="email" placeholder="Email"
+                                    disabled={!inputsHabilitados} 
+                                    />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <input type="password"
                                     value={dadosUsuario.senha}
                                     onChange={(e) => setdadosUsuario({ ...dadosUsuario, senha: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                    id="senha" placeholder="Senha" />
+                                    id="senha" placeholder="Senha"
+                                    disabled={!inputsHabilitados} />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Select 
                                     value={dadosUsuario.cargo_id.toString()} 
+                                    disabled={!inputsHabilitados}
                                     onValueChange={(value) => setdadosUsuario({ ...dadosUsuario, cargo_id: parseInt(value) })}>
                                     <SelectTrigger className="w-[220px]">
                                         <SelectValue placeholder="Cargos..." />
@@ -105,11 +123,10 @@ export default function App({ params }: { params: { id: number } }) {
                                 </Select>
                             </div>
                         </div>
-                        <div className="flex justify-center">
-                            <button
-                                className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded"
-                                type="submit">
-                                EDITAR USUARIO
+                        <div className='flex justify-center'>
+                            <button type='button' onClick={handleButtonClick}
+                                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                {inputsHabilitados ? "Alterar" : "Editar"}
                             </button>
                         </div>
                     </Card>

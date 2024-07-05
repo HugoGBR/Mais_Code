@@ -8,6 +8,11 @@ import { getClienteById, updateClientByID } from "@/lib/ClienteController";
 export default function App({ params }: { params: { id: number } }) {
     const [dadosCliente, setDadosCliente] = useState({ nome: "", email: "", telefone: "", cpf_cnpj: "" });
     const router = useRouter();
+    const [inputsHabilitados, setInputHabilitados] = useState(false);
+
+    const HabilitarEventos = () => {
+        setInputHabilitados(true);
+    }
 
     useEffect(() => {
         const setDados = async () => {
@@ -22,6 +27,15 @@ export default function App({ params }: { params: { id: number } }) {
         e.preventDefault();
         await updateClientByID(dadosCliente.nome, dadosCliente.email, dadosCliente.telefone, dadosCliente.cpf_cnpj, params.id);
         router.push('/routes/gestao');
+    };
+
+    const handleButtonClick = async () => {
+        if (inputsHabilitados) {
+            await updateClientByID(dadosCliente.nome, dadosCliente.email, dadosCliente.telefone, dadosCliente.cpf_cnpj, params.id);
+            router.push('/routes/gestao');
+        } else {
+            HabilitarEventos();
+        }
     };
 
     return (
@@ -43,6 +57,7 @@ export default function App({ params }: { params: { id: number } }) {
                                     onChange={(e) => setDadosCliente({ ...dadosCliente, nome: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="nome" placeholder="Nome"
+                                    disabled={!inputsHabilitados}
                                 />
                             </div>
                             <div className="flex flex-col space-y-1.5">
@@ -51,6 +66,7 @@ export default function App({ params }: { params: { id: number } }) {
                                     onChange={(e) => setDadosCliente({ ...dadosCliente, email: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="email" placeholder="Email"
+                                    disabled={!inputsHabilitados}
                                 />
                             </div>
                             <div className="flex flex-col space-y-1.5">
@@ -59,6 +75,7 @@ export default function App({ params }: { params: { id: number } }) {
                                     onChange={(e) => setDadosCliente({ ...dadosCliente, telefone: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="telefone" placeholder="Telefone"
+                                    disabled={!inputsHabilitados}
                                 />
                             </div>
                             <div className="flex flex-col space-y-1.5">
@@ -67,11 +84,15 @@ export default function App({ params }: { params: { id: number } }) {
                                     onChange={(e) => setDadosCliente({ ...dadosCliente, cpf_cnpj: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="cpf_cnpj" placeholder="CPF/CNPJ"
+                                    disabled={!inputsHabilitados}
                                 />
                             </div>
                         </div>
-                        <div className="flex justify-center">
-                            <button className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded" type="submit">EDITAR CLIENTE</button>
+                        <div className='flex justify-center'>
+                            <button type='button' onClick={handleButtonClick}
+                                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                {inputsHabilitados ? "Alterar" : "Editar"}
+                            </button>
                         </div>
                     </Card>
                 </div>
