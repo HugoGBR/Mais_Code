@@ -64,13 +64,11 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
     return (
         <div>
             <form onSubmit={handleEditSubmit}>
-                <div className="flex justify-center items-center bg-gray-100 mt-10">
-                    <Card className="p-10 drop-shadow-xl rounded-xl">
-                        <div className="h-12 mb-5">
-                            <h1 className="font-bold text-2xl">Cadastro Produto</h1>
-                        </div>
-                        <div className="pb-16 grid grid-cols-1 sm:grid-cols-2 gap-10">
-                            <div className="flex flex-col space-y-1.5">
+                <div className="flex flex-col h-screen">
+                    <div className="flex justify-center items-center flex-grow">
+                        <div className="max-w-lg w-full bg-white shadow-xl rounded-md p-8">
+                            <h2 className="text-2xl font-semibold mb-4 text-center">Cadastro Produto</h2>
+                            <div className="mb-4">
                                 <input
                                     type="text"
                                     value={produto.nome}
@@ -81,7 +79,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     required
                                 />
                             </div>
-                            <div className="flex flex-col space-y-1.5">
+                            <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
                                 <input
                                     type="number"
                                     value={produto.horas_trabalhadas}
@@ -91,8 +89,6 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     placeholder="Horas Trabalhadas"
                                     required
                                 />
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
                                 <input
                                     type="text"
                                     value={produto.comissaoNovo}
@@ -102,8 +98,6 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     placeholder="Nova Comissão"
                                     required
                                 />
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
                                 <input
                                     type="text"
                                     value={produto.comissaoAntigo}
@@ -114,32 +108,32 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     required
                                 />
                             </div>
-                            <div className="flex flex-col space-y-1.5">
-                                <textarea
-                                    id="descricaoProduto"
-                                    value={produto.descricao_produto}
-                                    onChange={handleDescricaoChange}
-                                    placeholder="Descrição do Produto"
-                                    rows={4}
-                                    maxLength={descricaoLimiteCaracteres}
-                                    className="shadow-inner-2 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                ></textarea>
-                                <div className="flex justify-end">
-                                    <p className="text-sm text-gray-500">
-                                        {produto.descricao_produto.length}/{descricaoLimiteCaracteres}
-                                    </p>
+
+                            <div className="mb-4 flex flex-col">
+                                <div>
+                                    <textarea
+                                        id="descricaoProduto"
+                                        value={produto.descricao_produto}
+                                        onChange={handleDescricaoChange}
+                                        placeholder="Descrição do Produto"
+                                        rows={4}
+                                        maxLength={descricaoLimiteCaracteres}
+                                        className="shadow-inner-2 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    ></textarea>
+                                    <div className="flex justify-end">
+                                        <p className="text-sm text-gray-500">
+                                            {produto.descricao_produto.length}/{descricaoLimiteCaracteres}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
+                            <div className="text-center">
+                                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    CADASTRAR
+                                </button>
+                            </div>
                         </div>
-                        <div className="flex justify-center">
-                            <button
-                                className="w-full bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold py-2 px-4 rounded"
-                                type="submit"
-                            >
-                                Atualizar Produto
-                            </button>
-                        </div>
-                    </Card>
+                    </div>
                 </div>
             </form>
         </div>
