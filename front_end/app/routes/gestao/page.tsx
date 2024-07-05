@@ -55,7 +55,7 @@ export default function Gestao() {
         carregarUsuarios();
         carregarCliente();
     }, []);
-
+   
     const renderGestaoCliente = () => {
         if (!Array.isArray(listaCliente)) return null;
         return (
@@ -81,7 +81,7 @@ export default function Gestao() {
                     .slice(0,8).filter(item => item.cargo_id == cargo_id)
                     .map(item => (
                         <Link href={`/routes/gestao/user/${item.id}`} key={item.id}>
-                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300  rounded-lg flex-grow'>
+                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300  rounded-lg flex-grow ' >
                                 <a className="block w-full">
                                     <CardUsuario dados={item} />
                                 </a>
@@ -97,7 +97,7 @@ export default function Gestao() {
        
          <div className="items-center py-10">
             <Tabs defaultValue='Cliente'>
-                <TabsList className='will-change-contents flex justify-between'>
+                <TabsList className='will-change-contents flex justify-between gap-6'>
                     <div className='space-x-5'>
                         <TabsTrigger value="Cliente">Cliente</TabsTrigger>
                         <TabsTrigger value="Administrador">Administrador</TabsTrigger>
@@ -108,7 +108,7 @@ export default function Gestao() {
                         <button
                             type="button"
                             id="Newuser"
-                            className="text-white bg-blue-500 w-full p-1 rounded-md hover:bg-blue-600 cursor-pointer "
+                            className="text-white bg-blue-500 w-full text-sm py-1 px-1 rounded-md hover:bg-blue-600 cursor-pointer "
                             onClick={rotaNewUser}
                         >
                             Novo Usuario
