@@ -92,7 +92,6 @@ export default function Perfil() {
                                 value={valorInputNome}
                                 disabled={!inputsHabilitados}
                             />
-                            {errors.nome && (<div className='text-red-500'>{errors.nome.message}</div>)}
                         </div>
 
                         <div>
@@ -106,7 +105,6 @@ export default function Perfil() {
                                 disabled={!inputsHabilitados}
                                 className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
                             />
-                            {errors.cargo && (<div className='text-red-500'>{errors.cargo.message}</div>)}
                         </div>
 
                         <div>
@@ -119,7 +117,6 @@ export default function Perfil() {
                                 disabled={!inputsHabilitados}
                                 className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
                             />
-                            {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
                         </div>
 
                         <div>
@@ -132,7 +129,6 @@ export default function Perfil() {
                                 disabled={!inputsHabilitados}
                                 className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
                             />
-                            {errors.senha && (<div className='text-red-500 '>{errors.senha.message}</div>)}
                         </div>
                     </div>
                     <div className='flex justify-center'>
