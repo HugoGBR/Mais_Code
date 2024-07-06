@@ -1,3 +1,4 @@
+import { formulario } from "@/app/routes/perfil/EditPerfil";
 import {criarCookie} from "./coockie";
 import {Cargos} from "./interfaces/dadosUsuarios";
 import {backendURL} from "./URLS/backendURL";
@@ -41,8 +42,28 @@ export async function validacaoLogin(
     if (response != 0)
         await criarCookie("CookiCriado",response[0].id);
         await criarCookie("UserName",response[0].nome);
+        await criarCookie("UserEmail",response[0].email);
+        await criarCookie("UserSenha",response[0].senha)
+        await criarCookie("UserCargo",response[0].cargo_id)
     return response
 
+}
+export async function atualizarDadosUsuario(id:string, dados:formulario) {
+    try {
+        const response = await fetch(`${backendURL()}/UserService.php?acao=atualizarUsuario`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id, dados }), // Ensure the payload is properly structured
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error updating user data:', error);
+        throw error;
+    }
 }
 
 export async function getAllUsers() {
