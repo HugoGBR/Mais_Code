@@ -1,5 +1,5 @@
 "use client"
-
+import router, { useRouter } from "next/navigation"
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -44,7 +44,7 @@ export function DataTable<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
-
+    const router=useRouter()
     const table = useReactTable({
         data,
         columns,
@@ -99,6 +99,8 @@ export function DataTable<TData, TValue>({
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
+                                    onClick={() => router.push(`/routes/relatorio/${Number(row.id) + 1}`)}
+                                    className="cursor-pointer"
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id} className="bg-gray-100 text-center">
