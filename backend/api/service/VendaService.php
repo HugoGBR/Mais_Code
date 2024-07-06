@@ -19,58 +19,41 @@ switch ($acao) {
             echo json_encode($mensagem);
         }
         break;
-        // if ($id !== null) {
-        //     echo "Ação 'BuscaRelatorio' não aceita um ID";
-        // } else {
-        //     $users = $relatorioManager->BuscaRelatorioVenda();
-        //     echo json_encode($users); 
-        // }
-        // break;
+    case "updateContratoByID":
+        if ($id !== null) {
+            $user = $vendaController->updateContratoByID($id);
+            echo json_encode($user);
+        } else {
+            echo json_encode(["error" => "Ação updateContratoByID necessita de um ID"]);
+        }
+        break;
+    case "getAllProductById":
+        if ($id !== null) {
+            $user = $vendaController->getAllProductById($id);
+            echo json_encode($user);
+        } else {
+            echo json_encode(["error" => "Ação GetUserById necessita de um ID"]);
+        }
+        break;
+    case "checkContratoExistsById":
+            if ($id !== null) {
+                $user = $vendaController->checkContratoExistsById($id);
+                echo json_encode($user);
+            } else {
+                echo json_encode(["error" => "Ação checkContratoExistsById necessita de um ID"]);
+            }
+        break;
+    
+    case "GetVendaById":
+        if ($id !== null) {
+            $user = $vendaController->getVendaById($id);
+            echo json_encode($user);
+        } else {
+            echo json_encode(["error" => "Ação checkContratoExistsById necessita de um ID"]);
+        }
+        break;
+    
     default:
         echo "Rota não encontrada";
 }
 
-// switch ($acao) {
-
-//     case "createNewSell":
-//         if ($id != null) {
-//             echo "Ação createNewSell não aceitar um ID";
-//         } else {
-//             $mensagem = $vendaController->createNewSell();
-//             echo json_encode($mensagem);
-//         }
-//         break;
-//     default:
-//         // Ação não suportada.
-//         return json_encode(["error" => "Ação não suportada."]);
-
-
-//     case "getAllProductById":
-//         if ($id !== null) {
-//             $users = $vendaController->getAllProductById($id);
-//             echo json_encode($users); // Saída em formato JSON
-//         } else {
-//             echo "Ação 'GetAllProductById' não aceita um ID";
-//         }
-//         break;
-
-        
-//     case "GetAllClient":
-//         if ($id !== null) {
-//             echo "Ação 'GetAllClient' não aceita um ID";
-//         } else {
-//             $users = $userController->getAllUsers();
-//             echo json_encode($users); // Saída em formato JSON
-//         }
-//         break;
-
-
-//     case "getAllUsers":
-//         if ($id != null) {
-//             echo json_encode(["error" => "Ação GetAllUsers não aceita um ID"]);
-//         } else {
-//             $users = $userController->getAllUsers();
-//             echo json_encode($users);
-//         }
-//         break;
-// } 
