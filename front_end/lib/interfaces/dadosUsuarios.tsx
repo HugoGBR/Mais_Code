@@ -52,20 +52,3 @@ export interface Payment {
     comissao_antiga: number,
     comissao_nova: number
   }
-
-  export interface dadosVenda{
-    cpf_cnpj: string,
-    data_inicio: Date,
-    data_termino: Date,
-    modelo_contrato: Number,
-    horas_trabalhadas: Number,
-    produtoID: Number,
-    dados_contatoNome: string,
-    dados_contatoTelefone: string,
-    dados_contatoEmail: string,
-    valor_entrada: Number,
-    status_clienteID: number,
-    metodo_pagamentoID: number,
-    numero_parcela: string,
-    valor_total: number     
-  }
