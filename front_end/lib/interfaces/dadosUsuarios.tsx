@@ -52,3 +52,23 @@ export interface Payment {
     comissao_antiga: number,
     comissao_nova: number
   }
+
+  export interface dadosVenda{
+    id: Number,
+    cliente_id: Number,
+    tipo_contrato_id: number,
+    modelo_contrato: Number,
+    produto_id: Number,
+    usuario_id: Number,
+    status_cliente: Number,
+    inicio_contrato: Date,
+    final_contrato: Date,
+    valor_entrada: Number,
+    valor_total: number,
+    nome_contato: string,
+    email: string,
+    telefone: string,
+    metodo_pagamento: string,
+    numero_parcela: string,
+    status: number     
+  }
