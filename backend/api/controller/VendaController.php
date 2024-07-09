@@ -48,7 +48,7 @@ class Vendacontroller
 {
     try {
         $user = json_decode(file_get_contents("php://input"));
-        $sql = "INSERT INTO vendas(cliente_id, tipo_contrato_id, produto_id, usuario_id, status_cliente, inicio_contrato, final_contrato, valor_entrada, valor_total, nome_contato, email, telefone,  metodo_pagamento, numero_parcela, status)
+        $sql = "INSERT INTO vendas(cliente_id, tipo_contrato_id, produto_id, usuario_id, status_cliente, horas_trabalhadas, inicio_contrato, final_contrato, valor_entrada, valor_total, nome_contato, email, telefone,  metodo_pagamento, numero_parcela, status)
                 VALUES (:cliente_id, :tipo_contrato_id, :produto_id, :usuario_id, :status_cliente, :inicio_contrato, :final_contrato, :valor_entrada, :valor_total, :nome_contato, :email, :telefone,  :metodo_pagamento, :numero_parcela, :status)";
         
         $db = $this->conn->prepare($sql);
@@ -57,6 +57,7 @@ class Vendacontroller
         $db->bindParam(":produto_id", $user->produto_id);
         $db->bindParam(":usuario_id", $user->usuario_id);
         $db->bindParam(":status_cliente", $user->status_cliente);
+        $db->bindParam(":horas_trabalhadas", $user->horas_trabalhadas);
         $db->bindParam(":inicio_contrato", $user->inicio_contrato);
         $db->bindParam(":final_contrato", $user->final_contrato);
         $db->bindParam(":valor_entrada", $user->valor_entrada);
@@ -97,6 +98,7 @@ public function updateContratoByID(int $id)
                     produto_id = :produto_id,
                     usuario_id = :usuario_id,
                     status_cliente = :status_cliente,
+                    horas_trabalhadas = :horas_trabalhadas,
                     inicio_contrato = :inicio_contrato,
                     final_contrato = :final_contrato,
                     valor_entrada = :valor_entrada,
@@ -115,6 +117,7 @@ public function updateContratoByID(int $id)
         $db->bindParam(":produto_id", $user->produto_id);
         $db->bindParam(":usuario_id", $user->usuario_id);
         $db->bindParam(":status_cliente", $user->status_cliente);
+        $db->bindParam(":horas_trabalhadas", $user->horas_trabalhadas);
         $db->bindParam(":inicio_contrato", $user->inicio_contrato);
         $db->bindParam(":final_contrato", $user->final_contrato);
         $db->bindParam(":valor_entrada", $user->valor_entrada);

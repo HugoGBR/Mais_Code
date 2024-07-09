@@ -97,6 +97,7 @@ export default function CardCadastro() {
             Number(new_produto_id),
             Number(new_usuario_id),
             statusClienteValor,
+            horas_trabalhadas,
             datadofim,
             Number(valor_entrada),
             valor_total,
