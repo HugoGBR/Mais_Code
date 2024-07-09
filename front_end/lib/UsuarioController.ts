@@ -49,6 +49,7 @@ export async function validacaoLogin(
 
 }
 export async function UptadeDadosUsuario(id:string, dados:formulario) {
+    console.log(id)
     try {
         const response = await fetch(`${backendURL()}/UserService.php?acao=UptadeUsuario`, {
             method: 'POST',

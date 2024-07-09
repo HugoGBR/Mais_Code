@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Card } from "@/components/ui/card";
-import FileAvatar from "@/components/FileAvatar";
 import React, { useState, useEffect } from "react";
 import { UptadeDadosUsuario, getAllCargo } from '@/lib/UsuarioController';
 import { criarCookie, getCookie } from '@/lib/coockie';
@@ -67,6 +66,7 @@ export default function Perfil() {
             email: dados.email,
             senha: dados.senha
         };
+        console.log(updatedUser)
 
         const response = await UptadeDadosUsuario(userId, updatedUser);
         if (response.success) {
@@ -88,8 +88,8 @@ export default function Perfil() {
                         <h1 className='font-bold pb-5 text-2xl'>Usuário</h1>
                     </div>
 
-                    <div className="mb-6">
-                        <FileAvatar />
+                    <div className="mb-6 flex justify-center items-center opacity-100">
+                        <img src="/icons/icon-perfil-preto.png" className="w-28" alt="imagem" />
                     </div>
 
                     <div className='pb-16 grid grid-cols-1 sm:grid-cols-2 gap-4'>
@@ -148,7 +148,7 @@ export default function Perfil() {
                         </div>
                     </div>
                     <div className='flex justify-center'>
-                        <button type='button' onClick={handleButtonClick}
+                        <button type='submit' onClick={handleButtonClick}
                             className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             {inputsHabilitados ? "Alterar" : "Editar"}
                         </button>
