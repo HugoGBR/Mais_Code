@@ -18,7 +18,7 @@ interface EditProps {
     vendaId: string;
 }
 
-export default function EditVenda({ vendaId }: EditProps) {
+export default function EditVenda({ params }: {params: {vendaId:number}}) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
@@ -47,7 +47,7 @@ export default function EditVenda({ vendaId }: EditProps) {
 
     useEffect(() => {
         async function fetchVenda() {
-            const vendaData = await getVendaById(vendaId);
+            const vendaData = await getVendaById(params.vendaId);
             setVenda(vendaData);
             setValorEntrada(vendaData.valor_entrada.toString());
             setDataInicio(vendaData.inicio_contrato.toISOString().split('T')[0]);
