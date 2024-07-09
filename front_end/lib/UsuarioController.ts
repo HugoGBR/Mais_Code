@@ -48,20 +48,20 @@ export async function validacaoLogin(
     return response
 
 }
-export async function atualizarDadosUsuario(id:string, dados:formulario) {
+export async function UptadeDadosUsuario(id:string, dados:formulario) {
     try {
-        const response = await fetch(`${backendURL()}/UserService.php?acao=atualizarUsuario`, {
+        const response = await fetch(`${backendURL()}/UserService.php?acao=UptadeUsuario`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id, dados }), // Ensure the payload is properly structured
+            body: JSON.stringify({ id, dados }),
         });
 
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error updating user data:', error);
+        console.error('Erro ao Uptade:', error);
         throw error;
     }
 }

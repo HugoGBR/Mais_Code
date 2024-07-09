@@ -4,14 +4,16 @@ import { z } from 'zod';
 import { Card } from "@/components/ui/card";
 import FileAvatar from "@/components/FileAvatar";
 import React, { useState, useEffect } from "react";
-import { atualizarDadosUsuario } from '@/lib/UsuarioController';
+import { UptadeDadosUsuario, getAllCargo } from '@/lib/UsuarioController';
 import { criarCookie, getCookie } from '@/lib/coockie';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DadosCargos } from '@/lib/interfaces/dadosUsuarios';
 
 const formulario = z.object({
     nome: z.string().min(10, 'Digite no mínimo 10 caracteres.').max(60, 'Digite o nome completo, máximo de 60 caracteres.'),
-    cargo: z.string().min(11, 'O cargo deve conter 11 caracteres.').max(11, 'O cargo deve conter 11 caracteres.'),
+    cargo: z.string().min(1, 'O cargo deve conter 1 caracteres.').max(11, 'O cargo deve conter 11 caracteres.'),
     email: z.string().email("Email inválido."),
-    senha: z.string().min(5, 'Número mínimo de caracteres é 5.').max(10, "Atingiu o limite de caracteres.")
+    senha: z.string().min(5, 'Número mínimo de caracteres é 5.').max(15, "Atingiu o limite de caracteres.")
 });
 
 export type formulario = z.infer<typeof formulario>;
@@ -20,32 +22,42 @@ export default function Perfil() {
     const { register, handleSubmit, formState: { errors } } = useForm<formulario>({
         resolver: zodResolver(formulario)
     });
+
+    const [listaCargo, setListaCargo] = useState<DadosCargos[]>([]);
     const [inputsHabilitados, setInputHabilitados] = useState(false);
     const [valorInputNome, setValorInputNome] = useState('');
-    const [valorInputcargo, setValorInputcargo] = useState('');
+    const [valorInputCargo, setValorInputCargo] = useState('');
     const [valorInputEmail, setValorInputEmail] = useState('');
     const [valorInputSenha, setValorInputSenha] = useState('');
     const [userId, setUserId] = useState('');
 
     useEffect(() => {
-        async function fetchData() {
-            const userId = await getCookie('CookiCriado');
+        const fetchData = async () => {
+            const Lcargo = await getAllCargo();
+            setListaCargo(Lcargo);
+
+            const userIdFromCookie = await getCookie('CookiCriado');
             const userName = await getCookie('UserName');
-            const userCargo = await getCookie('UserCargo'); 
+            const userCargo = await getCookie('UserCargo');
             const userEmail = await getCookie('UserEmail');
             const userSenha = await getCookie('UserSenha');
 
-            if (userId) setUserId(userId);
+            if (userIdFromCookie) setUserId(userIdFromCookie);
             if (userName) setValorInputNome(userName);
-            if (userCargo) setValorInputcargo(userCargo);
+            if (userCargo) setValorInputCargo(userCargo);
             if (userEmail) setValorInputEmail(userEmail);
             if (userSenha) setValorInputSenha(userSenha);
-        }
+        };
+
         fetchData();
     }, []);
 
-    const HabilitarEventos = () => {
-        setInputHabilitados(true);
+    const handleButtonClick = async () => {
+        if (inputsHabilitados) {
+            await handleSubmit(handleForm)();
+        } else {
+            setInputHabilitados(true);
+        }
     };
 
     async function handleForm(dados: formulario) {
@@ -56,9 +68,8 @@ export default function Perfil() {
             senha: dados.senha
         };
 
-        const response = await atualizarDadosUsuario(userId, updatedUser);
-
-        if (response.success) { 
+        const response = await UptadeDadosUsuario(userId, updatedUser);
+        if (response.success) {
             await criarCookie('UserName', dados.nome);
             await criarCookie('UserCargo', dados.cargo);
             await criarCookie('UserEmail', dados.email);
@@ -82,7 +93,7 @@ export default function Perfil() {
                     </div>
 
                     <div className='pb-16 grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                        <div className=''>
+                        <div>
                             <input
                                 type="text"
                                 placeholder='João da Silva'
@@ -94,17 +105,22 @@ export default function Perfil() {
                             />
                         </div>
 
-                        <div>
-                            <input
-                                type='text'
-                                maxLength={14}
-                                placeholder='cargo'
-                                {...register('cargo')}
-                                onChange={(e) => setValorInputcargo(e.target.value)}
-                                value={valorInputcargo}
+                        <div className="flex flex-col space-y-1.5">
+                            <Select
+                                value={valorInputCargo.toString()}
                                 disabled={!inputsHabilitados}
-                                className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
-                            />
+                                onValueChange={(value) => setValorInputCargo(value)}>
+                                <SelectTrigger className="w-[220px]">
+                                    <SelectValue placeholder="Cargos..." />
+                                </SelectTrigger>
+                                <SelectContent id="cargo">
+                                    <SelectGroup>
+                                        {listaCargo.map((Lcargo) => (
+                                            <SelectItem key={Lcargo.id} value={Lcargo.id.toString()}>{Lcargo.nome}</SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         <div>
@@ -132,15 +148,10 @@ export default function Perfil() {
                         </div>
                     </div>
                     <div className='flex justify-center'>
-                        {inputsHabilitados ? (
-                            <button type='submit' className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Alterar
-                            </button>
-                        ) : (
-                            <button type='button' onClick={HabilitarEventos} className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Editar
-                            </button>
-                        )}
+                        <button type='button' onClick={handleButtonClick}
+                            className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            {inputsHabilitados ? "Alterar" : "Editar"}
+                        </button>
                     </div>
                 </form>
             </Card>
