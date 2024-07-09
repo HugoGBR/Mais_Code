@@ -29,24 +29,35 @@ export async function validacaoLogin(
     newEmail: string,
     newSenha: string
 ) {
-    const request = await fetch(`${backendURL()}/UserService.php?acao=validacaoLogin`,
-        {
+    try {
+        const request = await fetch(`${backendURL()}/UserService.php?acao=validacaoLogin`, {
             method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
-                    email: newEmail,
-                    senha: newSenha
-                }
-            )
+                email: newEmail,
+                senha: newSenha
+            })
         });
-    const response = await request.json();
-    if (response != 0)
-        await criarCookie("CookiCriado",response[0].id);
-        await criarCookie("UserName",response[0].nome);
-        await criarCookie("UserEmail",response[0].email);
-        await criarCookie("UserSenha",response[0].senha)
-        await criarCookie("UserCargo",response[0].cargo_id)
-    return response
 
+        const response = await request.json();
+
+        if (response && response.length > 0 && response[0].id) {
+            const userData = response[0];
+            await criarCookie("CookiCriado", userData.id);
+            await criarCookie("UserName", userData.nome);
+            await criarCookie("UserEmail", userData.email);
+            await criarCookie("UserSenha", userData.senha);
+            await criarCookie("UserCargo", userData.cargo_id);
+            return userData;
+        } else {
+            throw new Error('Login inválido ou dados de resposta inesperados');
+        }
+    } catch (error) {
+        console.error('Erro na validação de login:', error);
+        return null;
+    }
 }
 export async function atualizarDadosUsuario(id:string, dados:formulario) {
     try {
