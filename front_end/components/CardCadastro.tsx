@@ -14,11 +14,12 @@ import PopUpConfig from "./PopUpConfig";
 import { getCookie } from "@/lib/coockie";
 
 export default function CardCadastro() {
+    const [numero_parcelas, setNumeroParcelas] = useState("");
+    const [valor_entrada, setValorEntrada] = useState("");
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
-    const [valor_entrada, setValorEntrada] = useState("");
     const [DataInicio, setDataInicio] = useState("");
     const [DataFim, setDataFim] = useState("");
     const [nome_contato, setNomeContato] = useState("");
@@ -36,8 +37,9 @@ export default function CardCadastro() {
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
-
     const route = useRouter();
+
+   
 
     useEffect(() => {
         if (foundCliente) {
@@ -111,7 +113,6 @@ export default function CardCadastro() {
         );
         route.push("/routes/home");
     }
-
     async function handleSearchCPF(event: FormEvent) {
         event.preventDefault();
         const clienteEncontrado = listaCliente.find(client => client.cpf_cnpj === cpf_cnpj_input);
@@ -132,8 +133,8 @@ export default function CardCadastro() {
     };
 
     return (
-        <div className="grid grid-cols-12 gap-5">
-            <div className="col-span-12 lg:col-span-7">
+        <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
+            <div className="w-full lg:w-3/5">
                 <Card className="p-10 drop-shadow-xl">
                     <form onSubmit={handleSearchCPF}>
                         <div className="flex justify-between mb-6 md:text-2xl font-bold">
@@ -142,50 +143,36 @@ export default function CardCadastro() {
                         </div>
 
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
-
-                        <div className="md:grid md:grid-cols-12 gap-5 mb-5">
-                            <input
-                                className="border-b-2 mt-auto md:col-span-4 focus:outline-none focus:border-blue-500"
-                                placeholder="CPF/CNPJ do Cliente"
-                                type="text"
-                                value={cpf_cnpj_input}
-                                onChange={(e) => setCpfCnpjInput(e.target.value)}
-                            />
-                            <button
-                                type="submit"
-                                className="p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 md:col-span-2">
-                                BUSCAR
-                            </button>
-                        </div>
-
-                        <div className="grid md:grid-cols-12 gap-5 mb-5">
-                            <div className="md:col-span-6">
-                                <div className="flex flex-col">
-                                    <label className="text-sm mb-1" htmlFor="dataInicio">Data Início</label>
-                                    <input
-                                        id="dataInicio"
-                                        className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="Data de início"
-                                        type="date"
-                                        onChange={(event) => setDataInicio(event.target.value)}
-                                    />
-                                </div>
+                        <div className="md:grid md:grid-cols-2 gap-5 mb-5">
+                            <div className="md:grid md:grid-cols-2 gap-5 mt-5">
+                                <input
+                                    className="border-b-2 h-6 mt-auto focus:outline-none focus:border-blue-500"
+                                    placeholder="CPF/CNPJ do Cliente"
+                                    type="text"
+                                    value={cpf_cnpj_input}
+                                    onChange={(e) => setCpfCnpjInput(e.target.value)}
+                                />
+                                <button
+                                    type="submit"
+                                    className="w-28 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                    BUSCAR
+                                </button>
                             </div>
-                            <div className="md:col-span-6">
-                                <div className="flex flex-col">
-                                    <label className="text-sm mb-1" htmlFor="dataTermino">Data Término</label>
-                                    <input
-                                        id="dataTermino"
-                                        className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="Data de término"
-                                        type="date"
-                                        onChange={(event) => setDataFim(event.target.value)}
-                                    />
-                                </div>
+
+                            <div className="flex flex-col mb-5">
+                                <label className="text-sm" htmlFor="teste">Data Inicio</label>
+                                <input className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    placeholder="Data de inicio" type="date"
+                                    onChange={(event) => setDataInicio(event.target.value)} />
+                            </div>
+                            <div className="flex flex-col mb-5">
+                                <label className="text-sm" htmlFor="teste">Data Termino</label>
+                                <input className="border-b-2 focus:outline-none focus:border-blue-500" type="date"
+                                    onChange={(event) => setDataFim(event.target.value)} />
                             </div>
                         </div>
 
-                        <div className="md:grid md:grid-cols-2">
+                        <div className="md:grid md:grid-cols-2 ">
                             <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
                                 <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
                                 <Select onValueChange={(value) => setnew_tipo_contrato_id(value)}>
@@ -223,7 +210,7 @@ export default function CardCadastro() {
                         </div>
 
                         <h2 className="font-bold">Dados do Contato</h2>
-                        <div className="grid col-span-12 md:grid-cols-2 gap-5 mt-5">
+                        <div className="grid grid-cols-2 gap-5 mt-5">
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                 placeholder="Nome"
                                 onChange={(event) => setNomeContato(event.target.value)}
@@ -239,7 +226,7 @@ export default function CardCadastro() {
                 </Card>
             </div>
 
-            <div className="grid col-span-12 lg:col-span-5">
+            <div className="w-full lg:w-2/5">
                 <Card className="p-10 drop-shadow-xl">
                     <form onSubmit={handleSubmit}>
                         <div className="flex justify-center mb-6 text-2xl font-bold">
@@ -310,7 +297,7 @@ export default function CardCadastro() {
                                         onChange={(event) => setnumero_parcelo(event.target.value)}
                                     />
                                     <Link href="">
-                                        <PopUpConfig />
+                                        <PopUpConfig valorTotal={valor_total} parcelas={numero_parcelo}/>
                                     </Link>
                                 </div>
                             )}
@@ -328,7 +315,7 @@ export default function CardCadastro() {
                         </div>
                     </form>
                 </Card>
-                <div className="flex flex-col py-3">
+                <div className="flex flex-col mb-5 py-3">
                     {renderGestaoCliente()}
                 </div>
             </div>
