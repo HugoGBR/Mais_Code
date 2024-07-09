@@ -49,7 +49,7 @@ class Vendacontroller
     try {
         $user = json_decode(file_get_contents("php://input"));
         $sql = "INSERT INTO vendas(cliente_id, tipo_contrato_id, produto_id, usuario_id, status_cliente, horas_trabalhadas, inicio_contrato, final_contrato, valor_entrada, valor_total, nome_contato, email, telefone,  metodo_pagamento, numero_parcela, status)
-                VALUES (:cliente_id, :tipo_contrato_id, :produto_id, :usuario_id, :status_cliente, :inicio_contrato, :final_contrato, :valor_entrada, :valor_total, :nome_contato, :email, :telefone,  :metodo_pagamento, :numero_parcela, :status)";
+                VALUES (:cliente_id, :tipo_contrato_id, :produto_id, :usuario_id, :status_cliente, :horas_trabalhadas, :inicio_contrato, :final_contrato, :valor_entrada, :valor_total, :nome_contato, :email, :telefone,  :metodo_pagamento, :numero_parcela, :status)";
         
         $db = $this->conn->prepare($sql);
         $db->bindParam(":cliente_id", $user->cliente_id);   

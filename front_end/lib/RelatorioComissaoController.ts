@@ -16,3 +16,21 @@ export async function fetchDataComissao(
         console.error("Erro:", error);
     }
 }
+
+export async function remuneracaoComissao(
+    id: Number
+) {
+    try {
+        const response = await fetch(`${backendURL()}/RelatorioComissaoServices.php?acao=remuneracaoComissao&id=${id}`);
+        if (!response.ok) {
+            throw new Error("Erro ao buscar os dados do relatório");
+        }
+        const jsonData = await response.json();
+        console.log(jsonData)
+        return (jsonData);
+
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
+    
