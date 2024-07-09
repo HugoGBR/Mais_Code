@@ -38,7 +38,7 @@ export default function CadastroProduto() {
     return (
         <div className="flex flex-col h-screen">
             <div className="flex justify-center items-center flex-grow">
-                <div className="max-w-lg w-full bg-white shadow-xl rounded-md p-8">
+                <div className="max-w-lg w-full bg-white shadow-xl rounded-md p-6">
                     <h2 className="text-2xl font-semibold mb-4 text-center">Cadastro Produto</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
@@ -70,7 +70,7 @@ export default function CadastroProduto() {
                                 name="comissaoNovo"
                                 value={comissaoNovo}
                                 onChange={(event) => setComissaoNovo(event.target.value)}
-                                placeholder="10%"
+                                placeholder="Nova Comissão"
                                 required
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
@@ -80,7 +80,7 @@ export default function CadastroProduto() {
                                 name="comissaoAntigo"
                                 value={comissaoAntigo}
                                 onChange={(event) => setComissaoAntigo(event.target.value)}
-                                placeholder="20%"
+                                placeholder="Comissão Antiga"
                                 required
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
