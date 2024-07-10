@@ -4,6 +4,7 @@ import {Button} from "@/components/ui/button";
 import {CaretSortIcon} from "@radix-ui/react-icons";
 import {ColumnDef} from "@tanstack/react-table";
 import { Payment } from "../../relatorio/Table/columns";
+import { format, parseISO } from "date-fns";
 
 export const columns: ColumnDef<Payment>[] = [
     {
@@ -27,9 +28,11 @@ export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "inicio_contrato",
         header: () => <div className="text-center">Data</div>,
-        cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("inicio_contrato")}</div>
-        ),
+        cell: ({ row }) => {
+            const dataFormatada = format(parseISO(row.getValue("inicio_contrato")), 'dd-MM-yyyy');
+            return <div className="lowercase">{dataFormatada}</div>;
+        }
+        
     },
 
     {

@@ -1,6 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table";
+import { format, parseISO } from "date-fns";
 
 export type Payment = {
     id: number
@@ -19,7 +20,11 @@ export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "Data_Venda",
         header: () => <div className="text-center w-auto min-w-24">Data</div>,
-        cell: ({ row }) => <div className="lowercase">{row.getValue("Data_Venda")}</div>,
+        cell: ({ row }) => {
+            const dataFormatada = format(parseISO(row.getValue("Data_Venda")), 'dd-MM-yyyy');
+            return <div className="lowercase">{dataFormatada}</div>;
+        }
+        
     },
 
     {

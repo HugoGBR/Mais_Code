@@ -36,8 +36,7 @@ export default function ConfiguracoesParcela({ valorTotal,parcelas }: PopUpConfi
     const valorParcela = valorTotal / parcelas;  
 
 
-    console.log(valorTotal)
-    console.log(parcelas)
+   
 
     return (
         <CardFooter className="flex justify-center items-center ">
