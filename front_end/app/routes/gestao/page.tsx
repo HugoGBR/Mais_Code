@@ -1,14 +1,14 @@
 "use client";
 
-import React, {useState, useEffect} from 'react';
-import {Tabs, TabsContent, TabsList} from '@/components/ui/tabs';
-import {TabsTrigger} from '@radix-ui/react-tabs';
+import React, { useState, useEffect } from 'react';
+import { Tabs, TabsContent, TabsList } from '@/components/ui/tabs';
+import { TabsTrigger } from '@radix-ui/react-tabs';
 import CardUsuario from '@/components/CardUsuario';
-import {dadosCliente, dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
+import { dadosCliente, dadosUsuario } from "@/lib/interfaces/dadosUsuarios";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
-import {getAllClient} from '@/lib/GestaoControler';
-import {getAllUsers} from '@/lib/UsuarioController';
+import { useRouter } from "next/navigation";
+import { getAllClient } from '@/lib/GestaoControler';
+import { getAllUsers } from '@/lib/UsuarioController';
 import CardCliente from '@/components/CardClienteGestao';
 
 export default function Gestao() {
@@ -55,16 +55,16 @@ export default function Gestao() {
         carregarUsuarios();
         carregarCliente();
     }, []);
-   
+
     const renderGestaoCliente = () => {
         if (!Array.isArray(listaCliente)) return null;
         return (
             <>
-                {listaCliente.slice(0,8).map(client => (
+                {listaCliente.slice(0, 8).map(client => (
                     <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
                         <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300  rounded-lg flex-grow'>
                             <a className="block w-full">
-                                <CardCliente dados={client} />  
+                                <CardCliente dados={client} />
                             </a>
                         </div>
                     </Link>
@@ -78,10 +78,11 @@ export default function Gestao() {
         return (
             <>
                 {listaUsuarios
-                    .slice(0,8).filter(item => item.cargo_id == cargo_id)
+                    .filter(item => item.cargo_id == cargo_id)
+                    .slice(0, 8)
                     .map(item => (
                         <Link href={`/routes/gestao/user/${item.id}`} key={item.id}>
-                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300  rounded-lg flex-grow ' >
+                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
                                 <a className="block w-full">
                                     <CardUsuario dados={item} />
                                 </a>
@@ -94,8 +95,8 @@ export default function Gestao() {
     }
 
     return (
-       
-         <div className="items-center py-10">
+
+        <div className="items-center py-10">
             <Tabs defaultValue='Cliente'>
                 <TabsList className='will-change-contents flex justify-between gap-6'>
                     <div className='space-x-5'>
@@ -130,7 +131,7 @@ export default function Gestao() {
                 </TabsContent>
             </Tabs>
         </div>
-       
+
     )
 
 

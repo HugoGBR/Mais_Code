@@ -48,22 +48,8 @@ export function DataTableComissao<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
-    const [comissaoTotal, setTotalPorcentagem] = useState<number>(0)
     const [soma, setSoma] = useState(0)
 
-    useEffect(() => {
-        const calcularTotalPorcentagem = () => {
-            let total = 0
-            if (Array.isArray(data)) {
-                data.forEach((item: any) => {
-                    total = total + (item.valor_total / item.porcentagem)
-                })
-            }
-            return total
-        }
-
-        setTotalPorcentagem(calcularTotalPorcentagem())
-    }, [data])
 
     const table = useReactTable({
         data,
@@ -86,12 +72,7 @@ export function DataTableComissao<TData, TValue>({
 
     return (
         <div>
-            <div className="flex justify-end pb-2 drop-shadow-lg ">
-                <div className="bg-white border boder-gray-300 rounded-md py-2 px-4 w-auto ">
-                    <strong>Remuneração R$ {comissaoTotal}</strong>
-                </div>
-            </div>
-
+  
             <div className="bg-white h-3/5 shadow-xl rounded-lg p-4">
                 <div className="flex items-center py-4 input-container">
                     <input
