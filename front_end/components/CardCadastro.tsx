@@ -39,7 +39,7 @@ export default function CardCadastro() {
     const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
     const route = useRouter();
 
-   
+
 
     useEffect(() => {
         if (foundCliente) {
@@ -158,6 +158,8 @@ export default function CardCadastro() {
                                     BUSCAR
                                 </button>
                             </div>
+                        </div>
+                        <div className="md:grid md:grid-cols-2 gap-5 mt-5">
 
                             <div className="flex flex-col mb-5">
                                 <label className="text-sm" htmlFor="teste">Data Inicio</label>
@@ -297,7 +299,7 @@ export default function CardCadastro() {
                                         onChange={(event) => setnumero_parcelo(event.target.value)}
                                     />
                                     <Link href="">
-                                        <PopUpConfig valorTotal={valor_total} parcelas={numero_parcelo}/>
+                                        <PopUpConfig valorTotal={valor_total} parcelas={numero_parcelo} />
                                     </Link>
                                 </div>
                             )}
