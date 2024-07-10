@@ -47,7 +47,7 @@ class RelatorioComissaoController
         $sql = "SELECT
         SUM(comissao_total)
         FROM bancocomissao
-        WHERE user_id = :usuario_id AND status = 1 or 2
+        WHERE user_id = :usuario_id AND (status = 2)
         ";
         $db = $this->conn->prepare($sql);
         $db->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
