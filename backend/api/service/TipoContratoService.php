@@ -20,7 +20,23 @@ switch ($acao) {
             echo json_encode($tipo_contrato);
         }
         break;
+        case "getContratoById":
+            if ($id !== null) {
+                $user = $TipoContratoController->getContratoById($id);
+                echo json_encode($user);
+            } else {
+                echo json_encode(["error" => "Ação getContratoById necessita de um ID"]);
+            }
+            break;
 
+        case "updateContratoById":
+            if ($id !== null) {
+                $user = $TipoContratoController->updateContratoById($id);
+                echo json_encode($user);
+            } else {
+                echo json_encode(["error" => "Ação updateContratoById necessita de um ID"]);
+            }
+            break;
     case "createNewTipoContrato":
         if ($id != null) {
             echo json_encode(["error" => "Ação createNewTipoContrato não aceita um ID"]);

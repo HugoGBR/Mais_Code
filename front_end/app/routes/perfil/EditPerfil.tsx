@@ -105,6 +105,31 @@ export default function Perfil() {
                             />
                         </div>
 
+                        <div>
+                            <input
+                                type='password'
+                                placeholder='************'
+                                {...register('senha')}
+                                onChange={(e) => setValorInputSenha(e.target.value)}
+                                value={valorInputSenha}
+                                disabled={!inputsHabilitados}
+                                className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
+                            />
+                        </div>
+
+
+                        <div>
+                            <input
+                                type='email'
+                                placeholder='joão@gmail.com'
+                                {...register('email')}
+                                onChange={(e) => setValorInputEmail(e.target.value)}
+                                value={valorInputEmail}
+                                disabled={!inputsHabilitados}
+                                className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
+                            />
+                        </div>
+
                         <div className="flex flex-col space-y-1.5">
                             <Select
                                 value={valorInputCargo.toString()}
@@ -121,30 +146,6 @@ export default function Perfil() {
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
-                        </div>
-
-                        <div>
-                            <input
-                                type='email'
-                                placeholder='joão@gmail.com'
-                                {...register('email')}
-                                onChange={(e) => setValorInputEmail(e.target.value)}
-                                value={valorInputEmail}
-                                disabled={!inputsHabilitados}
-                                className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
-                            />
-                        </div>
-
-                        <div>
-                            <input
-                                type='password'
-                                placeholder='************'
-                                {...register('senha')}
-                                onChange={(e) => setValorInputSenha(e.target.value)}
-                                value={valorInputSenha}
-                                disabled={!inputsHabilitados}
-                                className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
-                            />
                         </div>
                     </div>
                     <div className='flex justify-center'>

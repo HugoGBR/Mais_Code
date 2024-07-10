@@ -26,6 +26,7 @@ import { useState } from "react"
 import { RiCloseCircleLine } from "react-icons/ri";
 import { PiPlusCircleBold } from "react-icons/pi";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 
 
@@ -44,7 +45,7 @@ export function TabelaContrato<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
-
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -106,6 +107,8 @@ export function TabelaContrato<TData, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    onClick={() => router.push(`/routes/ajustes/ModeloContrato/${Number(row.id) + 1}`)}
+                    className="cursor-pointer"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="w-full">
