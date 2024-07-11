@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
-
+import { format, parseISO } from 'date-fns';
 
 export type Payment = {
     id: number
@@ -22,12 +22,12 @@ export const columns: ColumnDef<Payment>[] = [
             return (
                 <div className="text-center">
                     <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    N*Contrato
-                    <CaretSortIcon className="ml-2 h-4 w-4 "/>
-                </Button>
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        N*Contrato
+                        <CaretSortIcon className="ml-2 h-4 w-4 " />
+                    </Button>
                 </div>
             )
         },
@@ -43,11 +43,14 @@ export const columns: ColumnDef<Payment>[] = [
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Data
-                    <CaretSortIcon className="ml-2 h-4 w-4" />
+                    <CaretSortIcon className="ml-2 h-4 w-4 text-center" />
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("data_inicio")}</div>,
+        cell: ({ row }) => {
+            const dataFormatada = format(parseISO(row.getValue("data_inicio")), 'dd-MM-yyyy');
+            return <div className="lowercase">{dataFormatada}</div>;
+          },
     },
 
     {

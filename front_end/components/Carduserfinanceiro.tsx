@@ -9,7 +9,7 @@ export default function Cardfinanceiro({dados}: { dados: dadosUsuario }) {
     return (
         <div onClick={() => router.push(`/routes/financeiro/${dados.id}`)} >
             <Link href="">
-                <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full py-3 px-5" >
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full py-3 px-5 " >
                     <div className="flex gap-6 items-center">
                         <img src="/icons/icon-perfil-preto.png" alt="Perfil" className="w-12 h-12 rounded-2xl" />
                         <div className="">

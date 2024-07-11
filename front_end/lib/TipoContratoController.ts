@@ -31,10 +31,31 @@ export async function createNewTipoContrato(
     }
 }
 
+export async function updateContratoById(
+    newNome: string,
+    paramsId: number
+) {
+    const request = await fetch(`${backendURL()}/TipoContratoService.php?acao=updateContratoById&id=${paramsId}`, {
+        method: "POST",
+        body: JSON.stringify({
+                nome: newNome
+            }
+        )
+    });
+    const response = await request.json();
+    return response.message;
+}
+
+export async function getContratoById(contratoID: number) {
+    const response = await fetch(`${backendURL()}/TipoContratoService.php?acao=getContratoById&id=${contratoID}`);
+    const dados = await response.json();
+    return dados;
+}
+
 export async function getAllTipoContrato() {
     try {
         const response = await fetch(
-            `${backendURL()}/TipoContratoController.php?acao=getAllTipoContratoController`
+            `${backendURL()}/TipoContratoService.php?acao=getAllTipoContratoController`
         );
 
         if (!response.ok) {

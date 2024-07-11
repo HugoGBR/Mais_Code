@@ -19,13 +19,13 @@ const LoginPage = () => {
 
     const handleFormSubmit = async (data: LoginFormSchema) => {
         const autenticado = await validacaoLogin(data.user,data.password)
-        if (autenticado == 1){
+        if (autenticado !=0){
             router.push('routes/home');
         }else{
             alert("Usuario não encontrado")
         }
     };
-
+    
     const memoizedErrors = useMemo(() => ({
         user: errors.user && (<div className="text-red-500 text-sm">{errors.user.message}</div>),
         password: errors.password && (<div className="text-red-500 text-sm">{errors.password.message}</div>)

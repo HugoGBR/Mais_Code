@@ -26,6 +26,7 @@ import { useState } from "react"
 import { RiCloseCircleLine } from "react-icons/ri";
 import { PiPlusCircleBold } from "react-icons/pi";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 
 
@@ -44,7 +45,7 @@ export function TabelaContrato<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
-
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -80,7 +81,7 @@ export function TabelaContrato<TData, TValue>({
           </div>
         </div>
 
-        <div className="rounded-lg border">
+        <div className="rounded-lg border h-96">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -100,16 +101,17 @@ export function TabelaContrato<TData, TValue>({
                 </TableRow>
               ))}
             </TableHeader>
-
-            <TableBody>
+            <TableBody className="w-full">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    onClick={() => router.push(`/routes/ajustes/ModeloContrato/${Number(row.id) + 1}`)}
+                    className="cursor-pointer"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="bg-gray-50">
+                      <TableCell key={cell.id} className="w-full">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -118,13 +120,11 @@ export function TabelaContrato<TData, TValue>({
                     ))}
                   </TableRow>
                 ))
-
               ) : (
-
                 <TableRow>
                   <TableCell
                     colSpan={columns.length}
-                    className="text-center"
+                    className="h-24 text-center"
                   >
                     Nenhum Resultado
                   </TableCell>
@@ -132,26 +132,6 @@ export function TabelaContrato<TData, TValue>({
               )}
             </TableBody>
           </Table>
-
-        </div>
-
-        <div className="space-x-3 mt-4 flex justify-center items-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Próximo
-          </Button>
         </div>
       </div>
     </div>

@@ -18,6 +18,11 @@ switch ($acao) {
         echo json_encode($relatorio);
         break;
 
+    case "remuneracaoComissao":
+        $relatorio = $relatorioController->remuneracaoComissao($id);
+        echo json_encode($relatorio);
+        break;
+
     default:
         echo json_encode(["error" => "Ação não suportada."]);
         break;

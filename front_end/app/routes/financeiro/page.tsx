@@ -51,10 +51,10 @@ export default function Financeiro() {
 
     return (
         <div>
-            <div className="md:grid md:grid-cols-2 space-x-3">
+            <div className="md:grid md:grid-cols-2 gap-3">
                 {listaUsuarios.slice(inicioIndex, finalIndex).map(item => (
                     <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
-                        <div className='bg-gray-300 mb-4 rounded-lg' style={{width: '100%'}}>
+                        <div className='bg-gray-300 rounded-lg w-full'>
                             <a className="block">
                                 <Cardfinanceiro dados={item}/>
                             </a>
