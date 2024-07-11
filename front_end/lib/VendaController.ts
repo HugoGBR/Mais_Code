@@ -29,6 +29,7 @@ export async function createNewSell(
     new_produto_id: number,
     new_usuario_id: number,
     newstatus_cliente: number,
+    newhoras_trabalhadas: number,
     final_contrato: Date,
     valor_entrada: number,
     valor_total: number,
@@ -52,6 +53,7 @@ export async function createNewSell(
                 produto_id: new_produto_id,
                 usuario_id: new_usuario_id,
                 status_cliente: newstatus_cliente,
+                horas_trabalhadas: newhoras_trabalhadas,
                 final_contrato: final_contrato,
                 valor_entrada: valor_entrada,
                 valor_total: valor_total,
@@ -72,5 +74,63 @@ export async function createNewSell(
         return data;
     } catch (error) {
         console.error('Fetch error:', error);
+    }
+}
+
+export async function getVendaById(vendaId: Number) {
+    try {
+        const response = await fetch(`${backendURL()}/VendaService.php?acao=GetVendaById&id=${vendaId}`);
+        const dados = await response.json();
+        return dados;
+    } catch (error) {
+        console.error('Erro ao buscar venda por ID:', error);
+        return null;
+    }
+}
+
+export async function updateVenda(
+    clienteId: number,
+    tipoContratoId: number,
+    produtoId: number,
+    usuarioId: number,
+    statusCliente: string,
+    inicioContrato: string,
+    finalContrato: string,
+    valorEntrada: number,
+    valorTotal: number,
+    nomeContato: string,
+    email: string,
+    telefone: string,
+    metodoPagamento: string,
+    numeroParcela: string,
+    status: string,
+    vendaId: number
+) {
+    try {
+        const request = await fetch(`${backendURL()}/VendaService.php?acao=UpdateVendaById&id=${vendaId}`, {
+            method: "POST",
+            body: JSON.stringify({
+                cliente_id: clienteId,
+                tipo_contrato_id: tipoContratoId,
+                produto_id: produtoId,
+                usuario_id: usuarioId,
+                status_cliente: statusCliente,
+                inicio_contrato: inicioContrato,
+                final_contrato: finalContrato,
+                valor_entrada: valorEntrada,
+                valor_total: valorTotal,
+                nome_contato: nomeContato,
+                email: email,
+                telefone: telefone,
+                metodo_pagamento: metodoPagamento,
+                numero_parcela: numeroParcela,
+                status: status
+            })
+        });
+        const response = await request.json();
+        return response.message;
+    } catch (error) {
+        console.error('Erro ao atualizar venda:', error);
+        return 'Erro ao atualizar venda.';
     }
 }

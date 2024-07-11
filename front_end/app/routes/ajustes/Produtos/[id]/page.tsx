@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getProdutoById, updateProdutoById } from '@/lib/ProdutoController';
-import { Card } from '@/components/ui/card';
 
 export default function CadastroProduto({ params }: { params: { id: number } }) {
     const [produto, setProduto] = useState({
@@ -67,7 +66,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                 <div className="flex flex-col h-screen">
                     <div className="flex justify-center items-center flex-grow">
                         <div className="max-w-lg w-full bg-white shadow-xl rounded-md p-8">
-                            <h2 className="text-2xl font-semibold mb-4 text-center">Cadastro Produto</h2>
+                            <h2 className="text-2xl font-semibold mb-4 text-center">Editar Produto</h2>
                             <div className="mb-4">
                                 <input
                                     type="text"
@@ -129,7 +128,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                             </div>
                             <div className="text-center">
                                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    CADASTRAR
+                                    EDITAR
                                 </button>
                             </div>
                         </div>

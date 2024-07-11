@@ -68,6 +68,7 @@ CREATE TABLE `vendas` (
   `produto_id` BIGINT(20) UNSIGNED NOT NULL,
   `usuario_id` BIGINT(20) UNSIGNED NOT NULL,
   `status_cliente` INT NOT NULL,
+  `horas_trabalhadas` INT NOT null,
   `inicio_contrato` DATE NOT NULL,
   `final_contrato` DATE NOT NULL,
   `valor_entrada` DECIMAL(8,2),
@@ -88,3 +89,36 @@ CREATE TABLE `vendas` (
   CONSTRAINT `vendas_tipo_contrato_id_foreign` FOREIGN KEY (`tipo_contrato_id`) REFERENCES `tipo_contrato` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE `bancocomissao`(
+ `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+ `id_venda` BIGINT(20) UNSIGNED NOT NULL,
+ `user_id` BIGINT(20) UNSIGNED NOT NULL,
+ `comissao_total`DECIMAL(8,2) NOT NULL,
+ `status` ENUM('pago','a pagar','cancelado') NOT NULL,
+ PRIMARY KEY (`id`),
+  KEY `bancocomissao_venda_id_foreign` (`id_venda`),
+  KEY `bancocomissao_user_id_foreign` (`user_id`),
+  CONSTRAINT `bancocomissao_venda_id_foreign` FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `bancocomissao_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+DELIMITER //
+
+CREATE TRIGGER after_vendas_insert
+AFTER INSERT ON vendas
+FOR EACH ROW
+BEGIN
+  DECLARE comissao_total DECIMAL(8,2);
+  
+  -- Calcular a comissão total
+  SET comissao_total = NEW.valor_total * (NEW.status_cliente / 100);
+  
+  -- Inserir na tabela bancocomissao
+  INSERT INTO bancocomissao (id_venda, user_id, comissao_total, status)
+  VALUES (NEW.id, NEW.usuario_id, comissao_total, 2);
+END;
+
+//
+
+DELIMITER ;

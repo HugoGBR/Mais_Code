@@ -11,7 +11,7 @@ class RelatorioComissaoController
         $this->conn = $objDb->connect();
     }
 
-    public function gerarRelatorioComissao()
+    public function gerarRelatorioComissao($usuario_id)
     {
         $sql = "SELECT 
             vendas.id AS numero_contrato,
@@ -31,17 +31,29 @@ class RelatorioComissaoController
         JOIN
             tipo_contrato ON vendas.tipo_contrato_id = tipo_contrato.id
         WHERE
-            vendas.status = 'em andamento'"; 
+            vendas.status = 'em andamento'
+            AND vendas.usuario_id = :usuario_id"; 
     
         $db = $this->conn->prepare($sql);
+        $db->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
         $db->execute();
     
         $relatorioComissao = $db->fetchAll(PDO::FETCH_ASSOC);
         return $relatorioComissao;
     }
+
+    public function remuneracaoComissao($usuario_id)
+    {
+        $sql = "SELECT
+        SUM(comissao_total)
+        FROM bancocomissao
+        WHERE user_id = :usuario_id AND (status = 2)
+        ";
+        $db = $this->conn->prepare($sql);
+        $db->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
+        $db->execute();
+
+        $remuneracaoComissao = $db->fetchAll(PDO::FETCH_ASSOC);
+        return $remuneracaoComissao;
+    }
 }
-
-
-            
-
-   

@@ -25,7 +25,20 @@ import { GoGear } from "react-icons/go";
 
 
 
-export default function ConfiguracoesParcela() {
+
+interface PopUpConfigProps {
+    valorTotal: any;
+    parcelas: any;
+}
+ 
+ 
+export default function ConfiguracoesParcela({ valorTotal,parcelas }: PopUpConfigProps): React.JSX.Element {
+    const valorParcela = valorTotal / parcelas;  
+
+
+    console.log(valorTotal)
+    console.log(parcelas)
+
     return (
         <CardFooter className="flex justify-center items-center ">
             <Dialog>
@@ -40,23 +53,25 @@ export default function ConfiguracoesParcela() {
                             Configuração de Parcelas
                         </h1>
                     </div>
-                        <Table>
-                            <TableHeader>
-                                <TableRow className="grid-cols-2 grid">
-                                    <TableHead className="text-lg text-center text-black ">Parcelas</TableHead>
-                                    <TableHead className="text-lg text-center text-black">Valor</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <ScrollArea className="h-[500px] rounded-md border p-4">
-                                <TableBody>
-                                    <TableRow className="grid-cols-2 grid">
-                                        <TableCell className="text-center col-span-1">1x</TableCell>
-                                        <TableCell className="text-center col-span-1">$250.00</TableCell>
+                    <Table>
+                        <TableHeader>
+                            <TableRow className="grid-cols-2 grid">
+                                <TableHead className="text-lg text-center text-black ">Parcelas</TableHead>
+                                <TableHead className="text-lg text-center text-black">Valor</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <ScrollArea className="h-[500px] rounded-md border p-4">
+                        <TableBody>
+                                {Array.from({ length: parcelas }, (_, i) => (
+                                    <TableRow key={i} className="grid-cols-2 grid">
+                                        <TableCell className="text-center col-span-1">{`${i + 1}x`}</TableCell>
+                                        <TableCell className="text-center col-span-1">{`R$ ${valorParcela.toFixed(2)}`}</TableCell>
                                     </TableRow>
-                                </TableBody>
-                            </ScrollArea>
+                                ))}
+                            </TableBody>
+                        </ScrollArea>
 
-                        </Table>
+                    </Table>
                     <DialogFooter>
                         <button className="hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500">
                             Confirmar

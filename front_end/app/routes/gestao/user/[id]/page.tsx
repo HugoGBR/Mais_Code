@@ -7,14 +7,7 @@ import { getAllCargo, getUserById, updateUser } from "@/lib/UsuarioController";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { userSchema } from "@/app/schemas/userSchema";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import { DadosCargos } from "@/lib/interfaces/dadosUsuarios";
 import { z } from "zod";
 

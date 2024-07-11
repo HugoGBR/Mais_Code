@@ -8,7 +8,7 @@ export default function AuthGuard ({ children }: {children: ReactNode}){
 
     useEffect(() => {
         const checkAuth = async () => {
-            const cookie = await getCookie('CookieCriado');
+            const cookie = await getCookie("CookiCriado"); 
             if (!cookie) {
                 router.push('/');
             } else {

@@ -72,3 +72,7 @@ export interface Payment {
     numero_parcela: string,
     status: number     
   }
+
+export interface dadosRemuneracao{
+  valortotal:Number
+}
