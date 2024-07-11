@@ -62,7 +62,7 @@ export function TableProduto<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
-    },  
+    },
   })
 
   return (
@@ -73,9 +73,6 @@ export function TableProduto<TData, TValue>({
             <b>Produtos</b>
           </h1>
           <div className="flex gap-2">
-            <Link href="">
-              <RiCloseCircleLine size={25} color="red" />
-            </Link>
             <Link href={'/routes/ajustes/Produtos'}>
               <PiPlusCircleBold size={25} color="#0762C8" />
             </Link>
