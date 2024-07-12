@@ -51,10 +51,10 @@ export default function Financeiro() {
 
     return (
         <div>
-            <div className="md:grid md:grid-cols-2 gap-3">
+            <div className="md:grid md:grid-cols-2 flex flex-col gap-3">
                 {listaUsuarios.slice(inicioIndex, finalIndex).map(item => (
                     <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
-                        <div className='bg-gray-300 rounded-lg w-full'>
+                        <div>
                             <a className="block">
                                 <Cardfinanceiro dados={item}/>
                             </a>
@@ -69,7 +69,7 @@ export default function Financeiro() {
                         <PaginationPrevious onClick={PaginaAnterior}/>
                     </PaginationItem>
                     <PaginationItem>
-                        <PaginationLink href="#">{paginaAtual}</PaginationLink>
+                        <h2>{paginaAtual}</h2>
                     </PaginationItem>
                     <PaginationItem>
                         <PaginationNext onClick={ProximaPagina}/>

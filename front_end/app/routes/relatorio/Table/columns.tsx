@@ -1,5 +1,4 @@
 "use client"
-
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
@@ -20,7 +19,7 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey: "numero_contrato",
         header: ({ column }) => {
             return (
-                <div className="text-center">
+                <div className="text-center hidden md:block">
                     <Button
                         variant="ghost"
                         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}

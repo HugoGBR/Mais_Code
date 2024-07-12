@@ -62,8 +62,8 @@ class ProdutoController
             $db->bindParam(":nome", $produto->nome);
             $db->bindParam(":horas_trabalhadas", $produto->horas_trabalhadas);
             $db->bindParam(":descricao_produto", $produto->descricao_produto);
-            $db->bindParam(":comissao_antiga", $produto->comissaoAntiga);
-            $db->bindParam(":comissao_nova", $produto->comissaoNova);
+            $db->bindParam(":comissao_nova", $produto->comissao_nova);
+            $db->bindParam(":comissao_antiga", $produto->comissao_antiga);
     
             if ($db->execute()) {
                 return json_encode(['status' => 1, 'message' => 'Registro atualizado com sucesso.']);

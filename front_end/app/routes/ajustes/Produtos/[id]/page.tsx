@@ -9,8 +9,8 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
         nome: '',
         horas_trabalhadas: 0,
         descricao_produto: '',
-        comissaoAntigo: '',
-        comissaoNovo: ''
+        comissaoNovo: '',
+        comissaoAntigo: ''
     });
     const [descricaoLimiteCaracteres] = useState(255);
     const router = useRouter();
@@ -23,8 +23,8 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                     nome: produtoData.nome,
                     horas_trabalhadas: produtoData.horas_trabalhadas,
                     descricao_produto: produtoData.descricao_produto,
-                    comissaoAntigo: produtoData.comissao_antiga,
-                    comissaoNovo: produtoData.comissao_nova
+                    comissaoNovo: produtoData.comissao_nova,
+                    comissaoAntigo: produtoData.comissao_antiga
                 });
             } catch (error) {
                 console.error('Erro ao carregar produto:', error);
