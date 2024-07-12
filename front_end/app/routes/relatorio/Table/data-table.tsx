@@ -1,6 +1,6 @@
 
-"use client"
-import router, { useRouter } from "next/navigation"
+'use client'
+import { useRouter } from "next/navigation"
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -12,8 +12,7 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
-} from "@tanstack/react-table"
-
+} from "@tanstack/react-table";
 import {
     Table,
     TableBody,
@@ -21,15 +20,8 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/table";
 import { Button } from "@/components/ui/button"
-import { ChevronDownIcon } from "lucide-react"
 import { useState } from "react"
 
 interface DataTableProps<TData, TValue> {

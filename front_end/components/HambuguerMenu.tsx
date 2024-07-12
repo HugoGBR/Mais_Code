@@ -3,50 +3,21 @@ import {
     SheetContent,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import {IoMenuSharp} from "react-icons/io5";
+import { IoMenuSharp } from "react-icons/io5";
 import Link from "next/link";
-import Image from "next/image";
-import {RxExit} from "react-icons/rx";
 import React from "react";
-import home from "@/public/icons/icon-home.png";
-import cadastro from "@/public/icons/icon-cadastro.png";
-import relatorio from "@/public/icons/icon-relatorio.png";
-import financeiro from "@/public/icons/icon-financeiro.png";
-import gestao from "@/public/icons/icon-gestao.png";
-import ajustes from "@/public/icons/icon-ajuste.png";
+
 
 const menuSuperior = [
-    {
-        nome: "Home",
-        href: "/routes/home",
-        icon: home
-    },
-    {
-        nome: "Cadastro",
-        href: "/routes/cadastros",
-        icon: cadastro
-    },
-    {
-        nome: "Relatorio",
-        href: "/routes/relatorio",
-        icon: relatorio
-    },
-    {
-        nome: "Financeiro",
-        href: "/routes/financeiro",
-        icon: financeiro
-    },
-    {
-        nome: "Gestão",
-        href: "/routes/gestao",
-        icon: gestao
-    },
-    {
-        nome: "Ajuste",
-        href: "/routes/ajustes",
-        icon: ajustes
-    },
-]
+    { nome: "Home", href: "/routes/home" },
+    { nome: "Cadastro", href: "/routes/cadastros" },
+    { nome: "Relatório", href: "/routes/relatorio" },
+    { nome: "Financeiro", href: "/routes/financeiro" },
+    { nome: "Gestão", href: "/routes/gestao" },
+    { nome: "Ajuste", href: "/routes/ajustes" },
+    { nome: "Perfil", href: "/routes/perfil" },
+    { nome: "Sair", href: "/" },
+];
 
 export function HambuguerMenu() {
     const side = "left";
@@ -58,50 +29,15 @@ export function HambuguerMenu() {
                     <IoMenuSharp className="w-10 h-auto">{side}</IoMenuSharp>
                 </SheetTrigger>
                 <SheetContent side={side}>
-                    <div className="flex flex-col justify-between w-full h-screen">
+                    <div className="flex flex-col justify-between w-full h-screen py-10">
                         <div>
-                            <Link href="/Rotas/Home" className="flex mb-14">
-                                <div className="flex p-4">
-                                    <img src="/icon-logo.png" alt="Logo da Empresa" className=""/>
-                                </div>
-                            </Link>
                             {menuSuperior.map((item) => (
-                                // eslint-disable-next-line react/jsx-key
-                                <Link href={item.href}
-                                      className="flex text-lg p-2 font-medium">
-                                    <div className="flex gap-3 justify-center items-center">
-                                        <Image src={item.icon} alt="icones menu" className="w-10 h-auto"/>
-                                        <p>
-                                            {item.nome}
-                                        </p>
+                                <Link key={item.nome} href={item.href}>
+                                    <div className="font-medium p-5">
+                                        <h1>{item.nome}</h1>
                                     </div>
                                 </Link>
                             ))}
-                        </div>
-
-                        <div className="mb-10">
-                            <Link href={'/routes/perfil'}
-                                  className="flex text-lg p-2 font-medium">
-                                <div className="flex items-center">
-                                    <ul>
-                                        <li className="flex items-center gap-3">
-                                            <RxExit className="w-10 h-auto"/>
-                                            <span className="md:hidden lg:inline-block">Perfil</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </Link>
-                            <Link href={'../'}
-                                  className="flex text-lg p-2 font-medium">
-                                <div className="flex items-center">
-                                    <ul>
-                                        <li className="flex items-center gap-3">
-                                            <RxExit className="w-10 h-auto"/>
-                                            <span className="md:hidden lg:inline-block">Sair</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </Link>
                         </div>
                     </div>
                 </SheetContent>

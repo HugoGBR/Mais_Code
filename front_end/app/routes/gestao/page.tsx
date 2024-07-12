@@ -168,13 +168,13 @@ export default function Gestao() {
     return (
 
         <div className="items-center py-10">
-            <Tabs defaultValue='Cliente'>
+            <Tabs defaultValue='Administrador'>
                 <TabsList className='will-change-contents flex justify-between gap-6'>
                     <div className='space-x-5'>
-                        <TabsTrigger value="Cliente">Cliente</TabsTrigger>
                         <TabsTrigger value="Administrador">Administrador</TabsTrigger>
                         <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
                         <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
+                        <TabsTrigger value="Cliente">Cliente</TabsTrigger>
                     </div>
                     <div>
                         <button

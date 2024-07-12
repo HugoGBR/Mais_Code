@@ -73,8 +73,7 @@ export default function CardCadastro() {
         if (new_produto_id && horas_trabalhadas) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
-                const valorEntradaNumerico = parseFloat(valor_entrada) || 0;
-                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valorEntradaNumerico);
+                setvalortotal(selectedProduct.horas_trabalhadas * horas_trabalhadas);
             }
         }
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
@@ -168,7 +167,7 @@ export default function CardCadastro() {
         });
 
         resetForm();
-        route.push("/routes/home");
+        route.push("/routes/cadastros");
     }
 
     async function handleSearchCPF(event: FormEvent) {
@@ -229,12 +228,14 @@ export default function CardCadastro() {
                                     <input
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="Data de inicio" type="date"
+                                        value={DataInicio}
                                         onChange={(event) => setDataInicio(event.target.value)} />
                                 </div>
                                 <div className="flex flex-col mb-5">
                                     <label className="text-sm" htmlFor="teste">Data Termino</label>
                                     <input
                                         className="border-b-2 focus:outline-none focus:border-blue-500" type="date"
+                                        value={DataFim}
                                         onChange={(event) => setDataFim(event.target.value)} />
                                 </div>
                             </div>
@@ -269,6 +270,7 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="Horas"
                                         type="number"
+                                        value={horas_trabalhadas}
                                         onChange={(event) => setHorasTrabalhadas(Number(event.target.value))}
                                     />
                                 </div>
@@ -278,16 +280,20 @@ export default function CardCadastro() {
                                 <input
                                     className="border-b-2 focus:outline-none focus:border-blue-500"
                                     placeholder="Nome"
+                                    value={nome_contato}
                                     onChange={(event) => setNomeContato(event.target.value)}
                                     type="text" />
                                 <input
                                     className="border-b-2 focus:outline-none focus:border-blue-500"
                                     placeholder="(99) 99999-9999"
+                                    value={telefone}
                                     onChange={(event) => setTelefoneContato(event.target.value)}
                                     type="tel" />
                                 <input
                                     className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="Email" onChange={(event) => setEmailContato(event.target.value)}
+                                    placeholder="Email" 
+                                    value={email}
+                                    onChange={(event) => setEmailContato(event.target.value)}
                                     type="email" />
                             </div>
                         </form>
@@ -304,6 +310,7 @@ export default function CardCadastro() {
                                 <input
                                     className="border-b-2 w-28 focus:outline-none focus:border-blue-500"
                                     placeholder="R$ 0000,00" type="text"
+                                    value={valor_entrada}
                                     onChange={(event) => setValorEntrada(event.target.value)} />
                             </div>
                             <div className="mb-5">
@@ -361,6 +368,7 @@ export default function CardCadastro() {
                                             className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
                                             placeholder="36x"
                                             type="number"
+                                            value={numero_parcelo}
                                             onChange={(event) => setnumero_parcelo(event.target.value)}
                                         />
                                         <Link href="">
