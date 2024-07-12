@@ -65,7 +65,7 @@ export default function CadastrarCliente() {
                             {errors.cpf_cnpj && <div className="text-red-500">{errors.cpf_cnpj.message}</div>}
                         </div>
                         <div className="flex flex-col space-y-1.5">
-                            <input type="text"
+                            <input type="email"
                                    className={`border-b-2 focus:border-b-2 ${errors.email ? 'border-red-500' : ''}`}
                                    placeholder="Email"  {...register('email')} />
                             {errors.email && <div className="text-red-500">{errors.email.message}</div>}
