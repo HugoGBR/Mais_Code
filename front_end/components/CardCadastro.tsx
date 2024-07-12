@@ -73,8 +73,7 @@ export default function CardCadastro() {
         if (new_produto_id && horas_trabalhadas) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
-                const valorEntradaNumerico = parseFloat(valor_entrada) || 0;
-                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valorEntradaNumerico);
+                setvalortotal(selectedProduct.horas_trabalhadas * horas_trabalhadas);
             }
         }
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
