@@ -108,8 +108,9 @@ export async function updateProdutoById(
       nome: newNome,
       horas_trabalhadas: newHorasTrabalhadas,
       descricao_produto: newDescricaoProduto,
+      comissao_nova: newComissaoNova,
       comissao_antiga: newComissaoAntiga,
-      comissao_nova: newComissaoNova
+
     })
   });
 
