@@ -50,8 +50,8 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                 produto.nome,
                 produto.horas_trabalhadas,
                 produto.descricao_produto,
-                produto.comissaoNovo,
                 produto.comissaoAntigo,
+                produto.comissaoNovo,
                 params.id
             );
             router.push('/routes/ajustes');
