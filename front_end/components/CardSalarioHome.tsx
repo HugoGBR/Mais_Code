@@ -23,7 +23,7 @@ export default function CardSalarioHome() {
 
     async function carregarRemuneracao() {
         try {
-            const remuneracao = await remuneracaoComissao(usuario_id.toString());
+            const remuneracao = await remuneracaoComissao(Number(usuario_id));
             console.log(remuneracao);
             if (Array.isArray(remuneracao) && remuneracao.length > 0) {
                 setComissaoTotal(parseFloat(remuneracao[0]["SUM(comissao_total)"]));
