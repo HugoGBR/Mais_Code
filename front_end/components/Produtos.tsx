@@ -84,6 +84,7 @@ export default function CadastroProduto() {
                                 required
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
+                            
                         </div>
 
                         <div className="mb-4 flex flex-col">

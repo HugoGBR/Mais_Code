@@ -90,15 +90,15 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey: "valor_total",
         header: () => <div className="text-center">Valor</div>,
         cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("valor_total")}</div>
+            <div className="capitalize text-center">R$ {row.getValue("valor_total")}</div>
         ),
     },
 
     {
-        accessorKey: "comissao_produtoA",
-        header: () => <div className="text-center">Comissão %</div>,
+        accessorKey: "comissao_produto",
+        header: () => <div className="text-center">Comissão</div>,
         cell: ({row}) => (
-            <div className="capitalize text-center">{row.getValue("comissao_produtoA")}</div>
+            <div className="capitalize text-center">R$ {row.getValue("comissao_produto")}</div>
         ),
     },
    

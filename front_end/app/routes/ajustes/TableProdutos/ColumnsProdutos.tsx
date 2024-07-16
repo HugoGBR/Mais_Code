@@ -38,7 +38,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("comissao_nova")}</div>,
+    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("comissao_nova")}%</div>,
   },
   {
     accessorKey: "comissao_antiga",
@@ -53,7 +53,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("comissao_antiga")}</div>,
+    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("comissao_antiga")}%</div>,
   },
   {
     accessorKey: "horas_trabalhadas",
@@ -68,7 +68,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("horas_trabalhadas")}</div>,
+    cell: ({ row }) => <div>R${row.getValue("horas_trabalhadas")}</div>,
   },
 
   {

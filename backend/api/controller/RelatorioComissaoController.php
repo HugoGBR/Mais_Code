@@ -20,8 +20,7 @@ class RelatorioComissaoController
             tipo_contrato.nome AS tipo_contrato,
             vendas.numero_parcela,
             vendas.valor_total,
-            produtos.comissao_antiga AS comissao_produtoA,
-            produtos.comissao_nova AS comissao_produtoB
+            ROUND (vendas.status_cliente / 100 * vendas.valor_total, 2) AS comissao_produto
         FROM
             vendas
         JOIN
