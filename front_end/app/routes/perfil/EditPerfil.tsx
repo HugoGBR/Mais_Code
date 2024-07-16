@@ -3,23 +3,23 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Card } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
-import { UptadeDadosUsuario, getAllCargo } from '@/lib/UsuarioController';
-import { criarCookie, getCookie } from '@/lib/coockie';
+import { editarUsuarioLogado, getAllCargo } from '@/lib/UsuarioController';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DadosCargos } from '@/lib/interfaces/dadosUsuarios';
+import { criarCookie, getCookie } from '@/lib/coockie';
 
-const formulario = z.object({
-    nome: z.string().min(10, 'Digite no mínimo 10 caracteres.').max(60, 'Digite o nome completo, máximo de 60 caracteres.'),
-    cargo: z.string().min(1, 'O cargo deve conter 1 caracteres.').max(11, 'O cargo deve conter 11 caracteres.'),
+const schema = z.object({
+    nome: z.string().min(1, 'Digite no mínimo 10 caracteres.').max(60, 'Digite o nome completo, máximo de 60 caracteres.'),
+    cargo: z.string().min(1, 'O cargo deve conter no mínimo 1 caractere.').max(11, 'O cargo deve conter no máximo 11 caracteres.'),
     email: z.string().email("Email inválido."),
-    senha: z.string().min(5, 'Número mínimo de caracteres é 5.').max(15, "Atingiu o limite de caracteres.")
+    senha: z.string().min(1, 'Número mínimo de caracteres é 5.').max(15, "Atingiu o limite de caracteres.")
 });
 
-export type formulario = z.infer<typeof formulario>;
+export type Formulario = z.infer<typeof schema>;
 
 export default function Perfil() {
-    const { register, handleSubmit, formState: { errors } } = useForm<formulario>({
-        resolver: zodResolver(formulario)
+    const { register, handleSubmit, formState: { errors } } = useForm<Formulario>({
+        resolver: zodResolver(schema)
     });
 
     const [listaCargo, setListaCargo] = useState<DadosCargos[]>([]);
@@ -32,8 +32,8 @@ export default function Perfil() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const Lcargo = await getAllCargo();
-            setListaCargo(Lcargo);
+            const cargos = await getAllCargo();
+            setListaCargo(cargos);
 
             const userIdFromCookie = await getCookie('CookiCriado');
             const userName = await getCookie('UserName');
@@ -59,16 +59,13 @@ export default function Perfil() {
         }
     };
 
-    async function handleForm(dados: formulario) {
-        const updatedUser = {
-            nome: dados.nome,
-            cargo: dados.cargo,
-            email: dados.email,
-            senha: dados.senha
-        };
-        console.log(updatedUser)
-
-        const response = await UptadeDadosUsuario(userId, updatedUser);
+    async function handleForm(dados: Formulario) {
+        const response = await editarUsuarioLogado(
+            dados.nome,
+            dados.email,
+            dados.senha,
+            dados.cargo
+        );
         if (response.success) {
             await criarCookie('UserName', dados.nome);
             await criarCookie('UserCargo', dados.cargo);
@@ -98,7 +95,7 @@ export default function Perfil() {
                                 type="text"
                                 placeholder='João da Silva'
                                 {...register('nome')}
-                                className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
+                                className={`border-b-2 focus:border-b-2 focus:outline-none ${errors.nome ? 'border-red-500' : 'focus:border-blue-500'}`}
                                 onChange={(e) => setValorInputNome(e.target.value)}
                                 value={valorInputNome}
                                 disabled={!inputsHabilitados}
@@ -113,10 +110,9 @@ export default function Perfil() {
                                 onChange={(e) => setValorInputSenha(e.target.value)}
                                 value={valorInputSenha}
                                 disabled={!inputsHabilitados}
-                                className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
+                                className={`border-b-2 focus:border-b-2 focus:outline-none ${errors.senha ? 'border-red-500' : 'focus:border-blue-500'}`}
                             />
                         </div>
-
 
                         <div>
                             <input
@@ -126,22 +122,22 @@ export default function Perfil() {
                                 onChange={(e) => setValorInputEmail(e.target.value)}
                                 value={valorInputEmail}
                                 disabled={!inputsHabilitados}
-                                className='border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500'
+                                className={`border-b-2 focus:border-b-2 focus:outline-none ${errors.email ? 'border-red-500' : 'focus:border-blue-500'}`}
                             />
                         </div>
 
                         <div className="flex flex-col space-y-1.5">
                             <Select
                                 value={valorInputCargo.toString()}
-                                disabled={!inputsHabilitados}
+                                disabled={!inputsHabilitados || true}
                                 onValueChange={(value) => setValorInputCargo(value)}>
                                 <SelectTrigger className="w-[220px]">
                                     <SelectValue placeholder="Cargos..." />
                                 </SelectTrigger>
                                 <SelectContent id="cargo">
                                     <SelectGroup>
-                                        {listaCargo.map((Lcargo) => (
-                                            <SelectItem key={Lcargo.id} value={Lcargo.id.toString()}>{Lcargo.nome}</SelectItem>
+                                        {listaCargo.map((cargo) => (
+                                            <SelectItem key={cargo.id} value={cargo.id.toString()}>{cargo.nome}</SelectItem>
                                         ))}
                                     </SelectGroup>
                                 </SelectContent>
@@ -151,7 +147,7 @@ export default function Perfil() {
                     <div className='flex justify-center'>
                         <button type='submit' onClick={handleButtonClick}
                             className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            {inputsHabilitados ? "Alterar" : "Editar"}
+                            {inputsHabilitados ? "Salvar" : "Editar"}
                         </button>
                     </div>
                 </form>
