@@ -109,27 +109,16 @@ CREATE TRIGGER after_vendas_insert
 AFTER INSERT ON vendas
 FOR EACH ROW
 BEGIN
-  DECLARE comissao_total_valor_total DECIMAL(8,2);
-  DECLARE comissao_total_valor_entrada DECIMAL(8,2);
-  DECLARE comissao_total_discounted DECIMAL(8,2);
-
-  -- Calcular a comissão total baseada no valor total
-  SET comissao_total_valor_total = NEW.valor_total * (NEW.status_cliente / 100);
+  DECLARE comissao_total DECIMAL(8,2);
   
-  -- Calcular a comissão total baseada no valor de entrada
-  SET comissao_total_valor_entrada = NEW.valor_entrada * (NEW.status_cliente / 100);
+  -- Calcular a comissão total
+  SET comissao_total = NEW.valor_total * (NEW.status_cliente / 100);
   
-  -- Calcular a comissão descontada
-  SET comissao_total_discounted = comissao_total_valor_total - comissao_total_valor_entrada;
-
-  -- Inserir na tabela bancocomissao com comissão baseada no valor de entrada
+  -- Inserir na tabela bancocomissao
   INSERT INTO bancocomissao (id_venda, user_id, comissao_total, status)
-  VALUES (NEW.id, NEW.usuario_id, comissao_total_valor_entrada, 'pago');
-
-  -- Inserir na tabela bancocomissao com comissão descontada
-  INSERT INTO bancocomissao (id_venda, user_id, comissao_total, status)
-  VALUES (NEW.id, NEW.usuario_id, comissao_total_discounted, 'a pagar');
+  VALUES (NEW.id, NEW.usuario_id, comissao_total, 2);
 END;
+
 //
 
 DELIMITER ;
