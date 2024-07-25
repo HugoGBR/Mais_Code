@@ -38,7 +38,7 @@ export async function createNewSell(
     email: string,
     telefone: string,
     nome_contato: string,
-    newnumero_parcela: string,
+    newnumero_parcela: Number,
     new_status: number
 ) {
     try {
@@ -106,7 +106,7 @@ export async function updateVenda(
     email: string,
     telefone: string,
     metodoPagamento: string,
-    numeroParcela: string,
+    numeroParcela: Number,
     status: string,
     vendaId: number
 ) {

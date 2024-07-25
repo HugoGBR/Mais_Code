@@ -33,7 +33,7 @@ export default function CardCadastro() {
     const [new_usuario_id, setnew_usuario_id] = useState("");
     const [valor_total, setvalortotal] = useState(0);
     const [metodo_pagamento, setmetodo_pagamento] = useState("");
-    const [numero_parcelo, setnumero_parcelo] = useState("1");
+    const [numero_parcelo, setnumero_parcelo] = useState(1);
     const [cpf_cnpj_input, setCpfCnpjInput] = useState("");
     const [statusCliente, setstatusCliente] = useState("");
     const [statusClienteValor, setstatusClienteValor] = useState(0);
@@ -126,7 +126,7 @@ export default function CardCadastro() {
         setnew_usuario_id("");
         setvalortotal(0);
         setmetodo_pagamento("");
-        setnumero_parcelo("1");
+        setnumero_parcelo(1);
         setCpfCnpjInput("");
         setstatusCliente("");
         setstatusClienteValor(0);
@@ -156,7 +156,7 @@ export default function CardCadastro() {
             email,
             telefone,
             nome_contato,
-            numero_parcelo,
+            Number(numero_parcelo),
             2
         );
 
@@ -337,7 +337,7 @@ export default function CardCadastro() {
                                             aria-describedby="pagamento-opcao-1"
                                             onClick={() => {
                                                 setmetodo_pagamento("À vista");
-                                                setnumero_parcelo("1");
+                                                setnumero_parcelo(1);
                                                 setMostrarParcelas(false);
                                             }} />
                                         <label htmlFor="pagamento-opcao-1"
@@ -369,7 +369,7 @@ export default function CardCadastro() {
                                             placeholder="36x"
                                             type="number"
                                             value={numero_parcelo}
-                                            onChange={(event) => setnumero_parcelo(event.target.value)}
+                                            onChange={(event) => setnumero_parcelo(Number(event.target.value))}
                                         />
                                         <Link href="">
                                             <PopUpConfig valorTotal={valor_total} parcelas={numero_parcelo} />
