@@ -52,20 +52,19 @@ export async function editarUsuarioLogado(
     nome: string,
     email: string,
     senha: string,
-    cargo_id: string
 ) {
     const userId = await getCookie("CookiCriado");
 
-
-
     const request = await fetch(`${backendURL()}/UserService.php?acao=editarUsuario`, {
         method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
             id: userId,
             nome: nome,
             email: email,
             senha: senha,
-            cargo_id: cargo_id,
         })
     });
 
@@ -75,12 +74,9 @@ export async function editarUsuarioLogado(
         await criarCookie("UserName", nome);
         await criarCookie("UserEmail", email);
         await criarCookie("UserSenha", senha);
-        await criarCookie("UserCargo", cargo_id);
     }
-
     return response;
 }
-
 
 export async function getAllUsers() {
     const resposta = await fetch(`${backendURL()}/UserService.php?acao=getAllUsers`)

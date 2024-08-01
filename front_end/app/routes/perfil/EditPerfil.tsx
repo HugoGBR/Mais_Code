@@ -9,16 +9,16 @@ import { DadosCargos } from '@/lib/interfaces/dadosUsuarios';
 import { criarCookie, getCookie } from '@/lib/coockie';
 
 const schema = z.object({
-    nome: z.string().min(1, 'Digite no mínimo 10 caracteres.').max(60, 'Digite o nome completo, máximo de 60 caracteres.'),
-    cargo: z.string().min(1, 'O cargo deve conter no mínimo 1 caractere.').max(11, 'O cargo deve conter no máximo 11 caracteres.'),
-    email: z.string().email("Email inválido."),
-    senha: z.string().min(1, 'Número mínimo de caracteres é 5.').max(15, "Atingiu o limite de caracteres.")
+    nome: z.string(),
+    cargo: z.string(),
+    email: z.string(),
+    senha: z.string()
 });
 
 export type Formulario = z.infer<typeof schema>;
 
 export default function Perfil() {
-    const { register, handleSubmit, formState: { errors } } = useForm<Formulario>({
+    const { register, handleSubmit} = useForm<Formulario>({
         resolver: zodResolver(schema)
     });
 
@@ -35,13 +35,13 @@ export default function Perfil() {
             const cargos = await getAllCargo();
             setListaCargo(cargos);
 
-            const userIdFromCookie = await getCookie('CookiCriado');
+            const userId = await getCookie('CookiCriado');
             const userName = await getCookie('UserName');
             const userCargo = await getCookie('UserCargo');
             const userEmail = await getCookie('UserEmail');
             const userSenha = await getCookie('UserSenha');
 
-            if (userIdFromCookie) setUserId(userIdFromCookie);
+            if (userId) setUserId(userId);
             if (userName) setValorInputNome(userName);
             if (userCargo) setValorInputCargo(userCargo);
             if (userEmail) setValorInputEmail(userEmail);
@@ -64,7 +64,6 @@ export default function Perfil() {
             dados.nome,
             dados.email,
             dados.senha,
-            dados.cargo
         );
         if (response.success) {
             await criarCookie('UserName', dados.nome);
@@ -95,7 +94,7 @@ export default function Perfil() {
                                 type="text"
                                 placeholder='João da Silva'
                                 {...register('nome')}
-                                className={`border-b-2 focus:border-b-2 focus:outline-none ${errors.nome ? 'border-red-500' : 'focus:border-blue-500'}`}
+                                className={`border-b-2 focus:border-b-2 focus:outline-none `}
                                 onChange={(e) => setValorInputNome(e.target.value)}
                                 value={valorInputNome}
                                 disabled={!inputsHabilitados}
@@ -110,7 +109,7 @@ export default function Perfil() {
                                 onChange={(e) => setValorInputSenha(e.target.value)}
                                 value={valorInputSenha}
                                 disabled={!inputsHabilitados}
-                                className={`border-b-2 focus:border-b-2 focus:outline-none ${errors.senha ? 'border-red-500' : 'focus:border-blue-500'}`}
+                                className={`border-b-2 focus:border-b-2 focus:outline-none `}
                             />
                         </div>
 
@@ -122,7 +121,7 @@ export default function Perfil() {
                                 onChange={(e) => setValorInputEmail(e.target.value)}
                                 value={valorInputEmail}
                                 disabled={!inputsHabilitados}
-                                className={`border-b-2 focus:border-b-2 focus:outline-none ${errors.email ? 'border-red-500' : 'focus:border-blue-500'}`}
+                                className={`border-b-2 focus:border-b-2 focus:outline-none `}
                             />
                         </div>
 
