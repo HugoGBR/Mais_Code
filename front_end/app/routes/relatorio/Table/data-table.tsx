@@ -1,6 +1,6 @@
 
-'use client'
-import { useRouter } from "next/navigation"
+"use client"
+import router, { useRouter } from "next/navigation"
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -12,7 +12,8 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
-} from "@tanstack/react-table";
+} from "@tanstack/react-table"
+
 import {
     Table,
     TableBody,
@@ -20,9 +21,17 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
+import { ChevronDownIcon } from "lucide-react"
 import { useState } from "react"
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -37,7 +46,7 @@ export function DataTable<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
-    const router=useRouter()
+    const router = useRouter()
     const table = useReactTable({
         data,
         columns,
@@ -59,13 +68,23 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
+            <div className="flex items-center py-4">
+                <input
+                    placeholder="Filtros"
+                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                    onChange={(event: { target: { value: any } }) =>
+                        table.getColumn("email")?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm"
+                />
+            </div>
             <div className="flex flex-col items-end py-5 input-container">
                 <input
                     type="text"
                     placeholder="Pesquisar..."
-                    value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
+                    value={(table.getColumn("nome_cliente")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("nome")?.setFilterValue(event.target.value)
+                        table.getColumn("nome_cliente")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
                 />
