@@ -51,15 +51,16 @@ export default function Perfil() {
         fetchData();
     }, []);
 
-    const handleButtonClick = async () => {
-        if (inputsHabilitados) {
-            await handleSubmit(handleForm)();
-        } else {
-            setInputHabilitados(true);
-        }
-    };
+    // const handleButtonClick = async () => {
+    //     if (inputsHabilitados) {
+    //         await handleSubmit(handleForm)();
+    //     } else {
+    //         setInputHabilitados(true);
+    //     }
+    // };
 
     async function handleForm(dados: Formulario) {
+        console.log(dados)
         const response = await editarUsuarioLogado(
             dados.nome,
             dados.email,
@@ -76,81 +77,85 @@ export default function Perfil() {
         }
     }
 
+    const HabilitarEventos = () => {
+        setInputHabilitados(true);
+    }
+
+    const handleButtonClick = async () => {
+        if (inputsHabilitados) {
+            console.log(valorInputNome)
+        } else {
+            HabilitarEventos();
+        }
+    };
+
+
     return (
-        <div className='flex justify-center items-center'>
-            <Card className='p-6 drop-shadow-xl rounded-xl'>
-                <form onSubmit={handleSubmit(handleForm)}>
-                    <div>
-                        <h1 className='font-bold pb-5 text-2xl'>Usuário</h1>
-                    </div>
-
-                    <div className="mb-6 flex justify-center items-center opacity-100">
-                        <img src="/icons/icon-perfil-preto.png" className="w-28" alt="imagem" />
-                    </div>
-
-                    <div className='pb-16 grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                        <div>
-                            <input
-                                type="text"
-                                placeholder='João da Silva'
-                                {...register('nome')}
-                                className={`border-b-2 focus:border-b-2 focus:outline-none `}
-                                onChange={(e) => setValorInputNome(e.target.value)}
-                                value={valorInputNome}
-                                disabled={!inputsHabilitados}
-                            />
+        <div>
+            <form>
+                <div className="flex justify-center items-center bg-gray-100 mt-10">
+                    <Card className="p-10 drop-shadow-xl rounded-xl">
+                        <div className="h-12 mb-5">
+                            <h1 className="font-bold text-2xl">Usuário</h1>
+                        </div>
+                        <div className="flex justify-center items-center opacity-40 mb-10">
+                            <img src="/icons/icon-perfil-preto.png" className="w-28" alt="imagem" />
                         </div>
 
-                        <div>
-                            <input
-                                type='password'
-                                placeholder='************'
-                                {...register('senha')}
-                                onChange={(e) => setValorInputSenha(e.target.value)}
-                                value={valorInputSenha}
-                                disabled={!inputsHabilitados}
-                                className={`border-b-2 focus:border-b-2 focus:outline-none `}
-                            />
+                        <div className="pb-16 grid grid-cols-1 sm:grid-cols-2 gap-10">
+                            <div className="flex flex-col space-y-1.5">
+                                <input type="text"
+                                    value={valorInputNome}
+                                    onChange={(e) => setValorInputNome(e.target.value )}
+                                    className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    id="nome" placeholder="Nome"
+                                    disabled={!inputsHabilitados}
+                                />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                                <input type="email"
+                                    value={valorInputEmail}
+                                    onChange={(e) => setValorInputEmail(e.target.value )}
+                                    className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    id="email" placeholder="Email"
+                                    disabled={!inputsHabilitados} 
+                                    />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                                <input type="password"
+                                    value={valorInputSenha}
+                                    onChange={(e) => setValorInputSenha(e.target.value )}
+                                    className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    id="senha" placeholder="Senha"
+                                    disabled={!inputsHabilitados} />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                                <Select 
+                                    value={valorInputCargo} 
+                                    disabled={!inputsHabilitados || true}
+                                    onValueChange={(value) => setValorInputCargo(value)}>
+                                    <SelectTrigger className="w-[220px]">
+                                        <SelectValue placeholder="Cargos..." />
+                                    </SelectTrigger>
+                                    <SelectContent id="cargo_id">
+                                        <SelectGroup>
+                                            {listaCargo.map((Lcargo) => (
+                                                <SelectItem key={Lcargo.id} value={Lcargo.id.toString()}>{Lcargo.nome}</SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
                         </div>
-
-                        <div>
-                            <input
-                                type='email'
-                                placeholder='joão@gmail.com'
-                                {...register('email')}
-                                onChange={(e) => setValorInputEmail(e.target.value)}
-                                value={valorInputEmail}
-                                disabled={!inputsHabilitados}
-                                className={`border-b-2 focus:border-b-2 focus:outline-none `}
-                            />
+                        <div className='flex justify-center'>
+                            <button type='button' onClick={handleButtonClick}
+                                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                {inputsHabilitados ? "Alterar" : "Editar"}
+                            </button>
                         </div>
-
-                        <div className="flex flex-col space-y-1.5">
-                            <Select
-                                value={valorInputCargo.toString()}
-                                disabled={!inputsHabilitados || true}
-                                onValueChange={(value) => setValorInputCargo(value)}>
-                                <SelectTrigger className="w-[220px]">
-                                    <SelectValue placeholder="Cargos..." />
-                                </SelectTrigger>
-                                <SelectContent id="cargo">
-                                    <SelectGroup>
-                                        {listaCargo.map((cargo) => (
-                                            <SelectItem key={cargo.id} value={cargo.id.toString()}>{cargo.nome}</SelectItem>
-                                        ))}
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
-                    <div className='flex justify-center'>
-                        <button type='submit' onClick={handleButtonClick}
-                            className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            {inputsHabilitados ? "Salvar" : "Editar"}
-                        </button>
-                    </div>
-                </form>
-            </Card>
+                    </Card>
+                </div>
+            </form>
         </div>
     );
 }
