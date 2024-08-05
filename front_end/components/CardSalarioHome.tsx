@@ -38,7 +38,7 @@ export default function CardSalarioHome() {
 
     return (
         <div className='rounded-lg flex flex-col justify-end bg-white drop-shadow-xl p-2'>
-            <h3 className='text-center text-lg'>Remuneração</h3>
+            <h3 className='text-center text-lg'>Remuneração do Mês</h3>
             <h1 className='text-4xl text-center font-bold'>R${comissaoTotal.toFixed(2)}</h1>
         </div>
     );
