@@ -1,7 +1,6 @@
 import { remuneracaoComissao } from "@/lib/RelatorioComissaoController";
 import { getCookie } from "@/lib/coockie";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function CardSalarioHome() {
     const [comissaoTotal, setComissaoTotal] = useState(0);
@@ -24,9 +23,10 @@ export default function CardSalarioHome() {
     async function carregarRemuneracao() {
         try {
             const remuneracao = await remuneracaoComissao(Number(usuario_id));
-            console.log(remuneracao);
             if (Array.isArray(remuneracao) && remuneracao.length > 0) {
-                setComissaoTotal(parseFloat(remuneracao[0]["SUM(comissao_total)"]));
+                const valor = remuneracao[0]["SUM(comissao_total)"];
+                const comissao = isNaN(parseFloat(valor)) ? 0 : parseFloat(valor);
+                setComissaoTotal(comissao);
             } else {    
                 setComissaoTotal(0);
             }

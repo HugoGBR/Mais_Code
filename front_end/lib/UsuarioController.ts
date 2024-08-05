@@ -55,29 +55,29 @@ export async function editarUsuarioLogado(
 ) {
     const userId = await getCookie("CookiCriado");
 
-    const request = await fetch(`${backendURL()}/UserService.php?acao=editarUsuario`, {
+    const response = await fetch(`${backendURL()}/UserService.php?acao=UpdateUserById&id=${userId}`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: userId,
             nome: nome,
             email: email,
-            senha: senha,
+            senha: senha
         })
     });
 
-    const response = await request.json();
+    const result = await response.json();
+    console.log('Response from server:', result);
 
-    if (response.sucesso) {
+    if (result.status === 1) {
+        // Atualizar cookies com os novos valores
         await criarCookie("UserName", nome);
         await criarCookie("UserEmail", email);
         await criarCookie("UserSenha", senha);
     }
-    return response;
+    return result;
 }
-
 export async function getAllUsers() {
     const resposta = await fetch(`${backendURL()}/UserService.php?acao=getAllUsers`)
     const dados = await resposta.json();
