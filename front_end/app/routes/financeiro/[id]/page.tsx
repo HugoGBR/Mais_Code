@@ -39,7 +39,7 @@ export default function Relatorio({ params }: { params: { id: Number } }) {
         <div className="container mx-auto py-10">
             <div className="flex justify-end pb-2 drop-shadow-lg">
                 <div className="bg-white border border-gray-300 rounded-md py-2 px-4 w-auto">
-                    <strong>Remuneração R$ {comissaoTotal.toFixed(2)}</strong>
+                    <strong>Remuneração do Mês R$ {comissaoTotal.toFixed(2)}</strong>
                 </div>
             </div>
             <DataTableComissao columns={columns} data={data} />

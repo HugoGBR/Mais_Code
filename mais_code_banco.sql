@@ -3,10 +3,6 @@ CREATE DATABASE `mais_code`;
 
 USE `mais_code`;
 
-/*Table structure for table `cargos` */
-
-DROP TABLE IF EXISTS `cargos`;
-
 CREATE TABLE `cargos` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(255) NOT NULL,
@@ -38,8 +34,6 @@ CREATE TABLE `produtos` (
   `comissao_nova` INT not null,
   PRIMARY KEY (`id`)
 );
-
-DROP TABLE IF EXISTS `tipo_contrato`;
 
 CREATE TABLE `tipo_contrato` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -95,9 +89,8 @@ CREATE TABLE `bancocomissao`(
  `id_venda` BIGINT(20) UNSIGNED NOT NULL,
  `user_id` BIGINT(20) UNSIGNED NOT NULL,
  `comissao_total`DECIMAL(8,2) NOT NULL,
- `data_inicial` DATE NOT NULL,
- `data_final` DATE NOT NULL,
- `parcela` DECIMAL(10, 2) NOT NULL,
+ `data_pagamento` DATE NOT NULL,
+ `numero_da_parcela` DECIMAL(10, 2) NOT NULL,
  `status` ENUM('pago','a pagar','cancelado') NOT NULL,
  PRIMARY KEY (`id`),
   KEY `bancocomissao_venda_id_foreign` (`id_venda`),
@@ -106,6 +99,7 @@ CREATE TABLE `bancocomissao`(
   CONSTRAINT `bancocomissao_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
 DELIMITER //
 
 CREATE TRIGGER after_vendas_insert
@@ -113,15 +107,73 @@ AFTER INSERT ON vendas
 FOR EACH ROW
 BEGIN
   DECLARE comissao_total DECIMAL(8,2);
-  
+  DECLARE parcela_comissao DECIMAL(8,2);
+  DECLARE i INT DEFAULT 1;
+  DECLARE data_pagamento DATE;
+
   -- Calcular a comissão total
   SET comissao_total = NEW.valor_total * (NEW.status_cliente / 100);
   
-  -- Inserir na tabela bancocomissao
-  INSERT INTO bancocomissao (id_venda, user_id, comissao_total, status)
-  VALUES (NEW.id, NEW.usuario_id, comissao_total, 2);
+  -- Calcular a comissão por parcela
+  SET parcela_comissao = comissao_total / NEW.numero_parcela;
+  
+  -- Definir a data de pagamento inicial
+  SET data_pagamento = NEW.inicio_contrato;
+
+  -- Loop para inserir as parcelas de comissão na tabela bancocomissao
+  WHILE i <= NEW.numero_parcela DO
+    -- Inserir na tabela bancocomissao
+    INSERT INTO bancocomissao (id_venda, user_id, comissao_total, data_pagamento, numero_da_parcela, status)
+    VALUES (NEW.id, NEW.usuario_id, parcela_comissao, data_pagamento, i, 'a pagar');
+    
+    -- Incrementar o mês da data de pagamento para a próxima parcela
+    SET data_pagamento = DATE_ADD(data_pagamento, INTERVAL 1 MONTH);
+    
+    -- Incrementar o contador de parcelas
+    SET i = i + 1;
+  END WHILE;
 END;
 
 //
 
 DELIMITER ;
+-- Trigger para atualizar o status da comissão para "pago" quando a data de pagamento passou
+DELIMITER //
+
+CREATE TRIGGER update_comissao_status_before_insert
+BEFORE INSERT ON bancocomissao
+FOR EACH ROW
+BEGIN
+  IF NEW.data_pagamento < CURDATE() THEN
+    SET NEW.status = 'pago';
+  END IF;
+END //
+
+CREATE TRIGGER update_comissao_status_before_update
+BEFORE UPDATE ON bancocomissao
+FOR EACH ROW
+BEGIN
+  IF NEW.data_pagamento < CURDATE() AND NEW.status != 'pago' THEN
+    SET NEW.status = 'pago';
+  END IF;
+END //
+
+DELIMITER ;
+
+-- Trigger para atualizar o status da comissão para "cancelado" quando o status da venda é "cancelado"
+DELIMITER //
+
+CREATE TRIGGER update_comissao_status_on_venda_update
+AFTER UPDATE ON vendas
+FOR EACH ROW
+BEGIN
+  IF NEW.status = 'cancelado' THEN
+    UPDATE bancocomissao 
+    SET status = 'cancelado' 
+    WHERE id_venda = NEW.id AND status != 'pago';
+  END IF;
+END //
+
+DELIMITER ;
+
+

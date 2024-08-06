@@ -106,6 +106,10 @@ export const columns: ColumnDef<Payment>[] = [
         ),
     },
 
+
+
+
+    
     {
         id: "actions",
         enableHiding: false,

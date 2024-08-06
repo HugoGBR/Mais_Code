@@ -51,13 +51,6 @@ export default function Perfil() {
         fetchData();
     }, []);
 
-    // const handleButtonClick = async () => {
-    //     if (inputsHabilitados) {
-    //         await handleSubmit(handleForm)();
-    //     } else {
-    //         setInputHabilitados(true);
-    //     }
-    // };
 
     async function handleForm(dados: Formulario) {
         console.log(dados)

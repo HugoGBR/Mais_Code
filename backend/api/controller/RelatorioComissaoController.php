@@ -43,10 +43,12 @@ class RelatorioComissaoController
 
     public function remuneracaoComissao($usuario_id)
     {
-        $sql = "SELECT
-        SUM(comissao_total)
-        FROM bancocomissao
-        WHERE user_id = :usuario_id AND (status = 2)
+        $sql = "SELECT SUM(comissao_total) 
+        FROM bancocomissao 
+        WHERE user_id = :usuario_id
+        AND (status = 'a pagar' OR status = 'pago')
+        AND MONTH(data_pagamento) = MONTH(CURDATE())
+        AND YEAR(data_pagamento) = YEAR(CURDATE())
         ";
         $db = $this->conn->prepare($sql);
         $db->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
