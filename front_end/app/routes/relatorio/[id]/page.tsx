@@ -44,6 +44,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
     const [horas_trabalhadas, setHorasTrabalhadas] = useState<number>(0); // Adicionei isso, pois a interface de venda não inclui horas trabalhadas
     const [numero_parcelo, setnumero_parcelo] = useState("1");
 
+
     const route = useRouter();
 
     useEffect(() => {
@@ -52,23 +53,23 @@ export default function EditVenda({ params }: {params: {id:number}}) {
             console.log(vendaData) 
             if (vendaData){
                 setVenda(vendaData);
-                setValorEntrada(vendaData.valor_entrada.toString());
+                setValorEntrada(vendaData.valor_entrada);
                 setDataInicio(vendaData.inicio_contrato);
                 setDataFim(vendaData.final_contrato);
                 setNomeContato(vendaData.nome_contato);
-                setTelefoneContato(vendaData.telefone);
-                setEmailContato(vendaData.email);
+                setTelefoneContato(vendaData.telefone_contato);
+                setEmailContato(vendaData.email_contato);
                 setnew_cliente_id(vendaData.cliente_id.toString());
-                setnew_tipo_contrato_id(vendaData.tipo_contrato_id.toString());
+                setnew_tipo_contrato_id(vendaData.nome_tipo_contrato.toString());
                 setnew_produto_id(vendaData.produto_id.toString());
+                console.log(vendaData.produto_id.toString())
                 setnew_usuario_id(vendaData.usuario_id.toString());
                 setvalortotal(vendaData.valor_total);
                 setmetodo_pagamento(vendaData.metodo_pagamento);
                 setnumero_parcela(vendaData.numero_parcela);
                 setstatusCliente(vendaData.status_cliente === 1 ? "antigo" : "novo");
-                setstatusClienteValor(vendaData.status_cliente);
-                setValorEntrada(vendaData.Valor_entrada);
-                
+                setHorasTrabalhadas(vendaData.horas_trabalhadas);                
+                setstatusClienteValor(vendaData.status_cliente);                
             }
             
         }
@@ -177,7 +178,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                     <form onSubmit={handleSearchCPF}>
                         <div className="flex justify-between mb-6 md:text-2xl font-bold">
                             <h1>Contrato</h1>
-                            <h1 className="hidden">Nº {venda?.id.toString()}</h1>
+                            <h1 className="hidden">Nº </h1>
                         </div>
 
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
@@ -259,7 +260,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                                     className="border-b-2 focus:outline-none focus:border-blue-500"
                                     placeholder="Horas"
                                     value={horas_trabalhadas}
-                                    type="number"
+                                    type="text"
                                     onChange={(event) => setHorasTrabalhadas(Number(event.target.value))}
                                 />
                             </div>
@@ -274,10 +275,10 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                                 type="text" />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                 placeholder="(99) 99999-9999"
-                                onChange={(event) => setTelefoneContato(event.target.value)} type="tel"
+                                onChange={(event) => setTelefoneContato(event.target.value)} type="phone"
                                 value={telefone} />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="Email" onChange={(event) => setEmailContato(event.target.value)}
+                                placeholder="Email" onChange={(event) =>  setEmailContato(event.target.value)}
                                 type="email"
                                 value={email} />
                         </div>
@@ -287,7 +288,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
 
             <div className="w-full lg:w-2/5">
                 <Card className="p-10 drop-shadow-xl">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSearchCPF}>
                         <div className="flex justify-center mb-6 text-2xl font-bold">
                             <h1>Forma de Pagamento</h1>
                         </div>

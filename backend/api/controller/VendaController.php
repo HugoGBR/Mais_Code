@@ -27,20 +27,55 @@ class Vendacontroller
         }
     }
     public function getVendaById(int $id)
-    {
-        try {
-            $sql = "SELECT * FROM vendas WHERE id = :id";
-            $db = $this->conn->prepare($sql);
-            $db->bindParam(":id", $id);
-            $db->execute();
-            $user = $db->fetch(PDO::FETCH_ASSOC);
-            return $user;
+{
+    try {
+        $sql = "
+        SELECT 
+        vendas.id AS venda_id, 
+        vendas.cliente_id, 
+        clientes.nome AS nome_cliente, 
+        vendas.tipo_contrato_id, 
+        tipo_contrato.nome AS nome_tipo_contrato, 
+        vendas.produto_id, 
+        produtos.nome AS nome_produto, 
+        vendas.usuario_id, 
+        usuarios.nome AS nome_usuario, 
+        vendas.status_cliente, 
+        vendas.horas_trabalhadas, 
+        vendas.inicio_contrato, 
+        vendas.final_contrato, 
+        vendas.valor_entrada, 
+        vendas.valor_total, 
+        vendas.nome_contato, 
+        vendas.email AS email_contato, 
+        vendas.telefone AS telefone_contato, 
+        vendas.metodo_pagamento, 
+        vendas.numero_parcela, 
+        vendas.status AS status_venda
+    FROM 
+        vendas
+    JOIN 
+        clientes ON vendas.cliente_id = clientes.id
+    JOIN 
+        tipo_contrato ON vendas.tipo_contrato_id = tipo_contrato.id
+    JOIN 
+        produtos ON vendas.produto_id = produtos.id
+    JOIN 
+        usuarios ON vendas.usuario_id = usuarios.id
+    WHERE 
+        vendas.id = :id;
+        ";
+        $db = $this->conn->prepare($sql);
+        $db->bindParam(":id", $id);
+        $db->execute();
+        $venda = $db->fetch(PDO::FETCH_ASSOC);
+        return $venda;
 
-        } catch (\Exception $th) {
-            echo "Erro ao buscar a venda: " . $th->getMessage();
-            return null;
-        }
+    } catch (\Exception $th) {
+        echo "Erro ao buscar a venda: " . $th->getMessage();
+        return null;
     }
+}
 
     // await createNewSell(datadoinicio, datadofim, NomeContato, Number(TelefoneContato), EmailContato, Number(ValorEntrada))
 

@@ -88,10 +88,6 @@ export async function getVendaById(vendaId: Number) {
     }
 }
 
-
-
-
-
 export async function updateVenda(
     clienteId: number,
     tipoContratoId: number,
@@ -132,9 +128,13 @@ export async function updateVenda(
             })
         });
         const response = await request.json();
+        console.log(valorEntrada)
         return response.message;
+        
     } catch (error) {
         console.error('Erro ao atualizar venda:', error);
         return 'Erro ao atualizar venda.';
     }
+    
+
 }
