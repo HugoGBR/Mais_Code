@@ -14,11 +14,11 @@ export async function fetchRelatorio() {
     }
 }
 
-export async function fetchPodium() {
+export async function fetchDadosGrafico() {
     try {
-        const response = await fetch(`${backendURL()}/RelatorioHomeService.php?acao=getPodiumVendedor`);
+        const response = await fetch(`${backendURL()}/RelatorioHomeService.php?acao=getDadosGrafico`);
         if (!response.ok) {
-            throw new Error("Erro ao buscar os dados do pódio");
+            throw new Error("Erro ao buscar os dados do gráfico");
         }
         const jsonData = await response.json();
         console.log(jsonData)

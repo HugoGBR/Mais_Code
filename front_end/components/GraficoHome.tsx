@@ -1,56 +1,84 @@
-import React from "react";
+import { fetchDadosGrafico } from "@/lib/RelatorioHomeController";
+import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
-const data = {
-    series: [
-        {
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-        },
-    ],
-    options: {
-        chart: {
-            type: "area",
-            zoom: {
-                enabled: false,
-            },
-            toolbar: {
-                show: false, // Desabilita o menu de opções
-            },
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        stroke: {
-            curve: "smooth",
-        },
-        title: {
-            text: "Ultimas Vendas",
-            align: "left",
-        },
-        grid: {
-            row: {
-                colors: ["#f3f3f3", "transparent"],
-                opacity: 0.5,
-            },
-        },
-        xaxis: {
-            categories: [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-            ],
-        },
-    },
-};
 
 export default function ApexAreaChart() { // Verifique se ButtonProps é necessário
+    const [dadosGrafico, setDadosGrafico] = useState([])
+
+
+    const fetchData = async () => {
+        const dados = await fetchDadosGrafico();
+        setDadosGrafico(dados)
+
+    };
+
+
+    useEffect(() => {
+
+        fetchData()
+
+    }, [])
+
+    const data = {
+        series: [
+            {
+                name: "Vendas",
+                data: dadosGrafico.map(item => (
+                    item.valor
+                )),
+            },
+        ],
+        options: {
+            chart: {
+                type: "area",
+                zoom: {
+                    enabled: false,
+                },
+                toolbar: {
+                    show: false, // Desabilita o menu de opções
+                },
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: "smooth",
+            },
+            title: {
+                text: "Vendas Mensal",
+                align: "left",
+            },
+            grid: {
+                row: {
+                    colors: ["#f3f3f3", "transparent"],
+                    opacity: 0.5,
+                },
+            },
+            xaxis: {
+                categories: [
+                    "Jan",
+                    "Fev",
+                    "Mar",
+                    "Abr",
+                    "Mai",
+                    "Jun",
+                    "Jul",
+                    "Ago",
+                    "Set",
+                    "Out",
+                    "Nov",
+                    "Set",
+                    "Out",
+                    "Nov",
+                    "Dez",
+                ],
+            },
+        },
+    };
+
+
+
     return (
         <div className='w-full h-auto bg-white p-4 drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
             <Chart

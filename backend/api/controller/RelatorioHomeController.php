@@ -31,4 +31,16 @@ class RelatorioHomeController
         $relatorio_home = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $relatorio_home;
     }
+
+    public function getDadosGrafico()
+    {
+        $sql = "SELECT COUNT(id) as valor FROM vendas
+        WHERE YEAR(inicio_contrato) = YEAR(SYSDATE())
+        GROUP BY
+            MONTH(inicio_contrato);";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $dados_grafico = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $dados_grafico;
+    }
 }

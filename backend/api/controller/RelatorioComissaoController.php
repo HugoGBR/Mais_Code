@@ -43,8 +43,8 @@ class RelatorioComissaoController
 
     public function remuneracaoComissao($usuario_id)
     {
-        $sql = "SELECT SUM(comissao_total) 
-        FROM bancocomissao 
+        $sql = "SELECT SUM(comissao_total)
+        FROM bancocomissao
         WHERE user_id = :usuario_id
         AND (status = 'a pagar' OR status = 'pago')
         AND MONTH(data_pagamento) = MONTH(CURDATE())
