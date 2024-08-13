@@ -20,7 +20,6 @@ import { getCookie } from "@/lib/coockie";
 
 export default function EditVenda({ params }: {params: {id:number}}) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
-    const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
@@ -32,17 +31,18 @@ export default function EditVenda({ params }: {params: {id:number}}) {
     const [email, setEmailContato] = useState("");
     const [new_cliente_id, setnew_cliente_id] = useState("");
     const [new_tipo_contrato_id, setnew_tipo_contrato_id] = useState("");
-    const [new_produto_id, setnew_produto_id] = useState("");
+    const [new_produto_id, setnew_produto_id] = useState("0");
+    const [newProdutoNome, setProdutoNome] = useState("");
     const [new_usuario_id, setnew_usuario_id] = useState("");
     const [valor_total, setvalortotal] = useState(0);
     const [metodo_pagamento, setmetodo_pagamento] = useState("");
-    const [numero_parcela, setnumero_parcela] = useState("");
+    const [numero_parcela, setnumero_parcela] = useState("1");
     const [cpf_cnpj_input, setCpfCnpjInput] = useState("");
     const [statusCliente, setstatusCliente] = useState("");
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState<number>(0); // Adicionei isso, pois a interface de venda não inclui horas trabalhadas
-    const [numero_parcelo, setnumero_parcelo] = useState("1");
+
 
 
     const route = useRouter();
@@ -60,69 +60,32 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                 setTelefoneContato(vendaData.telefone_contato);
                 setEmailContato(vendaData.email_contato);
                 setnew_cliente_id(vendaData.cliente_id.toString());
-                setnew_tipo_contrato_id(vendaData.nome_tipo_contrato.toString());
+                setnew_tipo_contrato_id(vendaData.tipo_contrato_id.toString());
                 setnew_produto_id(vendaData.produto_id.toString());
-                console.log(vendaData.produto_id.toString())
+                setProdutoNome(vendaData.nome_produto)
                 setnew_usuario_id(vendaData.usuario_id.toString());
                 setvalortotal(vendaData.valor_total);
                 setmetodo_pagamento(vendaData.metodo_pagamento);
                 setnumero_parcela(vendaData.numero_parcela);
                 setstatusCliente(vendaData.status_cliente === 1 ? "antigo" : "novo");
                 setHorasTrabalhadas(vendaData.horas_trabalhadas);                
-                setstatusClienteValor(vendaData.status_cliente);                
+                setstatusClienteValor(vendaData.status_cliente);
+                setCpfCnpjInput(vendaData.cpf_cnpj);
+                setMostrarParcelas(vendaData.metodo_pagamento === "Parcelado");
             }
-            
         }
-
         fetchVenda();
     }, [params.id]);
 
-    // useEffect(() => {
-    //     if (foundCliente) {
-    //         setnew_cliente_id(foundCliente.id.toString());
-    //     }
-    // }, [foundCliente]);
-
-    // useEffect(() => {
-    //     async function fetchUsername() {
-    //         const user = await getCookie("CookiCriado");
-    //         setnew_usuario_id(user || "Usuário");
-    //     }
-    //     fetchUsername();
-    // }, []);
-
     useEffect(() => {
         const fetchData = async () => {
-            // const tipos_contrato = await getAllContratos();
-            // setModeloContrato(tipos_contrato);
-            const tipo_Produto = await getAllProduto();
-            setTipoProduto(tipo_Produto);
-            // const LCliente = await getAllClient();
-            // setListaCliente(LCliente);
+            const tipos_contrato = await getAllContratos();
+            setModeloContrato(tipos_contrato);
         };
 
         fetchData();
     }, []);
 
-    // useEffect(() => {
-    //     if (new_produto_id && horas_trabalhadas) {
-    //         const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
-    //         if (selectedProduct) {
-    //             const valorEntradaNumerico = parseFloat(valor_entrada) || 0;
-    //             setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valorEntradaNumerico);
-    //         }
-    //     }
-    // }, [new_produto_id, horas_trabalhadas, valor_entrada]);
-
-    // useEffect(() => {
-    //     if (new_produto_id) {
-    //         const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
-    //         if (selectedProduct) {
-    //             const comissao = statusCliente === "antigo" ? selectedProduct.comissao_antiga : selectedProduct.comissao_nova;
-    //             setstatusClienteValor(comissao);
-    //         }
-    //     }
-    // }, [statusCliente, new_produto_id]);
 
     async function handleSubmit(event: FormEvent) {
         // event.preventDefault();
@@ -158,7 +121,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
         setFoundCliente(clienteEncontrado || null);
     }
 
-    const renderGestaoCliente = () => {
+    const renderGestaoCliente = () => { 
         if (!foundCliente) return null;
         return (
             <Link href={`/routes/gestao/cliente/${foundCliente.id}`} key={foundCliente.id}>
@@ -175,7 +138,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
         <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
             <div className="w-full lg:w-3/5">
                 <Card className="p-10 drop-shadow-xl">
-                    <form onSubmit={handleSearchCPF}>
+                    <form>
                         <div className="flex justify-between mb-6 md:text-2xl font-bold">
                             <h1>Contrato</h1>
                             <h1 className="hidden">Nº </h1>
@@ -185,17 +148,16 @@ export default function EditVenda({ params }: {params: {id:number}}) {
 
                         <div className="md:grid md:grid-cols-12 gap-5 mb-5">
                             <input
-                                className="border-b-2 mt-auto md:col-span-4 focus:outline-none focus:border-blue-500"
+                                className="border-b-2 mt-auto md:col-span-4 focus:outline-none focus:border-blue-500 disabled" 
                                 placeholder="CPF/CNPJ do Cliente"
                                 type="text"
                                 value={cpf_cnpj_input}
-                                onChange={(e) => setCpfCnpjInput(e.target.value)}
                             />
                         </div>
-                        <div className="grid md:grid-cols-12 gap-5 mb-5">
+                        <div className="grid md:grid-cols-12 gap-5 mb-5 disabled">
                             <div className="md:col-span-6">
                                 <label className="mb-2">Status Cliente</label>
-                                <Select value={statusCliente} onValueChange={setstatusCliente}>
+                                <Select value={statusCliente} >
                                     <SelectTrigger>
                                         <SelectValue placeholder="Status Cliente" />
                                     </SelectTrigger>
@@ -208,16 +170,12 @@ export default function EditVenda({ params }: {params: {id:number}}) {
 
                             <div className="md:col-span-6">
                                 <label className="mb-2">Produto</label>
-                                <Select value={new_produto_id} onValueChange={setnew_produto_id}>
+                                <Select value={new_produto_id}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Produto" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {TiposProduto.map((produto) => (
-                                            <SelectItem key={produto.id} value={produto.id.toString()}>
-                                                {produto.nome}
-                                            </SelectItem>
-                                        ))}
+                                        <SelectItem value={new_produto_id}>{newProdutoNome}</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -241,7 +199,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                         <div className="md:grid md:grid-cols-2 ">
                             <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
                                 <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
-                                <Select onValueChange={(value) => setnew_tipo_contrato_id(value)}>
+                                <Select value={new_tipo_contrato_id}>
                                     <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
                                         <SelectValue placeholder="Tipo Contrato" />
                                     </SelectTrigger>
@@ -249,7 +207,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                                         {ModeloContrato.map((tipos_contrato) => (
                                             <SelectItem key={tipos_contrato.id} value={tipos_contrato.id.toString()}>{tipos_contrato.nome}</SelectItem>
                                         ))}
-                                    </SelectContent>
+                                    </SelectContent>    
                                 </Select>
 
                                 
@@ -304,32 +262,41 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                         <div className="space-y-4 md:flex md:justify-between md:w-full">
                             <div className="flex gap-3">
                                 <div className="flex items-center">
-                                    <input id="pagamento-opcao-1" type="radio" name="forma-pagamento"
-                                        value="À vista"
+                                    <input 
+                                        id="pagamento-opcao-1" 
+                                        type="radio" 
+                                        name="forma-pagamento"
+                                        value="À vista"  
                                         className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                         aria-labelledby="pagamento-opcao-1"
                                         aria-describedby="pagamento-opcao-1"
-                                        onClick={() => {
-                                            setmetodo_pagamento("À vista");
-                                            setnumero_parcelo("1");
+                                        checked={metodo_pagamento === "À vista"}
+                                        onChange={() => {
                                             setMostrarParcelas(false);
-                                        }} />
-                                    <label htmlFor="pagamento-opcao-1"
+                                        }} 
+                                    />
+                                    <label 
+                                        htmlFor="pagamento-opcao-1"
                                         className="block ml-2 text-sm font-medium text-gray-900">
                                         À vista
                                     </label>
                                 </div>
                                 <div className="flex items-center">
-                                    <input id="pagamento-opcao-2" type="radio" name="forma-pagamento"
-                                        value="Parcelado"
+                                    <input 
+                                        id="pagamento-opcao-2" 
+                                        type="radio" 
+                                        name="forma-pagamento"
+                                        value="Parcelado" 
                                         className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                         aria-labelledby="pagamento-opcao-2"
                                         aria-describedby="pagamento-opcao-2"
-                                        onClick={() => {
-                                            setmetodo_pagamento("Parcelado");
-                                            setMostrarParcelas(true);
-                                        }} />
-                                    <label htmlFor="pagamento-opcao-2"
+                                        checked={metodo_pagamento === "Parcelado"}
+                                        onChange={() => {
+                                            setMostrarParcelas(true); // Exibe o campo de parcelas
+                                        }} 
+                                    />
+                                    <label 
+                                        htmlFor="pagamento-opcao-2"
                                         className="block ml-2 text-sm font-medium text-gray-900">
                                         Parcelado
                                     </label>
@@ -339,17 +306,19 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                             {mostrarParcelas && (
                                 <div className="flex space-x-4">
                                     <input
+                                        value={numero_parcela}
                                         className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
                                         placeholder="36x"
                                         type="number"
-                                        onChange={(event) => setnumero_parcelo(event.target.value)}
+                                        onChange={(event) => setnumero_parcela(event.target.value)}
                                     />
                                     <Link href="">
-                                        <PopUpConfig valorTotal={valor_total} parcelas={numero_parcelo} />
+                                        <PopUpConfig valorTotal={valor_total} parcelas={numero_parcela} />
                                     </Link>
                                 </div>
                             )}
                         </div>
+
 
                         {/* <div className="flex justify-between mt-5 h-auto">
                             <label className="font-bold" htmlFor="teste">Valor total a pagar:</label>

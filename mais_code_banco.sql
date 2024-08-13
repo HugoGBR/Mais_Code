@@ -71,7 +71,7 @@ CREATE TABLE `vendas` (
   `email` VARCHAR(255) NOT NULL,
   `telefone` VARCHAR(255) NOT NULL,
   `metodo_pagamento` VARCHAR(45) NOT NULL,
-  `numero_parcela` DECIMAL(10, 2),
+  `numero_parcela` INT(11),
   `status` ENUM('concluido','em andamento','cancelado') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `vendas_cliente_id_foreign` (`cliente_id`),

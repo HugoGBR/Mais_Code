@@ -51,7 +51,8 @@ class Vendacontroller
         vendas.telefone AS telefone_contato, 
         vendas.metodo_pagamento, 
         vendas.numero_parcela, 
-        vendas.status AS status_venda
+        vendas.status AS status_venda,
+        clientes.cpf_cnpj
     FROM 
         vendas
     JOIN 
