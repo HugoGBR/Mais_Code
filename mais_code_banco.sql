@@ -71,7 +71,7 @@ CREATE TABLE `vendas` (
   `email` VARCHAR(255) NOT NULL,
   `telefone` VARCHAR(255) NOT NULL,
   `metodo_pagamento` VARCHAR(45) NOT NULL,
-  `numero_parcela` INT(11),
+  `numero_parcela` DECIMAL(10, 2),
   `status` ENUM('concluido','em andamento','cancelado') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `vendas_cliente_id_foreign` (`cliente_id`),
@@ -82,6 +82,16 @@ CREATE TABLE `vendas` (
   CONSTRAINT `vendas_produto_id_foreign` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_tipo_contrato_id_foreign` FOREIGN KEY (`tipo_contrato_id`) REFERENCES `tipo_contrato` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `parcelas`(
+`id`BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+`id_venda` BIGINT(20) UNSIGNED NOT NULL,
+`numero_da_parcela` DECIMAL(10, 2) NOT NULL,
+`valor_da_parcela` DECIMAL(8,2) NOT NULL,
+PRIMARY KEY (`id`),
+KEY `parcelas_venda_id_foreign` (`id_venda`),
+CONSTRAINT `parcelas_venda_id_foreign` FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `bancocomissao`(
