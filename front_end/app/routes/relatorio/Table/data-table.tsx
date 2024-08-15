@@ -46,6 +46,13 @@ export function DataTable<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
+    const hoje = new Date()
+    var dataHojeFormatado = `${hoje.getFullYear()}-${(hoje.getMonth().toString().padStart(2,"0"))}`
+
+    const [startDate, setStartDate] = useState(dataHojeFormatado);
+
+
+    
     const router = useRouter()
     const table = useReactTable({
         data,
@@ -68,8 +75,8 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            
-            <div className="flex flex-col items-end py-5 input-container">
+
+            <div className="flex gap-5 items-end py-5 input-container">
                 <input
                     type="text"
                     placeholder="Pesquisar..."
@@ -79,7 +86,24 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
                 />
+
+                <input
+                    type="month"
+                    id="start"
+                    name="start"
+                    min="2018-03"
+                    value={startDate}
+                    onChange={(event) => setStartDate(event.target.value)}  // Atualizando o estado quando o valor muda
+                    className="border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
+
+                />
             </div>
+
+            <div className="flex flex-col items-start py-5 input-container">
+
+
+            </div>
+
             <div className="bg-white h-3/5 shadow-xl shadow-gray-400 rounded-lg p-4">
                 <Table>
                     <TableHeader>
