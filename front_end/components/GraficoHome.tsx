@@ -54,6 +54,7 @@ export default function ApexAreaChart() { // Verifique se ButtonProps √© necess√
                     colors: ["#f3f3f3", "transparent"],
                     opacity: 0.5,
                 },
+
             },
             xaxis: {
                 categories: [
@@ -74,7 +75,7 @@ export default function ApexAreaChart() { // Verifique se ButtonProps √© necess√
         },
     };
 
-
+    console.log(data)
 
     return (
         <div className='w-full h-auto bg-white p-4 drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
