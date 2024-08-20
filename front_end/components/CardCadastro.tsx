@@ -70,13 +70,12 @@ export default function CardCadastro() {
     }, []);
 
     useEffect(() => {
-        if (new_produto_id && horas_trabalhadas) {
+        if (new_produto_id && horas_trabalhadas >= 0) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
                 setvalortotal(selectedProduct.horas_trabalhadas * horas_trabalhadas);
             }
         }
-        
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
 
     useEffect(() => {
@@ -97,7 +96,7 @@ export default function CardCadastro() {
         if (!DataFim) newErrors.DataFim = "Data de fim é obrigatória";
         if (!new_tipo_contrato_id) newErrors.new_tipo_contrato_id = "Modelo de contrato é obrigatório";
         if (!new_produto_id) newErrors.new_produto_id = "Produto é obrigatório";
-        if (!horas_trabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas são obrigatórias";
+        if (horas_trabalhadas < 0) newErrors.horas_trabalhadas = "Horas trabalhadas não pode ser negativa";
         if (!nome_contato) newErrors.nome_contato = "Nome do contato é obrigatório";
         if (!telefone) newErrors.telefone = "Telefone do contato é obrigatório";
         if (!email) newErrors.email = "Email do contato é obrigatório";
@@ -271,8 +270,12 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="Horas"
                                         type="number"
+                                        min="0"  
                                         value={horas_trabalhadas}
-                                        onChange={(event) => setHorasTrabalhadas(Number(event.target.value))}
+                                        onChange={(event) => {
+                                            const value = Math.max(0, Number(event.target.value)); 
+                                            setHorasTrabalhadas(value);
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -369,6 +372,7 @@ export default function CardCadastro() {
                                             className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
                                             placeholder="36x"
                                             type="number"
+                                            min="1"  // Ensure at least one installment
                                             value={numero_parcelo}
                                             onChange={(event) => setnumero_parcelo(Number(event.target.value))}
                                         />
