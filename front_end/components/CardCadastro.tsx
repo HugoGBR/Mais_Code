@@ -76,6 +76,7 @@ export default function CardCadastro() {
                 setvalortotal(selectedProduct.horas_trabalhadas * horas_trabalhadas);
             }
         }
+        
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
 
     useEffect(() => {
