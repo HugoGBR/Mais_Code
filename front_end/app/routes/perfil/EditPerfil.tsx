@@ -3,10 +3,11 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Card } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
-import { editarUsuarioLogado, getAllCargo } from '@/lib/UsuarioController';
+import { updateUserPerfil, getAllCargo } from '@/lib/UsuarioController';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DadosCargos } from '@/lib/interfaces/dadosUsuarios';
 import { criarCookie, getCookie } from '@/lib/coockie';
+import { useRouter } from 'next/navigation';
 
 const schema = z.object({
     nome: z.string(),
@@ -21,7 +22,7 @@ export default function Perfil() {
     const { register, handleSubmit} = useForm<Formulario>({
         resolver: zodResolver(schema)
     });
-
+    const router = useRouter();
     const [listaCargo, setListaCargo] = useState<DadosCargos[]>([]);
     const [inputsHabilitados, setInputHabilitados] = useState(false);
     const [valorInputNome, setValorInputNome] = useState('');
@@ -54,7 +55,7 @@ export default function Perfil() {
 
     async function handleForm(dados: Formulario) {
         console.log(dados)
-        const response = await editarUsuarioLogado(
+        const response = await updateUserPerfil(
             dados.nome,
             dados.email,
             dados.senha,
@@ -76,7 +77,12 @@ export default function Perfil() {
 
     const handleButtonClick = async () => {
         if (inputsHabilitados) {
+            await updateUserPerfil(valorInputNome, valorInputEmail, valorInputSenha);
+            router.push('/');
+
             console.log(valorInputNome)
+            console.log(valorInputEmail)
+            console.log(valorInputSenha)
         } else {
             HabilitarEventos();
         }

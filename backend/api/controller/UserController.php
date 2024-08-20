@@ -166,5 +166,44 @@ class Usercontroller
         $count = $stmt->fetchColumn();
         return $count > 0;
     }
-}
 
+    public function updateUserPerfil(int $id){
+        try {
+            $user = json_decode(file_get_contents('php://input'));
+    
+
+            $userExists = $this->checkUserExistsById($id);
+            if (!$userExists) {
+                return json_encode(['status' => 0, 'message' => 'Usuário não encontrado.']);
+            }
+    
+            $sql = "UPDATE usuarios SET nome = :nome, senha = :senha, email = :email WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':nome', $user->nome);
+            $stmt->bindParam(':senha', $user->senha);
+            $stmt->bindParam(':email', $user->email);
+    
+            if ($stmt->execute()) {
+                return json_encode(['status' => 1, 'message' => 'Registro atualizado com sucesso.']);
+            } else {
+                return json_encode(['status' => 0, 'message' => 'Falha ao atualizar o registro.']);
+            }
+    
+        } catch (\Exception $e) {
+            error_log('Erro ao atualizar usuário: ' . $e->getMessage());
+            return json_encode(['status' => 0, 'message' => 'Erro ao atualizar usuário.']);
+        }
+    }
+    
+
+
+    private function checkUserExistsByIdPerfil(int $id){
+        $query = "SELECT COUNT(*) FROM USUARIOS WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+}

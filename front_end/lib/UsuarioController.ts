@@ -48,14 +48,14 @@ export async function validacaoLogin(
 
 }
 
-export async function editarUsuarioLogado(
+export async function updateUserPerfil(
     nome: string,
     email: string,
     senha: string,
 ) {
     const userId = await getCookie("CookiCriado");
 
-    const response = await fetch(`${backendURL()}/UserService.php?acao=UpdateUserById&id=${userId}`, {
+    const response = await fetch(`${backendURL()}/UserService.php?acao=updateUserPerfil&id=${userId}`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -71,7 +71,6 @@ export async function editarUsuarioLogado(
     console.log('Response from server:', result);
 
     if (result.status === 1) {
-        // Atualizar cookies com os novos valores
         await criarCookie("UserName", nome);
         await criarCookie("UserEmail", email);
         await criarCookie("UserSenha", senha);
@@ -122,6 +121,25 @@ export async function updateUser(
         body: JSON.stringify({
                 nome: newNome,
                 cargo_id: newCargoid,
+                senha: newSenha,
+                email: newEmail
+            }
+        )
+    });
+    const response = await request.json();
+    return response.message;
+}
+
+export async function updatePerfil(
+    newNome: string,
+    newEmail: string,
+    newSenha: string,
+    paramsId: number
+) {
+    const request = await fetch(`${backendURL()}/UserService.php?acao=UpdateUserById&id=${paramsId}`, {
+        method: "POST",
+        body: JSON.stringify({
+                nome: newNome,
                 senha: newSenha,
                 email: newEmail
             }
