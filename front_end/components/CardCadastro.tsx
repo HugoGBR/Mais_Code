@@ -14,6 +14,7 @@ import PopUpConfig from "./PopUpConfig";
 import { getCookie } from "@/lib/coockie";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
+import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetario } from "@/lib/MaskInput/MaskInput";
 
 export default function CardCadastro() {
     const [numero_parcelas, setNumeroParcelas] = useState("");
@@ -213,7 +214,7 @@ export default function CardCadastro() {
                                         placeholder="CPF/CNPJ do Cliente"
                                         type="text"
                                         value={cpf_cnpj_input}
-                                        onChange={(e) => setCpfCnpjInput(e.target.value)}
+                                        onChange={(e) => setCpfCnpjInput(insertMaskCpfCnpj(e.target.value))}
                                     />
                                     <button
                                         type="submit"
@@ -296,7 +297,7 @@ export default function CardCadastro() {
                                     className="border-b-2 focus:outline-none focus:border-blue-500"
                                     placeholder="(99) 99999-9999"
                                     value={telefone}
-                                    onChange={(event) => setTelefoneContato(event.target.value)}
+                                    onChange={(event) => setTelefoneContato(insertMaskTelefone(event.target.value))}
                                     type="tel" />
                                 <input
                                     className="border-b-2 focus:outline-none focus:border-blue-500"
@@ -316,11 +317,18 @@ export default function CardCadastro() {
                             </div>
                             <div className="flex mb-4 ">
                                 <label className="mr-4" htmlFor="teste">Valor da Entrada</label>
-                                <input
-                                    className="border-b-2 w-28 focus:outline-none focus:border-blue-500"
-                                    placeholder="R$ 0000,00" type="text"
-                                    value={valor_entrada}
-                                    onChange={(event) => setValorEntrada(event.target.value)} />
+                                <div className="relative w-28">
+                                    <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                                        R$
+                                    </span>
+                                    <input
+                                        className="border-b-2 pl-8 w-auto focus:outline-none focus:border-blue-500"
+                                        placeholder="0000,00"
+                                        type="text"
+                                        value={valor_entrada}
+                                        onChange={(event) => setValorEntrada(insertMaskValorMonetario(event.target.value))}
+                                    />
+                                </div>
                             </div>
                             <div className="mb-5">
                                 <label className="text-sm" htmlFor="Nn">Status Cliente</label>
