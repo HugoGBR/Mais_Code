@@ -37,12 +37,12 @@ export const columns: ColumnDef<Payment>[] = [
         accessorKey: "data_inicio",
         header: ({ column }) => {
             return (
-                <Button
+                <Button className="text-center"
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Data
-                    <CaretSortIcon className="ml-2 h-4 w-4 text-center" />
+                    <CaretSortIcon className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
