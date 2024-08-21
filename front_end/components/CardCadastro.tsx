@@ -107,6 +107,7 @@ export default function CardCadastro() {
             toast({
                 title: "Erro de Validação",
                 description: "Por favor, preencha todos os campos obrigatórios.",
+                className:"bg-red-600 text-white"
             });
             return false;
         }
@@ -179,6 +180,7 @@ export default function CardCadastro() {
             toast({
                 title: "Erro de Validação",
                 description: "Cliente não encontrado",
+                className:"bg-red-600 text-white"
             });
         }
     }
