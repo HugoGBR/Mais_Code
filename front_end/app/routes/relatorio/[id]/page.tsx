@@ -5,7 +5,7 @@ import Link from "next/link";
 import { GoGear } from "react-icons/go";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getVendaById, updateVenda } from "@/lib/VendaController";  // Funções para pegar e atualizar venda
+import { getVendaById, updateVenda } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosProduto, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
 import { getAllProduto } from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
@@ -14,9 +14,6 @@ import CardCliente from '@/components/CardClienteGestao';
 import PopUpConfig from "@/components/PopUpConfig";
 import { getCookie } from "@/lib/coockie";
 
-// interface EditProps {
-//     vendaId: string;
-// }
 
 export default function EditVenda({ params }: {params: {id:number}}) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
@@ -41,7 +38,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
     const [statusCliente, setstatusCliente] = useState("");
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
-    const [horas_trabalhadas, setHorasTrabalhadas] = useState<number>(0); // Adicionei isso, pois a interface de venda não inclui horas trabalhadas
+    const [horas_trabalhadas, setHorasTrabalhadas] = useState<number>(0);
 
 
 
@@ -88,31 +85,6 @@ export default function EditVenda({ params }: {params: {id:number}}) {
 
 
     async function handleSubmit(event: FormEvent) {
-        // event.preventDefault();
-        // if (!venda) return;
-
-        // const inicio_contrato = new Date(DataInicio);
-        // const final_contrato = new Date(DataFim);
-
-        // await updateVenda(
-        //     Number(venda.id),  // Adicione o id do objeto para atualização
-        //     Number(new_cliente_id),
-        //     Number(new_tipo_contrato_id),
-        //     Number(new_produto_id),
-        //     Number(new_usuario_id),
-        //     statusClienteValor,
-        //     final_contrato,
-        //     Number(valor_entrada),
-        //     valor_total,
-        //     inicio_contrato,
-        //     metodo_pagamento,
-        //     email,
-        //     telefone,
-        //     nome_contato,
-        //     numero_parcela,
-        //     2
-        // );
-        // route.push("/routes/home");
     }
 
     async function handleSearchCPF(event: FormEvent) {
@@ -292,7 +264,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                                         aria-describedby="pagamento-opcao-2"
                                         checked={metodo_pagamento === "Parcelado"}
                                         onChange={() => {
-                                            setMostrarParcelas(true); // Exibe o campo de parcelas
+                                            setMostrarParcelas(true);
                                         }} 
                                     />
                                     <label 
@@ -320,10 +292,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                         </div>
 
 
-                        {/* <div className="flex justify-between mt-5 h-auto">
-                            <label className="font-bold" htmlFor="teste">Valor total a pagar:</label>
-                            <h1 className="font-bold">{`R$ ${valor_total.toFixed(2)}`}</h1>
-                        </div> */}
+
                         <div className="mt-5 text-center">
                         <button
                             type="submit"
