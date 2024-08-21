@@ -1,4 +1,3 @@
-
 "use client"
 import router, { useRouter } from "next/navigation"
 import {
@@ -47,12 +46,10 @@ export function DataTable<TData, TValue>({
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
     const hoje = new Date()
-    var dataHojeFormatado = `${hoje.getFullYear()}-${(hoje.getMonth().toString().padStart(2,"0"))}`
+    var dataHojeFormatado = `${hoje.getFullYear()}-${(hoje.getMonth().toString().padStart(2, "0"))}`
 
     const [startDate, setStartDate] = useState(dataHojeFormatado);
 
-
-    
     const router = useRouter()
     const table = useReactTable({
         data,
@@ -72,6 +69,14 @@ export function DataTable<TData, TValue>({
             rowSelection,
         },
     });
+
+    function handleSubmit() {
+        // Lógica para submissão do formulário (opcional)
+        console.log("Formulário enviado:", { startDate })
+    }
+
+
+    console.log(table.getRowModel().rows.map(row=>row.original))
 
     return (
         <div>
@@ -95,13 +100,17 @@ export function DataTable<TData, TValue>({
                     value={startDate}
                     onChange={(event) => setStartDate(event.target.value)}  // Atualizando o estado quando o valor muda
                     className="border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
-
                 />
+                <Button
+                    type="submit"
+                    onClick={handleSubmit}
+                    className="bg-blue-500 hover:bg-blue-700 font-bold"
+                >
+                    BUSCAR
+                </Button>
             </div>
 
             <div className="flex flex-col items-start py-5 input-container">
-
-
             </div>
 
             <div className="bg-white h-3/5 shadow-xl shadow-gray-400 rounded-lg p-4">

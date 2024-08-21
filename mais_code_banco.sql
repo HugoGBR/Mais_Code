@@ -186,4 +186,27 @@ END //
 
 DELIMITER ;
 
+use mais_code;
+select * from vendas;
+	 SELECT 
+			vendas.id AS numero_contrato,
+			vendas.inicio_contrato AS data_inicio, 
+			vendas.final_contrato AS data_fim, 
+			clientes.nome AS nome_cliente, 
+			usuarios.nome AS nome_vendedor, 
+			vendas.valor_total, vendas.status as st
+			
+			FROM vendas
+			
+			JOIN clientes ON vendas.cliente_id = clientes.id
+			
+			JOIN usuarios ON vendas.usuario_id = usuarios.id
+			
+			WHERE vendas.status IN ('concluido', 'em andamento')
+            AND YEAR(vendas.inicio_contrato) = 2024
+			AND MONTH(vendas.inicio_contrato) = 08 
+			
+			ORDER BY vendas.inicio_contrato DESC;
+
+
 
