@@ -265,16 +265,21 @@ export default function CardCadastro() {
                                     </Select>
                                 </div>
                                 <div className="flex flex-col mb-5 md:ml-5">
-                                    <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
+                                    <label className="text-sm mb-2" htmlFor="horas-trabalhadas">Horas Trabalhadas</label>
                                     <input
+                                        id="horas-trabalhadas"
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="Horas"
+                                        placeholder="0 "
                                         type="number"
                                         min="0"  
-                                        value={horas_trabalhadas}
+                                        value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}  
                                         onChange={(event) => {
-                                            const value = Math.max(0, Number(event.target.value)); 
-                                            setHorasTrabalhadas(value);
+                                            const value = Number(event.target.value);
+                                            if (!isNaN(value) && value >= 0) {
+                                                setHorasTrabalhadas(value);
+                                            } else {
+                                                setHorasTrabalhadas(0); 
+                                            }
                                         }}
                                     />
                                 </div>
@@ -295,7 +300,7 @@ export default function CardCadastro() {
                                     type="tel" />
                                 <input
                                     className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="Email" 
+                                    placeholder="Email"
                                     value={email}
                                     onChange={(event) => setEmailContato(event.target.value)}
                                     type="email" />
@@ -372,7 +377,7 @@ export default function CardCadastro() {
                                             className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
                                             placeholder="36x"
                                             type="number"
-                                            min="1"  // Ensure at least one installment
+                                            min="1"
                                             value={numero_parcelo}
                                             onChange={(event) => setnumero_parcelo(Number(event.target.value))}
                                         />
