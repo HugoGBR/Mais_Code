@@ -1,5 +1,5 @@
 "use client"
-import router, { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -12,7 +12,6 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-
 import {
     Table,
     TableBody,
@@ -21,15 +20,11 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { ChevronDownIcon } from "lucide-react"
 import { useState } from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 
 
 interface DataTableProps<TData, TValue> {
@@ -76,12 +71,13 @@ export function DataTable<TData, TValue>({
     }
 
 
-    console.log(table.getRowModel().rows.map(row=>row.original))
+    console.log(table.getRowModel().rows.map(row => row.original))
+    console.log(startDate)
 
     return (
         <div>
 
-            <div className="flex gap-5 items-end py-5 input-container">
+            <div className="flex gap-5 items-center py-5 input-container">
                 <input
                     type="text"
                     placeholder="Pesquisar..."
@@ -92,22 +88,23 @@ export function DataTable<TData, TValue>({
                     className="max-w-sm border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
                 />
 
-                <input
-                    type="month"
-                    id="start"
-                    name="start"
-                    min="2018-03"
-                    value={startDate}
-                    onChange={(event) => setStartDate(event.target.value)}  // Atualizando o estado quando o valor muda
-                    className="border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
-                />
-                <Button
-                    type="submit"
-                    onClick={handleSubmit}
-                    className="bg-blue-500 hover:bg-blue-700 font-bold"
-                >
-                    BUSCAR
-                </Button>
+                <div className="flex gap-2 border bg-white border-gray-300 rounded-md shadow-md shadow-gray-400 p-2 focus:outline-none focus:border-blue-500">
+                    <input
+                        type="month"
+                        id="start"
+                        name="start"
+                        min="2018-03"
+                        value={startDate}
+                        onChange={(event) => setStartDate(event.target.value)}  // Atualizando o estado quando o valor muda
+                    />
+                    <button
+                        type="submit"
+                        onClick={handleSubmit}
+                        className=""
+                    >
+                        <FontAwesomeIcon icon={faSearch} className="text-[#122F54]" style={{ fontSize: '24px' }} />
+                    </button>
+                </div>
             </div>
 
             <div className="flex flex-col items-start py-5 input-container">
