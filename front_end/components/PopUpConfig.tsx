@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     CardFooter,
 } from "@/components/ui/card";
@@ -8,10 +8,8 @@ import {
     Dialog,
     DialogContent,
     DialogFooter,
-    DialogHeader,
-    DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
     Table,
     TableBody,
@@ -19,21 +17,23 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table"
-// import * as React from "react"
-
-import { ScrollArea } from "@/components/ui/scroll-area"
+} from "@/components/ui/table";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { GoGear } from "react-icons/go";
 
 interface PopUpConfigProps {
-    valorTotal: any;
-    parcelas: any;
+    valorTotal: number;
+    parcelas: number;
 }
 
 export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConfigProps): React.JSX.Element {
-    const [valoresParcelas, setValoresParcelas] = useState<number[]>(
-        Array.from({ length: parcelas }, () => valorTotal / parcelas)
-    );
+    const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
+
+    // Atualiza os valores das parcelas quando o número de parcelas ou o valor total muda
+    useEffect(() => {
+        const valorParcela = parcelas > 0 ? valorTotal / parcelas : 0;
+        setValoresParcelas(Array.from({ length: parcelas }, () => valorParcela));
+    }, [valorTotal, parcelas]);
 
     const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         const novoValor = e.target.value.replace('R$ ', '').replace(',', '.');
@@ -45,24 +45,21 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConf
             setValoresParcelas(novosValores);
         }
     };
+
     return (
-        <CardFooter className="flex justify-center items-center ">
+        <CardFooter className="flex justify-center items-center">
             <Dialog>
                 <DialogTrigger asChild>
-
                     <GoGear className="w-8 h-8" />
-
                 </DialogTrigger>
                 <DialogContent className="pt-10 rounded-lg">
                     <div className="text-center">
-                        <h1 className="text-2xl">
-                            Configuração de Parcelas
-                        </h1>
+                        <h1 className="text-2xl">Configuração de Parcelas</h1>
                     </div>
                     <Table>
                         <TableHeader>
                             <TableRow className="grid-cols-2 grid">
-                                <TableHead className="text-lg text-center text-black ">Parcelas</TableHead>
+                                <TableHead className="text-lg text-center text-black">Parcelas</TableHead>
                                 <TableHead className="text-lg text-center text-black">Valor</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -71,12 +68,19 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConf
                                 {Array.from({ length: parcelas }, (_, i) => (
                                     <TableRow key={i} className="grid-cols-2 grid">
                                         <TableCell className="text-center col-span-1">{`${i + 1}x`}</TableCell>
-                                        <TableCell className="text-center col-span-1">{`R$ ${valorTotal.toFixed(2)}`}</TableCell>
+                                        <TableCell>
+                                            <input
+                                                className="focus:outline-none focus:border-blue-500"
+                                                placeholder="0000,00"
+                                                type="text"
+                                                value={`R$ ${(valoresParcelas[i])}`}
+                                                onChange={(e) => handleChange(i, e)}
+                                            />
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </ScrollArea>
-
                     </Table>
                     <DialogFooter>
                         <button className="hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500">
@@ -85,6 +89,6 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConf
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
-        </CardFooter >
-    )
+        </CardFooter>
+    );
 }
