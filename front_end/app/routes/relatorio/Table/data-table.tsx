@@ -72,41 +72,10 @@ export function DataTable<TData, TValue>({
 
 
     console.log(table.getRowModel().rows.map(row => row.original))
-    console.log(startDate)
+    
 
     return (
         <div>
-
-            <div className="flex gap-5 items-center py-5 input-container">
-                <input
-                    type="text"
-                    placeholder="Pesquisar..."
-                    value={(table.getColumn("nome_cliente")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("nome_cliente")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
-                />
-
-                <div className="flex gap-2 border bg-white border-gray-300 rounded-md shadow-md shadow-gray-400 p-2 focus:outline-none focus:border-blue-500">
-                    <input
-                        type="month"
-                        id="start"
-                        name="start"
-                        min="2018-03"
-                        value={startDate}
-                        onChange={(event) => setStartDate(event.target.value)}  // Atualizando o estado quando o valor muda
-                    />
-                    <button
-                        type="submit"
-                        onClick={handleSubmit}
-                        className=""
-                    >
-                        <FontAwesomeIcon icon={faSearch} className="text-[#122F54]" style={{ fontSize: '24px' }} />
-                    </button>
-                </div>
-            </div>
-
             <div className="flex flex-col items-start py-5 input-container">
             </div>
 

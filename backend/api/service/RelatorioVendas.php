@@ -19,6 +19,17 @@ switch ($acao) {
             echo json_encode($users); 
         }
         break;
+    case "BuscaRelatorioByData":
+        if ($id !== null) {
+                echo "Ação 'BuscaRelatorio' não aceita um ID";
+        } else {
+                $users = $relatorioManager->BuscaRelatorioVendaByData();
+                echo json_encode($users); 
+        }
+        break; 
     default:
         echo "Rota não encontrada";
 }
+
+
+
