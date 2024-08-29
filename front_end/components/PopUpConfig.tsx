@@ -29,7 +29,6 @@ interface PopUpConfigProps {
 export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConfigProps): React.JSX.Element {
     const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
 
-    // Atualiza os valores das parcelas quando o número de parcelas ou o valor total muda
     useEffect(() => {
         const valorParcela = parcelas > 0 ? valorTotal / parcelas : 0;
         setValoresParcelas(Array.from({ length: parcelas }, () => valorParcela));
@@ -42,6 +41,17 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConf
         if (!isNaN(valorNumerico)) {
             const novosValores = [...valoresParcelas];
             novosValores[index] = valorNumerico;
+
+            const restante = valorTotal - novosValores.reduce((acc, cur) => acc + cur, 0);
+ 
+            const restantes = parcelas - (index + 1);
+            if (restantes > 0) {
+                const valorRestantePorParcela = restante / restantes;
+                for (let i = index + 1; i < parcelas; i++) {
+                    novosValores[i] = valorRestantePorParcela;
+                }
+            }
+
             setValoresParcelas(novosValores);
         }
     };
