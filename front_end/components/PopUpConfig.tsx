@@ -42,10 +42,14 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConf
             const novosValores = [...valoresParcelas];
             novosValores[index] = valorNumerico;
 
-            const restante = valorTotal - novosValores.reduce((acc, cur) => acc + cur, 0);
- 
+            const somaAteAtual = novosValores.slice(0, index + 1).reduce((acc, cur) => acc + cur, 0);
+
+            const restante = valorTotal - somaAteAtual;
+
             const restantes = parcelas - (index + 1);
             if (restantes > 0) {
+                console.log(restantes)
+                console.log(restante)
                 const valorRestantePorParcela = restante / restantes;
                 for (let i = index + 1; i < parcelas; i++) {
                     novosValores[i] = valorRestantePorParcela;
