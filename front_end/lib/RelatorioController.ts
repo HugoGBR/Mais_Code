@@ -42,3 +42,35 @@ export async function GetDadosVendaByData(
         console.error("Erro:", error);
     }
 }
+
+export async function GetDadosVendaByYear(
+    Newyear: Date
+) {
+    try {
+        const response = await fetch(
+            `${backendURL()}/RelatorioVendas.php?acao=BuscaRelatorioByYear`,
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    data: Newyear
+                }),
+            }
+        );
+        if (!response.ok) {
+            throw new Error("Erro ao buscar os dados do relatório");
+        }
+        const jsonData = await response.json();
+        console.log(jsonData)
+        return (jsonData);
+
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
+
+
+
+

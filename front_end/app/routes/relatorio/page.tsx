@@ -3,7 +3,7 @@ import * as React from "react"
 import { Payment, columns } from "./Table/columns"
 import { DataTable } from "./Table/data-table"
 import { useEffect, useState } from "react";
-import { GetDadosVendaByData, fetchData } from "@/lib/RelatorioController";
+import { GetDadosVendaByData, GetDadosVendaByYear, fetchData } from "@/lib/RelatorioController";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,14 +18,13 @@ export default function Relatorio() {
         const Dados = await GetDadosVendaByData(new Date(startDate))
         setData(Dados)
     }
-
-
-    const getDados = async () => {
-        const Dados = await GetDadosVendaByData(hoje)
+    
+    const getDadosYear = async () => {
+        const Dados = await GetDadosVendaByYear(hoje)
         setData(Dados)
     }
     useEffect(() => {
-        getDados();
+        getDadosYear();
     }, []);
 
     return (
