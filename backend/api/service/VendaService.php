@@ -38,15 +38,6 @@ switch ($acao) {
         }
         break;
 
-    case "checkContratoExistsById":
-        if ($id !== null) {
-            $user = $vendaController->checkContratoExistsById($id);
-            echo json_encode($user);
-        } else {
-            echo json_encode(["error" => "Ação checkContratoExistsById necessita de um ID"]);
-        }
-        break;
-
     case "GetVendaById":
         if ($id !== null) {
             $user = $vendaController->getVendaById($id);
@@ -55,25 +46,14 @@ switch ($acao) {
             echo json_encode(["error" => "Ação GetVendaById necessita de um ID"]);
         }
         break;
-
-        case "UpdateVendaById":
-            if ($id !== null) {
-                $user = $vendaController->updateVendaByID($id);
-                echo json_encode($user);
-            } else {
-                echo json_encode(["error" => "Ação updateContratoByID necessita de um ID"]);
-            }
-            break;
-
-    case "GetDadosVendaById":
+    case "createNewlistParcelas":
         if ($id !== null) {
-            $user = $vendaController->GetDadosVendaById($id);
-            echo json_encode($user);
+            echo json_encode(["error" => "Ação não suportada com ID"]);
         } else {
-            echo json_encode(["error" => "Ação GetDadosVendaById necessita de um ID"]);
+            $mensagem = $vendaController->createNewlistParcelas();
+            echo json_encode($mensagem);
         }
         break;
-
     default:
         echo json_encode(["error" => "Rota não encontrada"]);
         break;

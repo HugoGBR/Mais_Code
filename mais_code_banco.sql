@@ -87,7 +87,8 @@ CREATE TABLE `vendas` (
 CREATE TABLE `parcelas`(
 `id`BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 `id_venda` BIGINT(20) UNSIGNED NOT NULL,
-`numero_da_parcela` DECIMAL(10, 2) NOT NULL,
+`total_parcela` INT NOT NULL,
+`numero_da_parcela` INT NOT NULL,
 `valor_da_parcela` DECIMAL(8,2) NOT NULL,
 PRIMARY KEY (`id`),
 KEY `parcelas_venda_id_foreign` (`id_venda`),
