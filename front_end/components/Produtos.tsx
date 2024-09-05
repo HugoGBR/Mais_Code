@@ -69,7 +69,13 @@ export default function CadastroProduto() {
                                 id="comissaoNovo"
                                 name="comissaoNovo"
                                 value={comissaoNovo}
-                                onChange={(event) => setComissaoNovo(event.target.value)}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    if (Number(value) >= 0) {
+                                        setComissaoNovo(value);
+                                    }
+                                }}
+                                min="0"
                                 placeholder="Nova Comissão"
                                 required
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
@@ -79,14 +85,19 @@ export default function CadastroProduto() {
                                 id="comissaoAntigo"
                                 name="comissaoAntigo"
                                 value={comissaoAntigo}
-                                onChange={(event) => setComissaoAntigo(event.target.value)}
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    if (Number(value) >= 0) {
+                                        setComissaoAntigo(value);
+                                    }
+                                }}
+                                min="0"
                                 placeholder="Comissão Antiga"
                                 required
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
-                            
-                        </div>
 
+                        </div>
                         <div className="mb-4 flex flex-col">
                             <div>
                                 <textarea

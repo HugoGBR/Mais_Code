@@ -7,7 +7,6 @@ const CaracterLimit = () => {
 
     const handleDescricaoChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const descricao = event.target.value;
-        // Verifica se a descrição excede o limite de caracteres
         if (descricao.length <= descricaoLimiteCaracteres) {
             setDescricaoProduto(descricao);
         }
@@ -25,7 +24,6 @@ const CaracterLimit = () => {
                 maxLength={descricaoLimiteCaracteres}
                 className="shadow-inner-2 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             ></textarea>
-            {/* Exibe o contador de caracteres restantes */}
             <div className="flex justify-end">
                 <p className="text-sm text-gray-500">{descricaoProduto.length}/{descricaoLimiteCaracteres}</p>
             </div>
