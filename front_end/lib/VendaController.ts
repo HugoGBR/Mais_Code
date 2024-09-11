@@ -143,7 +143,8 @@ export async function createNewParcela(
     newid_venda: number,
     newtotal_parcela: number,
     newnumero_da_parcela: number,
-    newvalor_da_parcela: number
+    newvalor_da_parcela: number,
+    status: number
 ) {
     try {
         const response = await fetch(`${backendURL()}/VendaService.php?acao=createNewlistParcelas`, {

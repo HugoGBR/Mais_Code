@@ -187,14 +187,15 @@ class Vendacontroller
     {
         try {
             $parcela = json_decode(file_get_contents("php://input"));
-            $sql = "INSERT INTO parcelas(id_venda, total_parcela, numero_da_parcela, valor_da_parcela)
-            VALUES (:id_venda, :total_parcela, :numero_da_parcela, :valor_da_parcela)";
+            $sql = "INSERT INTO parcelas(id_venda, total_parcela, numero_da_parcela, valor_da_parcela, status)
+            VALUES (:id_venda, :total_parcela, :numero_da_parcela, :valor_da_parcela, :status)";
 
             $db = $this->conn->prepare($sql);
             $db->bindParam(":id_venda", $parcela->id_venda);
             $db->bindParam(":total_parcela", $parcela->total_parcela);
             $db->bindParam(":numero_da_parcela", $parcela->numero_da_parcela);
             $db->bindParam(":valor_da_parcela", $parcela->valor_da_parcela);
+            $db->bindParam(":status",$parcela->status);
             $db->execute();
             return json_encode(["Mensagem" => "Parcela Cadastrada com Sucesso!"]);
         

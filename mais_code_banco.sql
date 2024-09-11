@@ -91,6 +91,7 @@ CREATE TABLE `parcelas`(
 `total_parcela` INT NOT NULL,
 `numero_da_parcela` INT NOT NULL,
 `valor_da_parcela` DECIMAL(8,2) NOT NULL,
+`status` ENUM('pago','a pagar','cancelado') NOT NULL,
 PRIMARY KEY (`id`),
 KEY `parcelas_venda_id_foreign` (`id_venda`),
 CONSTRAINT `parcelas_venda_id_foreign` FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
