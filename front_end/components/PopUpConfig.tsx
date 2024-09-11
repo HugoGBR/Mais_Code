@@ -62,6 +62,7 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
     const handleConfirm = () => {
         // Envia os valores das parcelas para o componente pai (CardCadastro)
         onSetValoresParcelas(valoresParcelas);
+        console.log(valoresParcelas);
     };
 
     return (
