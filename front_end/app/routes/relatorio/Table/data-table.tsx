@@ -77,9 +77,18 @@ export function DataTable<TData, TValue>({
     return (
         <div>
             <div className="flex flex-col items-start py-5 input-container">
-            </div>
+           
 
             <div className="bg-white h-3/5 shadow-xl shadow-gray-400 rounded-lg p-4">
+            <input
+                    type="text"
+                    placeholder="Pesquisar..."
+                    value={(table.getColumn("nome_cliente")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) =>
+                        table.getColumn("nome_cliente")?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
+                />
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -145,6 +154,7 @@ export function DataTable<TData, TValue>({
                         Próximo
                     </Button>
                 </div>
+            </div>
             </div>
         </div>
     );

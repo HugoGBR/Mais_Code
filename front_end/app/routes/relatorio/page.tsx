@@ -31,7 +31,7 @@ export default function Relatorio() {
         
          <div>
             <div className="flex gap-5 items-center py-5 input-container">
-                <input
+                {/* <input
                     type="text"
                     placeholder="Pesquisar..."
                     // value={(table.getColumn("nome_cliente")?.getFilterValue() as string) ?? ""}
@@ -39,7 +39,7 @@ export default function Relatorio() {
                     //     table.getColumn("nome_cliente")?.setFilterValue(event.target.value)
                     // }
                     className="max-w-sm border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
-                />
+                /> */}
 
                 <div className="flex gap-2 border bg-white border-gray-300 rounded-md shadow-md shadow-gray-400 p-2 focus:outline-none focus:border-blue-500">
                     <input
