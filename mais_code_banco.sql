@@ -49,6 +49,7 @@ CREATE TABLE `usuarios` (
   `nome` VARCHAR(255) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
+  `status_usuario` boolean default(0),
   PRIMARY KEY (`id`),
    KEY `usuarios_cargo_id_foreign` (`cargo_id`),
    CONSTRAINT `usuarios_cargo_id_foreign` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -186,28 +187,4 @@ BEGIN
 END //
 
 DELIMITER ;
-
-use mais_code;
-select * from vendas;
-	 SELECT 
-			vendas.id AS numero_contrato,
-			vendas.inicio_contrato AS data_inicio, 
-			vendas.final_contrato AS data_fim, 
-			clientes.nome AS nome_cliente, 
-			usuarios.nome AS nome_vendedor, 
-			vendas.valor_total, vendas.status as st
-			
-			FROM vendas
-			
-			JOIN clientes ON vendas.cliente_id = clientes.id
-			
-			JOIN usuarios ON vendas.usuario_id = usuarios.id
-			
-			WHERE vendas.status IN ('concluido', 'em andamento')
-            AND YEAR(vendas.inicio_contrato) = 2024
-			AND MONTH(vendas.inicio_contrato) = 08 
-			
-			ORDER BY vendas.inicio_contrato DESC;
-
-
 

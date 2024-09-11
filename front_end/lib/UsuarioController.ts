@@ -28,25 +28,33 @@ export async function validacaoLogin(
     newEmail: string,
     newSenha: string
 ) {
-    const request = await fetch(`${backendURL()}/UserService.php?acao=validacaoLogin`,
-        {
-            method: "POST",
-            body: JSON.stringify({
-                    email: newEmail,
-                    senha: newSenha
-                }
-            )
-        });
+    const request = await fetch(`${backendURL()}/UserService.php?acao=validacaoLogin`, {
+        method: "POST",
+        body: JSON.stringify({
+                email: newEmail,
+                senha: newSenha
+            }
+        )
+    });
+    
     const response = await request.json();
-    if (response != 0)
-        await criarCookie("CookiCriado",response[0].id);
-        await criarCookie("UserName",response[0].nome);
-        await criarCookie("UserEmail",response[0].email);
-        await criarCookie("UserSenha",response[0].senha)
-        await criarCookie("UserCargo",response[0].cargo_id)
-    return response
+    
+    if (response != 0) {
+        if (response[0].status_usuario === 1) {
+            await criarCookie("CookiCriado", response[0].id);
+            await criarCookie("UserName", response[0].nome);
+            await criarCookie("UserEmail", response[0].email);
+            await criarCookie("UserSenha", response[0].senha);
+            await criarCookie("UserCargo", response[0].cargo_id);
+            return response;
+        } else {
+            return { error: "Usuário inativo. Entre em contato com o administrador." };
+        }
+    }
 
+    return { error: "Usuário não encontrado." };
 }
+
 
 export async function updateUserPerfil(
     nome: string,
@@ -89,7 +97,7 @@ export async function getAllCargo() {
     return dados;
 }
 
-export function escolheTipoCliente(cargo_id: number) {
+export function     escolheTipoCliente(cargo_id: number) {
     switch (cargo_id) {
         case Cargos.Administrador:
             return "Administrador"
@@ -114,6 +122,7 @@ export async function updateUser(
     newCargoid: number,
     newEmail: string,
     newSenha: string,
+    newStatus: number,
     paramsId: number
 ) {
     const request = await fetch(`${backendURL()}/UserService.php?acao=UpdateUserById&id=${paramsId}`, {
@@ -122,6 +131,7 @@ export async function updateUser(
                 nome: newNome,
                 cargo_id: newCargoid,
                 senha: newSenha,
+                status_usuario: newStatus,
                 email: newEmail
             }
         )

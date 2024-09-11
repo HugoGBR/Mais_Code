@@ -7,14 +7,14 @@ import { getAllCargo, getUserById, updateUser } from "@/lib/UsuarioController";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { userSchema } from "@/app/schemas/userSchema";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DadosCargos } from "@/lib/interfaces/dadosUsuarios";
 import { z } from "zod";
 
 type LoginFormSchema = z.infer<typeof userSchema>;
 
 export default function App({ params }: { params: { id: number } }) {
-    const [dadosUsuario, setdadosUsuario] = useState({ nome: "", cargo_id: 0, senha: "", email: "" });
+    const [dadosUsuario, setdadosUsuario] = useState({ nome: "", cargo_id: 0, senha: "", email: "", status_usuario: 1 });
     const router = useRouter();
     const [inputsHabilitados, setInputHabilitados] = useState(false);
 
@@ -41,23 +41,36 @@ export default function App({ params }: { params: { id: number } }) {
             setdadosUsuario(usuario);
             setValue('cargo', usuario.cargo_id.toString());
         };
-
+    
         setdados();
     }, [params.id, setValue]);
+    
 
     const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, params.id);
+        await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, dadosUsuario.status_usuario, params.id);
         router.push('/routes/gestao');
     };
+
     const handleButtonClick = async () => {
         if (inputsHabilitados) {
-            await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, params.id);
+            await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, dadosUsuario.status_usuario, params.id);
             router.push('/routes/gestao');
         } else {
             HabilitarEventos();
         }
     };
+
+    const toggleUserStatus = async () => {
+        try {
+            const novoStatus = dadosUsuario.status_usuario === 1 ? 0 : 1; 
+            setdadosUsuario((prev) => ({ ...prev, status_usuario: novoStatus }));
+            
+        } catch (error) {
+            console.error("Erro ao alterar o status do usuário: ", error);
+        }
+    };
+
 
     return (
         <div>
@@ -73,35 +86,39 @@ export default function App({ params }: { params: { id: number } }) {
 
                         <div className="pb-16 grid grid-cols-1 sm:grid-cols-2 gap-10">
                             <div className="flex flex-col space-y-1.5">
-                                <input type="text"
+                                <input
+                                    type="text"
                                     value={dadosUsuario.nome}
                                     onChange={(e) => setdadosUsuario({ ...dadosUsuario, nome: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="nome" placeholder="Nome"
-                                    disabled={!inputsHabilitados}
+                                    disabled={!inputsHabilitados } 
                                 />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                <input type="email"
+                                <input
+                                    type="email"
                                     value={dadosUsuario.email}
                                     onChange={(e) => setdadosUsuario({ ...dadosUsuario, email: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="email" placeholder="Email"
-                                    disabled={!inputsHabilitados} 
-                                    />
+                                    disabled={!inputsHabilitados } 
+                                />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                <input type="password"
+                                <input
+                                    type="password"
                                     value={dadosUsuario.senha}
                                     onChange={(e) => setdadosUsuario({ ...dadosUsuario, senha: e.target.value })}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="senha" placeholder="Senha"
-                                    disabled={!inputsHabilitados} />
+                                    disabled={!inputsHabilitados } 
+                                />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                <Select 
-                                    value={dadosUsuario.cargo_id.toString()} 
-                                    disabled={!inputsHabilitados}
+                                <Select
+                                    value={dadosUsuario.cargo_id.toString()}
+                                    disabled={!inputsHabilitados || dadosUsuario.status_usuario === 0} 
                                     onValueChange={(value) => setdadosUsuario({ ...dadosUsuario, cargo_id: parseInt(value) })}>
                                     <SelectTrigger className="w-[220px]">
                                         <SelectValue placeholder="Cargos..." />
@@ -109,16 +126,28 @@ export default function App({ params }: { params: { id: number } }) {
                                     <SelectContent id="cargo_id">
                                         <SelectGroup>
                                             {listaCargo.map((Lcargo) => (
-                                                <SelectItem key={Lcargo.id} value={Lcargo.id.toString()}>{Lcargo.nome}</SelectItem>
+                                                <SelectItem key={Lcargo.id} value={Lcargo.id.toString()}>
+                                                    {Lcargo.nome}
+                                                </SelectItem>
                                             ))}
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
                             </div>
                         </div>
+                        <div className='flex justify-center '>
+                            <button
+                                type="button"
+                                onClick={toggleUserStatus}
+                                className={`w-full ${dadosUsuario.status_usuario === 1 ? 'bg-red-700' : 'bg-green-700'} hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded`}
+                                disabled={!inputsHabilitados} 
+                            >
+                                {dadosUsuario.status_usuario === 1 ? "Inativar Usuário" : "Ativar Usuário"}
+                            </button>
+                        </div>
                         <div className='flex justify-center'>
                             <button type='button' onClick={handleButtonClick}
-                                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold mt-5 py-2 px-4 rounded">
                                 {inputsHabilitados ? "Alterar" : "Editar"}
                             </button>
                         </div>
