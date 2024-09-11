@@ -24,9 +24,10 @@ import { GoGear } from "react-icons/go";
 interface PopUpConfigProps {
     valorTotal: number;
     parcelas: number;
+    onSetValoresParcelas: (valores: number[]) => void; // Callback para enviar os valores ao componente pai
 }
 
-export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConfigProps): React.JSX.Element {
+export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValoresParcelas }: PopUpConfigProps): React.JSX.Element {
     const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
 
     useEffect(() => {
@@ -48,8 +49,6 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConf
 
             const restantes = parcelas - (index + 1);
             if (restantes > 0) {
-                console.log(restantes)
-                console.log(restante)
                 const valorRestantePorParcela = restante / restantes;
                 for (let i = index + 1; i < parcelas; i++) {
                     novosValores[i] = valorRestantePorParcela;
@@ -58,6 +57,11 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConf
 
             setValoresParcelas(novosValores);
         }
+    };
+
+    const handleConfirm = () => {
+        // Envia os valores das parcelas para o componente pai (CardCadastro)
+        onSetValoresParcelas(valoresParcelas);
     };
 
     return (
@@ -97,7 +101,10 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas }: PopUpConf
                         </ScrollArea>
                     </Table>
                     <DialogFooter>
-                        <button className="hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500">
+                        <button
+                            className="hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500"
+                            onClick={handleConfirm} // Chama handleConfirm ao confirmar
+                        >
                             Confirmar
                         </button>
                     </DialogFooter>

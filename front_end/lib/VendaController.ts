@@ -1,4 +1,4 @@
-import {backendURL} from "@/lib/URLS/backendURL";
+import { backendURL } from "@/lib/URLS/backendURL";
 
 // Retorna os clientes 
 export async function getAllClient() {
@@ -130,11 +130,45 @@ export async function updateVenda(
         const response = await request.json();
         console.log(valorEntrada)
         return response.message;
-        
+
     } catch (error) {
         console.error('Erro ao atualizar venda:', error);
         return 'Erro ao atualizar venda.';
     }
-    
+
 
 }
+
+export async function createNewParcela(
+    newid_venda: number,
+    newtotal_parcela: number,
+    newnumero_da_parcela: number,
+    newvalor_da_parcela: number
+) {
+    try {
+        const response = await fetch(`${backendURL()}/VendaService.php?acao=createNewlistParcelas`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_venda: newid_venda,
+                total_parcela: newtotal_parcela,
+                numero_da_parcela: newnumero_da_parcela,
+                valor_da_parcela: newvalor_da_parcela
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+        
+    } catch (error) {
+        console.error('Erro ao cadastrar parcela:', error);
+        return { success: false, message: 'Erro ao cadastrar parcela' };
+    }
+}
+

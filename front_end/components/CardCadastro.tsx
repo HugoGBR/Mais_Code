@@ -4,7 +4,7 @@ import Link from "next/link";
 import { GoGear } from "react-icons/go";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createNewSell } from "@/lib/VendaController";
+import { createNewParcela, createNewSell } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosProduto } from "@/lib/interfaces/dadosUsuarios";
 import { getAllProduto } from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
@@ -40,6 +40,8 @@ export default function CardCadastro() {
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
+    const [valoresParcelas, setValoresParcelas] = useState<number[]>([]); // Novo estado para valores das parcelas
+
     const route = useRouter();
     const { toast } = useToast();
 
@@ -134,6 +136,7 @@ export default function CardCadastro() {
         setstatusClienteValor(0);
         setFoundCliente(null);
         setHorasTrabalhadas(0);
+        setValoresParcelas([]); // Resetar os valores das parcelas
     };
 
     async function handleSubmit(event: FormEvent) {
@@ -143,7 +146,8 @@ export default function CardCadastro() {
         const datadoinicio = new Date(DataInicio);
         const datadofim = new Date(DataFim);
 
-        await createNewSell(
+        // Cadastrar a venda e capturar o id da venda criada
+        const vendaResponse = await createNewSell(
             Number(new_cliente_id),
             Number(new_tipo_contrato_id),
             Number(new_produto_id),
@@ -162,14 +166,35 @@ export default function CardCadastro() {
             2
         );
 
-        toast({
-            title: "Sucesso",
-            description: "Cadastro realizado com sucesso!",
-            className: "bg-green-500 text-white"
-        });
+        if (vendaResponse && vendaResponse.id) {
+            const id_venda = vendaResponse.id; // Captura o id da venda cadastrada
 
-        resetForm();
-        route.push("/routes/cadastros");
+            // Executar createNewParcela para cada parcela com base nos valores personalizados
+            for (let i = 0; i < numero_parcelo; i++) {
+                const valorParcela = valoresParcelas[i];
+                await createNewParcela(
+                    id_venda,          // id da venda cadastrada
+                    numero_parcelo,     // total de parcelas
+                    i + 1,             // número da parcela (começa em 1)
+                    valorParcela       // valor da parcela personalizado
+                );
+            }
+
+            toast({
+                title: "Sucesso",
+                description: "Cadastro realizado com sucesso!",
+                className: "bg-green-500 text-white"
+            });
+
+            resetForm();
+            route.push("/routes/cadastros");
+        } else {
+            toast({
+                title: "Erro",
+                description: "Falha ao cadastrar a venda",
+                className: "bg-red-600 text-white"
+            });
+        }
     }
 
     async function handleSearchCPF(event: FormEvent) {
@@ -196,6 +221,11 @@ export default function CardCadastro() {
                 </div>
             </Link>
         );
+    };
+
+    // Função para capturar os valores das parcelas personalizadas
+    const handleSetValoresParcelas = (novosValores: number[]) => {
+        setValoresParcelas(novosValores);
     };
 
     return (
@@ -391,9 +421,8 @@ export default function CardCadastro() {
                                             value={numero_parcelo}
                                             onChange={(event) => setnumero_parcelo(Number(event.target.value))}
                                         />
-                                        <Link href="">
-                                            <PopUpConfig valorTotal={valor_total} parcelas={numero_parcelo} />
-                                        </Link>
+                                        {/* Passando a função callback para capturar os valores personalizados */}
+                                        <PopUpConfig valorTotal={valor_total} parcelas={numero_parcelo} onSetValoresParcelas={handleSetValoresParcelas} />
                                     </div>
                                 )}
                             </div>
