@@ -176,7 +176,8 @@ export default function CardCadastro() {
                     id_venda,          // id da venda cadastrada
                     numero_parcelo,     // total de parcelas
                     i + 1,             // número da parcela (começa em 1)
-                    valorParcela       // valor da parcela personalizado
+                    valorParcela,
+                    2      // valor da parcela personalizado
                 );
             }
 

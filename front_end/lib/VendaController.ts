@@ -144,7 +144,7 @@ export async function createNewParcela(
     newtotal_parcela: number,
     newnumero_da_parcela: number,
     newvalor_da_parcela: number,
-    status: number
+    statusparcela: number
 ) {
     try {
         const response = await fetch(`${backendURL()}/VendaService.php?acao=createNewlistParcelas`, {
@@ -156,7 +156,8 @@ export async function createNewParcela(
                 id_venda: newid_venda,
                 total_parcela: newtotal_parcela,
                 numero_da_parcela: newnumero_da_parcela,
-                valor_da_parcela: newvalor_da_parcela
+                valor_da_parcela: newvalor_da_parcela,
+                status: statusparcela
             })
         });
 
