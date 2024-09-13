@@ -293,12 +293,21 @@ export default function EditVenda({ params }: {params: {id:number}}) {
 
 
 
-                        <div className="mt-5 text-center">
+                        <div className="mt-5 text-center grid grid-cols-2 gap-4 ">
                         <button
-                            type="submit"
-                            className="w-full p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                            SALVAR
+                            type="submit" 
+                            className=" p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white">
+                            Cancelar Venda
+                            
                         </button>
+                        
+                        
+                            <button 
+                            type="submit"
+                            className=" p-2 font-bold text-white  bg-blue-500 rounded hover:bg-blue-700">
+                                 
+                                SALVAR
+                            </button>
                         </div>
                     </form>
                 </Card>
