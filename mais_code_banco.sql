@@ -49,7 +49,7 @@ CREATE TABLE `usuarios` (
   `nome` VARCHAR(255) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
-  `status_usuario` boolean default(0),
+  `status_usuario` boolean default(1),
   PRIMARY KEY (`id`),
    KEY `usuarios_cargo_id_foreign` (`cargo_id`),
    CONSTRAINT `usuarios_cargo_id_foreign` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
