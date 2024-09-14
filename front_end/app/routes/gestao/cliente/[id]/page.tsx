@@ -4,12 +4,23 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { getClienteById, updateClientByID } from "@/lib/ClienteController";
+import { insertMaskCpfCnpj, insertMaskTelefone } from "@/lib/MaskInput/MaskInput";
+import { useForm } from "react-hook-form";
+import { clientSchema } from "@/app/schemas/clientSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+type LoginFormSchema = z.infer<typeof clientSchema>;
 
 export default function App({ params }: { params: { id: number } }) {
     const [dadosCliente, setDadosCliente] = useState({ nome: "", email: "", telefone: "", cpf_cnpj: "" });
     const router = useRouter();
     const [inputsHabilitados, setInputHabilitados] = useState(false);
 
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<LoginFormSchema>({
+        resolver: zodResolver(clientSchema)
+    });
+    
     const HabilitarEventos = () => {
         setInputHabilitados(true);
     }
@@ -18,10 +29,28 @@ export default function App({ params }: { params: { id: number } }) {
         const setDados = async () => {
             const cliente = await getClienteById(params.id);
             setDadosCliente(cliente);
+
+            // Atualizando os valores no formulário com as máscaras aplicadas
+            setValue('telefone', insertMaskTelefone(cliente.telefone));
+            setValue('cpf_cnpj', insertMaskCpfCnpj(cliente.cpf_cnpj));
         };
 
         setDados();
-    }, [params.id]);
+    }, [params.id, setValue]);
+
+    const handleTelefoneChange = (event: any) => {
+        const { value } = event.target;
+        const maskedValue = insertMaskTelefone(value);
+        setValue('telefone', maskedValue);
+        setDadosCliente({ ...dadosCliente, telefone: maskedValue });
+    };
+
+    const handleCpfCnpjChange = (event: any) => {
+        const { value } = event.target;
+        const maskedValue = insertMaskCpfCnpj(value);
+        setValue('cpf_cnpj', maskedValue);
+        setDadosCliente({ ...dadosCliente, cpf_cnpj: maskedValue });
+    };
 
     const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -70,23 +99,25 @@ export default function App({ params }: { params: { id: number } }) {
                                 />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                                <input type="text"
-                                    value={dadosCliente.telefone}
-                                    onChange={(e) => setDadosCliente({ ...dadosCliente, telefone: e.target.value })}
-                                    className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                    id="telefone" placeholder="Telefone"
-                                    disabled={!inputsHabilitados}
-                                />
-                            </div>
+                            <input
+                                type="text"
+                                className={`border-b-2 focus:border-b-2 ${errors.telefone ? 'border-red-500' : ''}`}
+                                placeholder="Telefone"
+                                {...register('telefone')}
+                                onChange={handleTelefoneChange}
+                            />
+                            {errors.telefone && <div className="text-red-500">{errors.telefone.message}</div>}
+                        </div>
                             <div className="flex flex-col space-y-1.5">
-                                <input type="text"
-                                    value={dadosCliente.cpf_cnpj}
-                                    onChange={(e) => setDadosCliente({ ...dadosCliente, cpf_cnpj: e.target.value })}
-                                    className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                    id="cpf_cnpj" placeholder="CPF/CNPJ"
-                                    disabled={!inputsHabilitados}
-                                />
-                            </div>
+                            <input
+                                type="text"
+                                className={`border-b-2 focus:border-b-2 ${errors.cpf_cnpj ? 'border-red-500' : ''}`}
+                                placeholder="CPF/CNPJ"
+                                {...register('cpf_cnpj')}
+                                onChange={handleCpfCnpjChange}
+                            />
+                            {errors.cpf_cnpj && <div className="text-red-500">{errors.cpf_cnpj.message}</div>}
+                        </div>
                         </div>
                         <div className='flex justify-center'>
                             <button type='button' onClick={handleButtonClick}
