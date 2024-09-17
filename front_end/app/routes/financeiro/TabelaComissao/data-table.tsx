@@ -32,6 +32,9 @@ import {
 import { Button } from "@/components/ui/button"
 import { ChevronDownIcon, Slice } from "lucide-react"
 import { useEffect, useState } from "react"
+import { CSVLink } from "react-csv";
+
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -49,7 +52,7 @@ export function DataTableComissao<TData, TValue>({
   
     const [pageIndex, setPageIndex] = useState(0)
     const [pagesize, setPageSize] = useState(8)
-        
+    
     const table = useReactTable({
         data,
         columns,
@@ -90,6 +93,8 @@ export function DataTableComissao<TData, TValue>({
 
     return (
         <div>
+            <div className="flex justify-end mb-4">
+            </div>
             <div className="bg-white h-3/5 shadow-xl rounded-lg p-4">
                 <div className="flex items-center py-4 input-container">
                     <input

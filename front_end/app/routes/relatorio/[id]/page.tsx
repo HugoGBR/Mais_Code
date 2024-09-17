@@ -13,9 +13,11 @@ import { getAllClient } from "@/lib/ClienteController";
 import CardCliente from '@/components/CardClienteGestao';
 import PopUpConfig from "@/components/PopUpConfig";
 import { getCookie } from "@/lib/coockie";
+import { CSVLink } from "react-csv";
+import { Button } from "@/components/ui/button";
 
 
-export default function EditVenda({ params }: {params: {id:number}}) {
+export default function EditVenda({ params }: { params: { id: number } }) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
@@ -47,8 +49,8 @@ export default function EditVenda({ params }: {params: {id:number}}) {
     useEffect(() => {
         async function fetchVenda() {
             const vendaData = await getVendaById(params.id);
-            console.log(vendaData) 
-            if (vendaData){
+            console.log(vendaData)
+            if (vendaData) {
                 setVenda(vendaData);
                 setValorEntrada(vendaData.valor_entrada);
                 setDataInicio(vendaData.inicio_contrato);
@@ -65,7 +67,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                 setmetodo_pagamento(vendaData.metodo_pagamento);
                 setnumero_parcela(vendaData.numero_parcela);
                 setstatusCliente(vendaData.status_cliente === 1 ? "antigo" : "novo");
-                setHorasTrabalhadas(vendaData.horas_trabalhadas);                
+                setHorasTrabalhadas(vendaData.horas_trabalhadas);
                 setstatusClienteValor(vendaData.status_cliente);
                 setCpfCnpjInput(vendaData.cpf_cnpj);
                 setMostrarParcelas(vendaData.metodo_pagamento === "Parcelado");
@@ -73,6 +75,8 @@ export default function EditVenda({ params }: {params: {id:number}}) {
         }
         fetchVenda();
     }, [params.id]);
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -93,7 +97,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
         setFoundCliente(clienteEncontrado || null);
     }
 
-    const renderGestaoCliente = () => { 
+    const renderGestaoCliente = () => {
         if (!foundCliente) return null;
         return (
             <Link href={`/routes/gestao/cliente/${foundCliente.id}`} key={foundCliente.id}>
@@ -105,7 +109,9 @@ export default function EditVenda({ params }: {params: {id:number}}) {
             </Link>
         );
     };
-
+    
+    
+    
     return (
         <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
             <div className="w-full lg:w-3/5">
@@ -115,12 +121,13 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                             <h1>Contrato</h1>
                             <h1 className="hidden">Nº </h1>
                         </div>
+                        
 
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
 
                         <div className="md:grid md:grid-cols-12 gap-5 mb-5">
                             <input
-                                className="border-b-2 mt-auto md:col-span-4 focus:outline-none focus:border-blue-500 disabled" 
+                                className="border-b-2 mt-auto md:col-span-4 focus:outline-none focus:border-blue-500 disabled"
                                 placeholder="CPF/CNPJ do Cliente"
                                 type="text"
                                 value={cpf_cnpj_input}
@@ -139,6 +146,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                                     </SelectContent>
                                 </Select>
                             </div>
+                                
 
                             <div className="md:col-span-6">
                                 <label className="mb-2">Produto</label>
@@ -163,7 +171,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                             </div>
                             <div className="flex flex-col mb-5">
                                 <label className="text-sm" htmlFor="teste">Data Termino</label>
-                                <input className="border-b-2 focus:outline-none focus:border-blue-500" value={DataFim} type="date" 
+                                <input className="border-b-2 focus:outline-none focus:border-blue-500" value={DataFim} type="date"
                                     onChange={(event) => setDataFim(event.target.value)} />
                             </div>
                         </div>
@@ -179,10 +187,10 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                                         {ModeloContrato.map((tipos_contrato) => (
                                             <SelectItem key={tipos_contrato.id} value={tipos_contrato.id.toString()}>{tipos_contrato.nome}</SelectItem>
                                         ))}
-                                    </SelectContent>    
+                                    </SelectContent>
                                 </Select>
 
-                                
+
                             </div>
                             <div className="flex flex-col mb-5 md:ml-5">
                                 <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
@@ -208,7 +216,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                                 onChange={(event) => setTelefoneContato(event.target.value)} type="phone"
                                 value={telefone} />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="Email" onChange={(event) =>  setEmailContato(event.target.value)}
+                                placeholder="Email" onChange={(event) => setEmailContato(event.target.value)}
                                 type="email"
                                 value={email} />
                         </div>
@@ -228,37 +236,37 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                                 placeholder="R$ 0000,00" type="text" value={valor_entrada}
                                 onChange={(event) => setValorEntrada(event.target.value)} />
                         </div>
-
+                      
 
                         <h2 className="font-bold mb-5">Metodo de Pagamento</h2>
                         <div className="space-y-4 md:flex md:justify-between md:w-full">
                             <div className="flex gap-3">
                                 <div className="flex items-center">
-                                    <input 
-                                        id="pagamento-opcao-1" 
-                                        type="radio" 
+                                    <input
+                                        id="pagamento-opcao-1"
+                                        type="radio"
                                         name="forma-pagamento"
-                                        value="À vista"  
+                                        value="À vista"
                                         className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                         aria-labelledby="pagamento-opcao-1"
                                         aria-describedby="pagamento-opcao-1"
                                         checked={metodo_pagamento === "À vista"}
                                         onChange={() => {
                                             setMostrarParcelas(false);
-                                        }} 
+                                        }}
                                     />
-                                    <label 
+                                    <label
                                         htmlFor="pagamento-opcao-1"
                                         className="block ml-2 text-sm font-medium text-gray-900">
                                         À vista
                                     </label>
                                 </div>
                                 <div className="flex items-center">
-                                    <input 
-                                        id="pagamento-opcao-2" 
-                                        type="radio" 
+                                    <input
+                                        id="pagamento-opcao-2"
+                                        type="radio"
                                         name="forma-pagamento"
-                                        value="Parcelado" 
+                                        value="Parcelado"
                                         className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                                         aria-labelledby="pagamento-opcao-2"
                                         aria-describedby="pagamento-opcao-2"
@@ -267,7 +275,7 @@ export default function EditVenda({ params }: {params: {id:number}}) {
                                             setMostrarParcelas(true);
                                         }} 
                                     />
-                                    <label 
+                                    <label
                                         htmlFor="pagamento-opcao-2"
                                         className="block ml-2 text-sm font-medium text-gray-900">
                                         Parcelado

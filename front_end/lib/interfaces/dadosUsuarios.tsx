@@ -1,4 +1,5 @@
 export interface dadosUsuario {
+    [x: string]: any
     id: number,
     nome: string,
     senha: string,

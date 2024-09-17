@@ -27,6 +27,16 @@ export default function Relatorio() {
         getDadosYear();
     }, []);
 
+
+    const headers = [
+        { label: "numero_contrato", key: "numero_contrato" },
+        { label: "data_inicio", key: "data_inicio" },
+        { label: "data_fim", key: "data_fim" },
+        { label: "nome_cliente", key: "nome_cliente" },
+        { label: "nome_vendedor", key: "nome_vendedor" }
+        
+    ];
+
     return (
         
          <div>
@@ -60,6 +70,6 @@ export default function Relatorio() {
             </div>
             <DataTable columns={columns} data={data} />
         </div>
-       
+
     );
 }
