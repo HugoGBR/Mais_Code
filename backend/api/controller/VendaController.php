@@ -204,4 +204,18 @@ class Vendacontroller
             return json_encode(['status' => 0, 'message' => 'Erro ao criar Parcela' . $e->getMessage()]);
         }
     }
+
+    public function countVenda()
+    {
+        try {
+            $sql = "SELECT COUNT(*) FROM vendas;";
+            $db = $this->conn->prepare($sql);
+            $db->execute();
+            $QuantidadeVendas = $db->fetch(PDO::FETCH_ASSOC);
+            return $QuantidadeVendas;      
+        } catch (\Exception $th) {
+            echo "Erro ao buscar o cliente: " . $th->getMessage();
+            return null;
+        }
+    }
 }

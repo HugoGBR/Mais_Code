@@ -1,10 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
-import { GoGear } from "react-icons/go";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createNewParcela, createNewSell } from "@/lib/VendaController";
+import { createNewParcela, createNewSell, CountVendas } from "@/lib/VendaController"; 
 import { dadosCliente, dadosModelo_contrato, dadosProduto } from "@/lib/interfaces/dadosUsuarios";
 import { getAllProduto } from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
@@ -40,7 +39,8 @@ export default function CardCadastro() {
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
-    const [valoresParcelas, setValoresParcelas] = useState<number[]>([]); // Novo estado para valores das parcelas
+    const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
+    const [id_venda, setIdVenda] = useState(1);
 
     const route = useRouter();
     const { toast } = useToast();
@@ -91,6 +91,15 @@ export default function CardCadastro() {
         }
     }, [statusCliente, new_produto_id]);
 
+    // Atualizar o ID da venda ao carregar a página, somando o resultado de CountVendas mais 1
+    useEffect(() => {
+        const atualizarIdVenda = async () => {
+            const vendaCount = await CountVendas();
+            setIdVenda(Number(vendaCount) + 1); // Seta o novo valor de id_venda
+        };
+        atualizarIdVenda();
+    }, []);
+
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
 
@@ -109,7 +118,7 @@ export default function CardCadastro() {
             toast({
                 title: "Erro de Validação",
                 description: "Por favor, preencha todos os campos obrigatórios.",
-                className:"bg-red-600 text-white"
+                className: "bg-red-600 text-white"
             });
             return false;
         }
@@ -136,7 +145,7 @@ export default function CardCadastro() {
         setstatusClienteValor(0);
         setFoundCliente(null);
         setHorasTrabalhadas(0);
-        setValoresParcelas([]); // Resetar os valores das parcelas
+        setValoresParcelas([]);
     };
 
     async function handleSubmit(event: FormEvent) {
@@ -146,53 +155,84 @@ export default function CardCadastro() {
         const datadoinicio = new Date(DataInicio);
         const datadofim = new Date(DataFim);
 
-        // Cadastrar a venda e capturar o id da venda criada
-        const vendaResponse = await createNewSell(
-            Number(new_cliente_id),
-            Number(new_tipo_contrato_id),
-            Number(new_produto_id),
-            Number(new_usuario_id),
-            statusClienteValor,
-            horas_trabalhadas,
-            datadofim,
-            Number(valor_entrada),
-            valor_total,
-            datadoinicio,
-            metodo_pagamento,
-            email,
-            telefone,
-            nome_contato,
-            Number(numero_parcelo),
-            2
-        );
+        try {
+            // Cadastrar a venda e obter o ID da venda
+            const vendaResponse = await createNewSell(
+                Number(new_cliente_id),
+                Number(new_tipo_contrato_id),
+                Number(new_produto_id),
+                Number(new_usuario_id),
+                statusClienteValor,
+                horas_trabalhadas,
+                datadofim,
+                Number(valor_entrada),
+                valor_total,
+                datadoinicio,
+                metodo_pagamento,
+                email,
+                telefone,
+                nome_contato,
+                Number(numero_parcelo),
+                2
+            );
 
-        if (vendaResponse && vendaResponse.id) {
-            const id_venda = vendaResponse.id; // Captura o id da venda cadastrada
+            // Verifica se o cadastro da venda retornou um ID válido
+            if (vendaResponse && vendaResponse.id) {
+                const vendaId = vendaResponse.id; // Captura o ID da venda
 
-            // Executar createNewParcela para cada parcela com base nos valores personalizados
-            for (let i = 0; i < numero_parcelo; i++) {
-                const valorParcela = valoresParcelas[i];
-                await createNewParcela(
-                    id_venda,          // id da venda cadastrada
-                    numero_parcelo,     // total de parcelas
-                    i + 1,             // número da parcela (começa em 1)
-                    valorParcela,
-                    2      // valor da parcela personalizado
+                // Chama a função separada para cadastrar as parcelas
+                await handleSubmitParcela(vendaId, numero_parcelo, valoresParcelas, toast);
+
+                toast({
+                    title: "Sucesso",
+                    description: "Cadastro realizado com sucesso!",
+                    className: "bg-green-500 text-white"
+                });
+
+                resetForm();
+                route.push("/routes/cadastros");
+            } else {
+                throw new Error("Erro ao cadastrar a venda");
+            }
+        } catch (error) {
+            console.error("Erro ao cadastrar a venda ou parcelas:", error);
+            toast({
+                title: "Erro",
+                description: "Falha ao cadastrar a venda ou parcelas",
+                className: "bg-red-600 text-white"
+            });
+        }
+    }
+
+    async function handleSubmitParcela(vendaId: number, numeroParcelas: number, valoresParcelas: number[], toast: any) {
+        try {
+            for (let i = 0; i < numeroParcelas; i++) {
+                const valorParcela = valoresParcelas[i] || 0;  // Se não houver valor, define como 0
+                const responseParcela = await createNewParcela(
+                    vendaId,          // id da venda cadastrada
+                    numeroParcelas,   // total de parcelas
+                    i + 1,            // número da parcela (começa em 1)
+                    valorParcela,     // valor da parcela personalizado
+                    2                 // status 'a pagar'
                 );
+
+                // Verifica se a parcela foi cadastrada com sucesso
+                if (responseParcela && responseParcela.status === 0) {
+                    throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
+                }
             }
 
             toast({
                 title: "Sucesso",
-                description: "Cadastro realizado com sucesso!",
+                description: "Parcelas cadastradas com sucesso!",
                 className: "bg-green-500 text-white"
             });
 
-            resetForm();
-            route.push("/routes/cadastros");
-        } else {
+        } catch (error) {
+            console.error("Erro ao cadastrar as parcelas:", error);
             toast({
                 title: "Erro",
-                description: "Falha ao cadastrar a venda",
+                description: "Falha ao cadastrar as parcelas",
                 className: "bg-red-600 text-white"
             });
         }
@@ -206,7 +246,7 @@ export default function CardCadastro() {
             toast({
                 title: "Erro de Validação",
                 description: "Cliente não encontrado",
-                className:"bg-red-600 text-white"
+                className: "bg-red-600 text-white"
             });
         }
     }
@@ -224,7 +264,6 @@ export default function CardCadastro() {
         );
     };
 
-    // Função para capturar os valores das parcelas personalizadas
     const handleSetValoresParcelas = (novosValores: number[]) => {
         setValoresParcelas(novosValores);
     };
@@ -305,14 +344,14 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="0 "
                                         type="number"
-                                        min="0"  
-                                        value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}  
+                                        min="0"
+                                        value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
                                         onChange={(event) => {
                                             const value = Number(event.target.value);
                                             if (!isNaN(value) && value >= 0) {
                                                 setHorasTrabalhadas(value);
                                             } else {
-                                                setHorasTrabalhadas(0); 
+                                                setHorasTrabalhadas(0);
                                             }
                                         }}
                                     />

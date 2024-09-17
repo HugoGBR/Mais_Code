@@ -147,6 +147,14 @@ export async function createNewParcela(
     statusparcela: number
 ) {
     try {
+        console.log("Enviando parcela: ", {
+            id_venda: newid_venda,
+            total_parcela: newtotal_parcela,
+            numero_da_parcela: newnumero_da_parcela,
+            valor_da_parcela: newvalor_da_parcela,
+            status: statusparcela
+        });
+
         const response = await fetch(`${backendURL()}/VendaService.php?acao=createNewlistParcelas`, {
             method: "POST",
             headers: {
@@ -167,10 +175,17 @@ export async function createNewParcela(
 
         const data = await response.json();
         return data;
-        
+
     } catch (error) {
         console.error('Erro ao cadastrar parcela:', error);
         return { success: false, message: 'Erro ao cadastrar parcela' };
     }
 }
 
+
+export async function CountVendas() {
+    const response = await fetch(`${backendURL()}/VendaService.php?acao=countVenda`);
+    const dados = await response.json();
+    console.log(dados);
+    return dados;
+}

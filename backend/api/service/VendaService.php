@@ -54,6 +54,14 @@ switch ($acao) {
             echo json_encode($mensagem);
         }
         break;
+    case "countVenda":
+        if ($id !== null) {
+            echo json_encode(["error" => "Ação não suportada com ID"]);
+        } else {
+            $mensagem = $vendaController->countVenda();
+            echo json_encode($mensagem);
+        }
+        break;
     default:
         echo json_encode(["error" => "Rota não encontrada"]);
         break;
