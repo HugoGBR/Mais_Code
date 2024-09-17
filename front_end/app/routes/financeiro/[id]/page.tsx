@@ -5,11 +5,24 @@ import { useEffect, useState } from "react";
 
 import { DataTableComissao } from "../TabelaComissao/data-table";
 import { fetchDataComissao, remuneracaoComissao } from "@/lib/RelatorioComissaoController";
+import { CSVLink } from "react-csv";
+import { Button } from "@/components/ui/button";
 
 export default function Relatorio({ params }: { params: { id: Number } }) {
-    const [data, setData] = useState([]);
+    const [dados, setData] = useState([]);
     const [comissaoTotal, setComissaoTotal] = useState(0);
 
+
+    const headers = [
+        { label: "comissao_produto", key: "comissao_produto" },
+        { label: "inicio_contrato", key: "inicio_contrato" },
+        { label: "nome_cliente", key: "nome_cliente" },
+        { label: "numero_contrato", key: "numero_contrato" },
+        { label: "tipo_contrato", key: "tipo_contrato" },
+        { label: "valor_total", key: "valor_total" }
+    ];
+
+  
     const getDados = async () => {
         const Dados = await fetchDataComissao(params.id)
         setData(Dados)
@@ -35,6 +48,7 @@ export default function Relatorio({ params }: { params: { id: Number } }) {
         getDados();
     }, []);
 
+    
     return (
         <div className="container mx-auto py-10">
             <div className="flex justify-end pb-2 drop-shadow-lg">
@@ -42,7 +56,18 @@ export default function Relatorio({ params }: { params: { id: Number } }) {
                     <strong>Remuneração do Mês R$ {comissaoTotal.toFixed(2)}</strong>
                 </div>
             </div>
-            <DataTableComissao columns={columns} data={data} />
+            <CSVLink
+                    data={dados}
+                    headers={headers}
+                    filename={"comissao.csv"}
+                    separator={";"}
+                    className="btn btn-primary"
+                >
+                    <Button variant="outline">
+                        Exportar 
+                    </Button>
+                </CSVLink>
+            <DataTableComissao columns={columns} data={dados} />
         </div>
     );
 }
