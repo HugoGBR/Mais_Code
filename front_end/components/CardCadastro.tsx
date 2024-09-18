@@ -3,7 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Link from "next/link";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createNewParcela, createNewSell, CountVendas } from "@/lib/VendaController"; 
+import { createNewParcela, createNewSell, CountVendas } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosProduto } from "@/lib/interfaces/dadosUsuarios";
 import { getAllProduto } from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
@@ -91,11 +91,15 @@ export default function CardCadastro() {
         }
     }, [statusCliente, new_produto_id]);
 
-    // Atualizar o ID da venda ao carregar a página, somando o resultado de CountVendas mais 1
     useEffect(() => {
         const atualizarIdVenda = async () => {
-            const vendaCount = await CountVendas();
-            setIdVenda(Number(vendaCount) + 1); // Seta o novo valor de id_venda
+            try {
+                const vendaCountResponse = await CountVendas(); // Chama a função para obter o count
+                const vendaCount = vendaCountResponse["COUNT(*)"]; // Extrai o valor do count
+                setIdVenda(vendaCount + 1); // Define o novo valor de id_venda (count + 1)
+            } catch (error) {
+                console.error("Erro ao contar as vendas: ", error);
+            }
         };
         atualizarIdVenda();
     }, []);
@@ -150,13 +154,15 @@ export default function CardCadastro() {
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
+    
         if (!validateForm()) return;
-
+    
         const datadoinicio = new Date(DataInicio);
         const datadofim = new Date(DataFim);
-
+    
         try {
-            // Cadastrar a venda e obter o ID da venda
+            console.log("Tentando cadastrar a venda...");
+    
             const vendaResponse = await createNewSell(
                 Number(new_cliente_id),
                 Number(new_tipo_contrato_id),
@@ -175,68 +181,78 @@ export default function CardCadastro() {
                 Number(numero_parcelo),
                 2
             );
-
-            // Verifica se o cadastro da venda retornou um ID válido
-            if (vendaResponse && vendaResponse.id) {
-                const vendaId = vendaResponse.id; // Captura o ID da venda
-
-                // Chama a função separada para cadastrar as parcelas
-                await handleSubmitParcela(vendaId, numero_parcelo, valoresParcelas, toast);
-
+    
+            // Verifica se a resposta da venda é verdadeira (true)
+            if (vendaResponse) {
+                console.log("Venda cadastrada com sucesso.");
+    
                 toast({
                     title: "Sucesso",
                     description: "Cadastro realizado com sucesso!",
-                    className: "bg-green-500 text-white"
+                    className: "bg-green-500 text-white",
                 });
-
+    
                 resetForm();
-                route.push("/routes/cadastros");
+                route.push("/routes/home");
+    
             } else {
-                throw new Error("Erro ao cadastrar a venda");
+                // Lança erro se a resposta for falsa
+                throw new Error("Erro ao cadastrar a venda: resposta inválida");
             }
         } catch (error) {
-            console.error("Erro ao cadastrar a venda ou parcelas:", error);
+            console.error("Erro ao cadastrar a venda:", error);
             toast({
                 title: "Erro",
-                description: "Falha ao cadastrar a venda ou parcelas",
-                className: "bg-red-600 text-white"
+                description: "Falha ao cadastrar a venda",
+                className: "bg-red-600 text-white",
             });
         }
     }
+    
+    
+    
 
     async function handleSubmitParcela(vendaId: number, numeroParcelas: number, valoresParcelas: number[], toast: any) {
         try {
+            console.log("Iniciando cadastro das parcelas...");
+    
             for (let i = 0; i < numeroParcelas; i++) {
-                const valorParcela = valoresParcelas[i] || 0;  // Se não houver valor, define como 0
+                const valorParcela = valoresParcelas[i] || 0;
                 const responseParcela = await createNewParcela(
-                    vendaId,          // id da venda cadastrada
-                    numeroParcelas,   // total de parcelas
-                    i + 1,            // número da parcela (começa em 1)
-                    valorParcela,     // valor da parcela personalizado
-                    2                 // status 'a pagar'
+                    vendaId,
+                    numeroParcelas,
+                    i + 1,
+                    valorParcela,
+                    2
                 );
-
-                // Verifica se a parcela foi cadastrada com sucesso
+    
+                // Verifica se a resposta da parcela contém um erro
                 if (responseParcela && responseParcela.status === 0) {
                     throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
                 }
+    
+                console.log(`Parcela ${i + 1} cadastrada com sucesso.`);
             }
-
+    
             toast({
                 title: "Sucesso",
                 description: "Parcelas cadastradas com sucesso!",
-                className: "bg-green-500 text-white"
+                className: "bg-green-500 text-white",
             });
-
+    
         } catch (error) {
             console.error("Erro ao cadastrar as parcelas:", error);
             toast({
                 title: "Erro",
                 description: "Falha ao cadastrar as parcelas",
-                className: "bg-red-600 text-white"
+                className: "bg-red-600 text-white",
             });
+    
+            // Relança o erro para ser capturado no handleSubmit
+            throw error;
         }
     }
+    
 
     async function handleSearchCPF(event: FormEvent) {
         event.preventDefault();
@@ -461,8 +477,13 @@ export default function CardCadastro() {
                                             value={numero_parcelo}
                                             onChange={(event) => setnumero_parcelo(Number(event.target.value))}
                                         />
-                                        {/* Passando a função callback para capturar os valores personalizados */}
-                                        <PopUpConfig valorTotal={valor_total} parcelas={numero_parcelo} onSetValoresParcelas={handleSetValoresParcelas} />
+                                        <PopUpConfig
+                                            valorTotal={valor_total}
+                                            parcelas={numero_parcelo}
+                                            onSetValoresParcelas={handleSetValoresParcelas}
+                                            onConfirm={(vendaId, numeroParcelas, valoresParcelas) => handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)}
+                                            idVenda={id_venda}
+                                        />
                                     </div>
                                 )}
                             </div>

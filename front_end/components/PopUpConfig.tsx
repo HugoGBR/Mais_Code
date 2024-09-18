@@ -9,6 +9,7 @@ import {
     DialogContent,
     DialogFooter,
     DialogTrigger,
+    DialogClose, // Use DialogClose para fechar o modal
 } from "@/components/ui/dialog";
 import {
     Table,
@@ -25,9 +26,11 @@ interface PopUpConfigProps {
     valorTotal: number;
     parcelas: number;
     onSetValoresParcelas: (valores: number[]) => void; // Callback para enviar os valores ao componente pai
+    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[]) => void; // Função para executar a confirmação
+    idVenda: number; // Receba o idVenda do CardCadastro
 }
 
-export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValoresParcelas }: PopUpConfigProps): React.JSX.Element {
+export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValoresParcelas, onConfirm, idVenda }: PopUpConfigProps): React.JSX.Element {
     const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
 
     useEffect(() => {
@@ -60,9 +63,8 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
     };
 
     const handleConfirm = () => {
-        // Envia os valores das parcelas para o componente pai (CardCadastro)
         onSetValoresParcelas(valoresParcelas);
-        console.log(valoresParcelas);
+        onConfirm(idVenda, parcelas, valoresParcelas);
     };
 
     return (
@@ -92,7 +94,7 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
                                                 className="focus:outline-none focus:border-blue-500"
                                                 placeholder="0000,00"
                                                 type="text"
-                                                value={`R$ ${(valoresParcelas[i])}`}
+                                                value={`R$ ${valoresParcelas[i]}`}
                                                 onChange={(e) => handleChange(i, e)}
                                             />
                                         </TableCell>
@@ -102,12 +104,14 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
                         </ScrollArea>
                     </Table>
                     <DialogFooter>
-                        <button
-                            className="hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500"
-                            onClick={handleConfirm} // Chama handleConfirm ao confirmar
-                        >
-                            Confirmar
-                        </button>
+                        <DialogClose asChild>
+                            <button
+                                className="hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500"
+                                onClick={handleConfirm} // Chama handleConfirm ao confirmar
+                            >
+                                Confirmar
+                            </button>
+                        </DialogClose>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
