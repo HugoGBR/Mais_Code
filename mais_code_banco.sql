@@ -110,80 +110,18 @@ CREATE TABLE `bancocomissao`(
   CONSTRAINT `bancocomissao_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+DELIMITER $$
 
-DELIMITER //
-
-CREATE TRIGGER after_vendas_insert
+CREATE TRIGGER after_venda_insert
 AFTER INSERT ON vendas
 FOR EACH ROW
 BEGIN
-  DECLARE comissao_total DECIMAL(8,2);
-  DECLARE parcela_comissao DECIMAL(8,2);
-  DECLARE i INT DEFAULT 1;
-  DECLARE data_pagamento DATE;
-
-  -- Calcular a comissão total
-  SET comissao_total = NEW.valor_total * (NEW.status_cliente / 100);
-  
-  -- Calcular a comissão por parcela
-  SET parcela_comissao = comissao_total / NEW.numero_parcela;
-  
-  -- Definir a data de pagamento inicial
-  SET data_pagamento = NEW.inicio_contrato;
-
-  -- Loop para inserir as parcelas de comissão na tabela bancocomissao
-  WHILE i <= NEW.numero_parcela DO
-    -- Inserir na tabela bancocomissao
-    INSERT INTO bancocomissao (id_venda, user_id, comissao_total, data_pagamento, numero_da_parcela, status)
-    VALUES (NEW.id, NEW.usuario_id, parcela_comissao, data_pagamento, i, 'a pagar');
-    
-    -- Incrementar o mês da data de pagamento para a próxima parcela
-    SET data_pagamento = DATE_ADD(data_pagamento, INTERVAL 1 MONTH);
-    
-    -- Incrementar o contador de parcelas
-    SET i = i + 1;
-  END WHILE;
-END;
-
-//
+  -- Verifica se o método de pagamento é "À vista"
+  IF NEW.metodo_pagamento = 'À vista' THEN
+    -- Insere uma nova linha na tabela `parcelas`
+    INSERT INTO parcelas (id_venda, total_parcela, numero_da_parcela, valor_da_parcela, status)
+    VALUES (NEW.id, 1, 1, NEW.valor_total, 'pago');
+  END IF;
+END $$
 
 DELIMITER ;
--- Trigger para atualizar o status da comissão para "pago" quando a data de pagamento passou
-DELIMITER //
-
-CREATE TRIGGER update_comissao_status_before_insert
-BEFORE INSERT ON bancocomissao
-FOR EACH ROW
-BEGIN
-  IF NEW.data_pagamento < CURDATE() THEN
-    SET NEW.status = 'pago';
-  END IF;
-END //
-
-CREATE TRIGGER update_comissao_status_before_update
-BEFORE UPDATE ON bancocomissao
-FOR EACH ROW
-BEGIN
-  IF NEW.data_pagamento < CURDATE() AND NEW.status != 'pago' THEN
-    SET NEW.status = 'pago';
-  END IF;
-END //
-
-DELIMITER ;
-
--- Trigger para atualizar o status da comissão para "cancelado" quando o status da venda é "cancelado"
-DELIMITER //
-
-CREATE TRIGGER update_comissao_status_on_venda_update
-AFTER UPDATE ON vendas
-FOR EACH ROW
-BEGIN
-  IF NEW.status = 'cancelado' THEN
-    UPDATE bancocomissao 
-    SET status = 'cancelado' 
-    WHERE id_venda = NEW.id AND status != 'pago';
-  END IF;
-END //
-
-DELIMITER ;
-
