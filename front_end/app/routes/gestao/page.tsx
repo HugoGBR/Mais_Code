@@ -25,6 +25,7 @@ export default function Gestao() {
     const [carregando, setCarregando] = useState(true)
     const router = useRouter();
     const [paginaAtual, setPaginaAtual] = useState(1);
+    const [termoBusca, setTermoBusca] = useState("");
     const itensPorPagina = 8;
 
     const rotaNewUser = () => {
@@ -81,6 +82,18 @@ export default function Gestao() {
     const inicioIndex = (paginaAtual - 1) * itensPorPagina;
     const finalIndex = inicioIndex + itensPorPagina;
 
+    const usuariosFiltrados = listaUsuarios.filter((usuario) => {
+        const nomeCliente = usuario?.nome || "";
+        const cargoUsuario = usuario?.cargo || "";
+
+
+        return (
+            nomeCliente.toLowerCase().includes(termoBusca.toLowerCase()) ||
+            cargoUsuario.toLowerCase().includes(termoBusca.toLowerCase())
+        );
+    });
+    console.log(listaUsuarios)
+
     useEffect(() => {
         carregarUsuarios();
         carregarCliente();
@@ -90,7 +103,9 @@ export default function Gestao() {
         if (!Array.isArray(listaCliente)) return null;
         return (
             <>
-            <div className='flex flex-col md:grid md:grid-cols-2 gap-4'> {listaCliente.slice(inicioIndex, finalIndex).map(client => (
+
+
+                <div className='flex flex-col md:grid md:grid-cols-2 gap-4'> {listaCliente.slice(inicioIndex, finalIndex).map(client => (
                     <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
                         <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300  rounded-lg flex-grow'>
                             <a className="block w-full">
@@ -100,8 +115,9 @@ export default function Gestao() {
                     </Link>
                 ))}
                 </div>
-               <div>
-               <Pagination >
+                <div>
+
+                    <Pagination >
                         <PaginationContent>
                             <PaginationItem>
                                 <PaginationPrevious onClick={PaginaAnterior} />
@@ -114,7 +130,7 @@ export default function Gestao() {
                             </PaginationItem>
                         </PaginationContent>
                     </Pagination>
-               </div>
+                </div>
 
 
             </>
@@ -144,21 +160,31 @@ export default function Gestao() {
                         }
                     </div>
                     <div className='mt-5'>
-                    <Pagination >
-                        <PaginationContent>
-                            <PaginationItem>
-                                <PaginationPrevious onClick={PaginaAnterior} />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink href="#">{paginaAtual}</PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationNext onClick={() => ProximaPagina(listaUsuarioFiltrada)} />
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination>
+
+                        {termoBusca && usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
+                            <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
+                                <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
+                                    <a className="block pb-1">
+                                        <CardCliente dados={item} />
+                                    </a>
+                                </div>
+                            </Link>
+                        ))}
+                        <Pagination >
+                            <PaginationContent>
+                                <PaginationItem>
+                                    <PaginationPrevious onClick={PaginaAnterior} />
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <PaginationLink href="#">{paginaAtual}</PaginationLink>
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <PaginationNext onClick={() => ProximaPagina(listaUsuarioFiltrada)} />
+                                </PaginationItem>
+                            </PaginationContent>
+                        </Pagination>
                     </div>
-                   
+
                 </div>
 
             </>
@@ -168,8 +194,20 @@ export default function Gestao() {
     return (
 
         <div className="items-center py-10">
+
+            <div className="flex items-center py-4 input-container">
+                <input
+                    type="text"
+                    placeholder="Pesquisar..."
+                    value={termoBusca}
+                    onChange={(event) => setTermoBusca(event.target.value)}
+                    className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                />
+            </div>
+
+
             <Tabs defaultValue='Administrador'>
-                <TabsList className='will-change-contents flex justify-between gap-6'>
+                <TabsList className='will-change-contents flex justify-center gap-6'>
                     <div className='space-x-5'>
                         <TabsTrigger value="Administrador">Administrador</TabsTrigger>
                         <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
@@ -200,7 +238,10 @@ export default function Gestao() {
                 <TabsContent value='Financeiro' className=''>
                     {renderGestao(3)}
                 </TabsContent>
+
+
             </Tabs>
+
 
         </div>
 
