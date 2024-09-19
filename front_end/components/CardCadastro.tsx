@@ -14,10 +14,11 @@ import { getCookie } from "@/lib/coockie";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
 import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetario } from "@/lib/MaskInput/MaskInput";
+import { number } from "zod";
 
 export default function CardCadastro() {
     const [numero_parcelas, setNumeroParcelas] = useState("");
-    const [valor_entrada, setValorEntrada] = useState("");
+    const [valor_entrada, setValorEntrada] = useState(0);
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
@@ -76,7 +77,7 @@ export default function CardCadastro() {
         if (new_produto_id && horas_trabalhadas >= 0) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
-                setvalortotal(selectedProduct.horas_trabalhadas * horas_trabalhadas);
+                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valor_entrada);
             }
         }
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
@@ -132,7 +133,7 @@ export default function CardCadastro() {
 
     const resetForm = () => {
         setNumeroParcelas("");
-        setValorEntrada("");
+        setValorEntrada(0);
         setMostrarParcelas(false);
         setDataInicio("");
         setDataFim("");
@@ -414,7 +415,7 @@ export default function CardCadastro() {
                                         placeholder="0000,00"
                                         type="text"
                                         value={valor_entrada}
-                                        onChange={(event) => setValorEntrada(insertMaskValorMonetario(event.target.value))}
+                                        onChange={(event) => setValorEntrada(Number(event.target.value))}
                                     />
                                 </div>
                             </div>
