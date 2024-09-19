@@ -25,7 +25,7 @@ export default function Financeiro() {
     const [termoBusca, setTermoBusca] = useState('');
     const itensPorPagina = 8;
 
-  
+
 
 
 
@@ -60,15 +60,16 @@ export default function Financeiro() {
     const finalIndex = inicioIndex + itensPorPagina;
 
     const usuariosFiltrados = listaUsuarios.filter((usuario) => {
-        const nomeCliente = usuario?.nome_cliente || usuario?.nome || usuario?.cliente_nome || ""; 
+        const nomeCliente = usuario?.nome_cliente || usuario?.nome || usuario?.cliente_nome || "";
         return nomeCliente.toLowerCase().includes(termoBusca.toLowerCase());
     });
-    console.log (listaUsuarios)
+    console.log(listaUsuarios)
 
     return (
 
 
         <div>
+
             <div className="flex items-center py-4 input-container">
                 <input
                     type="text"
@@ -79,15 +80,17 @@ export default function Financeiro() {
                 />
             </div>
 
-            {usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
-                <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
-                    <div>
-                        <a className="block">
-                            <Cardfinanceiro dados={item}/> 
-                        </a>
-                    </div>
-                </Link>
-            ))}
+            <div className='grid grid-cols-2 gap-3'>
+                {usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
+                    <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
+                        <div>
+                            <a className="block">
+                                <Cardfinanceiro dados={item} />
+                            </a>
+                        </div>
+                    </Link>
+                ))}
+            </div>
 
             <Pagination>
                 <PaginationContent>

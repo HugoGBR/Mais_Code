@@ -192,9 +192,8 @@ export default function Gestao() {
     }
 
     return (
-
         <div className="items-center py-10">
-
+    
             <div className="flex items-center py-4 input-container">
                 <input
                     type="text"
@@ -204,10 +203,9 @@ export default function Gestao() {
                     className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                 />
             </div>
-
-
+    
             <Tabs defaultValue='Administrador'>
-                <TabsList className='will-change-contents flex justify-center gap-6'>
+                <TabsList className='will-change-contents gap-6'>
                     <div className='space-x-5'>
                         <TabsTrigger value="Administrador">Administrador</TabsTrigger>
                         <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
@@ -225,27 +223,39 @@ export default function Gestao() {
                         </button>
                     </div>
                 </TabsList>
-
-                <TabsContent value='Cliente' className=''>
-                    {renderGestaoCliente()}
-                </TabsContent>
-                <TabsContent value='Administrador' className=''>
-                    {renderGestao(1)}
-                </TabsContent>
-                <TabsContent value='Vendedor' className=''>
-                    {renderGestao(2)}
-                </TabsContent>
-                <TabsContent value='Financeiro' className=''>
-                    {renderGestao(3)}
-                </TabsContent>
-
-
+    
+                {termoBusca ? (
+                    <div className='grid grid-cols-2 gap-3'>
+                        {/* Mostra os resultados filtrados */}
+                        {usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
+                            <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
+                                <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} className='bg-gray-300 rounded-lg flex-grow'>
+                                    <CardCliente dados={item} />
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                ) : (
+                    <>
+                        <TabsContent value='Cliente'>
+                            {renderGestaoCliente()}
+                        </TabsContent>
+                        <TabsContent value='Administrador'>
+                            {renderGestao(1)}
+                        </TabsContent>
+                        <TabsContent value='Vendedor'>
+                            {renderGestao(2)}
+                        </TabsContent>
+                        <TabsContent value='Financeiro'>
+                            {renderGestao(3)}
+                        </TabsContent>
+                    </>
+                )}
             </Tabs>
-
-
+    
         </div>
-
-    )
+    );
+    
 
 
 }
