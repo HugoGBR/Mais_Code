@@ -92,7 +92,14 @@ export default function Gestao() {
             cargoUsuario.toLowerCase().includes(termoBusca.toLowerCase())
         );
     });
-    console.log(listaUsuarios)
+    const clienteFiltrado = listaCliente.filter((cliente) => {
+        const nomeCliente = cliente?.nome || "";
+        return (
+            nomeCliente.toLowerCase().includes(termoBusca.toLowerCase())
+        );
+    });
+    console.log(usuariosFiltrados)
+    console.log(clienteFiltrado)
 
     useEffect(() => {
         carregarUsuarios();
@@ -109,7 +116,7 @@ export default function Gestao() {
                     <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
                         <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300  rounded-lg flex-grow'>
                             <a className="block w-full">
-                                <CardCliente dados={client} />
+                                <CardUsuario nome={client.nome} email={client.email} cargoId={4}   />
                             </a>
                         </div>
                     </Link>
@@ -145,27 +152,13 @@ export default function Gestao() {
         return (
             <>
                 <div>
-                    <div className='flex flex-col md:grid md:grid-cols-2 gap-4'>
-                        {listaUsuarioFiltrada
-                            .slice(inicioIndex, finalIndex)
-                            .map(item => (
-                                <Link href={`/routes/gestao/user/${item.id}`} key={item.id}>
-                                    <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
-                                        <a className="block w-full">
-                                            <CardUsuario dados={item} />
-                                        </a>
-                                    </div>
-                                </Link>
-                            ))
-                        }
-                    </div>
                     <div className='mt-5'>
 
                         {termoBusca && usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
                             <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
                                 <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
                                     <a className="block pb-1">
-                                        <CardCliente dados={item} />
+                                        <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
                                     </a>
                                 </div>
                             </Link>
@@ -193,7 +186,7 @@ export default function Gestao() {
 
     return (
         <div className="items-center py-10">
-    
+
             <div className="flex items-center py-4 input-container">
                 <input
                     type="text"
@@ -203,7 +196,7 @@ export default function Gestao() {
                     className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                 />
             </div>
-    
+
             <Tabs defaultValue='Administrador'>
                 <TabsList className='will-change-contents gap-6'>
                     <div className='space-x-5'>
@@ -223,14 +216,21 @@ export default function Gestao() {
                         </button>
                     </div>
                 </TabsList>
-    
+
                 {termoBusca ? (
                     <div className='grid grid-cols-2 gap-3'>
-                        {/* Mostra os resultados filtrados */}
                         {usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
                             <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
                                 <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} className='bg-gray-300 rounded-lg flex-grow'>
-                                    <CardCliente dados={item} />
+                                    <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
+                                </div>
+                            </Link>
+                        ))}
+
+                        {clienteFiltrado.slice(inicioIndex, finalIndex).map(item => (
+                            <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
+                                <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} className='bg-gray-300 rounded-lg flex-grow'>
+                                    <CardUsuario nome={item.nome} email={item.email} cargoId={4} />
                                 </div>
                             </Link>
                         ))}
@@ -252,10 +252,10 @@ export default function Gestao() {
                     </>
                 )}
             </Tabs>
-    
+
         </div>
     );
-    
+
 
 
 }

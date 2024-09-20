@@ -1,6 +1,6 @@
-import {criarCookie, getCookie} from "./coockie";
-import {Cargos} from "./interfaces/dadosUsuarios";
-import {backendURL} from "./URLS/backendURL";
+import { criarCookie, getCookie } from "./coockie";
+import { Cargos } from "./interfaces/dadosUsuarios";
+import { backendURL } from "./URLS/backendURL";
 
 export async function createNewUserGestao(
     newNome: string,
@@ -12,11 +12,11 @@ export async function createNewUserGestao(
         {
             method: "POST",
             body: JSON.stringify({
-                    nome: newNome,
-                    cargo_id: newCargoid,
-                    senha: newSenha,
-                    email: newEmail
-                }
+                nome: newNome,
+                cargo_id: newCargoid,
+                senha: newSenha,
+                email: newEmail
+            }
             )
         });
     const response = await request.json();
@@ -31,14 +31,14 @@ export async function validacaoLogin(
     const request = await fetch(`${backendURL()}/UserService.php?acao=validacaoLogin`, {
         method: "POST",
         body: JSON.stringify({
-                email: newEmail,
-                senha: newSenha
-            }
+            email: newEmail,
+            senha: newSenha
+        }
         )
     });
-    
+
     const response = await request.json();
-    
+
     if (response != 0) {
         if (response[0].status_usuario === 1) {
             await criarCookie("CookiCriado", response[0].id);
@@ -97,8 +97,10 @@ export async function getAllCargo() {
     return dados;
 }
 
-export function     escolheTipoCliente(cargo_id: number) {
+export function escolheTipoCliente(cargo_id: number) {
     switch (cargo_id) {
+
+
         case Cargos.Administrador:
             return "Administrador"
             break;
@@ -108,6 +110,10 @@ export function     escolheTipoCliente(cargo_id: number) {
         case Cargos.Financeiro:
             return "Financeiro"
             break
+
+        case Cargos.Cliente:
+            return "Cliente"
+            break;
     }
 }
 
@@ -128,12 +134,12 @@ export async function updateUser(
     const request = await fetch(`${backendURL()}/UserService.php?acao=UpdateUserById&id=${paramsId}`, {
         method: "POST",
         body: JSON.stringify({
-                nome: newNome,
-                cargo_id: newCargoid,
-                senha: newSenha,
-                status_usuario: newStatus,
-                email: newEmail
-            }
+            nome: newNome,
+            cargo_id: newCargoid,
+            senha: newSenha,
+            status_usuario: newStatus,
+            email: newEmail
+        }
         )
     });
     const response = await request.json();
@@ -149,10 +155,10 @@ export async function updatePerfil(
     const request = await fetch(`${backendURL()}/UserService.php?acao=UpdateUserById&id=${paramsId}`, {
         method: "POST",
         body: JSON.stringify({
-                nome: newNome,
-                senha: newSenha,
-                email: newEmail
-            }
+            nome: newNome,
+            senha: newSenha,
+            email: newEmail
+        }
         )
     });
     const response = await request.json();

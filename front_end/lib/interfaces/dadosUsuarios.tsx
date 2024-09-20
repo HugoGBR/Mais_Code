@@ -9,7 +9,8 @@ export interface dadosUsuario {
 export enum Cargos{
     Administrador = 1,
     Vendedor = 2,
-    Financeiro = 3
+    Financeiro = 3,
+    Cliente = 4
 }
 export interface DadosCargos{
   id: number,
