@@ -106,10 +106,10 @@ export function escolheTipoCliente(cargo_id: number) {
             break;
         case Cargos.Vendedor:
             return "Vendedor"
-            break
+            break;
         case Cargos.Financeiro:
             return "Financeiro"
-            break
+            break;
 
         case Cargos.Cliente:
             return "Cliente"
