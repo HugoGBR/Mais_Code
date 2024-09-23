@@ -125,3 +125,47 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER COMISSÃO
+AFTER INSERT ON vendas
+FOR EACH ROW
+BEGIN
+  DECLARE i INT DEFAULT 1;
+  DECLARE total_parcelas INT;
+  DECLARE valor_parcela DECIMAL(8,2);
+  DECLARE data_pagamento DATE;
+  DECLARE user_id BIGINT(20);
+  DECLARE status_cliente INT;
+  
+  -- Recupera o total de parcelas e o valor da parcela da tabela parcelas
+  SELECT total_parcela, valor_da_parcela INTO total_parcelas, valor_parcela FROM parcelas WHERE id_venda = NEW.id LIMIT 1;
+  
+  -- Recupera a data de início do contrato, o id do usuário e o status_cliente
+  SET data_pagamento = NEW.inicio_contrato;
+  SET user_id = NEW.usuario_id;
+  SET status_cliente = NEW.status_cliente;
+  
+  -- Loop para inserir todas as comissões de acordo com o número de parcelas
+  WHILE i <= total_parcelas DO
+    -- Insere as informações na tabela bancocomissao
+    INSERT INTO bancocomissao (id_venda, user_id, comissao_total, data_pagamento, numero_da_parcela, status)
+    VALUES (
+      NEW.id, 
+      user_id, 
+      (valor_parcela * (status_cliente / 100)),  -- Calcula a comissão com base no status_cliente
+      DATE_ADD(data_pagamento, INTERVAL (i - 1) MONTH),  -- Adiciona i-1 meses à data de início do contrato
+      i, 
+      (SELECT status FROM parcelas WHERE id_venda = NEW.id AND numero_da_parcela = i)  -- Recupera o status de cada parcela
+    );
+    
+    -- Incrementa o contador
+    SET i = i + 1;
+  END WHILE;
+END $$
+
+DELIMITER ;
+
+
+

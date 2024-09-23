@@ -194,7 +194,7 @@ export default function CardCadastro() {
                 });
     
                 resetForm();
-                route.push("/routes/cadastros");
+                route.push("/routes/home");
     
             } else {
                 // Lança erro se a resposta for falsa
