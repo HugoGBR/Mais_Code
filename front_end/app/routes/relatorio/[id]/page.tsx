@@ -1,19 +1,14 @@
-'use client'
+'use client';
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
-
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getVendaById, updateVenda } from "@/lib/VendaController";
+import { CancelamentodaVenda, getVendaById, updateVenda } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosProduto, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
-
 import { getAllContratos } from "@/lib/ContratoController";
-
 import CardCliente from '@/components/CardClienteGestao';
 import PopUpConfig from "@/components/PopUpConfig";
-
-
 
 export default function EditVenda({ params }: { params: { id: number } }) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
@@ -40,14 +35,12 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState<number>(0);
 
-
-
     const route = useRouter();
 
     useEffect(() => {
         async function fetchVenda() {
             const vendaData = await getVendaById(params.id);
-            console.log(vendaData)
+            console.log(vendaData);
             if (vendaData) {
                 setVenda(vendaData);
                 setValorEntrada(vendaData.valor_entrada);
@@ -59,7 +52,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 setnew_cliente_id(vendaData.cliente_id.toString());
                 setnew_tipo_contrato_id(vendaData.tipo_contrato_id.toString());
                 setnew_produto_id(vendaData.produto_id.toString());
-                setProdutoNome(vendaData.nome_produto)
+                setProdutoNome(vendaData.nome_produto);
                 setnew_usuario_id(vendaData.usuario_id.toString());
                 setvalortotal(vendaData.valor_total);
                 setmetodo_pagamento(vendaData.metodo_pagamento);
@@ -74,8 +67,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         fetchVenda();
     }, [params.id]);
 
-
-
     useEffect(() => {
         const fetchData = async () => {
             const tipos_contrato = await getAllContratos();
@@ -85,8 +76,20 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         fetchData();
     }, []);
 
-
-    async function handleSubmit(event: FormEvent) {
+  
+    async function handleCancel() {
+        try {
+            const response = await CancelamentodaVenda(params.id);
+            if (response.status === 1) {
+                alert(response.message); 
+                route.push('/routes/relatorio'); 
+            } else {
+                alert(response.message); 
+            }
+        } catch (error) {
+            console.error("Erro ao cancelar a venda:", error);
+            alert("Erro ao cancelar a venda.");
+        }
     }
 
     async function handleSearchCPF(event: FormEvent) {
@@ -107,13 +110,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
             </Link>
         );
     };
-    
-    
-    function CancelamentodaVend(event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        
-        console.log("Venda cancelada com sucesso");
-       
-    }
 
     return (
         <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
@@ -124,7 +120,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             <h1>Contrato</h1>
                             <h1 className="hidden">Nº </h1>
                         </div>
-                        
 
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
 
@@ -139,7 +134,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                         <div className="grid md:grid-cols-12 gap-5 mb-5 disabled">
                             <div className="md:col-span-6">
                                 <label className="mb-2">Status Cliente</label>
-                                <Select value={statusCliente} >
+                                <Select value={statusCliente}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Status Cliente" />
                                     </SelectTrigger>
@@ -149,7 +144,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     </SelectContent>
                                 </Select>
                             </div>
-                                
 
                             <div className="md:col-span-6">
                                 <label className="mb-2">Produto</label>
@@ -165,7 +159,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                         </div>
 
                         <div className="md:grid md:grid-cols-2 gap-5 mt-5">
-
                             <div className="flex flex-col mb-5">
                                 <label className="text-sm" htmlFor="teste">Data Inicio</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500" value={DataInicio}
@@ -192,8 +185,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                         ))}
                                     </SelectContent>
                                 </Select>
-
-
                             </div>
                             <div className="flex flex-col mb-5 md:ml-5">
                                 <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
@@ -239,7 +230,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                 placeholder="R$ 0000,00" type="text" value={valor_entrada}
                                 onChange={(event) => setValorEntrada(event.target.value)} />
                         </div>
-                      
 
                         <h2 className="font-bold mb-5">Metodo de Pagamento</h2>
                         <div className="space-y-4 md:flex md:justify-between md:w-full">
@@ -276,7 +266,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                         checked={metodo_pagamento === "Parcelado"}
                                         onChange={() => {
                                             setMostrarParcelas(true);
-                                        }} 
+                                        }}
                                     />
                                     <label
                                         htmlFor="pagamento-opcao-2"
@@ -302,21 +292,17 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             )}
                         </div>
 
-
-
                         <div className="mt-5 text-center grid grid-cols-2 gap-4 ">
-                        <button onClick={CancelamentodaVend}
-                            type="submit" 
-                            className=" p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white">
-                            Cancelar Venda
-                            
-                        </button>
-                        
-                        
                             <button 
-                            type="submit"
-                            className=" p-2 font-bold text-white  bg-blue-500 rounded hover:bg-blue-700">
-                                 
+                                type="button" 
+                                onClick={handleCancel} 
+                                className="p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white">
+                                Cancelar Venda
+                            </button>
+                            
+                            <button 
+                                type="submit"
+                                className="p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                 SALVAR
                             </button>
                         </div>
