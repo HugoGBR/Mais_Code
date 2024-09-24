@@ -125,7 +125,7 @@ BEGIN
 END $$
 
 DELIMITER ;
-
+drop * trigger
 DELIMITER $$
 
 CREATE TRIGGER COMISSÃO
@@ -167,5 +167,74 @@ END $$
 
 DELIMITER ;
 
+DELIMITER $$
+
+CREATE TRIGGER after_venda_status_update
+AFTER UPDATE ON vendas
+FOR EACH ROW
+BEGIN
+  IF NEW.status = 'cancelado' THEN
+    -- Atualiza as parcelas associadas à venda, exceto aquelas com status 'pago'
+    UPDATE parcelas 
+    SET status = 'cancelado'
+    WHERE id_venda = NEW.id AND status != 'pago';
+
+    -- Atualiza as comissões associadas à venda, exceto aquelas com status 'pago'
+    UPDATE bancocomissao 
+    SET status = 'cancelado'
+    WHERE id_venda = NEW.id AND status != 'pago';
+  END IF;
+END $$
+
+DELIMITER ;
+DELIMITER $$
+
+CREATE TRIGGER after_parcela_status_update
+AFTER UPDATE ON parcelas
+FOR EACH ROW
+BEGIN
+  IF NEW.status = 'pago' THEN
+    -- Atualiza o status da comissão correspondente à parcela
+    UPDATE bancocomissao 
+    SET status = 'pago'
+    WHERE id_venda = NEW.id_venda 
+    AND numero_da_parcela = NEW.numero_da_parcela;
+  END IF;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER after_venda_insert_with_entrada
+AFTER INSERT ON vendas
+FOR EACH ROW
+BEGIN
+  -- Verifica se a venda possui valor de entrada diferente de zero
+  IF NEW.valor_entrada > 0 THEN
+    -- Insere a parcela correspondente ao valor de entrada
+    INSERT INTO parcelas (id_venda, total_parcela, numero_da_parcela, valor_da_parcela, status)
+    VALUES (
+      NEW.id,        -- id_venda
+      1,             -- total_parcela igual a 1
+      1,             -- numero_da_parcela igual a 1
+      NEW.valor_entrada, -- valor_da_parcela igual ao valor_entrada
+      1              -- status igual a 1
+    );
+
+    -- Insere a comissão correspondente ao valor de entrada
+    INSERT INTO bancocomissao (id_venda, user_id, comissao_total, data_pagamento, numero_da_parcela, status)
+    VALUES (
+      NEW.id,        -- id_venda
+      NEW.usuario_id, -- user_id igual ao usuario_id da venda
+      (NEW.valor_entrada * (NEW.status_cliente / 100)), -- comissao_total calculada com base no valor_entrada e status_cliente
+      NEW.inicio_contrato, -- data_pagamento igual ao inicio_contrato
+      0,             -- numero_da_parcela igual a 0
+      1              -- status igual a 1
+    );
+  END IF;
+END $$
+
+DELIMITER ;
 
 
