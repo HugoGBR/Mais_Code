@@ -178,13 +178,12 @@ class Usercontroller
                 return json_encode(['status' => 0, 'message' => 'Usuário não encontrado.']);
             }
     
-            $sql = "UPDATE usuarios SET nome = :nome, senha = :senha, email = :email, status_usuario = :status_usuario WHERE id = :id";
+            $sql = "UPDATE usuarios SET nome = :nome, senha = :senha, email = :email WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':nome', $user->nome);
             $stmt->bindParam(':senha', $user->senha);
             $stmt->bindParam(':email', $user->email);
-            $stmt->bindParam(':status_usuario', $user->status_usuario);
     
             if ($stmt->execute()) {
                 return json_encode(['status' => 1, 'message' => 'Registro atualizado com sucesso.']);
