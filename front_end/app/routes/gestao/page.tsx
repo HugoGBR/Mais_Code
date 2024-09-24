@@ -114,7 +114,7 @@ export default function Gestao() {
             <>
 
 
-                <div className='flex flex-col md:grid md:grid-cols-2 gap-4'> {listaCliente.slice(inicioIndex, finalIndex).map(client => (
+                <div className='flex flex-col md:grid md:grid-cols-2 gap-1'> {listaCliente.slice(inicioIndex, finalIndex).map(client => (
                     <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
                         <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300  rounded-lg flex-grow'>
                             <a className="block w-full">
@@ -154,17 +154,19 @@ export default function Gestao() {
         return (
             <>
                 <div>
-                    <div className='mt-5'>
+                    <div className='mt-5 grid grid-cols-2 gap-1'>
                         {listaUsuarioFiltrada.slice(inicioIndex, finalIndex).map(item => (
-                            <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
-                                <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
+                            <Link href={`/routes/gestao/user/${item.id}`} key={item.id} className='w-80 flex'>
+                                <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
                                     <a className="block pb-1">
                                         <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
                                     </a>
                                 </div>
                             </Link>
                         ))}
-                        <Pagination >
+                        
+                    </div>
+                    <Pagination >
                             <PaginationContent>
                                 <PaginationItem>
                                     <PaginationPrevious onClick={PaginaAnterior} />
@@ -176,9 +178,7 @@ export default function Gestao() {
                                     <PaginationNext onClick={() => ProximaPagina(listaUsuarioFiltrada)} />
                                 </PaginationItem>
                             </PaginationContent>
-                        </Pagination>
-                    </div>
-
+                        </Pagination>   
                 </div>
 
             </>
