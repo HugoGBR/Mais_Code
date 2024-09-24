@@ -156,8 +156,8 @@ export default function Gestao() {
                 <div>
                     <div className='mt-5 grid grid-cols-2 gap-1'>
                         {listaUsuarioFiltrada.slice(inicioIndex, finalIndex).map(item => (
-                            <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
-                                <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
+                            <Link href={`/routes/gestao/user/${item.id}`} key={item.id} className='w-80 flex'>
+                                <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
                                     <a className="block pb-1">
                                         <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
                                     </a>
