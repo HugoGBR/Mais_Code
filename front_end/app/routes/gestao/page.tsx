@@ -86,15 +86,17 @@ export default function Gestao() {
         const nomeCliente = usuario?.nome || "";
         const cargoUsuario = usuario?.cargo || "";
 
-
         return (
+            termoBusca.trim() === "" ||
             nomeCliente.toLowerCase().includes(termoBusca.toLowerCase()) ||
             cargoUsuario.toLowerCase().includes(termoBusca.toLowerCase())
         );
     });
+
     const clienteFiltrado = listaCliente.filter((cliente) => {
         const nomeCliente = cliente?.nome || "";
         return (
+            termoBusca.trim() === "" ||
             nomeCliente.toLowerCase().includes(termoBusca.toLowerCase())
         );
     });
@@ -116,7 +118,7 @@ export default function Gestao() {
                     <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
                         <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300  rounded-lg flex-grow'>
                             <a className="block w-full">
-                                <CardUsuario nome={client.nome} email={client.email} cargoId={4}   />
+                                <CardUsuario nome={client.nome} email={client.email} cargoId={4} />
                             </a>
                         </div>
                     </Link>
@@ -153,8 +155,7 @@ export default function Gestao() {
             <>
                 <div>
                     <div className='mt-5'>
-
-                        {termoBusca && usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
+                        {listaUsuarioFiltrada.slice(inicioIndex, finalIndex).map(item => (
                             <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
                                 <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
                                     <a className="block pb-1">
@@ -220,8 +221,8 @@ export default function Gestao() {
                 {termoBusca ? (
                     <div className='grid grid-cols-2 gap-3'>
                         {usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
-                            <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
-                                <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} className='bg-gray-300 rounded-lg flex-grow'>
+                            <Link href={`/routes/gestao/user/${item.id}`} key={item.id} className='w-80 flex'>
+                                <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} className='bg-gray-300 rounded-lg flex-grow'>
                                     <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
                                 </div>
                             </Link>

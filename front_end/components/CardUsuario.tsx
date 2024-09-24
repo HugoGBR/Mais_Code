@@ -1,4 +1,4 @@
-
+'use client'
 import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
 import { escolheTipoCliente } from "@/lib/UsuarioController";
 import Link from "next/link";
