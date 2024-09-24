@@ -1,9 +1,9 @@
 "use client";
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Cardfinanceiro from '@/components/Carduserfinanceiro';
 import Link from "next/link";
-import {getAllFinan} from '@/lib/FinanceiroController';
+import { getAllFinan } from '@/lib/FinanceiroController';
 import {
     Pagination,
     PaginationContent,
@@ -13,14 +13,22 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-import {dadosUsuario} from "@/lib/interfaces/dadosUsuarios";
+import { dadosUsuario } from "@/lib/interfaces/dadosUsuarios";
 import ValidarTela from '@/components/ValidarTela';
+import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
+import { columns } from './TabelaComissao/columns';
 
 export default function Financeiro() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
     const [carregando, setCarregando] = useState(true);
     const [paginaAtual, setPaginaAtual] = useState(1);
+    const [termoBusca, setTermoBusca] = useState('');
     const itensPorPagina = 8;
+
+
+
+
+
 
     async function carregarUsuarios() {
         try {
@@ -46,17 +54,37 @@ export default function Financeiro() {
         setPaginaAtual(prevPage => Math.min(prevPage + 1, totalPages));
     };
 
+
+
     const inicioIndex = (paginaAtual - 1) * itensPorPagina;
     const finalIndex = inicioIndex + itensPorPagina;
 
+    const usuariosFiltrados = listaUsuarios.filter((usuario) => {
+        const nomeCliente = usuario?.nome_cliente || usuario?.nome || usuario?.cliente_nome || "";
+        return nomeCliente.toLowerCase().includes(termoBusca.toLowerCase());
+    });
+    console.log(listaUsuarios)
+
     return (
+
         <div>
-            <div className="md:grid md:grid-cols-2 flex flex-col gap-3">
-                {listaUsuarios.slice(inicioIndex, finalIndex).map(item => (
+
+            <div className="flex items-center py-4 input-container">
+                <input
+                    type="text"
+                    placeholder="Pesquisar..."
+                    value={termoBusca}
+                    onChange={(event) => setTermoBusca(event.target.value)}
+                    className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                />
+            </div>
+
+            <div className='grid grid-cols-2 gap-3'>
+                {usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
                     <Link href={`/routes/financeiro/${item.id}`} key={item.id}>
                         <div>
                             <a className="block">
-                                <Cardfinanceiro dados={item}/>
+                                <Cardfinanceiro dados={item} />
                             </a>
                         </div>
                     </Link>
@@ -66,16 +94,17 @@ export default function Financeiro() {
             <Pagination>
                 <PaginationContent>
                     <PaginationItem>
-                        <PaginationPrevious onClick={PaginaAnterior}/>
+                        <PaginationPrevious onClick={PaginaAnterior} />
                     </PaginationItem>
                     <PaginationItem>
                         <h2>{paginaAtual}</h2>
                     </PaginationItem>
                     <PaginationItem>
-                        <PaginationNext onClick={ProximaPagina}/>
+                        <PaginationNext onClick={ProximaPagina} />
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>
         </div>
     );
 }
+

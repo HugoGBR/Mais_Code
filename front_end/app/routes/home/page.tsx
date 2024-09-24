@@ -1,11 +1,12 @@
 'use client'
-import React from 'react';
+import React, { useEffect } from 'react';
 import RelatorioHome from '@/components/relatorioHome';
 import ApexAreaChart from "@/components/GraficoHome";
 import CardSalarioHome from "@/components/CardSalarioHome";
 import MenssagemBemVindo from '@/components/MenssagemBemVindo';
 
 export default function HomePage() {
+
     return (
         <div className="bg-gray-100 flex-col items-center justify-center w-8/12">
             <div className='flex flex-col gap-y-8 md:flex-row mb-8 justify-between'>

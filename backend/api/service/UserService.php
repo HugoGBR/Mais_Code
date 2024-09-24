@@ -74,7 +74,14 @@ if (isset($_REQUEST["acao"])) {
                 echo json_encode(["error" => "Ação UpdateUserById necessita de um ID"]);
             }
             break;
-
+        case "updateUserPerfil":
+            if ($id !== null) {
+                $user = $userController->updateUserPerfil($id);
+                echo json_encode($user);
+            } else {
+                echo json_encode(["error" => "Ação updateUserPerfil necessita de um ID"]);
+            }
+            break;
         case "validacaoLogin":
             if ($id !== null) {
                 echo json_encode(["error" => "Ação validacaoLogin não aceita um ID"]);

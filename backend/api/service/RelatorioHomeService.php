@@ -16,19 +16,16 @@ switch ($acao) {
             echo "Ação 'getRelatorioHome' não aceita um ID";
         } else {
             $users = $relatorioManager->getRelatorioHome();
-            echo json_encode($users); 
+            echo json_encode($users);
         }
         break;
-    
-    case "getPodiumVendedor":
+
+    case "getDadosGrafico":
         if ($id !== null) {
             echo "Ação 'getRelatorioHome' não aceita um ID";
         } else {
-            $users = $relatorioManager->getPodiumVendedor();
-            echo json_encode($users); 
+            $users = $relatorioManager->getDadosGrafico();
+            echo json_encode($users);
         }
         break;
-        
-    default:
-        echo "Rota não encontrada";
 }
