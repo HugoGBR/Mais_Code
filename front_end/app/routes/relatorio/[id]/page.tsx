@@ -2,19 +2,17 @@
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
-import { GoGear } from "react-icons/go";
+
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getVendaById, updateVenda } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosProduto, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
-import { getAllProduto } from "@/lib/ProdutoController";
+
 import { getAllContratos } from "@/lib/ContratoController";
-import { getAllClient } from "@/lib/ClienteController";
+
 import CardCliente from '@/components/CardClienteGestao';
 import PopUpConfig from "@/components/PopUpConfig";
-import { getCookie } from "@/lib/coockie";
-import { CSVLink } from "react-csv";
-import { Button } from "@/components/ui/button";
+
 
 
 export default function EditVenda({ params }: { params: { id: number } }) {
@@ -111,7 +109,12 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     };
     
     
-    
+    function CancelamentodaVend(event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        
+        console.log("Venda cancelada com sucesso");
+       
+    }
+
     return (
         <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
             <div className="w-full lg:w-3/5">
@@ -302,7 +305,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
 
 
                         <div className="mt-5 text-center grid grid-cols-2 gap-4 ">
-                        <button
+                        <button onClick={CancelamentodaVend}
                             type="submit" 
                             className=" p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white">
                             Cancelar Venda

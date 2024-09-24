@@ -89,8 +89,8 @@ class RelatorioController
         
         JOIN usuarios ON vendas.usuario_id = usuarios.id
         
-        WHERE vendas.status IN ('concluido', 'em andamento') AND YEAR(vendas.inicio_contrato) = YEAR(:data)
-        
+        WHERE vendas.status IN ('concluido', 'em andamento', 'cancelado ') AND YEAR(vendas.inicio_contrato) = YEAR(:data)
+   
         ORDER BY vendas.inicio_contrato DESC
         
         LIMIT 0,1000;";

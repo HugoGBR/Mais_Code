@@ -62,7 +62,17 @@ switch ($acao) {
             echo json_encode($mensagem);
         }
         break;
+        case "CancelamentodaVenda":
+            if ($id !== null) {
+                $user = $vendaController->CancelamentodaVenda($id);
+                echo json_encode($user);
+            } else {
+                echo json_encode(["error" => "Ação GetVendaById necessita de um ID"]);
+            }
+            break;
     default:
         echo json_encode(["error" => "Rota não encontrada"]);
         break;
+
+       
 }
