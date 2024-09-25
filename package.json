@@ -11,5 +11,8 @@
     "npm": "^10.8.0",
     "react-apexcharts": "^1.4.1",
     "react-cookie": "^7.1.4"
+  },
+  "devDependencies": {
+    "@types/react-csv": "^1.1.10"
   }
 }

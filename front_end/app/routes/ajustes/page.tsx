@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
@@ -12,41 +12,40 @@ import { getAllContratos } from "@/lib/ContratoController";
 import { getAllProduto } from "@/lib/ProdutoController";
 import ValidarTela from "@/components/ValidarTela";
 import { getAllTiposClientes } from "@/lib/TipoClienteController";
+import AuthGuard from "@/components/ValidarTela";
 
 export default function Ajuste() {
-    const [data, setData] = useState({
-        produtos: [],
-        contratos: []
-    });
+  const [data, setData] = useState({
+    produtos: [],
+    contratos: [],
+  });
 
-    const getDados = async () => {
-        try {
-            const [produtos, contratos] = await Promise.all([
-                getAllProduto(),
-                getAllContratos(),
-            ]);
-            setData({ produtos, contratos });
-        } catch (error) {
-            console.error('Erro ao buscar dados:', error);
-        }
+  const getDados = async () => {
+    try {
+      const [produtos, contratos] = await Promise.all([
+        getAllProduto(),
+        getAllContratos(),
+      ]);
+      setData({ produtos, contratos });
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
     }
+  };
 
-    useEffect(() => {
-        getDados();
-    }, []);
+  useEffect(() => {
+    getDados();
+  }, []);
 
-    return (
-        <div className="flex flex-col gap-3 md:flex md:flex-row">
-            <div className="h-auto">
-                <TableProduto columns={ColumnsProdutos} data={data.produtos} />
-            </div>
-            <div className="gap-3 h-auto w-auto flex flex-col">
-                <TabelaContrato columns={ColumnsContrato} data={data.contratos} />
-            </div>
+  return (
+    <AuthGuard>
+      <div className="flex flex-col gap-3 md:flex md:flex-row">
+        <div className="h-auto">
+          <TableProduto columns={ColumnsProdutos} data={data.produtos} />
         </div>
-    )
+        <div className="gap-3 h-auto w-auto flex flex-col">
+          <TabelaContrato columns={ColumnsContrato} data={data.contratos} />
+        </div>
+      </div>
+    </AuthGuard>
+  );
 }
-
-
-
-
