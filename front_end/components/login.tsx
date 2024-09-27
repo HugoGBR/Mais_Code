@@ -49,9 +49,12 @@ const LoginPage = () => {
                         <div className="w-full flex flex-col justify-center md:mb-16">
                             <h1 className="text-center md:mt-20 mb-8 text-3xl">FAÇA LOGIN</h1>
                             <form id="loginform" onSubmit={handleSubmit(handleFormSubmit)}>
-                                <div className="flex flex-col">
-                                    <input type="text" id="loginname" placeholder="Login" {...register("user")} className="ps-2 border-b-2 h-10 focus:border-b-2
-                            focus:outline-none focus:border-blue-500"/>
+                                <div className="flex flex-col gap-3">
+                                    <input 
+                                    type="text" 
+                                    id="loginname" 
+                                    placeholder="Login" {...register("user")} 
+                                    className="ps-2 border-b-2 h-10 focus:border-b-2 focus:outline-none focus:border-blue-500"/>
                                     {memoizedErrors.user}
 
                                     <div className="max-w-sm">
