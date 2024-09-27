@@ -123,7 +123,7 @@ export default function CardCadastro() {
             toast({
                 title: "Erro de Validação",
                 description: "Por favor, preencha todos os campos obrigatórios.",
-                className: "bg-red-600 text-white"
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
             return false;
         }
@@ -155,15 +155,15 @@ export default function CardCadastro() {
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
-    
+
         if (!validateForm()) return;
-    
+
         const datadoinicio = new Date(DataInicio);
         const datadofim = new Date(DataFim);
-    
+
         try {
             console.log("Tentando cadastrar a venda...");
-    
+
             const vendaResponse = await createNewSell(
                 Number(new_cliente_id),
                 Number(new_tipo_contrato_id),
@@ -182,20 +182,20 @@ export default function CardCadastro() {
                 Number(numero_parcelo),
                 2
             );
-    
+
             // Verifica se a resposta da venda é verdadeira (true)
             if (vendaResponse) {
                 console.log("Venda cadastrada com sucesso.");
-    
+
                 toast({
                     title: "Sucesso",
                     description: "Cadastro realizado com sucesso!",
-                    className: "bg-green-500 text-white",
+                    className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400"
                 });
-    
+
                 resetForm();
                 route.push("/routes/home");
-    
+
             } else {
                 // Lança erro se a resposta for falsa
                 throw new Error("Erro ao cadastrar a venda: resposta inválida");
@@ -205,18 +205,15 @@ export default function CardCadastro() {
             toast({
                 title: "Erro",
                 description: "Falha ao cadastrar a venda",
-                className: "bg-red-600 text-white",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
         }
     }
-    
-    
-    
 
     async function handleSubmitParcela(vendaId: number, numeroParcelas: number, valoresParcelas: number[], toast: any) {
         try {
             console.log("Iniciando cadastro das parcelas...");
-    
+
             for (let i = 0; i < numeroParcelas; i++) {
                 const valorParcela = valoresParcelas[i] || 0;
                 const responseParcela = await createNewParcela(
@@ -226,34 +223,34 @@ export default function CardCadastro() {
                     valorParcela,
                     2
                 );
-    
+
                 // Verifica se a resposta da parcela contém um erro
                 if (responseParcela && responseParcela.status === 0) {
                     throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
                 }
-    
+
                 console.log(`Parcela ${i + 1} cadastrada com sucesso.`);
             }
-    
+
             toast({
                 title: "Sucesso",
                 description: "Parcelas cadastradas com sucesso!",
-                className: "bg-green-500 text-white",
+                className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
             });
-    
+
         } catch (error) {
             console.error("Erro ao cadastrar as parcelas:", error);
             toast({
                 title: "Erro",
                 description: "Falha ao cadastrar as parcelas",
-                className: "bg-red-600 text-white",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
-    
+
             // Relança o erro para ser capturado no handleSubmit
             throw error;
         }
     }
-    
+
 
     async function handleSearchCPF(event: FormEvent) {
         event.preventDefault();
@@ -263,7 +260,7 @@ export default function CardCadastro() {
             toast({
                 title: "Erro de Validação",
                 description: "Cliente não encontrado",
-                className: "bg-red-600 text-white"
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
         }
     }
@@ -470,21 +467,25 @@ export default function CardCadastro() {
                                 </div>
                                 {mostrarParcelas && (
                                     <div className="flex space-x-4">
-                                        <input
-                                            className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
-                                            placeholder="36x"
-                                            type="number"
-                                            min="1"
-                                            value={numero_parcelo}
-                                            onChange={(event) => setnumero_parcelo(Number(event.target.value))}
-                                        />
-                                        <PopUpConfig
-                                            valorTotal={valor_total}
-                                            parcelas={numero_parcelo}
-                                            onSetValoresParcelas={handleSetValoresParcelas}
-                                            onConfirm={(vendaId, numeroParcelas, valoresParcelas) => handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)}
-                                            idVenda={id_venda}
-                                        />
+                                        <div>
+                                            <input
+                                                className="border-b-2 text-center w-14 focus:outline-none focus:border-blue-500"
+                                                placeholder="36x"
+                                                type="number"
+                                                min="1"
+                                                value={numero_parcelo}
+                                                onChange={(event) => setnumero_parcelo(Number(event.target.value))}
+                                            />
+                                        </div>
+                                        <div>
+                                            <PopUpConfig
+                                                valorTotal={valor_total}
+                                                parcelas={numero_parcelo}
+                                                onSetValoresParcelas={handleSetValoresParcelas}
+                                                onConfirm={(vendaId, numeroParcelas, valoresParcelas) => handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)}
+                                                idVenda={id_venda}
+                                            />
+                                        </div>
                                     </div>
                                 )}
                             </div>

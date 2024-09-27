@@ -9,6 +9,9 @@ import { dadosCliente, dadosModelo_contrato, dadosProduto, dadosVenda } from "@/
 import { getAllContratos } from "@/lib/ContratoController";
 import CardCliente from '@/components/CardClienteGestao';
 import PopUpConfig from "@/components/PopUpConfig";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+import { Span } from "next/dist/trace";
 
 export default function EditVenda({ params }: { params: { id: number } }) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
@@ -34,8 +37,10 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState<number>(0);
+    const [statusVenda, setStatusVenda] = useState("");
 
     const route = useRouter();
+    const { toast } = useToast();
 
     useEffect(() => {
         async function fetchVenda() {
@@ -62,11 +67,12 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 setstatusClienteValor(vendaData.status_cliente);
                 setCpfCnpjInput(vendaData.cpf_cnpj);
                 setMostrarParcelas(vendaData.metodo_pagamento === "Parcelado");
+                setStatusVenda(vendaData.status_venda);
             }
         }
         fetchVenda();
     }, [params.id]);
-
+    console.log(statusVenda)
     useEffect(() => {
         const fetchData = async () => {
             const tipos_contrato = await getAllContratos();
@@ -76,20 +82,52 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         fetchData();
     }, []);
 
-  
+
     async function handleCancel() {
         try {
             const response = await CancelamentodaVenda(params.id);
+            console.log(response)
             if (response.status === 1) {
-                alert(response.message); 
-                route.push('/routes/relatorio'); 
-            } else {
-                alert(response.message); 
+                toast({
+                    title: "Sucesso",
+                    description: "Venda cancelada!",
+                    className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+                });
+                setTimeout(() => {
+                    route.push('/routes/relatorio');
+                }, 2000);
             }
         } catch (error) {
+            toast({
+                title: "Erro",
+                description: "Erro ao cancelar a venda!",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
+            alert("Erro ao cancelar a venda!");
             console.error("Erro ao cancelar a venda:", error);
-            alert("Erro ao cancelar a venda.");
         }
+    }
+
+    async function handleAtivarVenda() {
+        // try {
+        //     const response = await updateVenda(params.id, { status: 0 });
+        //     if (response.status === 1) {
+        //         setStatusVenda(0); // Atualiza o estado local para refletir a ativação
+        //         toast({
+        //             title: "Sucesso",
+        //             description: "Venda ativada!",
+        //             className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+        //         });
+        //     }
+        // } catch (error) {
+        //     toast({
+        //         title: "Erro",
+        //         description: "Erro ao ativar a venda!",
+        //         className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+        //     });
+        //     alert("Erro ao ativar a venda!");
+        //     console.error("Erro ao ativar a venda:", error);
+        // }
     }
 
     async function handleSearchCPF(event: FormEvent) {
@@ -131,22 +169,37 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                 value={cpf_cnpj_input}
                             />
                         </div>
-                        <div className="grid md:grid-cols-12 gap-5 mb-5 disabled">
-                            <div className="md:col-span-6">
-                                <label className="mb-2">Status Cliente</label>
-                                <Select value={statusCliente}>
+
+                        <div className="md:grid md:grid-cols-2 gap-5 mt-5">
+                            <div className="flex flex-col mb-5">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Data Inicio</label>
+                                <input className="border-b-2 focus:outline-none focus:border-blue-500" value={DataInicio}
+                                    placeholder="Data de inicio" type="date"
+                                    onChange={(event) => setDataInicio(event.target.value)} />
+                            </div>
+                            <div className="flex flex-col mb-5">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Data Termino</label>
+                                <input className="border-b-2 focus:outline-none focus:border-blue-500" value={DataFim} type="date"
+                                    onChange={(event) => setDataFim(event.target.value)} />
+                            </div>
+                        </div>
+
+                        <div className="md:grid md:grid-cols-3 gap-5 mb-5">
+                            <div className="md:col-span-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Modelo do Contratos</label>
+                                <Select value={new_tipo_contrato_id}>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Status Cliente" />
+                                        <SelectValue placeholder="Modelo do Contratos" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="antigo">Antigo</SelectItem>
-                                        <SelectItem value="novo">Novo</SelectItem>
+                                        {ModeloContrato.map((tipos_contrato) => (
+                                            <SelectItem key={tipos_contrato.id} value={tipos_contrato.id.toString()}>{tipos_contrato.nome}</SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                             </div>
-
-                            <div className="md:col-span-6">
-                                <label className="mb-2">Produto</label>
+                            <div className="md:col-span-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Produto</label>
                                 <Select value={new_produto_id}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Produto" />
@@ -156,40 +209,11 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     </SelectContent>
                                 </Select>
                             </div>
-                        </div>
 
-                        <div className="md:grid md:grid-cols-2 gap-5 mt-5">
-                            <div className="flex flex-col mb-5">
-                                <label className="text-sm" htmlFor="teste">Data Inicio</label>
-                                <input className="border-b-2 focus:outline-none focus:border-blue-500" value={DataInicio}
-                                    placeholder="Data de inicio" type="date"
-                                    onChange={(event) => setDataInicio(event.target.value)} />
-                            </div>
-                            <div className="flex flex-col mb-5">
-                                <label className="text-sm" htmlFor="teste">Data Termino</label>
-                                <input className="border-b-2 focus:outline-none focus:border-blue-500" value={DataFim} type="date"
-                                    onChange={(event) => setDataFim(event.target.value)} />
-                            </div>
-                        </div>
-
-                        <div className="md:grid md:grid-cols-2 ">
-                            <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
-                                <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
-                                <Select value={new_tipo_contrato_id}>
-                                    <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
-                                        <SelectValue placeholder="Tipo Contrato" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {ModeloContrato.map((tipos_contrato) => (
-                                            <SelectItem key={tipos_contrato.id} value={tipos_contrato.id.toString()}>{tipos_contrato.nome}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <div className="flex flex-col mb-5 md:ml-5">
-                                <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
+                            <div className="md:col-span-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Horas Trabalhadas</label>
                                 <input
-                                    className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    className="border-b-2 h-10 focus:outline-none focus:border-blue-500"
                                     placeholder="Horas"
                                     value={horas_trabalhadas}
                                     type="text"
@@ -219,99 +243,144 @@ export default function EditVenda({ params }: { params: { id: number } }) {
             </div>
 
             <div className="w-full lg:w-2/5">
-                <Card className="p-10 drop-shadow-xl">
-                    <form onSubmit={handleSearchCPF}>
-                        <div className="flex justify-center mb-6 text-2xl font-bold">
-                            <h1>Forma de Pagamento</h1>
-                        </div>
-                        <div className="flex mb-4 ">
-                            <label className="mr-4" htmlFor="teste">Valor da Entrada</label>
-                            <input className="border-b-2 w-28 focus:outline-none focus:border-blue-500"
-                                placeholder="R$ 0000,00" type="text" value={valor_entrada}
-                                onChange={(event) => setValorEntrada(event.target.value)} />
+                <form onSubmit={handleSearchCPF}>
+                    <Card className="p-10 drop-shadow-xl grid grid-cols-2 gap-5">
+                        <div className="col-span-2 text-2xl text-center font-bold">
+                            <span>Forma de Pagamento</span>
                         </div>
 
-                        <h2 className="font-bold mb-5">Metodo de Pagamento</h2>
-                        <div className="space-y-4 md:flex md:justify-between md:w-full">
-                            <div className="flex gap-3">
-                                <div className="flex items-center">
-                                    <input
-                                        id="pagamento-opcao-1"
-                                        type="radio"
-                                        name="forma-pagamento"
-                                        value="À vista"
-                                        className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                        aria-labelledby="pagamento-opcao-1"
-                                        aria-describedby="pagamento-opcao-1"
-                                        checked={metodo_pagamento === "À vista"}
-                                        onChange={() => {
-                                            setMostrarParcelas(false);
-                                        }}
-                                    />
-                                    <label
-                                        htmlFor="pagamento-opcao-1"
-                                        className="block ml-2 text-sm font-medium text-gray-900">
-                                        À vista
-                                    </label>
-                                </div>
-                                <div className="flex items-center">
-                                    <input
-                                        id="pagamento-opcao-2"
-                                        type="radio"
-                                        name="forma-pagamento"
-                                        value="Parcelado"
-                                        className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                        aria-labelledby="pagamento-opcao-2"
-                                        aria-describedby="pagamento-opcao-2"
-                                        checked={metodo_pagamento === "Parcelado"}
-                                        onChange={() => {
-                                            setMostrarParcelas(true);
-                                        }}
-                                    />
-                                    <label
-                                        htmlFor="pagamento-opcao-2"
-                                        className="block ml-2 text-sm font-medium text-gray-900">
-                                        Parcelado
-                                    </label>
-                                </div>
+                        <div className="col-span-2 grid grid-cols-2 items-center gap-5">
+                            <label className="block text-md font-bold text-gray-700">Valor da Entrada</label>
+                            <div className="relative w-full">
+                                <span className="absolute top-1/2 transform -translate-y-1/2 text-gray-500">
+                                    R$
+                                </span>
+                                <input
+                                    className="border-b-2 pl-8 w-full focus:outline-none focus:border-blue-500"
+                                    placeholder="0000,00"
+                                    type="text"
+                                    value={valor_entrada}
+                                    onChange={(event) => setValorEntrada(event.target.value)}
+                                />
+                            </div>
+                        </div>
+
+
+                        <div className="col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Status Cliente</label>
+                            <Select value={statusCliente}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Status Cliente" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="antigo">Antigo</SelectItem>
+                                    <SelectItem value="novo">Novo</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="col-span-2 font-bold">
+                            <h2 className="col-span-2">Método de Pagamento</h2>
+                        </div>
+
+                        <div className="col-span-2 grid grid-cols-12 ">
+                            <div className="col-span-3">
+                                <input
+                                    id="pagamento-opcao-1"
+                                    type="radio"
+                                    name="forma-pagamento"
+                                    value="À vista"
+                                    className="w-5 h-5 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                    aria-labelledby="pagamento-opcao-1"
+                                    aria-describedby="pagamento-opcao-1"
+                                    checked={metodo_pagamento === "À vista"}
+                                    onChange={() => {
+                                        setMostrarParcelas(false);
+                                        setmetodo_pagamento("À vista");
+                                    }}
+                                />
+                                <label
+                                    htmlFor="pagamento-opcao-1"
+                                    className="ml-2 text-sm font-medium text-gray-900">
+                                    À vista
+                                </label>
+                            </div>
+
+                            <div className="col-span-3">
+                                <input
+                                    id="pagamento-opcao-2"
+                                    type="radio"
+                                    name="forma-pagamento"
+                                    value="Parcelado"
+                                    className="w-5 h-5 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                    aria-labelledby="pagamento-opcao-2"
+                                    aria-describedby="pagamento-opcao-2"
+                                    checked={metodo_pagamento === "Parcelado"}
+                                    onChange={() => {
+                                        setMostrarParcelas(true);
+                                        setmetodo_pagamento("Parcelado");
+                                    }}
+                                />
+                                <label
+                                    htmlFor="pagamento-opcao-2"
+                                    className="ml-2 text-sm font-medium text-gray-900">
+                                    Parcelado
+                                </label>
                             </div>
 
                             {mostrarParcelas && (
-                                <div className="flex space-x-4">
-                                    <input
-                                        value={numero_parcela}
-                                        className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
-                                        placeholder="36x"
-                                        type="number"
-                                        onChange={(event) => setnumero_parcela(event.target.value)}
-                                    />
-                                    <Link href="">
-                                        <PopUpConfig valorTotal={valor_total} parcelas={numero_parcela} />
-                                    </Link>
+                                <div className="col-span-6 grid grid-cols-3 gap-x-5">
+                                    <div className="col-start-2">
+                                        <input
+                                            value={numero_parcela}
+                                            className="border-b-2 text-center w-full focus:outline-none focus:border-blue-500"
+                                            placeholder="36x"
+                                            type="number"
+                                            onChange={(event) => setnumero_parcela(event.target.value)}
+                                        />
+                                    </div>
+                                    <div className="col-span-1">
+                                        <Link href="">
+                                            <PopUpConfig valorTotal={valor_total} parcelas={numero_parcela} />
+                                        </Link>
+                                    </div>
                                 </div>
                             )}
                         </div>
-
-                        <div className="mt-5 text-center grid grid-cols-2 gap-4 ">
-                            <button 
-                                type="button" 
-                                onClick={handleCancel} 
-                                className="p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white">
-                                Cancelar Venda
-                            </button>
-                            
-                            <button 
-                                type="submit"
-                                className="p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                                SALVAR
-                            </button>
+                        <div className="col-span-2 grid grid-cols-2">
+                            <label className="font-bold col-span-1" htmlFor="teste">Valor total a pagar:</label>
+                            <h1 className="font-bold col-span-1 text-end">44584</h1>
                         </div>
-                    </form>
-                </Card>
+                        <div className="text-center col-span-2">
+                            <div className="grid grid-cols-2 gap-x-5">
+                                {statusVenda == "em andamento" ? (
+                                    <button
+                                        type="button"
+                                        onClick={handleCancel}
+                                        className="col-span-1 p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white">
+                                        Cancelar Venda
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={handleAtivarVenda}  // Função para ativar venda
+                                        className=" p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white">
+                                        Ativar Venda
+                                    </button>
+                                )}
+                                <button
+                                    type="submit"
+                                    className="col-span-1 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                    SALVAR
+                                </button>
+                            </div>
+                        </div>
+                    </Card>
+                </form >
                 <div className="flex flex-col mb-5 py-3">
                     {renderGestaoCliente()}
                 </div>
-            </div>
-        </div>
+            </div >
+            <Toaster />
+        </div >
     );
 }

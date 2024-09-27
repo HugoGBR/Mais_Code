@@ -1,6 +1,8 @@
-'use client';
+'use client'
 
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import {
     CardFooter,
 } from "@/components/ui/card";
@@ -71,7 +73,7 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
         <CardFooter className="flex justify-center items-center">
             <Dialog>
                 <DialogTrigger asChild>
-                    <GoGear className="w-8 h-8" />
+                    <FontAwesomeIcon icon={faSlidersH} className="w-8 h-8" />
                 </DialogTrigger>
                 <DialogContent className="pt-10 rounded-lg">
                     <div className="text-center">
