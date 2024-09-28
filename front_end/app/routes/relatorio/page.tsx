@@ -18,7 +18,7 @@ export default function Relatorio() {
         const Dados = await GetDadosVendaByData(new Date(startDate))
         setData(Dados)
     }
-    
+
     const getDadosYear = async () => {
         const Dados = await GetDadosVendaByYear(hoje)
         setData(Dados)
@@ -34,42 +34,33 @@ export default function Relatorio() {
         { label: "data_fim", key: "data_fim" },
         { label: "nome_cliente", key: "nome_cliente" },
         { label: "nome_vendedor", key: "nome_vendedor" }
-        
+
     ];
 
     return (
-        
-         <div>
-            <div className="flex gap-5 items-center py-5 input-container">
-                {/* <input
-                    type="text"
-                    placeholder="Pesquisar..."
-                    // value={(table.getColumn("nome_cliente")?.getFilterValue() as string) ?? ""}
-                    // onChange={(event) =>
-                    //     table.getColumn("nome_cliente")?.setFilterValue(event.target.value)
-                    // }
-                    className="max-w-sm border border-gray-300 rounded-md shadow-md shadow-gray-400 py-2 px-4 focus:outline-none focus:border-blue-500"
-                /> */}
 
-                <div className="flex gap-2 border bg-white border-gray-300 rounded-md shadow-md shadow-gray-400 p-2 focus:outline-none focus:border-blue-500">
+        <div>
+            <div className="flex gap-5 items-center py-5 input-container">
+                <div className="flex items-center gap-3 border border-gray-300 rounded-lg bg-white hover:shadow-lg px-4 py-2 transition-shadow duration-200">
                     <input
                         type="month"
                         id="start"
                         name="start"
                         min="2018-03"
                         value={startDate}
-                        onChange={(event) => setStartDate(event.target.value)}  // Atualizando o estado quando o valor muda
+                        onChange={(event) => setStartDate(event.target.value)}
+                        className="w-full bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-700"
                     />
                     <button
                         type="submit"
                         onClick={handleSubmit}
+                        className="p-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors duration-200"
                     >
-                        <FontAwesomeIcon icon={faSearch} className="text-[#122F54]" style={{ fontSize: '24px' }} />
+                        <FontAwesomeIcon icon={faSearch} className="text-xl" />
                     </button>
                 </div>
             </div>
             <DataTable columns={columns} data={data} />
         </div>
-
     );
 }

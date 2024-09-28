@@ -78,7 +78,7 @@ export default function ApexAreaChart() { // Verifique se ButtonProps √© necess√
     console.log(data)
 
     return (
-        <div className='w-full h-auto bg-white p-4 drop-shadow-xl rounded-xl grid grid-cols-1 items-center'>
+        <div className='w-full h-auto bg-white p-4 border hover:drop-shadow-lg rounded-xl grid grid-cols-1 items-center'>
             <Chart
                 options={data.options}
                 series={data.series}

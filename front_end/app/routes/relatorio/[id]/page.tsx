@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Link from "next/link";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CancelamentodaVenda, getVendaById, updateVenda } from "@/lib/VendaController";
+import { CancelamentodaVenda, getVendaById, ativarVenda } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosProduto, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
 import { getAllContratos } from "@/lib/ContratoController";
 import CardCliente from '@/components/CardClienteGestao';
@@ -72,7 +72,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         }
         fetchVenda();
     }, [params.id]);
-    console.log(statusVenda)
     useEffect(() => {
         const fetchData = async () => {
             const tipos_contrato = await getAllContratos();
@@ -86,11 +85,12 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     async function handleCancel() {
         try {
             const response = await CancelamentodaVenda(params.id);
+            console.log('teste')
             console.log(response)
             if (response.status === 1) {
                 toast({
                     title: "Sucesso",
-                    description: "Venda cancelada!",
+                    description: "Venda inativada!",
                     className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
                 });
                 setTimeout(() => {
@@ -100,34 +100,35 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         } catch (error) {
             toast({
                 title: "Erro",
-                description: "Erro ao cancelar a venda!",
+                description: "Erro ao inativada a venda!",
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
             });
-            alert("Erro ao cancelar a venda!");
             console.error("Erro ao cancelar a venda:", error);
         }
     }
 
     async function handleAtivarVenda() {
-        // try {
-        //     const response = await updateVenda(params.id, { status: 0 });
-        //     if (response.status === 1) {
-        //         setStatusVenda(0); // Atualiza o estado local para refletir a ativação
-        //         toast({
-        //             title: "Sucesso",
-        //             description: "Venda ativada!",
-        //             className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
-        //         });
-        //     }
-        // } catch (error) {
-        //     toast({
-        //         title: "Erro",
-        //         description: "Erro ao ativar a venda!",
-        //         className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
-        //     });
-        //     alert("Erro ao ativar a venda!");
-        //     console.error("Erro ao ativar a venda:", error);
-        // }
+        try {
+            const response = await ativarVenda(params.id);
+            console.log('teste')
+            if (response.status === 0) {
+                toast({
+                    title: "Sucesso",
+                    description: "Venda ativada!",
+                    className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+                });
+                setTimeout(() => {
+                    route.push('/routes/relatorio');
+                }, 2000);
+            }
+        } catch (error) {
+            toast({
+                title: "Erro",
+                description: "Erro ao ativar a venda!",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
+            console.error("Erro ao ativar a venda:", error);
+        }
     }
 
     async function handleSearchCPF(event: FormEvent) {
@@ -266,7 +267,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                         </div>
 
 
-                        <div className="col-span-2">
+                        <div className="col-span-1">
                             <label className="block text-sm font-medium text-gray-700 mb-2">Status Cliente</label>
                             <Select value={statusCliente}>
                                 <SelectTrigger>
@@ -351,28 +352,30 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             <h1 className="font-bold col-span-1 text-end">44584</h1>
                         </div>
                         <div className="text-center col-span-2">
-                            <div className="grid grid-cols-2 gap-x-5">
-                                {statusVenda == "em andamento" ? (
-                                    <button
-                                        type="button"
-                                        onClick={handleCancel}
-                                        className="col-span-1 p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white">
-                                        Cancelar Venda
-                                    </button>
-                                ) : (
-                                    <button
-                                        type="button"
-                                        onClick={handleAtivarVenda}  // Função para ativar venda
-                                        className=" p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white">
-                                        Ativar Venda
-                                    </button>
-                                )}
-                                <button
-                                    type="submit"
-                                    className="col-span-1 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                                    SALVAR
-                                </button>
-                            </div>
+                        <div className="text-center col-span-2">
+    <div className="grid grid-cols-2 gap-x-5">
+        {statusVenda === "em andamento" ? (
+            <button
+                type="button"
+                onClick={handleCancel}
+                className="col-span-1 p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white focus:outline-none">
+                Inativar Venda
+            </button>
+        ) : (
+            <button
+                type="button"
+                onClick={handleAtivarVenda}
+                className="col-span-1 p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
+                Ativar Venda
+            </button>
+        )}
+        <button
+            type="submit"
+            className="col-span-1 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
+            SALVAR
+        </button>
+    </div>
+</div>
                         </div>
                     </Card>
                 </form >

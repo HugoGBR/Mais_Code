@@ -197,7 +197,6 @@ class Vendacontroller
             $db->bindParam(":status", $parcela->status);
             $db->execute();
             return json_encode(["Mensagem" => "Parcela Cadastrada com Sucesso!"]);
-        
         } catch (\Exception $e) {
             error_log('Erro ao criar Parcela: ' . $e->getMessage());
             return json_encode(['status' => 0, 'message' => 'Erro ao criar Parcela: ' . $e->getMessage()]);
@@ -211,7 +210,7 @@ class Vendacontroller
             $db = $this->conn->prepare($sql);
             $db->execute();
             $QuantidadeVendas = $db->fetch(PDO::FETCH_ASSOC);
-            return $QuantidadeVendas;      
+            return $QuantidadeVendas;
         } catch (\Exception $th) {
             echo "Erro ao buscar o cliente: " . $th->getMessage();
             return null;
@@ -227,20 +226,46 @@ class Vendacontroller
             if (!$vendaExists) {
                 return ['status' => 0, 'message' => 'Venda não encontrada.'];
             }
-    
+
             $sql = "UPDATE vendas SET status = :cancelado WHERE id = :id";
             $db = $this->conn->prepare($sql);
             $db->bindValue(":cancelado", $cancelamento);
             $db->bindValue(":id", $id);
-    
+
             if ($db->execute()) {
                 return ['status' => 1, 'message' => 'Venda cancelada com sucesso.'];
             } else {
                 return ['status' => 0, 'message' => 'Falha ao cancelar a venda.'];
             }
         } catch (Exception $e) {
-           
+
             return ['status' => 0, 'message' => 'Erro ao cancelar a venda: ' . $e->getMessage()];
+        }
+    }
+
+    public function AtivarVenda(int $id): array
+    {
+        $ativar = "ativado";
+        try {
+            $vendaExists = $this->checkContratoExistsById($id);
+            if (!$vendaExists) {
+                return ['status' => 0, 'message' => 'Venda não encontrada.'];
+            }
+
+            $sql = "UPDATE vendas SET status = :ativado WHERE id = :id";
+            $db = $this->conn->prepare($sql);
+            $db->bindValue(":ativado", $ativar, PDO::PARAM_STR);
+            $db->bindValue(":id", $id, PDO::PARAM_INT);
+
+            if ($db->execute()) {
+                return ['status' => 1, 'message' => 'Venda ativada com sucesso.'];
+            } else {
+                $errorInfo = $db->errorInfo();
+                return ['status' => 0, 'message' => 'Falha ao ativar a venda.', 'error' => $errorInfo];
+            }
+        } catch (Exception $e) {
+
+            return ['status' => 0, 'message' => 'Erro ao ativar a venda: ' . $e->getMessage()];
         }
     }
 }

@@ -187,13 +187,24 @@ export async function CountVendas() {
     const response = await fetch(`${backendURL()}/VendaService.php?acao=countVenda`);
     const dados = await response.json();
     console.log(dados);
-    return dados;                        
+    return dados;
 
 }
 
 export async function CancelamentodaVenda(vendaId: Number) {
     try {
         const response = await fetch(`${backendURL()}/VendaService.php?acao=CancelamentodaVenda&id=${vendaId}`);
+        const dados = await response.json();
+        return dados;
+    } catch (error) {
+        console.error('Erro ao buscar venda por ID:', error);
+        return null;
+    }
+}
+
+export async function ativarVenda(vendaId: Number) {
+    try {
+        const response = await fetch(`${backendURL()}/VendaService.php?acao=AtivarVenda&id=${vendaId}`);
         const dados = await response.json();
         return dados;
     } catch (error) {
