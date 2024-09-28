@@ -11,7 +11,7 @@ import {
     DialogContent,
     DialogFooter,
     DialogTrigger,
-    DialogClose, // Use DialogClose para fechar o modal
+    DialogClose,
 } from "@/components/ui/dialog";
 import {
     Table,
@@ -22,13 +22,17 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 interface PopUpConfigProps {
     valorTotal: number;
     parcelas: number;
-    onSetValoresParcelas: (valores: number[]) => void; // Callback para enviar os valores ao componente pai
-    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[]) => void; // Função para executar a confirmação
-    idVenda: number; // Receba o idVenda do CardCadastro
+    onSetValoresParcelas: (valores: number[]) => void;
+    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[]) => void; 
+    idVenda: number;
 }
 
 export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValoresParcelas, onConfirm, idVenda }: PopUpConfigProps): React.JSX.Element {
@@ -108,7 +112,7 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
                         <DialogClose asChild>
                             <button
                                 className="hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500"
-                                onClick={handleConfirm} // Chama handleConfirm ao confirmar
+                                onClick={handleConfirm}
                             >
                                 Confirmar
                             </button>

@@ -7,16 +7,13 @@ import { getAllFinan } from '@/lib/FinanceiroController';
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
-    PaginationLink,
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { dadosUsuario } from "@/lib/interfaces/dadosUsuarios";
 import ValidarTela from '@/components/ValidarTela';
-import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
-import { columns } from './TabelaComissao/columns';
+
 
 export default function Financeiro() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
@@ -24,10 +21,6 @@ export default function Financeiro() {
     const [paginaAtual, setPaginaAtual] = useState(1);
     const [termoBusca, setTermoBusca] = useState('');
     const itensPorPagina = 8;
-
-
-
-
 
 
     async function carregarUsuarios() {
