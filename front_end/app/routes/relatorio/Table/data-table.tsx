@@ -25,6 +25,11 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -64,17 +69,10 @@ export function DataTable<TData, TValue>({
         },
     });
 
-    // const headers = [
-    //     { label: "numero_contrato", key: "numero_contrato" },
-    //     { label: "data_inicio", key: "data_inicio" },
-    //     { label: "data_fim", key: "data_fim" },
-    //     { label: "nome_cliente", key: "nome_cliente" },
-    //     { label: "nome_vendedor", key: "nome_vendedor" }
-
-    // ];
+  
 
     function handleSubmit() {
-        // Lógica para submissão do formulário (opcional)
+    
         console.log("Formulário enviado:", { startDate })
     }
 

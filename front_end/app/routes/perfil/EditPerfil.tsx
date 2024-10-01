@@ -6,8 +6,9 @@ import React, { useState, useEffect } from "react";
 import { updateUserPerfil, getAllCargo } from '@/lib/UsuarioController';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DadosCargos } from '@/lib/interfaces/dadosUsuarios';
-import { criarCookie, getCookie } from '@/lib/coockie';
+import { getCookie } from '@/lib/coockie';
 import { useRouter } from 'next/navigation';
+
 
 const schema = z.object({
     nome: z.string(),
@@ -19,7 +20,7 @@ const schema = z.object({
 export type Formulario = z.infer<typeof schema>;
 
 export default function Perfil() {
-    const { register, handleSubmit} = useForm<Formulario>({
+    const {} = useForm<Formulario>({
         resolver: zodResolver(schema)
     });
     const router = useRouter();
@@ -53,23 +54,7 @@ export default function Perfil() {
     }, []);
 
 
-    async function handleForm(dados: Formulario) {
-        console.log(dados)
-        const response = await updateUserPerfil(
-            dados.nome,
-            dados.email,
-            dados.senha,
-        );
-        if (response.success) {
-            await criarCookie('UserName', dados.nome);
-            await criarCookie('UserCargo', dados.cargo);
-            await criarCookie('UserEmail', dados.email);
-            await criarCookie('UserSenha', dados.senha);
-            setInputHabilitados(false);
-        } else {
-            console.error('Erro ao atualizar o usuário:', response.message);
-        }
-    }
+
 
     const HabilitarEventos = () => {
         setInputHabilitados(true);
@@ -77,14 +62,12 @@ export default function Perfil() {
 
     const handleButtonClick = async () => {
         if (inputsHabilitados) {
-            await updateUserPerfil(valorInputNome, valorInputEmail, valorInputSenha);
             router.push('/');
+            await updateUserPerfil(valorInputNome, valorInputEmail, valorInputSenha);
 
-            console.log(valorInputNome)
-            console.log(valorInputEmail)
-            console.log(valorInputSenha)
         } else {
             HabilitarEventos();
+            
         }
     };
 

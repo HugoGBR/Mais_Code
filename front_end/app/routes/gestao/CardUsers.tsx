@@ -22,7 +22,7 @@ type LoginFormSchema = z.infer<typeof userSchema>;
 export default function CadastrarUsuarioGestao() {
     const route = useRouter();
     const [listaCargo, setListaCargo] = useState<DadosCargos[]>([]);
-    const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
+    const [showPassword, setShowPassword] = useState(false); 
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<LoginFormSchema>({
         resolver: zodResolver(userSchema)
     });

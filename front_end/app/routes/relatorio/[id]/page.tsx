@@ -107,6 +107,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         }
     }
 
+<<<<<<< Updated upstream
     async function handleAtivarVenda() {
         try {
             const response = await ativarVenda(params.id);
@@ -130,6 +131,8 @@ export default function EditVenda({ params }: { params: { id: number } }) {
             console.error("Erro ao ativar a venda:", error);
         }
     }
+=======
+>>>>>>> Stashed changes
 
     async function handleSearchCPF(event: FormEvent) {
         event.preventDefault();
@@ -352,6 +355,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             <h1 className="font-bold col-span-1 text-end">44584</h1>
                         </div>
                         <div className="text-center col-span-2">
+<<<<<<< Updated upstream
                         <div className="text-center col-span-2">
     <div className="grid grid-cols-2 gap-x-5">
         {statusVenda === "em andamento" ? (
@@ -376,6 +380,30 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         </button>
     </div>
 </div>
+=======
+                            <div className="grid grid-cols-2 gap-x-5">
+                                {statusVenda == "em andamento" ? (
+                                    <button
+                                        type="button"
+                                        onClick={handleCancel}
+                                        className="col-span-1 p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white">
+                                        Cancelar Venda
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={handleAtivarVenda} 
+                                        className=" p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white">
+                                        Ativar Venda
+                                    </button>
+                                )}
+                                <button
+                                    type="submit"
+                                    className="col-span-1 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                    SALVAR
+                                </button>
+                            </div>
+>>>>>>> Stashed changes
                         </div>
                     </Card>
                 </form >

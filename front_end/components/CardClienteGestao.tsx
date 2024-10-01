@@ -8,7 +8,6 @@ export default function CardCliente({dados}: { dados: dadosCliente }) {
                 <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full py-3 px-5">
                     <div className="flex gap-6 items-center">
                         <img src="/icons/icon-perfil-preto.png" alt="Perfil" className="w-12 h-12 rounded-2xl"/>
-                        {/* onClick */}
                         <div className="">
                             <h1 className="text-sm">{dados.nome}</h1>
                             <h1>{dados.telefone}</h1>

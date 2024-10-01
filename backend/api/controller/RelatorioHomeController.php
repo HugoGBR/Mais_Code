@@ -1,5 +1,5 @@
 <?php
-include "../database.php"; //importando database
+include "../database.php"; 
 
 class RelatorioHomeController
 {

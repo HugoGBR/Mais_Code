@@ -123,9 +123,5 @@ class ClienteController
 
 }
 
-
-
-
-
 ?>
 

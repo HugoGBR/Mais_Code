@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 
-// Este tipo é usado para definir o formato dos nossos dados.
-// Você pode usar um esquema Zod aqui, se quiser.
+
 export type Payment = {
   tipocontrato: String  
 }
