@@ -38,12 +38,6 @@ export default function Relatorio() {
     ];
 
     return (
-<<<<<<< Updated upstream
-=======
-        
-         <div>
-            <div className="flex gap-5 items-center py-5 input-container">
->>>>>>> Stashed changes
 
         <div>
             <div className="flex gap-5 items-center py-5 input-container">
@@ -54,12 +48,8 @@ export default function Relatorio() {
                         name="start"
                         min="2018-03"
                         value={startDate}
-<<<<<<< Updated upstream
                         onChange={(event) => setStartDate(event.target.value)}
                         className="w-full bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-700"
-=======
-                        onChange={(event) => setStartDate(event.target.value)} 
->>>>>>> Stashed changes
                     />
                     <button
                         type="submit"

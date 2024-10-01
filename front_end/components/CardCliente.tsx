@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { createNewCliente } from "@/lib/ClienteController";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FormProps, FormState, useForm } from "react-hook-form";
 import { z } from "zod";
 import { clientSchema } from "@/app/schemas/clientSchema";
 import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetario } from "@/lib/MaskInput/MaskInput";
@@ -89,7 +89,7 @@ export default function CadastrarCliente() {
                                 className={`border-b-2 focus:border-b-2 ${errors.telefone ? 'border-red-500' : ''}`}
                                 placeholder="Telefone"
                                 {...register('telefone')}
-                                onChange={handleTelefoneChange} 
+                                onChange={handleTelefoneChange} // Aplica a máscara ao digitar
                             />
                             {errors.telefone && <div className="text-red-500">{errors.telefone.message}</div>}
                         </div>

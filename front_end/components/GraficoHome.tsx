@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
 
-export default function ApexAreaChart() {
+export default function ApexAreaChart() { // Verifique se ButtonProps é necessário
     const [dadosGrafico, setDadosGrafico] = useState([])
 
 
@@ -36,7 +36,7 @@ export default function ApexAreaChart() {
                     enabled: false,
                 },
                 toolbar: {
-                    show: false, 
+                    show: false, // Desabilita o menu de opções
                 },
             },
             dataLabels: {

@@ -14,6 +14,7 @@ import { getCookie } from "@/lib/coockie";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
 import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetario } from "@/lib/MaskInput/MaskInput";
+import { number } from "zod";
 
 export default function CardCadastro() {
     const [numero_parcelas, setNumeroParcelas] = useState("");
@@ -94,9 +95,9 @@ export default function CardCadastro() {
     useEffect(() => {
         const atualizarIdVenda = async () => {
             try {
-                const vendaCountResponse = await CountVendas(); 
-                const vendaCount = vendaCountResponse["COUNT(*)"]; 
-                setIdVenda(vendaCount + 1);
+                const vendaCountResponse = await CountVendas(); // Chama a função para obter o count
+                const vendaCount = vendaCountResponse["COUNT(*)"]; // Extrai o valor do count
+                setIdVenda(vendaCount + 1); // Define o novo valor de id_venda (count + 1)
             } catch (error) {
                 console.error("Erro ao contar as vendas: ", error);
             }
@@ -182,6 +183,7 @@ export default function CardCadastro() {
                 2
             );
 
+            // Verifica se a resposta da venda é verdadeira (true)
             if (vendaResponse) {
                 console.log("Venda cadastrada com sucesso.");
 
@@ -195,6 +197,7 @@ export default function CardCadastro() {
                 route.push("/routes/home");
 
             } else {
+                // Lança erro se a resposta for falsa
                 throw new Error("Erro ao cadastrar a venda: resposta inválida");
             }
         } catch (error) {
@@ -221,6 +224,7 @@ export default function CardCadastro() {
                     2
                 );
 
+                // Verifica se a resposta da parcela contém um erro
                 if (responseParcela && responseParcela.status === 0) {
                     throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
                 }
@@ -242,6 +246,7 @@ export default function CardCadastro() {
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
 
+            // Relança o erro para ser capturado no handleSubmit
             throw error;
         }
     }

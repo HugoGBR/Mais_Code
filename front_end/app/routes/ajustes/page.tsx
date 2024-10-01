@@ -6,8 +6,12 @@ import { ColumnsContrato } from "./TabelaContrato/ColumnsContrato";
 import { ColumnsProdutos } from "./TableProdutos/ColumnsProdutos";
 import { TableProduto } from "./TableProdutos/TableProduto";
 import { TabelaContrato } from "./TabelaContrato/TabelaContrato";
+import { useRouter } from "next/navigation";
+import { getCookie } from "@/lib/coockie";
 import { getAllContratos } from "@/lib/ContratoController";
 import { getAllProduto } from "@/lib/ProdutoController";
+import ValidarTela from "@/components/ValidarTela";
+import { getAllTiposClientes } from "@/lib/TipoClienteController";
 
 export default function Ajuste() {
     const [data, setData] = useState({

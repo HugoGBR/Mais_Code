@@ -24,6 +24,7 @@ import {
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { RiCloseCircleLine } from "react-icons/ri";
 import { PiPlusCircleBold } from "react-icons/pi";
 import Link from "next/link";
 

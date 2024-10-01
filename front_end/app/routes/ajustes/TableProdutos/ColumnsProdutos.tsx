@@ -5,6 +5,8 @@ import { Payment } from "@/lib/interfaces/dadosUsuarios";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 
+// Este tipo é usado para definir o formato dos nossos dados.
+// Você pode usar um esquema Zod aqui, se quiser.
 
 
 export const ColumnsProdutos: ColumnDef<Payment>[] = [
