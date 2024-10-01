@@ -30,6 +30,7 @@ export default function App({ params }: { params: { id: number } }) {
             const cliente = await getClienteById(params.id);
             setDadosCliente(cliente);
 
+            // Atualizando os valores no formulário com as máscaras aplicadas
             setValue('telefone', insertMaskTelefone(cliente.telefone));
             setValue('cpf_cnpj', insertMaskCpfCnpj(cliente.cpf_cnpj));
         };

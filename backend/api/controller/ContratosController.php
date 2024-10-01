@@ -1,5 +1,5 @@
 <?php
-include "../database.php"; 
+include "../database.php"; // Importando database
 
 class ContratosController
 {

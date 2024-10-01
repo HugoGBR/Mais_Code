@@ -166,7 +166,7 @@ class Usercontroller
         $stmt->execute();
         $count = $stmt->fetchColumn();
         return $count > 0;
-    }   
+    }
 
     public function updateUserPerfil(int $id){
         try {

@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getAllClient } from '@/lib/GestaoControler';
 import { getAllUsers } from '@/lib/UsuarioController';
+import CardCliente from '@/components/CardClienteGestao';
 import {
     Pagination,
     PaginationContent,
