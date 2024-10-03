@@ -53,12 +53,16 @@ export default function App({ params }: { params: { id: number } }) {
         router.push('/routes/gestao');
     };
 
+    const [isHidden, setIsHidden] = useState(true);
+
     const handleButtonClick = async () => {
         if (inputsHabilitados) {
             await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, dadosUsuario.status_usuario, params.id);
             router.push('/routes/gestao');
         } else {
             HabilitarEventos();
+            setIsHidden(false);
+            setInputHabilitados(true);
         }
     };
 
@@ -171,7 +175,7 @@ export default function App({ params }: { params: { id: number } }) {
                                 </Select>
                             </div>
                         </div>
-                        <div className='flex justify-center '>
+                        <div className={`flex justify-center ${isHidden ? 'hidden' : ''}`}>
                             <button
                                 type="button"
                                 onClick={toggleUserStatus}
