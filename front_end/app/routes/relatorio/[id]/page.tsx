@@ -45,6 +45,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     useEffect(() => {
         async function fetchVenda() {
             const vendaData = await getVendaById(params.id);
+            console.log(vendaData);
             if (vendaData) {
                 setVenda(vendaData);
                 setValorEntrada(vendaData.valor_entrada);

@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { createNewProduto, getAllTiposClientes } from '@/lib/ProdutoController';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { dadosTipo_cliente } from '@/lib/interfaces/dadosUsuarios';
-import { insertMaskValorMonetario } from '@/lib/MaskInput/MaskInput';
 
 export default function CadastroProduto() {
     const [nomeProduto, setNomeProduto] = useState<string>('');
@@ -60,13 +59,13 @@ export default function CadastroProduto() {
                                 id="horasTrabalhadas"
                                 name="horasTrabalhadas"
                                 value={horasTrabalhadas}
-                                onChange={(event) => setHorasTrabalhadas(insertMaskValorMonetario(event.target.value))}
+                                onChange={(event) => setHorasTrabalhadas(event.target.value)}
                                 placeholder="R$"
                                 required
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
                             <input
-                                type="text"
+                                type="number"
                                 id="comissaoNovo"
                                 name="comissaoNovo"
                                 value={comissaoNovo}

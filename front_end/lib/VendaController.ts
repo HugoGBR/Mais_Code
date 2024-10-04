@@ -81,8 +81,6 @@ export async function getVendaById(vendaId: Number) {
     try {
         const response = await fetch(`${backendURL()}/VendaService.php?acao=GetVendaById&id=${vendaId}`);
         const dados = await response.json();
-        console.log("oi")
-        console.log(dados)
         return dados;
     } catch (error) {
         console.error('Erro ao buscar venda por ID:', error);
@@ -106,7 +104,7 @@ export async function updateVenda(
     metodoPagamento: string,
     numeroParcela: Number,
     status: string,
-    vendaId: number 
+    vendaId: number
 ) {
     try {
         const request = await fetch(`${backendURL()}/VendaService.php?acao=UpdateVendaById&id=${vendaId}`, {

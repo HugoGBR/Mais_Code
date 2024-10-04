@@ -1,7 +1,7 @@
 export const insertMaskCpfCnpj = (value: string) => {
     let numericValue = value.replace(/\D/g, '');
 
-
+    // Limita o valor numérico a no máximo 14 caracteres
     numericValue = numericValue.slice(0, 14);
 
     if (numericValue.length <= 11) {

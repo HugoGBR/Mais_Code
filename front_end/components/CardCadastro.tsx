@@ -95,9 +95,9 @@ export default function CardCadastro() {
     useEffect(() => {
         const atualizarIdVenda = async () => {
             try {
-                const vendaCountResponse = await CountVendas();
-                const vendaCount = vendaCountResponse["COUNT(*)"]; 
-                setIdVenda(vendaCount + 1); 
+                const vendaCountResponse = await CountVendas(); // Chama a função para obter o count
+                const vendaCount = vendaCountResponse["COUNT(*)"]; // Extrai o valor do count
+                setIdVenda(vendaCount + 1); // Define o novo valor de id_venda (count + 1)
             } catch (error) {
                 console.error("Erro ao contar as vendas: ", error);
             }
