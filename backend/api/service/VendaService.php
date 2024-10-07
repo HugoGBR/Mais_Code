@@ -78,6 +78,23 @@ switch ($acao) {
             echo json_encode(["error" => "Ação GetVendaById necessita de um ID"]);
         }
         break;
+    case "getParcelaByIdv":
+        if ($id !== null) {
+            $user = $vendaController->getParcelaByIdv($id);
+            echo json_encode($user);
+        } else {
+            echo json_encode(["error" => "Ação getParcelaByIdv necessita de um ID"]);
+        }
+        break;
+    case "updateParcelaByIDv":
+        if ($id !== null) {
+            $user = $vendaController->updateParcelaByIDv($id);
+            echo json_encode($user);
+        } else {
+            echo json_encode(["error" => "Ação updateParcelaByIDv necessita de um ID"]);
+        }
+        break;
+
     default:
         echo json_encode(["error" => "Rota não encontrada"]);
         break;

@@ -268,4 +268,64 @@ class Vendacontroller
             return ['status' => 0, 'message' => 'Erro ao ativar a venda: ' . $e->getMessage()];
         }
     }
+
+    public function getParcelaByIdv(int $id)
+    {
+        try {
+            $sql = "
+            SELECT * FROM parcelas WHERE id_venda = :id;
+            ";
+            $db = $this->conn->prepare($sql);
+            $db->bindParam(":id", $id);
+            $db->execute();
+            $parcela = $db->fetchAll(PDO::FETCH_ASSOC);
+            return $parcela;
+        } catch (\Exception $th) {
+            echo "Erro ao buscar parcelas: " . $th->getMessage();
+            return null;
+        }
+    }
+    private function checkParcelaExistsByIdv(int $id)
+    {
+        $query = "SELECT COUNT(*) FROM parcelas WHERE id_venda = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+    public function updateParcelaByIDv(int $id)
+    {
+        try {
+            $userExists = $this->checkParcelaExistsByIdv($id);
+            if (!$userExists) {
+                return ['status' => 0, 'message' => ' não encontrado.'];
+            }
+
+            $user = json_decode(file_get_contents('php://input'));
+            if (!$user) {
+                return ['status' => 0, 'message' => 'Dados da parcelas inválidos.'];
+            }
+
+            $sql = "UPDATE parcelas SET 
+                    valor_da_parcela = :valor_da_parcela,
+                    status = :status    
+                    WHERE id = :id";
+
+            $db = $this->conn->prepare($sql);
+            $db->bindParam(":valor_da_parcela", $user->valor_da_parcela);
+            $db->bindParam(":status", $user->status);
+            $db->bindParam(":id", $id);
+
+            if ($db->execute()) {
+                return ['status' => 1, 'message' => 'Registro atualizado com sucesso.'];
+            } else {
+                return ['status' => 0, 'message' => 'Falha ao atualizar o registro.'];
+            }
+        } catch (Exception $e) {
+            return ['status' => 0, 'message' => 'Erro ao atualizar Contrato: ' . $e->getMessage()];
+        }
+    }
 }
+
+
