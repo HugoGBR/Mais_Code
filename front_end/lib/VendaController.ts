@@ -108,7 +108,10 @@ export async function updateVenda(
 ) {
     try {
         const request = await fetch(`${backendURL()}/VendaService.php?acao=UpdateVendaById&id=${vendaId}`, {
-            method: "POST",
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 cliente_id: clienteId,
                 tipo_contrato_id: tipoContratoId,
@@ -211,4 +214,51 @@ export async function ativarVenda(vendaId: Number) {
         console.error('Erro ao buscar venda por ID:', error);
         return null;
     }
+}
+
+export async function getParcelaByidv(vendaId: Number) {
+    try {
+        const response = await fetch(`${backendURL()}/VendaService.php?acao=getParcelaByIdv&id=${vendaId}`);
+        const dados = await response.json();
+        return dados;
+    } catch (error) {
+        console.error('Erro ao buscar parcelas por ID:', error);
+        return null;
+    }
+}
+
+export async function updateParcelaByIDv(
+    newvalor_da_parcela: number,
+    statusparcela: number,
+    id_parcela: number
+) {
+    try {
+        console.log("Enviando atualização de parcela: ", {
+            valor_da_parcela: newvalor_da_parcela,
+            status: statusparcela
+        });
+
+        const response = await fetch(`${backendURL()}/VendaService.php?acao=updateParcelaByIDv&id=${id_parcela}`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                valor_da_parcela: newvalor_da_parcela,
+                status: statusparcela
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error('Erro ao cadastrar parcela:', error);
+        return { success: false, message: 'Erro ao cadastrar parcela' };
+    }
+    
 }
