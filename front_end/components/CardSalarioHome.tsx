@@ -1,7 +1,6 @@
 import { remuneracaoComissao } from "@/lib/RelatorioComissaoController";
 import { getCookie } from "@/lib/coockie";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function CardSalarioHome() {
     const [comissaoTotal, setComissaoTotal] = useState(0);
@@ -23,11 +22,12 @@ export default function CardSalarioHome() {
 
     async function carregarRemuneracao() {
         try {
-            const remuneracao = await remuneracaoComissao(usuario_id.toString());
-            console.log(remuneracao);
+            const remuneracao = await remuneracaoComissao(Number(usuario_id));
             if (Array.isArray(remuneracao) && remuneracao.length > 0) {
-                setComissaoTotal(parseFloat(remuneracao[0]["SUM(comissao_total)"]));
-            } else {    
+                const valor = remuneracao[0]["SUM(comissao_total)"];
+                const comissao = isNaN(parseFloat(valor)) ? 0 : parseFloat(valor);
+                setComissaoTotal(comissao);
+            } else {
                 setComissaoTotal(0);
             }
         } catch (error) {
@@ -37,9 +37,9 @@ export default function CardSalarioHome() {
     }
 
     return (
-        <div className='rounded-lg flex flex-col justify-end bg-white drop-shadow-xl p-2'>
-            <h3 className='text-center text-lg'>Remuneração</h3>
-            <h1 className='text-4xl text-center font-bold'>R${comissaoTotal.toFixed(2)}</h1>
+        <div className='rounded-lg flex flex-col justify-end bg-white border hover:drop-shadow-lg py-2 px-4'>
+            <h1 className='text-center text-xl font-bold text-gray-700'>Remuneração do Mês</h1>
+            <p className='text-2xl text-left font-medium text-blue-500'>R${comissaoTotal.toFixed(2)}</p>
         </div>
     );
 }

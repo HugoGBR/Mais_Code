@@ -1,11 +1,10 @@
+
 "use client"
 
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
-    PaginationLink,
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
@@ -31,8 +30,10 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { ChevronDownIcon } from "lucide-react"
+import { ChevronDownIcon, Slice } from "lucide-react"
 import { useEffect, useState } from "react"
+import { CSVLink } from "react-csv";
+
 
 
 interface DataTableProps<TData, TValue> {
@@ -48,9 +49,10 @@ export function DataTableComissao<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
-    const [soma, setSoma] = useState(0)
-
-
+  
+    const [pageIndex, setPageIndex] = useState(0)
+    const [pagesize, setPageSize] = useState(8)
+    
     const table = useReactTable({
         data,
         columns,
@@ -67,12 +69,32 @@ export function DataTableComissao<TData, TValue>({
             columnFilters,
             columnVisibility,
             rowSelection,
+            pagination: { pageIndex: pageIndex, pageSize: pagesize }
         },
+        pageCount: Math.ceil(data.length / pagesize)
     })
+
+    const ProximaPagina = () => {
+        if (pageIndex + 1 < Math.ceil(table.getPageCount())) {
+            setPageIndex(pageIndex + 1)
+        }
+    }
+
+    const Paginaanterior = () => {
+        if (pageIndex > 0) {
+            setPageIndex(pageIndex - 1)
+        }
+    }
+
+    useEffect(() => {
+        table.setPageSize(pagesize)
+        table.setPageIndex(pageIndex)
+    }, [pagesize, pageIndex, table])
 
     return (
         <div>
-  
+            <div className="flex justify-end mb-4">
+            </div>
             <div className="bg-white h-3/5 shadow-xl rounded-lg p-4">
                 <div className="flex items-center py-4 input-container">
                     <input
@@ -140,10 +162,10 @@ export function DataTableComissao<TData, TValue>({
                     <Pagination>
                         <PaginationContent>
                             <PaginationItem>
-                                <PaginationPrevious onClick={() => table.previousPage()} />
+                                <PaginationPrevious onClick={Paginaanterior} />
                             </PaginationItem>
                             <PaginationItem>
-                                <PaginationNext onClick={() => table.nextPage()} />
+                                <PaginationNext onClick={ProximaPagina} />
                             </PaginationItem>
                         </PaginationContent>
                     </Pagination>

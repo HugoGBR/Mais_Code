@@ -1,10 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
-import { GoGear } from "react-icons/go";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createNewSell } from "@/lib/VendaController";
+import { createNewParcela, createNewSell, CountVendas } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosProduto } from "@/lib/interfaces/dadosUsuarios";
 import { getAllProduto } from "@/lib/ProdutoController";
 import { getAllContratos } from "@/lib/ContratoController";
@@ -14,10 +13,12 @@ import PopUpConfig from "./PopUpConfig";
 import { getCookie } from "@/lib/coockie";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
+import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetario } from "@/lib/MaskInput/MaskInput";
+import { number } from "zod";
 
 export default function CardCadastro() {
     const [numero_parcelas, setNumeroParcelas] = useState("");
-    const [valor_entrada, setValorEntrada] = useState("");
+    const [valor_entrada, setValorEntrada] = useState(0);
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
@@ -33,12 +34,15 @@ export default function CardCadastro() {
     const [new_usuario_id, setnew_usuario_id] = useState("");
     const [valor_total, setvalortotal] = useState(0);
     const [metodo_pagamento, setmetodo_pagamento] = useState("");
-    const [numero_parcelo, setnumero_parcelo] = useState("1");
+    const [numero_parcelo, setnumero_parcelo] = useState(1);
     const [cpf_cnpj_input, setCpfCnpjInput] = useState("");
     const [statusCliente, setstatusCliente] = useState("");
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
+    const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
+    const [id_venda, setIdVenda] = useState(1);
+
     const route = useRouter();
     const { toast } = useToast();
 
@@ -70,11 +74,10 @@ export default function CardCadastro() {
     }, []);
 
     useEffect(() => {
-        if (new_produto_id && horas_trabalhadas) {
+        if (new_produto_id && horas_trabalhadas >= 0) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
-                const valorEntradaNumerico = parseFloat(valor_entrada) || 0;
-                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valorEntradaNumerico);
+                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valor_entrada);
             }
         }
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
@@ -89,6 +92,19 @@ export default function CardCadastro() {
         }
     }, [statusCliente, new_produto_id]);
 
+    useEffect(() => {
+        const atualizarIdVenda = async () => {
+            try {
+                const vendaCountResponse = await CountVendas(); // Chama a função para obter o count
+                const vendaCount = vendaCountResponse["COUNT(*)"]; // Extrai o valor do count
+                setIdVenda(vendaCount + 1); // Define o novo valor de id_venda (count + 1)
+            } catch (error) {
+                console.error("Erro ao contar as vendas: ", error);
+            }
+        };
+        atualizarIdVenda();
+    }, []);
+
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
 
@@ -97,7 +113,7 @@ export default function CardCadastro() {
         if (!DataFim) newErrors.DataFim = "Data de fim é obrigatória";
         if (!new_tipo_contrato_id) newErrors.new_tipo_contrato_id = "Modelo de contrato é obrigatório";
         if (!new_produto_id) newErrors.new_produto_id = "Produto é obrigatório";
-        if (!horas_trabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas são obrigatórias";
+        if (horas_trabalhadas < 0) newErrors.horas_trabalhadas = "Horas trabalhadas não pode ser negativa";
         if (!nome_contato) newErrors.nome_contato = "Nome do contato é obrigatório";
         if (!telefone) newErrors.telefone = "Telefone do contato é obrigatório";
         if (!email) newErrors.email = "Email do contato é obrigatório";
@@ -107,6 +123,7 @@ export default function CardCadastro() {
             toast({
                 title: "Erro de Validação",
                 description: "Por favor, preencha todos os campos obrigatórios.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
             return false;
         }
@@ -116,7 +133,7 @@ export default function CardCadastro() {
 
     const resetForm = () => {
         setNumeroParcelas("");
-        setValorEntrada("");
+        setValorEntrada(0);
         setMostrarParcelas(false);
         setDataInicio("");
         setDataFim("");
@@ -127,49 +144,113 @@ export default function CardCadastro() {
         setnew_usuario_id("");
         setvalortotal(0);
         setmetodo_pagamento("");
-        setnumero_parcelo("1");
+        setnumero_parcelo(1);
         setCpfCnpjInput("");
         setstatusCliente("");
         setstatusClienteValor(0);
         setFoundCliente(null);
         setHorasTrabalhadas(0);
+        setValoresParcelas([]);
     };
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
+
         if (!validateForm()) return;
 
         const datadoinicio = new Date(DataInicio);
         const datadofim = new Date(DataFim);
 
-        await createNewSell(
-            Number(new_cliente_id),
-            Number(new_tipo_contrato_id),
-            Number(new_produto_id),
-            Number(new_usuario_id),
-            statusClienteValor,
-            horas_trabalhadas,
-            datadofim,
-            Number(valor_entrada),
-            valor_total,
-            datadoinicio,
-            metodo_pagamento,
-            email,
-            telefone,
-            nome_contato,
-            numero_parcelo,
-            2
-        );
+        try {
+            console.log("Tentando cadastrar a venda...");
 
-        toast({
-            title: "Sucesso",
-            description: "Cadastro realizado com sucesso!",
-            className: "bg-green-500 text-white"
-        });
+            const vendaResponse = await createNewSell(
+                Number(new_cliente_id),
+                Number(new_tipo_contrato_id),
+                Number(new_produto_id),
+                Number(new_usuario_id),
+                statusClienteValor,
+                horas_trabalhadas,
+                datadofim,
+                Number(valor_entrada),
+                valor_total,
+                datadoinicio,
+                metodo_pagamento,
+                email,
+                telefone,
+                nome_contato,
+                Number(numero_parcelo),
+                2
+            );
 
-        resetForm();
-        route.push("/routes/cadastros");
+            // Verifica se a resposta da venda é verdadeira (true)
+            if (vendaResponse) {
+                console.log("Venda cadastrada com sucesso.");
+
+                toast({
+                    title: "Sucesso",
+                    description: "Cadastro realizado com sucesso!",
+                    className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400"
+                });
+
+                resetForm();
+                route.push("/routes/home");
+
+            } else {
+                // Lança erro se a resposta for falsa
+                throw new Error("Erro ao cadastrar a venda: resposta inválida");
+            }
+        } catch (error) {
+            console.error("Erro ao cadastrar a venda:", error);
+            toast({
+                title: "Erro",
+                description: "Falha ao cadastrar a venda",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
+            });
+        }
     }
+
+    async function handleSubmitParcela(vendaId: number, numeroParcelas: number, valoresParcelas: number[], toast: any) {
+        try {
+            console.log("Iniciando cadastro das parcelas...");
+
+            for (let i = 0; i < numeroParcelas; i++) {
+                const valorParcela = valoresParcelas[i] || 0;
+                const responseParcela = await createNewParcela(
+                    vendaId,
+                    numeroParcelas,
+                    i + 1,
+                    valorParcela,
+                    2
+                );
+
+                // Verifica se a resposta da parcela contém um erro
+                if (responseParcela && responseParcela.status === 0) {
+                    throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
+                }
+
+                console.log(`Parcela ${i + 1} cadastrada com sucesso.`);
+            }
+
+            toast({
+                title: "Sucesso",
+                description: "Parcelas cadastradas com sucesso!",
+                className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+            });
+
+        } catch (error) {
+            console.error("Erro ao cadastrar as parcelas:", error);
+            toast({
+                title: "Erro",
+                description: "Falha ao cadastrar as parcelas",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
+            });
+
+            // Relança o erro para ser capturado no handleSubmit
+            throw error;
+        }
+    }
+
 
     async function handleSearchCPF(event: FormEvent) {
         event.preventDefault();
@@ -179,6 +260,7 @@ export default function CardCadastro() {
             toast({
                 title: "Erro de Validação",
                 description: "Cliente não encontrado",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
         }
     }
@@ -194,6 +276,10 @@ export default function CardCadastro() {
                 </div>
             </Link>
         );
+    };
+
+    const handleSetValoresParcelas = (novosValores: number[]) => {
+        setValoresParcelas(novosValores);
     };
 
     return (
@@ -214,7 +300,7 @@ export default function CardCadastro() {
                                         placeholder="CPF/CNPJ do Cliente"
                                         type="text"
                                         value={cpf_cnpj_input}
-                                        onChange={(e) => setCpfCnpjInput(e.target.value)}
+                                        onChange={(e) => setCpfCnpjInput(insertMaskCpfCnpj(e.target.value))}
                                     />
                                     <button
                                         type="submit"
@@ -266,13 +352,22 @@ export default function CardCadastro() {
                                     </Select>
                                 </div>
                                 <div className="flex flex-col mb-5 md:ml-5">
-                                    <label className="text-sm mb-2" htmlFor="teste">Horas Trabalhadas</label>
+                                    <label className="text-sm mb-2" htmlFor="horas-trabalhadas">Horas Trabalhadas</label>
                                     <input
+                                        id="horas-trabalhadas"
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="Horas"
+                                        placeholder="0 "
                                         type="number"
-                                        value={horas_trabalhadas}
-                                        onChange={(event) => setHorasTrabalhadas(Number(event.target.value))}
+                                        min="0"
+                                        value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
+                                        onChange={(event) => {
+                                            const value = Number(event.target.value);
+                                            if (!isNaN(value) && value >= 0) {
+                                                setHorasTrabalhadas(value);
+                                            } else {
+                                                setHorasTrabalhadas(0);
+                                            }
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -288,11 +383,11 @@ export default function CardCadastro() {
                                     className="border-b-2 focus:outline-none focus:border-blue-500"
                                     placeholder="(99) 99999-9999"
                                     value={telefone}
-                                    onChange={(event) => setTelefoneContato(event.target.value)}
+                                    onChange={(event) => setTelefoneContato(insertMaskTelefone(event.target.value))}
                                     type="tel" />
                                 <input
                                     className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="Email" 
+                                    placeholder="Email"
                                     value={email}
                                     onChange={(event) => setEmailContato(event.target.value)}
                                     type="email" />
@@ -308,11 +403,18 @@ export default function CardCadastro() {
                             </div>
                             <div className="flex mb-4 ">
                                 <label className="mr-4" htmlFor="teste">Valor da Entrada</label>
-                                <input
-                                    className="border-b-2 w-28 focus:outline-none focus:border-blue-500"
-                                    placeholder="R$ 0000,00" type="text"
-                                    value={valor_entrada}
-                                    onChange={(event) => setValorEntrada(event.target.value)} />
+                                <div className="relative w-28">
+                                    <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                                        R$
+                                    </span>
+                                    <input
+                                        className="border-b-2 pl-8 w-auto focus:outline-none focus:border-blue-500"
+                                        placeholder="0000,00"
+                                        type="text"
+                                        value={valor_entrada}
+                                        onChange={(event) => setValorEntrada(Number(event.target.value))}
+                                    />
+                                </div>
                             </div>
                             <div className="mb-5">
                                 <label className="text-sm" htmlFor="Nn">Status Cliente</label>
@@ -338,7 +440,7 @@ export default function CardCadastro() {
                                             aria-describedby="pagamento-opcao-1"
                                             onClick={() => {
                                                 setmetodo_pagamento("À vista");
-                                                setnumero_parcelo("1");
+                                                setnumero_parcelo(1);
                                                 setMostrarParcelas(false);
                                             }} />
                                         <label htmlFor="pagamento-opcao-1"
@@ -365,16 +467,25 @@ export default function CardCadastro() {
                                 </div>
                                 {mostrarParcelas && (
                                     <div className="flex space-x-4">
-                                        <input
-                                            className="border-b-2 text-center w-14 flex focus:outline-none focus:border-blue-500"
-                                            placeholder="36x"
-                                            type="number"
-                                            value={numero_parcelo}
-                                            onChange={(event) => setnumero_parcelo(event.target.value)}
-                                        />
-                                        <Link href="">
-                                            <PopUpConfig valorTotal={valor_total} parcelas={numero_parcelo} />
-                                        </Link>
+                                        <div>
+                                            <input
+                                                className="border-b-2 text-center w-14 focus:outline-none focus:border-blue-500"
+                                                placeholder="36x"
+                                                type="number"
+                                                min="1"
+                                                value={numero_parcelo}
+                                                onChange={(event) => setnumero_parcelo(Number(event.target.value))}
+                                            />
+                                        </div>
+                                        <div>
+                                            <PopUpConfig
+                                                valorTotal={valor_total}
+                                                parcelas={numero_parcelo}
+                                                onSetValoresParcelas={handleSetValoresParcelas}
+                                                onConfirm={(vendaId, numeroParcelas, valoresParcelas) => handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)}
+                                                idVenda={id_venda}
+                                            />
+                                        </div>
                                     </div>
                                 )}
                             </div>

@@ -20,8 +20,7 @@ class RelatorioComissaoController
             tipo_contrato.nome AS tipo_contrato,
             vendas.numero_parcela,
             vendas.valor_total,
-            produtos.comissao_antiga AS comissao_produtoA,
-            produtos.comissao_nova AS comissao_produtoB
+            ROUND (vendas.status_cliente / 100 * vendas.valor_total, 2) AS comissao_produto
         FROM
             vendas
         JOIN
@@ -31,8 +30,10 @@ class RelatorioComissaoController
         JOIN
             tipo_contrato ON vendas.tipo_contrato_id = tipo_contrato.id
         WHERE
-            vendas.status = 'em andamento'
+            vendas.status = 'em andamento' 
+            
             AND vendas.usuario_id = :usuario_id"; 
+        
     
         $db = $this->conn->prepare($sql);
         $db->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
@@ -44,10 +45,12 @@ class RelatorioComissaoController
 
     public function remuneracaoComissao($usuario_id)
     {
-        $sql = "SELECT
-        SUM(comissao_total)
+        $sql = "SELECT SUM(comissao_total)
         FROM bancocomissao
-        WHERE user_id = :usuario_id AND (status = 2)
+        WHERE user_id = :usuario_id
+        AND (status = 'a pagar' OR status = 'pago')
+        AND MONTH(data_pagamento) = MONTH(CURDATE())
+        AND YEAR(data_pagamento) = YEAR(CURDATE())
         ";
         $db = $this->conn->prepare($sql);
         $db->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
