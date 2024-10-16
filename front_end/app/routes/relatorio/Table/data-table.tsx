@@ -24,23 +24,23 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { GetDadosVendaByData, GetDadosVendaByYear } from "@/lib/RelatorioController";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
 }
 
 export function DataTable<TData, TValue>({
     columns,
-    data,
 }: DataTableProps<TData, TValue>) {
+    const [data, setData] = useState<TData[]>([]);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
     const hoje = new Date()
-    var dataHojeFormatado = `${hoje.getFullYear()}-${(hoje.getMonth().toString().padStart(2, "0"))}`
+    var dataHojeFormatado = `${hoje.getFullYear()}-${((hoje.getMonth() + 1).toString().padStart(2, "0"))}`
 
     const [startDate, setStartDate] = useState(dataHojeFormatado);
 
@@ -64,23 +64,22 @@ export function DataTable<TData, TValue>({
         },
     });
 
-    // const headers = [
-    //     { label: "numero_contrato", key: "numero_contrato" },
-    //     { label: "data_inicio", key: "data_inicio" },
-    //     { label: "data_fim", key: "data_fim" },
-    //     { label: "nome_cliente", key: "nome_cliente" },
-    //     { label: "nome_vendedor", key: "nome_vendedor" }
 
-    // ];
-
-    function handleSubmit() {
-        // Lógica para submissão do formulário (opcional)
-        console.log("Formulário enviado:", { startDate })
+    const getDadosYear = async () => {
+        const dados = await GetDadosVendaByYear(hoje);
+        setData(dados);
     }
 
+    useEffect(() => {
+        getDadosYear();
+    }, []); 
 
-    console.log(table.getRowModel().rows.map(row => row.original))
-
+  
+    async function handleSubmit() {
+        const dados = await GetDadosVendaByData(new Date(startDate));
+        console.log(`dados da nova consulta ${startDate}`)
+        setData(dados);         
+    }
 
     return (
         <div>
