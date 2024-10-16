@@ -28,7 +28,7 @@ class RelatorioController
         
         JOIN usuarios ON vendas.usuario_id = usuarios.id
         
-        WHERE vendas.status IN ('concluido', 'em andamento')
+        WHERE vendas.status IN ('concluido', 'em andamento',)
         
         ORDER BY vendas.inicio_contrato DESC
         

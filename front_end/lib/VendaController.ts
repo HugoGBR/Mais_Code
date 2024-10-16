@@ -207,6 +207,9 @@ export async function CancelamentodaVenda(vendaId: Number) {
 
 export async function ativarVenda(vendaId: Number) {
     try {
+        console.log(
+          `vendaid ${vendaId}`  
+        )
         const response = await fetch(`${backendURL()}/VendaService.php?acao=AtivarVenda&id=${vendaId}`);
         const dados = await response.json();
         return dados;
