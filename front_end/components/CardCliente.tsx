@@ -49,10 +49,10 @@ export default function CadastrarCliente() {
                 description: "Por favor, preencha todos os campos obrigatórios.",
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     };
 
     const resetForm = () => {
