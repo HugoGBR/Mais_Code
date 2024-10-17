@@ -179,7 +179,7 @@ export default function App({ params }: { params: { id: number } }) {
                             <button
                                 type="button"
                                 onClick={toggleUserStatus}
-                                className={`w-full ${dadosUsuario.status_usuario === 1 ? 'bg-red-700' : 'bg-green-700'} hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded`}
+                                className={`w-full ${dadosUsuario.status_usuario === 1 ? 'border border-red-700 text-black hover:bg-red-700 hover:text-white ' : 'border border-green-700 text-black hover:bg-green-700 hover:text-white'} font-bold py-2 px-4 rounded`}
                                 disabled={!inputsHabilitados}
                             >
                                 {dadosUsuario.status_usuario === 1 ? "Inativar Usuário" : "Ativar Usuário"}
