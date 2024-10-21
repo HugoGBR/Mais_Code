@@ -11,7 +11,7 @@ import {
     DialogContent,
     DialogFooter,
     DialogTrigger,
-    DialogClose, // Use DialogClose para fechar o modal
+    DialogClose,
 } from "@/components/ui/dialog";
 import {
     Table,
@@ -26,13 +26,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 interface PopUpConfigProps {
     valorTotal: number;
     parcelas: number;
-    onSetValoresParcelas: (valores: number[]) => void; // Callback para enviar os valores ao componente pai
-    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[]) => void; // Função para executar a confirmação
-    idVenda: number; // Receba o idVenda do CardCadastro
+    onSetValoresParcelas: (valores: number[]) => void;
+    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[]) => void;
+    idVenda: number;
 }
 
 export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValoresParcelas, onConfirm, idVenda }: PopUpConfigProps): React.JSX.Element {
     const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
+    const [mensagemErro, setMensagemErro] = useState<string | null>(null);
 
     useEffect(() => {
         const valorParcela = parcelas > 0 ? valorTotal / parcelas : 0;
@@ -43,29 +44,35 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
         const novoValor = e.target.value.replace('R$ ', '').replace(',', '.');
         const valorNumerico = parseFloat(novoValor);
 
-        if (!isNaN(valorNumerico)) {
-            const novosValores = [...valoresParcelas];
-            novosValores[index] = valorNumerico;
+        if (!isNaN(valorNumerico) && valorNumerico > 0) {
+            if (valorNumerico >= valorTotal) {
+                setMensagemErro('Impossível definir parcela com valor igual ou maior que o valor total.');
+            } else {
+                setMensagemErro(null);
+                const novosValores = [...valoresParcelas];
+                novosValores[index] = valorNumerico;
 
-            const somaAteAtual = novosValores.slice(0, index + 1).reduce((acc, cur) => acc + cur, 0);
-
-            const restante = valorTotal - somaAteAtual;
-
-            const restantes = parcelas - (index + 1);
-            if (restantes > 0) {
-                const valorRestantePorParcela = restante / restantes;
-                for (let i = index + 1; i < parcelas; i++) {
-                    novosValores[i] = valorRestantePorParcela;
+                const somaAteAtual = novosValores.slice(0, index + 1).reduce((acc, cur) => acc + cur, 0);
+                const restante = valorTotal - somaAteAtual;
+                const restantes = parcelas - (index + 1);
+                
+                if (restantes > 0) {
+                    const valorRestantePorParcela = Math.max(restante / restantes, 0);
+                    for (let i = index + 1; i < parcelas; i++) {
+                        novosValores[i] = valorRestantePorParcela;
+                    }
                 }
-            }
 
-            setValoresParcelas(novosValores);
+                setValoresParcelas(novosValores);
+            }
         }
     };
 
     const handleConfirm = () => {
-        onSetValoresParcelas(valoresParcelas);
-        onConfirm(idVenda, parcelas, valoresParcelas);
+        if (!mensagemErro) {
+            onSetValoresParcelas(valoresParcelas);
+            onConfirm(idVenda, parcelas, valoresParcelas);
+        }
     };
 
     return (
@@ -78,6 +85,9 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
                     <div className="text-center">
                         <h1 className="text-2xl">Configuração de Parcelas</h1>
                     </div>
+                    {mensagemErro && (
+                        <p className="text-red-500 text-center font-bold mb-4">{mensagemErro}</p>
+                    )}
                     <Table>
                         <TableHeader>
                             <TableRow className="grid-cols-2 grid">
@@ -95,7 +105,7 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
                                                 className="focus:outline-none focus:border-blue-500"
                                                 placeholder="0000,00"
                                                 type="text"
-                                                value={`R$ ${valoresParcelas[i]}`}
+                                                value={`R$ ${valoresParcelas[i] !== undefined ? valoresParcelas[i].toFixed(2) : '0.00'}`}
                                                 onChange={(e) => handleChange(i, e)}
                                             />
                                         </TableCell>
@@ -107,8 +117,9 @@ export default function ConfiguracoesParcela({ valorTotal, parcelas, onSetValore
                     <DialogFooter>
                         <DialogClose asChild>
                             <button
-                                className="hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500"
-                                onClick={handleConfirm} // Chama handleConfirm ao confirmar
+                                className={`hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500 ${mensagemErro ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                onClick={handleConfirm}
+                                disabled={!!mensagemErro}
                             >
                                 Confirmar
                             </button>
