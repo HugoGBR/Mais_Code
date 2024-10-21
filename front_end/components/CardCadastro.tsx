@@ -16,6 +16,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetario } from "@/lib/MaskInput/MaskInput";
 import { number } from "zod";
 
+
 export default function CardCadastro() {
     const [numero_parcelas, setNumeroParcelas] = useState("");
     const [valor_entrada, setValorEntrada] = useState(0);
@@ -39,9 +40,10 @@ export default function CardCadastro() {
     const [statusCliente, setstatusCliente] = useState("");
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
-    const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
+    //const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
     const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
     const [id_venda, setIdVenda] = useState(1);
+    const [horasTrabalhadas, setHorasTrabalhadas] = useState<string>('');
 
     const route = useRouter();
     const { toast } = useToast();
@@ -74,13 +76,13 @@ export default function CardCadastro() {
     }, []);
 
     useEffect(() => {
-        if (new_produto_id && horas_trabalhadas >= 0) {
+        if (new_produto_id && horasTrabalhadas) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
-                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valor_entrada);
+                setvalortotal((selectedProduct.horas_trabalhadas) - valor_entrada);
             }
         }
-    }, [new_produto_id, horas_trabalhadas, valor_entrada]);
+    }, [new_produto_id, horasTrabalhadas, valor_entrada]);
 
     useEffect(() => {
         if (new_produto_id) {
@@ -95,15 +97,18 @@ export default function CardCadastro() {
     useEffect(() => {
         const atualizarIdVenda = async () => {
             try {
-                const vendaCountResponse = await CountVendas();
+                const vendaCountResponse = await CountVendas(); 
                 const vendaCount = vendaCountResponse["COUNT(*)"]; 
-                setIdVenda(vendaCount + 1); 
+                setIdVenda(vendaCount + 1);
             } catch (error) {
                 console.error("Erro ao contar as vendas: ", error);
             }
         };
         atualizarIdVenda();
     }, []);
+
+
+    
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
@@ -113,7 +118,7 @@ export default function CardCadastro() {
         if (!DataFim) newErrors.DataFim = "Data de fim é obrigatória";
         if (!new_tipo_contrato_id) newErrors.new_tipo_contrato_id = "Modelo de contrato é obrigatório";
         if (!new_produto_id) newErrors.new_produto_id = "Produto é obrigatório";
-        if (horas_trabalhadas < 0) newErrors.horas_trabalhadas = "Horas trabalhadas não pode ser negativa";
+        if (horasTrabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas não pode ser negativa";
         if (!nome_contato) newErrors.nome_contato = "Nome do contato é obrigatório";
         if (!telefone) newErrors.telefone = "Telefone do contato é obrigatório";
         if (!email) newErrors.email = "Email do contato é obrigatório";
@@ -149,7 +154,7 @@ export default function CardCadastro() {
         setstatusCliente("");
         setstatusClienteValor(0);
         setFoundCliente(null);
-        setHorasTrabalhadas(0);
+        setHorasTrabalhadas("");
         setValoresParcelas([]);
     };
 
@@ -170,7 +175,7 @@ export default function CardCadastro() {
                 Number(new_produto_id),
                 Number(new_usuario_id),
                 statusClienteValor,
-                horas_trabalhadas,
+                Number(horasTrabalhadas),
                 datadofim,
                 Number(valor_entrada),
                 valor_total,
@@ -183,7 +188,6 @@ export default function CardCadastro() {
                 2
             );
 
-            // Verifica se a resposta da venda é verdadeira (true)
             if (vendaResponse) {
                 console.log("Venda cadastrada com sucesso.");
 
@@ -197,7 +201,7 @@ export default function CardCadastro() {
                 route.push("/routes/home");
 
             } else {
-                // Lança erro se a resposta for falsa
+               
                 throw new Error("Erro ao cadastrar a venda: resposta inválida");
             }
         } catch (error) {
@@ -224,7 +228,7 @@ export default function CardCadastro() {
                     2
                 );
 
-                // Verifica se a resposta da parcela contém um erro
+               
                 if (responseParcela && responseParcela.status === 0) {
                     throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
                 }
@@ -246,7 +250,7 @@ export default function CardCadastro() {
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
 
-            // Relança o erro para ser capturado no handleSubmit
+      
             throw error;
         }
     }
@@ -359,13 +363,13 @@ export default function CardCadastro() {
                                         placeholder="0 "
                                         type="number"
                                         min="0"
-                                        value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
+                                        value={horasTrabalhadas? '' : horasTrabalhadas}
                                         onChange={(event) => {
                                             const value = Number(event.target.value);
                                             if (!isNaN(value) && value >= 0) {
-                                                setHorasTrabalhadas(value);
+                                                setHorasTrabalhadas("");
                                             } else {
-                                                setHorasTrabalhadas(0);
+                                                setHorasTrabalhadas("");
                                             }
                                         }}
                                     />
@@ -401,20 +405,17 @@ export default function CardCadastro() {
                             <div className="flex justify-center mb-6 text-2xl font-bold">
                                 <h1>Forma de Pagamento</h1>
                             </div>
-                            <div className="flex mb-4 ">
-                                <label className="mr-4" htmlFor="teste">Valor da Entrada</label>
-                                <div className="relative w-28">
-                                    <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
-                                        R$
-                                    </span>
-                                    <input
-                                        className="border-b-2 pl-8 w-auto focus:outline-none focus:border-blue-500"
-                                        placeholder="0000,00"
-                                        type="text"
-                                        value={valor_entrada}
-                                        onChange={(event) => setValorEntrada(Number(event.target.value))}
-                                    />
-                                </div>
+                            <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
+                            <input
+                                type="text"
+                                id="horasTrabalhadas"
+                                name="horasTrabalhadas"
+                                value={horasTrabalhadas}
+                                onChange={(event) => setHorasTrabalhadas(insertMaskValorMonetario(event.target.value))}
+                                placeholder="R$"
+                                required
+                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                            />
                             </div>
                             <div className="mb-5">
                                 <label className="text-sm" htmlFor="Nn">Status Cliente</label>

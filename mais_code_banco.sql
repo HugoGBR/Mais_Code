@@ -199,7 +199,7 @@ BEGIN
     SET status = 'pago'
     WHERE id_venda = NEW.id_venda 
     AND numero_da_parcela = NEW.numero_da_parcela;
-  END IF;
+  END IF; 
 END $$
 
 DELIMITER ;
