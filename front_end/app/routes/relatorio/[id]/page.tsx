@@ -348,7 +348,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                         </div>
                         <div className="col-span-2 grid grid-cols-2">
                             <label className="font-bold col-span-1" htmlFor="teste">Valor total a pagar:</label>
-                            <h1 className="font-bold col-span-1 text-end">44584</h1>
+                            <h1 className="font-bold">{`R$ ${valor_total}`}</h1>
                         </div>
                         <div className="text-center col-span-2">
                             <div className="text-center col-span-2">
