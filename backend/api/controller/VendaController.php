@@ -243,19 +243,20 @@ class Vendacontroller
         }
     }
 
-    public function AtivarVenda(int $id): array
+    public function AtivarVenda(int $id)
     {
-        $ativar = "ativado";
+        $ativar = "em andamento";
+       
         try {
             $vendaExists = $this->checkContratoExistsById($id);
             if (!$vendaExists) {
                 return ['status' => 0, 'message' => 'Venda não encontrada.'];
             }
 
-            $sql = "UPDATE vendas SET status = :ativado WHERE id = :id";
+            $sql = "UPDATE vendas SET status = :emandamento WHERE id = :id";
             $db = $this->conn->prepare($sql);
-            $db->bindValue(":ativado", $ativar, PDO::PARAM_STR);
-            $db->bindValue(":id", $id, PDO::PARAM_INT);
+            $db->bindValue(":emandamento", $ativar );
+            $db->bindValue(":id", $id);
 
             if ($db->execute()) {
                 return ['status' => 1, 'message' => 'Venda ativada com sucesso.'];
