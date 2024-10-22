@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Link from "next/link";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CancelamentodaVenda, getVendaById, ativarVenda } from "@/lib/VendaController";
+import { CancelamentodaVenda, getVendaById, ativarVenda, updateVenda } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosProduto, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
 import { getAllContratos } from "@/lib/ContratoController";
 import CardCliente from '@/components/CardClienteGestao';
@@ -19,6 +19,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
     const [mostrarParcelas, setMostrarParcelas] = useState(false);
     const [valor_entrada, setValorEntrada] = useState("");
+    const [inputsHabilitados, setInputHabilitados] = useState(false);
     const [DataInicio, setDataInicio] = useState("");
     const [DataFim, setDataFim] = useState("");
     const [nome_contato, setNomeContato] = useState("");
@@ -83,9 +84,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
 
     async function handleCancel() {
         try {
-            const response = await CancelamentodaVenda(params.id);
-            console.log('teste')
-            console.log(response)
+            const response = await CancelamentodaVenda(params.id)
             if (response.status === 1) {
                 toast({
                     title: "Sucesso",
@@ -109,8 +108,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     async function handleAtivarVenda() {
         try {
             const response = await ativarVenda(params.id);
-            console.log('teste')
-            if (response.status === 0) {
+            if (response.status === 1) {
                 toast({
                     title: "Sucesso",
                     description: "Venda ativada!",
@@ -118,7 +116,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 });
                 setTimeout(() => {
                     route.push('/routes/relatorio');
-                }, 2000);
+                }, 1000);  
             }
         } catch (error) {
             toast({
@@ -135,7 +133,32 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         const clienteEncontrado = listaCliente.find(client => client.cpf_cnpj === cpf_cnpj_input);
         setFoundCliente(clienteEncontrado || null);
     }
-
+    const handleButtonsavle = async (event: FormEvent) => {
+        
+        event.preventDefault(); 
+        await updateVenda(
+            Number(new_cliente_id),
+            Number(new_tipo_contrato_id),
+            Number(new_produto_id),
+            Number(new_usuario_id),
+            String(statusCliente),
+            String(DataInicio),
+            String(DataFim),
+            Number(valor_entrada),
+            Number(valor_total),
+            String(nome_contato),
+            String(email),
+            String(telefone),
+            String(metodo_pagamento),
+            Number(numero_parcela),
+            String(statusCliente),
+            Number(statusVenda)
+        );
+    };
+    
+    const handleButtonClick = async () => {
+        setInputHabilitados(true);
+    };
     const renderGestaoCliente = () => {
         if (!foundCliente) return null;
         return (
@@ -167,6 +190,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                 placeholder="CPF/CNPJ do Cliente"
                                 type="text"
                                 value={cpf_cnpj_input}
+                                disabled={!inputsHabilitados}
                             />
                         </div>
 
@@ -175,19 +199,25 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Data Inicio</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500" value={DataInicio}
                                     placeholder="Data de inicio" type="date"
+                                    disabled={!inputsHabilitados}
                                     onChange={(event) => setDataInicio(event.target.value)} />
+
                             </div>
                             <div className="flex flex-col mb-5">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Data Termino</label>
                                 <input className="border-b-2 focus:outline-none focus:border-blue-500" value={DataFim} type="date"
+                                    disabled={!inputsHabilitados}
                                     onChange={(event) => setDataFim(event.target.value)} />
+
                             </div>
                         </div>
 
                         <div className="md:grid md:grid-cols-3 gap-5 mb-5">
                             <div className="md:col-span-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Modelo do Contratos</label>
-                                <Select value={new_tipo_contrato_id}>
+                                <Select value={new_tipo_contrato_id}
+                                    disabled={!inputsHabilitados}>
+
                                     <SelectTrigger>
                                         <SelectValue placeholder="Modelo do Contratos" />
                                     </SelectTrigger>
@@ -200,7 +230,8 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             </div>
                             <div className="md:col-span-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Produto</label>
-                                <Select value={new_produto_id}>
+                                <Select value={new_produto_id}
+                                    disabled={!inputsHabilitados}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Produto" />
                                     </SelectTrigger>
@@ -216,6 +247,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     className="border-b-2 h-10 focus:outline-none focus:border-blue-500"
                                     placeholder="Horas"
                                     value={horas_trabalhadas}
+                                    disabled={!inputsHabilitados}
                                     type="text"
                                     onChange={(event) => setHorasTrabalhadas(Number(event.target.value))}
                                 />
@@ -227,16 +259,20 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                 placeholder="Nome"
                                 value={nome_contato}
+                                disabled={!inputsHabilitados}
                                 onChange={(event) => setNomeContato(event.target.value)}
                                 type="text" />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                 placeholder="(99) 99999-9999"
                                 onChange={(event) => setTelefoneContato(event.target.value)} type="phone"
-                                value={telefone} />
+                                value={telefone}
+                                disabled={!inputsHabilitados} />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                 placeholder="Email" onChange={(event) => setEmailContato(event.target.value)}
                                 type="email"
-                                value={email} />
+                                value={email}
+                                disabled={!inputsHabilitados}
+                            />
                         </div>
                     </form>
                 </Card>
@@ -260,6 +296,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     placeholder="0000,00"
                                     type="text"
                                     value={valor_entrada}
+                                    disabled={!inputsHabilitados}
                                     onChange={(event) => setValorEntrada(event.target.value)}
                                 />
                             </div>
@@ -268,7 +305,8 @@ export default function EditVenda({ params }: { params: { id: number } }) {
 
                         <div className="col-span-1">
                             <label className="block text-sm font-medium text-gray-700 mb-2">Status Cliente</label>
-                            <Select value={statusCliente}>
+                            <Select value={statusCliente}
+                                disabled={!inputsHabilitados}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Status Cliente" />
                                 </SelectTrigger>
@@ -293,6 +331,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     aria-labelledby="pagamento-opcao-1"
                                     aria-describedby="pagamento-opcao-1"
                                     checked={metodo_pagamento === "À vista"}
+                                    disabled={!inputsHabilitados}
                                     onChange={() => {
                                         setMostrarParcelas(false);
                                         setmetodo_pagamento("À vista");
@@ -315,6 +354,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     aria-labelledby="pagamento-opcao-2"
                                     aria-describedby="pagamento-opcao-2"
                                     checked={metodo_pagamento === "Parcelado"}
+                                    disabled={!inputsHabilitados}
                                     onChange={() => {
                                         setMostrarParcelas(true);
                                         setmetodo_pagamento("Parcelado");
@@ -336,6 +376,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                             placeholder="36x"
                                             type="number"
                                             onChange={(event) => setnumero_parcela(event.target.value)}
+                                            disabled={!inputsHabilitados}
                                         />
                                     </div>
                                     <div className="col-span-1">
@@ -348,7 +389,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                         </div>
                         <div className="col-span-2 grid grid-cols-2">
                             <label className="font-bold col-span-1" htmlFor="teste">Valor total a pagar:</label>
-                            <h1 className="font-bold">{`R$ ${valor_total}`}</h1>
+                            <h1 className="font-bold col-span-1 text-end">44584</h1>
                         </div>
                         <div className="text-center col-span-2">
                             <div className="text-center col-span-2">
@@ -369,11 +410,18 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                         </button>
                                     )}
                                     <button
-                                        type="submit"
+                                        type="button"
+                                        onClick={handleButtonsavle}
                                         className="col-span-1 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
                                         SALVAR
                                     </button>
-                                   
+                                    <button
+                                        type="submit"
+                                        onClick={handleButtonClick}
+                                        className="  mt-3 col-span-2 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
+                                        Editar
+                                    </button>
+
 
                                 </div>
 
