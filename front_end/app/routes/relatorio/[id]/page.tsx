@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
+
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CancelamentodaVenda, getVendaById, ativarVenda, updateVenda } from "@/lib/VendaController";
@@ -67,6 +68,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 setstatusClienteValor(vendaData.status_cliente);
                 setCpfCnpjInput(vendaData.cpf_cnpj);
                 setMostrarParcelas(vendaData.metodo_pagamento === "Parcelado");
+                console.log(vendaData.status_venda)
                 setStatusVenda(vendaData.status_venda);
             }
         }
@@ -134,27 +136,47 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         setFoundCliente(clienteEncontrado || null);
     }
     const handleButtonsavle = async (event: FormEvent) => {
-        
-        event.preventDefault(); 
-        await updateVenda(
-            Number(new_cliente_id),
-            Number(new_tipo_contrato_id),
-            Number(new_produto_id),
-            Number(new_usuario_id),
-            String(statusCliente),
-            String(DataInicio),
-            String(DataFim),
-            Number(valor_entrada),
-            Number(valor_total),
-            String(nome_contato),
-            String(email),
-            String(telefone),
-            String(metodo_pagamento),
-            Number(numero_parcela),
-            String(statusCliente),
-            Number(statusVenda)
-        );
+        event.preventDefault();
+    
+        try {
+            await updateVenda(
+                Number(new_cliente_id),
+                Number(new_tipo_contrato_id),
+                Number(new_produto_id),
+                Number(new_usuario_id),
+                String(statusCliente),
+                horas_trabalhadas,
+                String(DataInicio),
+                String(DataFim),
+                Number(valor_entrada),
+                Number(valor_total),
+                String(nome_contato),
+                String(email),
+                String(telefone),
+                String(metodo_pagamento),
+                Number(numero_parcela),
+                String(statusVenda),
+                params.id
+            );
+            toast({
+                title: "Sucesso",
+                description: "Venda atualizada com sucesso!",
+                className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+            });
+            setTimeout(() => {
+                route.push('/routes/relatorio');
+            }, 2000);
+        } catch (error) {
+            toast({
+                title: "Erro",
+                description: "Erro ao atualizar a venda!",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
+    
+            console.error("Erro ao atualizar a venda:", error);
+        }
     };
+    
     
     const handleButtonClick = async () => {
         setInputHabilitados(true);

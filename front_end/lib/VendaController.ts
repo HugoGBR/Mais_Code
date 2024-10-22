@@ -96,6 +96,7 @@ export async function updateVenda(
     produtoId: number,
     usuarioId: number,
     statusCliente: string,
+    horastrabalhadas:Number,
     inicioContrato: string,
     finalContrato: string,
     valorEntrada: number,
@@ -109,8 +110,8 @@ export async function updateVenda(
     vendaId: number 
 ) {
     try {
-        const request = await fetch(`${backendURL()}/VendaService.php?acao=UpdateVendaById&id=${vendaId}`, {
-            method: "PATCH",
+        const request = await fetch(`${backendURL()}/VendaService.php?acao=updateContratoByID&id=${vendaId}`, {
+            method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -120,6 +121,7 @@ export async function updateVenda(
                 produto_id: produtoId,
                 usuario_id: usuarioId,
                 status_cliente: statusCliente,
+                horas_trabalhadas:horastrabalhadas,
                 inicio_contrato: inicioContrato,
                 final_contrato: finalContrato,
                 valor_entrada: valorEntrada,

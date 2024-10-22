@@ -28,6 +28,7 @@ switch ($acao) {
             echo json_encode(["error" => "Ação updateContratoByID necessita de um ID"]);
         }
         break;
+    
 
     case "getAllProductById":
         if ($id !== null) {
