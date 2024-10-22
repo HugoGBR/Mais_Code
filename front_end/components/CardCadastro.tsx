@@ -108,21 +108,24 @@ export default function CardCadastro() {
     }, []);
 
 
-    
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
 
         if (!cpf_cnpj_input) newErrors.cpf_cnpj_input = "CPF/CNPJ é obrigatório";
         if (!DataInicio) newErrors.DataInicio = "Data de início é obrigatória";
-        if (!DataFim) newErrors.DataFim = "Data de fim é obrigatória";
+        if (!DataFim) newErrors.DataFim = "Data de término é obrigatória";
         if (!new_tipo_contrato_id) newErrors.new_tipo_contrato_id = "Modelo de contrato é obrigatório";
         if (!new_produto_id) newErrors.new_produto_id = "Produto é obrigatório";
-        if (horasTrabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas não pode ser negativa";
+        if (!horasTrabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas é obrigatório";
         if (!nome_contato) newErrors.nome_contato = "Nome do contato é obrigatório";
         if (!telefone) newErrors.telefone = "Telefone do contato é obrigatório";
         if (!email) newErrors.email = "Email do contato é obrigatório";
-        if (!metodo_pagamento) newErrors.metodo_pagamento = "Método de pagamento é obrigatório";
+        if (!statusCliente) newErrors.statusCliente = "Status do cliente é obrigatório";
+        if (!metodo_pagamento) newErrors.metodo_pagamento = "Selecione um método de pagamento";
+
+        setErrors(newErrors);
 
         if (Object.keys(newErrors).length > 0) {
             toast({
@@ -304,13 +307,17 @@ export default function CardCadastro() {
                                         placeholder="CPF/CNPJ do Cliente"
                                         type="text"
                                         value={cpf_cnpj_input}
-                                        onChange={(e) => setCpfCnpjInput(insertMaskCpfCnpj(e.target.value))}
+                                        onChange={(e) => {
+                                            setCpfCnpjInput(insertMaskCpfCnpj(e.target.value));
+                                            setErrors((prevErrors) => ({ ...prevErrors, cpf_cnpj_input: '' }));
+                                        }}
                                     />
                                     <button
                                         type="submit"
                                         className="w-28 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                         BUSCAR
                                     </button>
+                                    {errors.cpf_cnpj_input && <span className="error text-xs text-red-600 -mt-4">{errors.cpf_cnpj_input}</span>}
                                 </div>
                             </div>
                             <div className="md:grid md:grid-cols-2 gap-5 mt-5">
@@ -320,20 +327,32 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="Data de inicio" type="date"
                                         value={DataInicio}
-                                        onChange={(event) => setDataInicio(event.target.value)} />
+                                        onChange={(event) => {
+                                            setDataInicio(event.target.value);
+                                            setErrors((prevErrors) => ({ ...prevErrors, DataInicio: '' }));
+                                          }}
+                                        />
+                                        {errors.DataInicio && <span className="error text-xs text-red-600 mt-1">{errors.DataInicio}</span>}
                                 </div>
                                 <div className="flex flex-col mb-5">
-                                    <label className="text-sm" htmlFor="teste">Data Termino</label>
+                                    <label className="text-sm" htmlFor="teste">Data Término</label>
                                     <input
                                         className="border-b-2 focus:outline-none focus:border-blue-500" type="date"
                                         value={DataFim}
-                                        onChange={(event) => setDataFim(event.target.value)} />
+                                        onChange={(event) => {
+                                            setDataFim(event.target.value);
+                                            setErrors((prevErrors) => ({ ...prevErrors, DataFim: '' }));
+                                        }} />
+                                    {errors.DataFim && <span className="error text-xs text-red-600 mt-1">{errors.DataFim}</span>}
                                 </div>
                             </div>
                             <div className="md:grid md:grid-cols-2">
                                 <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
                                     <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
-                                    <Select onValueChange={(value) => setnew_tipo_contrato_id(value)}>
+                                    <Select onValueChange={(value) => {
+                                    setnew_tipo_contrato_id(value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, new_tipo_contrato_id: '' }));
+                                    }}>
                                         <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
                                             <SelectValue placeholder="Tipo Contrato" />
                                         </SelectTrigger>
@@ -343,6 +362,7 @@ export default function CardCadastro() {
                                             ))}
                                         </SelectContent>
                                     </Select>
+                                    {errors.new_tipo_contrato_id && <span className="error text-xs text-red-600 h-fit mt-10 mr-1">{errors.new_tipo_contrato_id}</span>}
                                     <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
                                     <Select onValueChange={(value) => setnew_produto_id(value)}>
                                         <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
@@ -354,8 +374,9 @@ export default function CardCadastro() {
                                             ))}
                                         </SelectContent>
                                     </Select>
+                                    {errors.new_produto_id && <span className="error text-xs text-red-600 h-fit mt-10 ,r-1">{errors.new_produto_id}</span>}
                                 </div>
-                                <div className="flex flex-col mb-5 md:ml-5">
+                                <div className="flex flex-col mb-5 md:ml-2.5">
                                     <label className="text-sm mb-2" htmlFor="horas-trabalhadas">Horas Trabalhadas</label>
                                     <input
                                         id="horas-trabalhadas"
@@ -373,28 +394,38 @@ export default function CardCadastro() {
                                             }
                                         }}
                                     />
+                                    {errors.horas_trabalhadas && <span className="error text-xs text-red-600 mt-1">{errors.horas_trabalhadas}</span>}
                                 </div>
                             </div>
                             <h2 className="font-bold">Dados do Contato</h2>
                             <div className="grid grid-cols-2 gap-5 mt-5">
-                                <input
-                                    className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="Nome"
-                                    value={nome_contato}
-                                    onChange={(event) => setNomeContato(event.target.value)}
-                                    type="text" />
-                                <input
-                                    className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="(99) 99999-9999"
-                                    value={telefone}
-                                    onChange={(event) => setTelefoneContato(insertMaskTelefone(event.target.value))}
-                                    type="tel" />
-                                <input
-                                    className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="Email"
-                                    value={email}
-                                    onChange={(event) => setEmailContato(event.target.value)}
-                                    type="email" />
+                                <div className="grid grid-cols-1">
+                                    <input
+                                        className="border-b-2 focus:outline-none focus:border-blue-500"
+                                        placeholder="Nome"
+                                        value={nome_contato}
+                                        onChange={(event) => setNomeContato(event.target.value)}
+                                        type="text" />
+                                    {errors.nome_contato && <span className="error text-xs text-red-600 mt-1">{errors.nome_contato}</span>}
+                                </div>
+                                <div className="grid grid-cols-1">
+                                    <input
+                                        className="border-b-2 focus:outline-none focus:border-blue-500"
+                                        placeholder="(99) 99999-9999"
+                                        value={telefone}
+                                        onChange={(event) => setTelefoneContato(insertMaskTelefone(event.target.value))}
+                                        type="tel" />
+                                    {errors.telefone && <span className="error text-xs text-red-600 mt-1">{errors.telefone}</span>}
+                                </div>
+                                <div className="grid grid-cols-1">
+                                    <input
+                                        className="border-b-2 focus:outline-none focus:border-blue-500"
+                                        placeholder="Email"
+                                        value={email}
+                                        onChange={(event) => setEmailContato(event.target.value)}
+                                        type="email" />
+                                    {errors.email && <span className="error text-xs text-red-600 mt-1">{errors.email}</span>}
+                                </div>
                             </div>
                         </form>
                     </Card>
@@ -413,7 +444,7 @@ export default function CardCadastro() {
                                 value={horasTrabalhadas}
                                 onChange={(event) => setHorasTrabalhadas(insertMaskValorMonetario(event.target.value))}
                                 placeholder="R$"
-                                required
+                                
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
                             </div>
@@ -427,6 +458,7 @@ export default function CardCadastro() {
                                         <SelectItem value={"antigo"}>Antigo</SelectItem>
                                         <SelectItem value={"novo"}>Novo</SelectItem>
                                     </SelectContent>
+                                    {errors.statusCliente && <span className="error text-xs text-red-600 mt-1">{errors.statusCliente}</span>}
                                 </Select>
                             </div>
                             <h2 className="font-bold mb-5">Metodo de Pagamento</h2>
@@ -476,7 +508,7 @@ export default function CardCadastro() {
                                                 min="1"
                                                 value={numero_parcelo}
                                                 onChange={(event) => setnumero_parcelo(Number(event.target.value))}
-                                            />
+                                                />
                                         </div>
                                         <div>
                                             <PopUpConfig
@@ -485,11 +517,12 @@ export default function CardCadastro() {
                                                 onSetValoresParcelas={handleSetValoresParcelas}
                                                 onConfirm={(vendaId, numeroParcelas, valoresParcelas) => handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)}
                                                 idVenda={id_venda}
-                                            />
+                                                />
                                         </div>
                                     </div>
                                 )}
                             </div>
+                                {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
                             <div className="flex justify-between mt-5 h-auto">
                                 <label className="font-bold" htmlFor="teste">Valor total a pagar:</label>
                                 <h1 className="font-bold">{`R$ ${valor_total.toFixed(2)}`}</h1>
@@ -511,3 +544,7 @@ export default function CardCadastro() {
         </>
     );
 }
+function setErrors(newErrors: { [key: string]: string; }) {
+    throw new Error("Function not implemented.");
+}
+
