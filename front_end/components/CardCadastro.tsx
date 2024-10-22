@@ -364,7 +364,10 @@ export default function CardCadastro() {
                                     </Select>
                                     {errors.new_tipo_contrato_id && <span className="error text-xs text-red-600 h-fit mt-10 mr-1">{errors.new_tipo_contrato_id}</span>}
                                     <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
-                                    <Select onValueChange={(value) => setnew_produto_id(value)}>
+                                    <Select onValueChange={(value) => {
+                                        setnew_produto_id(value);
+                                        setErrors((prevErrors) => ({ ...prevErrors, new_produto_id: '' }));
+                                    }}>
                                         <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
                                             <SelectValue placeholder="Produto" />
                                         </SelectTrigger>
@@ -392,6 +395,7 @@ export default function CardCadastro() {
                                             } else {
                                                 setHorasTrabalhadas("");
                                             }
+                                            setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
                                         }}
                                     />
                                     {errors.horas_trabalhadas && <span className="error text-xs text-red-600 mt-1">{errors.horas_trabalhadas}</span>}
@@ -404,7 +408,10 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="Nome"
                                         value={nome_contato}
-                                        onChange={(event) => setNomeContato(event.target.value)}
+                                        onChange={(event) => {
+                                            setNomeContato(event.target.value);
+                                            setErrors((prevErrors) => ({ ...prevErrors, nome_contato: '' }));
+                                        }}
                                         type="text" />
                                     {errors.nome_contato && <span className="error text-xs text-red-600 mt-1">{errors.nome_contato}</span>}
                                 </div>
@@ -413,7 +420,10 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="(99) 99999-9999"
                                         value={telefone}
-                                        onChange={(event) => setTelefoneContato(insertMaskTelefone(event.target.value))}
+                                        onChange={(event) => {
+                                            setTelefoneContato(insertMaskTelefone(event.target.value));
+                                            setErrors((prevErrors) => ({ ...prevErrors, telefone: '' }));
+                                        }}
                                         type="tel" />
                                     {errors.telefone && <span className="error text-xs text-red-600 mt-1">{errors.telefone}</span>}
                                 </div>
@@ -422,7 +432,10 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="Email"
                                         value={email}
-                                        onChange={(event) => setEmailContato(event.target.value)}
+                                        onChange={(event) => {
+                                            setEmailContato(event.target.value);
+                                            setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+                                        }}
                                         type="email" />
                                     {errors.email && <span className="error text-xs text-red-600 mt-1">{errors.email}</span>}
                                 </div>
@@ -444,13 +457,15 @@ export default function CardCadastro() {
                                 value={horasTrabalhadas}
                                 onChange={(event) => setHorasTrabalhadas(insertMaskValorMonetario(event.target.value))}
                                 placeholder="R$"
-                                
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
                             </div>
                             <div className="mb-5">
                                 <label className="text-sm" htmlFor="Nn">Status Cliente</label>
-                                <Select onValueChange={(value) => setstatusCliente(value)}>
+                                <Select onValueChange={(value) => {
+                                    setstatusCliente(value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, statusCliente: '' }));
+                                }}>
                                     <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
                                         <SelectValue placeholder="Tipo Cliente" />
                                     </SelectTrigger>
@@ -475,6 +490,8 @@ export default function CardCadastro() {
                                                 setmetodo_pagamento("À vista");
                                                 setnumero_parcelo(1);
                                                 setMostrarParcelas(false);
+                                                setErrors((prevErrors) => ({ ...prevErrors, metodo_pagamento: '' }));
+                                                
                                             }} />
                                         <label htmlFor="pagamento-opcao-1"
                                             className="block ml-2 text-sm font-medium text-gray-900">
@@ -491,6 +508,7 @@ export default function CardCadastro() {
                                             onClick={() => {
                                                 setmetodo_pagamento("Parcelado");
                                                 setMostrarParcelas(true);
+                                                setErrors((prevErrors) => ({ ...prevErrors, metodo_pagamento: '' }));
                                             }} />
                                         <label htmlFor="pagamento-opcao-2"
                                             className="block ml-2 text-sm font-medium text-gray-900">
