@@ -14,6 +14,7 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
+    Row,
 } from "@tanstack/react-table"
 import {
     Table,
@@ -30,6 +31,8 @@ import { GetDadosVendaByData, GetDadosVendaByYear } from "@/lib/RelatorioControl
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
 }
+
+
 
 export function DataTable<TData, TValue>({
     columns,
@@ -56,15 +59,23 @@ export function DataTable<TData, TValue>({
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
+        
         state: {
             sorting,
             columnFilters,
             columnVisibility,
             rowSelection,
         },
+
+
+        
     });
 
 
+    function HandleClick(row:string){
+        const dadosDaLinha = JSON.parse(row)
+        router.push(`/routes/relatorio/${dadosDaLinha.numero_contrato}`)
+    }
     const getDadosYear = async () => {
         const dados = await GetDadosVendaByYear(hoje);
         setData(dados);
@@ -80,6 +91,8 @@ export function DataTable<TData, TValue>({
         console.log(`dados da nova consulta ${startDate}`)
         setData(dados);         
     }
+
+
 
     return (
         <div>
@@ -136,7 +149,8 @@ export function DataTable<TData, TValue>({
                                     <TableRow
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
-                                        onClick={() => router.push(`/routes/relatorio/${Number(row.id) + 1}`)}
+                                        // onClick={() => router.push(`/routes/relatorio/${Number(row.id) + 1}`)}
+                                        onClick={() => HandleClick(JSON.stringify(row.original))}
                                         className="cursor-pointer"
                                     >
                                         {row.getVisibleCells().map((cell) => (
