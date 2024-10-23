@@ -40,10 +40,9 @@ export default function CardCadastro() {
     const [statusCliente, setstatusCliente] = useState("");
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
-    //const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
+    const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
     const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
     const [id_venda, setIdVenda] = useState(1);
-    const [horasTrabalhadas, setHorasTrabalhadas] = useState<string>('');
 
     const route = useRouter();
     const { toast } = useToast();
@@ -76,13 +75,13 @@ export default function CardCadastro() {
     }, []);
 
     useEffect(() => {
-        if (new_produto_id && horasTrabalhadas) {
+        if (new_produto_id && horas_trabalhadas >= 0) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
-                setvalortotal((selectedProduct.horas_trabalhadas) - valor_entrada);
+                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valor_entrada);
             }
         }
-    }, [new_produto_id, horasTrabalhadas, valor_entrada]);
+    }, [new_produto_id, horas_trabalhadas, valor_entrada]);
 
     useEffect(() => {
         if (new_produto_id) {
@@ -118,7 +117,7 @@ export default function CardCadastro() {
         if (!DataFim) newErrors.DataFim = "Data de término é obrigatória";
         if (!new_tipo_contrato_id) newErrors.new_tipo_contrato_id = "Modelo de contrato é obrigatório";
         if (!new_produto_id) newErrors.new_produto_id = "Produto é obrigatório";
-        if (!horasTrabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas é obrigatório";
+        if (horas_trabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas é obrigatório";
         if (!nome_contato) newErrors.nome_contato = "Nome do contato é obrigatório";
         if (!telefone) newErrors.telefone = "Telefone do contato é obrigatório";
         if (!email) newErrors.email = "Email do contato é obrigatório";
@@ -157,7 +156,7 @@ export default function CardCadastro() {
         setstatusCliente("");
         setstatusClienteValor(0);
         setFoundCliente(null);
-        setHorasTrabalhadas("");
+        setHorasTrabalhadas(0);
         setValoresParcelas([]);
     };
 
@@ -178,7 +177,7 @@ export default function CardCadastro() {
                 Number(new_produto_id),
                 Number(new_usuario_id),
                 statusClienteValor,
-                Number(horasTrabalhadas),
+                horas_trabalhadas,
                 datadofim,
                 Number(valor_entrada),
                 valor_total,
@@ -387,14 +386,14 @@ export default function CardCadastro() {
                                         placeholder="0 "
                                         type="number"
                                         min="0"
-                                        value={horasTrabalhadas !== undefined && horasTrabalhadas !== null ? horasTrabalhadas : ''}
+                                        value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
                                         onChange={(event) => {
                                             const value = Number(event.target.value);
                                             if (!isNaN(value) && value >= 0) {
                                                 setHorasTrabalhadas(value);
                                                 setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
                                             } else {
-                                                setHorasTrabalhadas("");
+                                                setHorasTrabalhadas(0);
                                             }
                                         }}
                                     />
