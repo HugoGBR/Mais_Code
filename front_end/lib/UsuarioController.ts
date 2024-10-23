@@ -10,7 +10,11 @@ export async function createNewUserGestao(
 ) {
     const request = await fetch(`${backendURL()}/UserService.php?acao=createNewUserGestao`,
         {
+            
             method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 nome: newNome,
                 cargo_id: newCargoid,
@@ -20,8 +24,7 @@ export async function createNewUserGestao(
             )
         });
     const response = await request.json();
-    console.log(response)
-    return response
+    return JSON.parse(response)
 }
 
 export async function validacaoLogin(

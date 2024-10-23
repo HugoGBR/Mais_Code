@@ -16,16 +16,18 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { DadosCargos } from "@/lib/interfaces/dadosUsuarios";
+import { useToast } from "@/components/ui/use-toast";
 
 type LoginFormSchema = z.infer<typeof userSchema>;
 
-export default function CadastrarUsuarioGestao() {
+export default function CardUsers() {
     const route = useRouter();
     const [listaCargo, setListaCargo] = useState<DadosCargos[]>([]);
-    const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
+    const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<LoginFormSchema>({
         resolver: zodResolver(userSchema)
     });
+    const { toast } = useToast();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,8 +38,17 @@ export default function CadastrarUsuarioGestao() {
         fetchData();
     }, []);
 
+   
+    const resetForm = () => {
+        setValue('nome', "");
+        setValue('email', "");
+        setListaCargo([]);
+        setShowPassword(false);
+    };
+
     const handleFormSubmit = async (data: LoginFormSchema) => {
         const { nome, email, password, cargo } = data;
+
 
         const response = await createNewUserGestao(
             nome,
@@ -45,13 +56,22 @@ export default function CadastrarUsuarioGestao() {
             email,
             password
         );
-
-        if (response == 1) {
-            alert('Usuário cadastrado com sucesso!');
+        if (Number(response.status) == 1) {
+            toast({
+                title: "Sucesso",
+                description: "Usuário cadastrado com sucesso!",
+                className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+            });
+            resetForm();
             route.push('/routes/gestao');
         } else {
-            alert('Erro ao cadastrar o usuário. Por favor, tente novamente.');
+            toast({
+                title: "Erro",
+                description: "Erro ao cadastrar o usuário. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
         }
+
     };
 
     return (
@@ -61,7 +81,7 @@ export default function CadastrarUsuarioGestao() {
                     <div className="h-12 mb-5">
                         <h1 className="font-bold text-2xl">Usuário</h1>
                     </div>
-                    <div className="flex justify-center items-center opacity-40 mb-10">
+                    <div className="flex justify-center items-center mb-10">
                         <img
                             src="/icons/icon-perfil-preto.png"
                             className="w-28"
@@ -96,7 +116,7 @@ export default function CadastrarUsuarioGestao() {
                                 <input
                                     id="hs-toggle-password"
                                     type={showPassword ? "text" : "password"}
-                                    className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10 w-full pr-10"  // pr-10 para evitar que o botão sobreponha o texto
+                                    className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10 w-full pr-10"
                                     placeholder="Senha"
                                     {...register('password')}
                                 />

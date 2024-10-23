@@ -1,10 +1,10 @@
 import {backendURL} from "@/lib/URLS/backendURL";
 
-export async function createNewCliente(newNome: string, newEmail: string, newTelefone: string, newCpf_cnpj: string) {
+export async function createNewCliente(newNome: string, newEmail: string, newCpf_cnpj: string) {
     const request = await fetch(`${backendURL()}/ClienteService.php?acao=createNewCliente`,
         {
             method: "POST",
-            body: JSON.stringify({nome: newNome, email: newEmail, telefone: newTelefone, cpf_cnpj: newCpf_cnpj})
+            body: JSON.stringify({nome: newNome, email: newEmail, cpf_cnpj: newCpf_cnpj})
         });
     const response = await request.json();
     console.log(response)

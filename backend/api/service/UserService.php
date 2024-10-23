@@ -30,14 +30,14 @@ if (isset($_REQUEST["acao"])) {
             }
             break;
 
-        case "CreateNewUser":
-            if ($id !== null) {
-                echo json_encode(["error" => "Ação CreateNewUser não aceita um ID"]);
-            } else {
-                $mensagem = $userController->CreateNewUser();
-                echo json_encode($mensagem);
-            }
-            break;
+        // case "CreateNewUser":
+        //     if ($id !== null) {
+        //         echo json_encode(["error" => "Ação CreateNewUser não aceita um ID"]);
+        //     } else {
+        //         $mensagem = $userController->CreateNewUser();
+        //         echo json_encode($mensagem);
+        //     }
+        //     break;
 
         case "getUserById":
             if ($id !== null) {
