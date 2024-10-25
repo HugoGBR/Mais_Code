@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { createNewProduto, getAllTiposClientes } from '@/lib/ProdutoController';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { dadosTipo_cliente } from '@/lib/interfaces/dadosUsuarios';
-import { insertMaskValorMonetario } from '@/lib/MaskInput/MaskInput';
+import { insertMaskValorMonetarioSemVirgula } from '@/lib/MaskInput/MaskInput';
 
 export default function CadastroProduto() {
     const [nomeProduto, setNomeProduto] = useState<string>('');
@@ -55,16 +55,17 @@ export default function CadastroProduto() {
                             />
                         </div>
                         <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
-                            <input
-                                type="text"
-                                id="horasTrabalhadas"
-                                name="horasTrabalhadas"
-                                value={horasTrabalhadas}
-                                onChange={(event) => setHorasTrabalhadas(insertMaskValorMonetario(event.target.value))}
-                                placeholder="R$"
-                                required
-                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                            />
+                        <input
+    type="text"
+    id="horasTrabalhadas"
+    name="horasTrabalhadas"
+    value={horasTrabalhadas}
+    onChange={(event) => setHorasTrabalhadas(insertMaskValorMonetarioSemVirgula(event.target.value))}
+    placeholder="Horas Trabalhadas (HHMM)"
+    required
+    className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+/>
+
                             <input
                                 type="text"
                                 id="comissaoNovo"

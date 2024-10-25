@@ -18,13 +18,14 @@ export const insertMaskTelefone = (telefone: string) => {
 
     return maskedTelefone;
 };
-export const insertMaskValorMonetario = (valor: string) => {
+export const insertMaskValorMonetarioSemVirgula = (valor: string) => {
+    // Remove caracteres não numéricos
     let numericValor = valor.replace(/\D/g, '');
 
+    // Converte para um número e divide por 100 para formatar como decimal
     numericValor = (parseInt(numericValor) / 100).toFixed(2);
 
-    numericValor = numericValor.replace('.', ',');
-
+    // Formata o número para adicionar separador de milhar
     const formattedValor = numericValor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
     return `${formattedValor}`;

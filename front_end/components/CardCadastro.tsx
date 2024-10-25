@@ -445,7 +445,6 @@ export default function CardCadastro() {
                                 value={valor_entrada}
                                 onChange={(event) => setValorEntrada(insertMaskValorMonetario(event.target.value))}
                                 placeholder="R$"
-                                
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
                             </div>
