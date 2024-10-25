@@ -22,11 +22,26 @@ export const insertMaskValorMonetarioSemVirgula = (valor: string) => {
     // Remove caracteres não numéricos
     let numericValor = valor.replace(/\D/g, '');
 
+    // Se a entrada estiver vazia, retorne uma string vazia
+    if (numericValor === '') {
+        return '';
+    }
+
     // Converte para um número e divide por 100 para formatar como decimal
-    numericValor = (parseInt(numericValor) / 100).toFixed(2);
+    const valorNumerico = parseFloat(numericValor) / 100;
+
+    // Verifica se o valor é maior que um determinado limite, se necessário
+    if (valorNumerico > 1000000) { // exemplo de limite, ajuste conforme necessário
+        return 'Valor muito alto';
+    }
 
     // Formata o número para adicionar separador de milhar
-    const formattedValor = numericValor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const formattedValor = valorNumerico.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }).replace(',', '.');
 
     return `${formattedValor}`;
 };
+
+
