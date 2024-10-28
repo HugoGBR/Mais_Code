@@ -13,7 +13,7 @@ import PopUpConfig from "./PopUpConfig";
 import { getCookie } from "@/lib/coockie";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
-import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetario } from "@/lib/MaskInput/MaskInput";
+import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
 import { number } from "zod";
 
 
@@ -443,7 +443,7 @@ export default function CardCadastro() {
                                 id="valorEntrada "
                                 name="valorEntrada"
                                 value={valor_entrada}
-                                onChange={(event) => setValorEntrada(insertMaskValorMonetario(event.target.value))}
+                                onChange={(event) => setValorEntrada(insertMaskValorMonetarioSemVirgula(event.target.value))}
                                 placeholder="R$"
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
