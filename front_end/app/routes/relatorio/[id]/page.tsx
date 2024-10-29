@@ -190,16 +190,17 @@ export default function EditVenda({ params }: { params: { id: number } }) {
             valor_da_parcela: novosValores[i],
             status: novosStatus[i],
         }));
-        setParcelas(novasParcelas); // Atualiza os valores das parcelas conforme edição
+        setParcelas(novasParcelas);
     };
-
-    const handleConfirmParcelas = async (vendaId: number, numeroParcelas: number, valoresParcelas: number[]) => {
+    
+    const handleConfirmParcelas = async (vendaId: number, numeroParcelas: number, valoresParcelas: number[], statusParcelas: string[]) => {
         try {
             for (let i = 0; i < parcelas.length; i++) {
                 const parcela = parcelas[i];
-                await updateParcelaByIDv(valoresParcelas[i], parcela.status, parcela.id);
+                const statusParcela = statusParcelas[i]; 
+                await updateParcelaByIDv(valoresParcelas[i], statusParcela, parcela.id);
             }
-
+    
             toast({
                 title: "Sucesso",
                 description: "Parcelas atualizadas com sucesso!",
@@ -214,6 +215,9 @@ export default function EditVenda({ params }: { params: { id: number } }) {
             console.error("Erro ao atualizar as parcelas:", error);
         }
     };
+    
+    
+
 
     const renderGestaoCliente = () => {
         if (!foundCliente) return null;

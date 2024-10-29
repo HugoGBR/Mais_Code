@@ -13,7 +13,7 @@ interface PopUpConfigProps {
     valorTotal: number;
     parcelas: number;
     onSetValoresParcelas: (valores: number[], status: string[]) => void;
-    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[], statusParcelas: string[]) => Promise<void>; // Adicionado status
+    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[], statusParcelas: string[]) => Promise<void>;
     idVenda: number;
     listaParcelas: any[];
 }
@@ -56,7 +56,7 @@ export default function EditConfiguracoesParcela({ valorTotal, parcelas, onSetVa
     const handleConfirm = () => {
         if (!mensagemErro) {
             onSetValoresParcelas(valoresParcelas, statusParcelas);
-            onConfirm(idVenda, parcelas, valoresParcelas, statusParcelas); // Chamando a função onConfirm
+            onConfirm(idVenda, parcelas, valoresParcelas, statusParcelas); // Chama handleConfirmParcelas com status
         }
     };
 

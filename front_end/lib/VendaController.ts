@@ -242,7 +242,7 @@ export async function updateParcelaByIDv(
         });
 
         const response = await fetch(`${backendURL()}/VendaService.php?acao=updateParcelaByIDv&id=${id_parcela}`, {
-            method: "PUT",  
+            method: "POST",  
             headers: {
                 'Content-Type': 'application/json'
             },
