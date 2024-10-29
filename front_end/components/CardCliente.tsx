@@ -63,12 +63,12 @@ export default function CadastrarCliente() {
     };
 
     const handleFormSubmit = async (data: LoginFormSchema) => {
-        const { nome, email, cpf_cnpj } = data;
+        const { nome, email, cpf_cnpj, telefone } = data;
 
         if (validateForm()) return;
 
         try {
-            const response = await createNewCliente(nome, email, cpf_cnpj);
+            const response = await createNewCliente(nome, email, cpf_cnpj, telefone);
 
             if (response === 1) {
                 toast({
