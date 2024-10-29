@@ -1,55 +1,34 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
-import {
-    CardFooter,
-} from "@/components/ui/card";
-import {
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogTrigger,
-    DialogClose,
-} from "@/components/ui/dialog";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import { CardFooter } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogFooter, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { SelectContent, SelectGroup, SelectItem } from './ui/select';
-import { getParcelaByidv, updateParcelaByIDv } from "@/lib/VendaController";
+import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from './ui/select';
 
 interface PopUpConfigProps {
     valorTotal: number;
     parcelas: number;
-    onSetValoresParcelas: (valores: number[]) => void;
-    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[]) => void;
+    onSetValoresParcelas: (valores: number[], status: string[]) => void;
+    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[], statusParcelas: string[]) => Promise<void>; // Adicionado status
     idVenda: number;
+    listaParcelas: any[];
 }
 
-export default function EditConfiguracoesParcela({ valorTotal, parcelas, onSetValoresParcelas, onConfirm, idVenda }: PopUpConfigProps): React.JSX.Element {
+export default function EditConfiguracoesParcela({ valorTotal, parcelas, onSetValoresParcelas, onConfirm, idVenda, listaParcelas }: PopUpConfigProps): React.JSX.Element {
     const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
+    const [statusParcelas, setStatusParcelas] = useState<string[]>([]);
     const [mensagemErro, setMensagemErro] = useState<string | null>(null);
-    const [listaParcelas, setListaParcelas] = useState<any[]>([]); // Armazena as parcelas recuperadas do banco
 
     useEffect(() => {
-        // Carrega as parcelas do banco quando o componente é montado
-        const carregarParcelas = async () => {
-            const dadosParcelas = await getParcelaByidv(idVenda);
-            if (dadosParcelas) {
-                setListaParcelas(dadosParcelas);
-                setValoresParcelas(dadosParcelas.map((parcela: any) => parseFloat(parcela.valor_da_parcela)));
-            }
-        };
-
-        carregarParcelas();
-    }, [idVenda]);
+        if (listaParcelas) {
+            setValoresParcelas(listaParcelas.map((parcela: any) => parseFloat(parcela.valor_da_parcela)));
+            setStatusParcelas(listaParcelas.map((parcela: any) => parcela.status));
+        }
+    }, [listaParcelas]);
 
     const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         const novoValor = e.target.value.replace('R$ ', '').replace(',', '.');
@@ -68,23 +47,16 @@ export default function EditConfiguracoesParcela({ valorTotal, parcelas, onSetVa
         }
     };
 
-    const handleStatusChange = (index: number, status: number) => {
-        const novaListaParcelas = [...listaParcelas];
-        novaListaParcelas[index].status = status;
-        setListaParcelas(novaListaParcelas);
+    const handleStatusChange = (index: number, status: string) => {
+        const novosStatus = [...statusParcelas];
+        novosStatus[index] = status;
+        setStatusParcelas(novosStatus);
     };
 
-    const handleConfirm = async () => {
+    const handleConfirm = () => {
         if (!mensagemErro) {
-            onSetValoresParcelas(valoresParcelas);
-
-            // Atualiza cada parcela no banco de dados
-            for (let i = 0; i < listaParcelas.length; i++) {
-                const parcela = listaParcelas[i];
-                await updateParcelaByIDv(valoresParcelas[i], parcela.status, parcela.id);
-            }
-
-            onConfirm(idVenda, parcelas, valoresParcelas);
+            onSetValoresParcelas(valoresParcelas, statusParcelas);
+            onConfirm(idVenda, parcelas, valoresParcelas, statusParcelas); // Chamando a função onConfirm
         }
     };
 
@@ -124,13 +96,18 @@ export default function EditConfiguracoesParcela({ valorTotal, parcelas, onSetVa
                                             />
                                         </TableCell>
                                         <TableCell>
-                                            <SelectContent id={`status-parcela-${i}`}>
-                                                <SelectGroup>
-                                                    <SelectItem value="1" onClick={() => handleStatusChange(i, 1)}>Pago</SelectItem>
-                                                    <SelectItem value="2" onClick={() => handleStatusChange(i, 2)}>A pagar</SelectItem>
-                                                    <SelectItem value="3" onClick={() => handleStatusChange(i, 3)}>Cancelado</SelectItem>
-                                                </SelectGroup>
-                                            </SelectContent>
+                                            <Select onValueChange={(value) => handleStatusChange(i, value)}>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder={statusParcelas[i]} />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectGroup>
+                                                        <SelectItem value="pago">Pago</SelectItem>
+                                                        <SelectItem value="a pagar">A pagar</SelectItem>
+                                                        <SelectItem value="cancelado">Cancelado</SelectItem>
+                                                    </SelectGroup>
+                                                </SelectContent>
+                                            </Select>
                                         </TableCell>
                                     </TableRow>
                                 ))}

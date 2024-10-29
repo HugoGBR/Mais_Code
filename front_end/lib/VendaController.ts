@@ -232,7 +232,7 @@ export async function getParcelaByidv(vendaId: Number) {
 
 export async function updateParcelaByIDv(
     newvalor_da_parcela: number,
-    statusparcela: number,
+    statusparcela: string,
     id_parcela: number
 ) {
     try {
@@ -242,7 +242,7 @@ export async function updateParcelaByIDv(
         });
 
         const response = await fetch(`${backendURL()}/VendaService.php?acao=updateParcelaByIDv&id=${id_parcela}`, {
-            method: "PATCH",
+            method: "PUT",  
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -253,15 +253,19 @@ export async function updateParcelaByIDv(
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            console.error(`Erro HTTP! status: ${response.status}`);
+            throw new Error(`Erro HTTP! status: ${response.status}`);
         }
 
+
         const data = await response.json();
+        console.log("Resposta do servidor:", data);
+
         return data;
 
     } catch (error) {
-        console.error('Erro ao cadastrar parcela:', error);
-        return { success: false, message: 'Erro ao cadastrar parcela' };
+        console.error('Erro ao atualizar a parcela:', error);
+        return { success: false, message: 'Erro ao atualizar a parcela' };
     }
-    
 }
+

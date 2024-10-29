@@ -2,17 +2,15 @@
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from "next/link";
-
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CancelamentodaVenda, getVendaById, ativarVenda, updateVenda } from "@/lib/VendaController";
-import { dadosCliente, dadosModelo_contrato, dadosProduto, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
+import { CancelamentodaVenda, getVendaById, ativarVenda, updateVenda, updateParcelaByIDv, getParcelaByidv } from "@/lib/VendaController";
+import { dadosCliente, dadosModelo_contrato, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
 import { getAllContratos } from "@/lib/ContratoController";
 import CardCliente from '@/components/CardClienteGestao';
-import PopUpConfig from "@/components/PopUpConfig";
+import EditConfiguracoesParcela from "@/components/ParcelaEdit"; // Componente de edição de parcelas
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-import { Span } from "next/dist/trace";
 
 export default function EditVenda({ params }: { params: { id: number } }) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
@@ -40,6 +38,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState<number>(0);
     const [statusVenda, setStatusVenda] = useState("");
+    const [parcelas, setParcelas] = useState<any[]>([]); // Estado para armazenar as parcelas
 
     const route = useRouter();
     const { toast } = useToast();
@@ -68,12 +67,16 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 setstatusClienteValor(vendaData.status_cliente);
                 setCpfCnpjInput(vendaData.cpf_cnpj);
                 setMostrarParcelas(vendaData.metodo_pagamento === "Parcelado");
-                console.log(vendaData.status_venda)
                 setStatusVenda(vendaData.status_venda);
+
+                // Carregar parcelas ao carregar a venda
+                const parcelasData = await getParcelaByidv(params.id);
+                setParcelas(parcelasData);
             }
         }
         fetchVenda();
     }, [params.id]);
+
     useEffect(() => {
         const fetchData = async () => {
             const tipos_contrato = await getAllContratos();
@@ -83,10 +86,9 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         fetchData();
     }, []);
 
-
     async function handleCancel() {
         try {
-            const response = await CancelamentodaVenda(params.id)
+            const response = await CancelamentodaVenda(params.id);
             if (response.status === 1) {
                 toast({
                     title: "Sucesso",
@@ -100,7 +102,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         } catch (error) {
             toast({
                 title: "Erro",
-                description: "Erro ao inativada a venda!",
+                description: "Erro ao inativar a venda!",
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
             });
             console.error("Erro ao cancelar a venda:", error);
@@ -118,7 +120,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 });
                 setTimeout(() => {
                     route.push('/routes/relatorio');
-                }, 1000);  
+                }, 1000);
             }
         } catch (error) {
             toast({
@@ -135,9 +137,10 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         const clienteEncontrado = listaCliente.find(client => client.cpf_cnpj === cpf_cnpj_input);
         setFoundCliente(clienteEncontrado || null);
     }
+
     const handleButtonsavle = async (event: FormEvent) => {
         event.preventDefault();
-    
+
         try {
             await updateVenda(
                 Number(new_cliente_id),
@@ -172,15 +175,46 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 description: "Erro ao atualizar a venda!",
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
             });
-    
+
             console.error("Erro ao atualizar a venda:", error);
         }
     };
-    
-    
+
     const handleButtonClick = async () => {
         setInputHabilitados(true);
     };
+
+    const handleParcelasChange = (novosValores: number[], novosStatus: string[]) => {
+        const novasParcelas = parcelas.map((parcela, i) => ({
+            ...parcela,
+            valor_da_parcela: novosValores[i],
+            status: novosStatus[i],
+        }));
+        setParcelas(novasParcelas); // Atualiza os valores das parcelas conforme edição
+    };
+
+    const handleConfirmParcelas = async (vendaId: number, numeroParcelas: number, valoresParcelas: number[]) => {
+        try {
+            for (let i = 0; i < parcelas.length; i++) {
+                const parcela = parcelas[i];
+                await updateParcelaByIDv(valoresParcelas[i], parcela.status, parcela.id);
+            }
+
+            toast({
+                title: "Sucesso",
+                description: "Parcelas atualizadas com sucesso!",
+                className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+            });
+        } catch (error) {
+            toast({
+                title: "Erro",
+                description: "Erro ao atualizar as parcelas!",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
+            console.error("Erro ao atualizar as parcelas:", error);
+        }
+    };
+
     const renderGestaoCliente = () => {
         if (!foundCliente) return null;
         return (
@@ -324,7 +358,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             </div>
                         </div>
 
-
                         <div className="col-span-1">
                             <label className="block text-sm font-medium text-gray-700 mb-2">Status Cliente</label>
                             <Select value={statusCliente}
@@ -338,11 +371,12 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                 </SelectContent>
                             </Select>
                         </div>
+
                         <div className="col-span-2 font-bold">
                             <h2 className="col-span-2">Método de Pagamento</h2>
                         </div>
 
-                        <div className="col-span-2 grid grid-cols-12 ">
+                        <div className="col-span-2 grid grid-cols-12">
                             <div className="col-span-3">
                                 <input
                                     id="pagamento-opcao-1"
@@ -390,22 +424,15 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             </div>
 
                             {mostrarParcelas && (
-                                <div className="col-span-6 grid grid-cols-3 gap-x-5">
-                                    <div className="col-start-2">
-                                        <input
-                                            value={numero_parcela}
-                                            className="border-b-2 text-center w-full focus:outline-none focus:border-blue-500"
-                                            placeholder="36x"
-                                            type="number"
-                                            onChange={(event) => setnumero_parcela(event.target.value)}
-                                            disabled={!inputsHabilitados}
-                                        />
-                                    </div>
-                                    <div className="col-span-1">
-                                        <Link href="">
-                                            <PopUpConfig valorTotal={valor_total} parcelas={numero_parcela} />
-                                        </Link>
-                                    </div>
+                                <div className="col-span-12">
+                                    <EditConfiguracoesParcela
+                                        valorTotal={valor_total}
+                                        parcelas={parcelas.length}
+                                        onSetValoresParcelas={handleParcelasChange}
+                                        onConfirm={handleConfirmParcelas}
+                                        idVenda={params.id}
+                                        listaParcelas={parcelas} // Passa as parcelas carregadas
+                                    />
                                 </div>
                             )}
                         </div>
@@ -440,22 +467,19 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     <button
                                         type="submit"
                                         onClick={handleButtonClick}
-                                        className="  mt-3 col-span-2 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
+                                        className="mt-3 col-span-2 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
                                         Editar
                                     </button>
-
-
                                 </div>
-
                             </div>
                         </div>
                     </Card>
-                </form >
+                </form>
                 <div className="flex flex-col mb-5 py-3">
                     {renderGestaoCliente()}
                 </div>
-            </div >
+            </div>
             <Toaster />
-        </div >
+        </div>
     );
 }
