@@ -11,6 +11,9 @@ import CardCliente from '@/components/CardClienteGestao';
 import EditConfiguracoesParcela from "@/components/ParcelaEdit"; // Componente de edição de parcelas
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
+import { Span } from "next/dist/trace";
+import PopUpCancelamento from "@/components/PopUpCancelamento";
+
 
 export default function EditVenda({ params }: { params: { id: number } }) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
@@ -448,12 +451,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             <div className="text-center col-span-2">
                                 <div className="grid grid-cols-2 gap-x-5">
                                     {statusVenda === "em andamento" ? (
-                                        <button
-                                            type="submit"
-                                            onClick={handleCancel}
-                                            className="col-span-1 p-2 font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white focus:outline-none">
-                                            Inativar Venda
-                                        </button>
+                                        <PopUpCancelamento id={params.id} />
                                     ) : (
                                         <button
                                             type="submit"
