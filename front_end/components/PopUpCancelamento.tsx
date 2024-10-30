@@ -8,18 +8,12 @@ import {
     DialogTrigger,
     DialogDescription,
 } from "@/components/ui/dialog"
-import { CancelamentodaVenda } from "@/lib/VendaController";
 import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { Toaster } from "@/components/ui/toaster";
-import { useRouter } from "next/navigation";
 
 
-export default function PopUpCancelamento({ id }: { id: number }) {
+export default function PopUpCancelamento() {
     const [descricaoProduto, setDescricaoProduto] = useState<string>('');
     const descricaoLimiteCaracteres = 255;
-    const route = useRouter()
-    const { toast } = useToast();
     const handleDescricaoChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const descricao = event.target.value;
         // Verifica se a descrição excede o limite de caracteres
@@ -28,36 +22,11 @@ export default function PopUpCancelamento({ id }: { id: number }) {
         }
     };
 
-
-    async function handleCancel() {
-        try {
-            const response = await CancelamentodaVenda(id)
-            if (response.status === 1) {
-                toast({
-                    title: "Sucesso",
-                    description: "Venda inativada!",
-                    className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
-                });
-                setTimeout(() => {
-                    route.push('/routes/relatorio');
-                }, 2000);
-            }
-        } catch (error) {
-            toast({
-                title: "Erro",
-                description: "Erro ao inativada a venda!",
-                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
-            });
-            console.error("Erro ao cancelar a venda:", error);
-        }
-    }
-
     return (
-        <CardFooter className="flex justify-center items-center w-full h-full">
+        <CardFooter className="flex justify-center items-center shadow-xl">
             <Dialog>
-                <DialogTrigger asChild >
-                    {/* <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Confirmar</button> */}
-                    <button className="col-span-1  font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white focus:outline-none">Inativar Venda</button>
+                <DialogTrigger asChild>
+                    <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Confirmar</button>
                 </DialogTrigger>
                 <DialogContent className="w-1/3 rounded-lg">
                     <DialogHeader>
@@ -88,7 +57,7 @@ export default function PopUpCancelamento({ id }: { id: number }) {
                     <DialogFooter className="flex justify-center items-center">
                         <div>
                             <button className="w-auto border border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out
-                             hover:bg-green-500 hover:text-white" type="button" onClick={handleCancel}>Confirmar</button>
+                             hover:bg-green-500 hover:text-white" type="button">Confirmar</button>
                         </div>
                     </DialogFooter>
                 </DialogContent>
