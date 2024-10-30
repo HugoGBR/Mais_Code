@@ -2,7 +2,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { createNewProduto } from '@/lib/ProdutoController';
-import { insertMaskValorMonetarioSemVirgula } from '@/lib/MaskInput/MaskInput';
+import { insertMaskValorMonetarioSemVirgula, removerMascaraValorMonetario } from '@/lib/MaskInput/MaskInput';
 
 export default function CadastroProduto() {
     const [nomeProduto, setNomeProduto] = useState<string>('');
@@ -24,7 +24,7 @@ export default function CadastroProduto() {
         event.preventDefault();
         await createNewProduto(
             nomeProduto,
-            Number(horasTrabalhadas),
+            removerMascaraValorMonetario(horasTrabalhadas),
             descricaoProduto,
             Number(comissaoNovo),
             Number(comissaoAntigo)

@@ -20,28 +20,42 @@ export const insertMaskTelefone = (telefone: string) => {
 };
 export const insertMaskValorMonetarioSemVirgula = (valor: string) => {
     // Remove caracteres não numéricos
-    let numericValor = valor.replace(/\D/g, '');
+    let numericValor = valor.replace(/\D/g, '').slice(0, 15);
 
     // Se a entrada estiver vazia, retorne uma string vazia
     if (numericValor === '') {
         return '';
     }
 
-    // Converte para um número e divide por 100 para formatar como decimal
-    const valorNumerico = parseFloat(numericValor) / 100;
+    // Garante que o valor tenha pelo menos dois dígitos para os centavos
+    let valorComCentavos = numericValor.padStart(3, '0');
+    
+    // Divide o valor em reais e centavos
+    const reais = valorComCentavos.slice(0, -2);
+    const centavos = valorComCentavos.slice(-2);
 
-    // Verifica se o valor é maior que um determinado limite, se necessário
-    if (valorNumerico > 1000000) { // exemplo de limite, ajuste conforme necessário
-        return 'Valor muito alto';
+    // Formata o valor com separador de milhar
+    const formattedReais = Number(reais).toLocaleString('pt-BR');
+
+    // Combina os reais com os centavos
+    return `${formattedReais}.${centavos}`;
+};
+
+export const removerMascaraValorMonetario = (valor: string) => {
+    // Remove caracteres não numéricos e o ponto decimal
+    let numericValor = valor.replace(/[^\d]/g, '');
+
+    // Se a entrada estiver vazia, retorne 0
+    if (numericValor === '') {
+        return 0;
     }
 
-    // Formata o número para adicionar separador de milhar
-    const formattedValor = valorNumerico.toLocaleString('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    }).replace(',', '.');
+    // Converte o valor numérico em string para um número
+    const valorNumerico = parseFloat(numericValor.slice(0, -2) + '.' + numericValor.slice(-2));
 
-    return `${formattedValor}`;
+    return valorNumerico || 0; // Retorna 0 se não for um número válido
 };
+
+
 
 
