@@ -40,10 +40,9 @@ export default function CardCadastro() {
     const [statusCliente, setstatusCliente] = useState("");
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
-    //const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
-    const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
+    const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
+    const [valoresParcelas, setValoresParcelas] = useState<number[]>([]); 
     const [id_venda, setIdVenda] = useState(1);
-    const [horasTrabalhadas, setHorasTrabalhadas] = useState<string>('');
 
     const route = useRouter();
     const { toast } = useToast();
@@ -76,13 +75,13 @@ export default function CardCadastro() {
     }, []);
 
     useEffect(() => {
-        if (new_produto_id && horasTrabalhadas) {
+        if (new_produto_id && horas_trabalhadas >= 0) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
-                setvalortotal((selectedProduct.horas_trabalhadas) - valor_entrada);
+                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valor_entrada);
             }
         }
-    }, [new_produto_id, horasTrabalhadas, valor_entrada]);
+    }, [new_produto_id, horas_trabalhadas, valor_entrada]);
 
     useEffect(() => {
         if (new_produto_id) {
@@ -97,8 +96,8 @@ export default function CardCadastro() {
     useEffect(() => {
         const atualizarIdVenda = async () => {
             try {
-                const vendaCountResponse = await CountVendas();
-                const vendaCount = vendaCountResponse["COUNT(*)"];
+                const vendaCountResponse = await CountVendas(); 
+                const vendaCount = vendaCountResponse["COUNT(*)"]; 
                 setIdVenda(vendaCount + 1);
             } catch (error) {
                 console.error("Erro ao contar as vendas: ", error);
@@ -118,7 +117,7 @@ export default function CardCadastro() {
         if (!DataFim) newErrors.DataFim = "Data de término é obrigatória";
         if (!new_tipo_contrato_id) newErrors.new_tipo_contrato_id = "Modelo de contrato é obrigatório";
         if (!new_produto_id) newErrors.new_produto_id = "Produto é obrigatório";
-        if (!horasTrabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas é obrigatório";
+        if (!horas_trabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas é obrigatório";
         if (!nome_contato) newErrors.nome_contato = "Nome do contato é obrigatório";
         if (!telefone) newErrors.telefone = "Telefone do contato é obrigatório";
         if (!email) newErrors.email = "Email do contato é obrigatório";
@@ -157,7 +156,7 @@ export default function CardCadastro() {
         setstatusCliente("");
         setstatusClienteValor(0);
         setFoundCliente(null);
-        setHorasTrabalhadas("");
+        setHorasTrabalhadas(0);
         setValoresParcelas([]);
     };
 
@@ -178,7 +177,7 @@ export default function CardCadastro() {
                 Number(new_produto_id),
                 Number(new_usuario_id),
                 statusClienteValor,
-                Number(horasTrabalhadas),
+                horas_trabalhadas,
                 datadofim,
                 Number(valor_entrada),
                 valor_total,
@@ -204,7 +203,7 @@ export default function CardCadastro() {
                 route.push("/routes/home");
 
             } else {
-
+               
                 throw new Error("Erro ao cadastrar a venda: resposta inválida");
             }
         } catch (error) {
@@ -231,7 +230,7 @@ export default function CardCadastro() {
                     2
                 );
 
-
+               
                 if (responseParcela && responseParcela.status === 0) {
                     throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
                 }
@@ -253,7 +252,7 @@ export default function CardCadastro() {
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
 
-
+      
             throw error;
         }
     }
@@ -331,8 +330,8 @@ export default function CardCadastro() {
                                             setDataInicio(event.target.value);
                                             setErrors((prevErrors) => ({ ...prevErrors, DataInicio: '' }));
                                         }}
-                                    />
-                                    {errors.DataInicio && <span className="error text-xs text-red-600 mt-1">{errors.DataInicio}</span>}
+                                        />
+                                        {errors.DataInicio && <span className="error text-xs text-red-600 mt-1">{errors.DataInicio}</span>}
                                 </div>
                                 <div className="flex flex-col mb-5">
                                     <label className="text-sm" htmlFor="teste">Data Término</label>
@@ -350,8 +349,8 @@ export default function CardCadastro() {
                                 <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
                                     <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
                                     <Select onValueChange={(value) => {
-                                        setnew_tipo_contrato_id(value);
-                                        setErrors((prevErrors) => ({ ...prevErrors, new_tipo_contrato_id: '' }));
+                                    setnew_tipo_contrato_id(value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, new_tipo_contrato_id: '' }));
                                     }}>
                                         <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
                                             <SelectValue placeholder="Tipo Contrato" />
@@ -364,7 +363,11 @@ export default function CardCadastro() {
                                     </Select>
                                     {errors.new_tipo_contrato_id && <span className="error text-xs text-red-600 h-fit mt-10 mr-1">{errors.new_tipo_contrato_id}</span>}
                                     <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
-                                    <Select onValueChange={(value) => setnew_produto_id(value)}>
+                                    <Select onValueChange={(value) => { 
+                                        setnew_produto_id(value);
+                                        setErrors((prevErrors) => ({ ...prevErrors, new_produto_id: '' }));
+                                        }}>
+                                        
                                         <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
                                             <SelectValue placeholder="Produto" />
                                         </SelectTrigger>
@@ -374,27 +377,29 @@ export default function CardCadastro() {
                                             ))}
                                         </SelectContent>
                                     </Select>
-                                    {errors.new_produto_id && <span className="error text-xs text-red-600 h-fit mt-10 ,r-1">{errors.new_produto_id}</span>}
+                                    <div></div> {/*Sim, deixa dessa forma, gambiarra mas funciona, se tirar essa div vai quebrar*/}
+                                    {errors.new_produto_id && <span className="error text-xs text-red-600 h-fit mt-1 w-max ,r-1">{errors.new_produto_id}</span>}
+                                    
                                 </div>
                                 <div className="flex flex-col mb-5 md:ml-2.5">
                                     <label className="text-sm mb-2" htmlFor="horas-trabalhadas">Horas Trabalhadas</label>
                                     <input
-                                        id="horas-trabalhadas"
-                                        className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="0"
-                                        type="number"
-                                        min="0"
-                                        value={horasTrabalhadas}
-                                        onChange={(event) => {
-                                            const value = Number(event.target.value);
-                                            if (!isNaN(value) && value >= 0) {
-                                                setHorasTrabalhadas(value.toString());
-                                                setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
-                                            } else {
-                                                setHorasTrabalhadas("");
-                                            }
-                                        }}
-                                    />
+                                         id="horas-trabalhadas"
+                                         className="border-b-2 focus:outline-none focus:border-blue-500"
+                                         placeholder="0 "
+                                         type="number"
+                                         min="0"
+                                         value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
+                                         onChange={(event) => {
+                                             const value = Number(event.target.value);
+                                             if (!isNaN(value) && value >= 0) {
+                                                 setHorasTrabalhadas(value);
+                                                 setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
+                                             } else {
+                                                 setHorasTrabalhadas(0);
+                                             }
+                                         }}
+                                     />
                                     {errors.horas_trabalhadas && <span className="error text-xs text-red-600 mt-1">{errors.horas_trabalhadas}</span>}
                                 </div>
                             </div>
@@ -405,7 +410,10 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="Nome"
                                         value={nome_contato}
-                                        onChange={(event) => setNomeContato(event.target.value)}
+                                        onChange={(event) => {
+                                            setNomeContato(event.target.value);
+                                            setErrors((prevErrors) => ({ ...prevErrors, nome_contato: '' }));
+                                        }}
                                         type="text" />
                                     {errors.nome_contato && <span className="error text-xs text-red-600 mt-1">{errors.nome_contato}</span>}
                                 </div>
@@ -414,7 +422,10 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="(99) 99999-9999"
                                         value={telefone}
-                                        onChange={(event) => setTelefoneContato(insertMaskTelefone(event.target.value))}
+                                        onChange={(event) => {
+                                            setTelefoneContato(insertMaskTelefone(event.target.value));
+                                            setErrors((prevErrors) => ({ ...prevErrors, telefone: '' }));
+                                            }}
                                         type="tel" />
                                     {errors.telefone && <span className="error text-xs text-red-600 mt-1">{errors.telefone}</span>}
                                 </div>
@@ -423,7 +434,10 @@ export default function CardCadastro() {
                                         className="border-b-2 focus:outline-none focus:border-blue-500"
                                         placeholder="Email"
                                         value={email}
-                                        onChange={(event) => setEmailContato(event.target.value)}
+                                        onChange={(event) => {
+                                            setEmailContato(event.target.value);
+                                            setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+                                        }}
                                         type="email" />
                                     {errors.email && <span className="error text-xs text-red-600 mt-1">{errors.email}</span>}
                                 </div>
@@ -438,19 +452,22 @@ export default function CardCadastro() {
                                 <h1>Forma de Pagamento</h1>
                             </div>
                             <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
-                                <input
-                                    type="text"
-                                    id="valorEntrada"
-                                    name="valorEntrada"
-                                    value={valor_entrada}
-                                    onChange={(event) => setValorEntrada(Number(insertMaskValorMonetarioSemVirgula(event.target.value)))}
-                                    placeholder="R$"
-                                    className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                />
+                            <input
+                                type="text"
+                                id="valorEntrada "
+                                name="valorEntrada"
+                                value={valor_entrada}
+                                onChange={(event) => setValorEntrada(insertMaskValorMonetarioSemVirgula(event.target.value))}
+                                placeholder="R$"
+                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                            />
                             </div>
                             <div className="mb-5">
                                 <label className="text-sm" htmlFor="Nn">Status Cliente</label>
-                                <Select onValueChange={(value) => setstatusCliente(value)}>
+                                <Select onValueChange={(value) => {
+                                    setstatusCliente(value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, statusCliente: '' }));
+                                    }}>
                                     <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
                                         <SelectValue placeholder="Tipo Cliente" />
                                     </SelectTrigger>
@@ -475,6 +492,7 @@ export default function CardCadastro() {
                                                 setmetodo_pagamento("À vista");
                                                 setnumero_parcelo(1);
                                                 setMostrarParcelas(false);
+                                                setErrors((prevErrors) => ({ ...prevErrors, metodo_pagamento: '' }));
                                             }} />
                                         <label htmlFor="pagamento-opcao-1"
                                             className="block ml-2 text-sm font-medium text-gray-900">
@@ -491,6 +509,7 @@ export default function CardCadastro() {
                                             onClick={() => {
                                                 setmetodo_pagamento("Parcelado");
                                                 setMostrarParcelas(true);
+                                                setErrors((prevErrors) => ({ ...prevErrors, metodo_pagamento: '' }));
                                             }} />
                                         <label htmlFor="pagamento-opcao-2"
                                             className="block ml-2 text-sm font-medium text-gray-900">
@@ -508,7 +527,7 @@ export default function CardCadastro() {
                                                 min="1"
                                                 value={numero_parcelo}
                                                 onChange={(event) => setnumero_parcelo(Number(event.target.value))}
-                                            />
+                                                />
                                         </div>
                                         <div>
                                             <PopUpConfig
@@ -517,12 +536,12 @@ export default function CardCadastro() {
                                                 onSetValoresParcelas={handleSetValoresParcelas}
                                                 onConfirm={(vendaId, numeroParcelas, valoresParcelas) => handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)}
                                                 idVenda={id_venda}
-                                            />
+                                                />
                                         </div>
                                     </div>
                                 )}
                             </div>
-                            {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
+                                {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
                             <div className="flex justify-between mt-5 h-auto">
                                 <label className="font-bold" htmlFor="teste">Valor total a pagar:</label>
                                 <h1 className="font-bold">{`R$ ${valor_total.toFixed(2)}`}</h1>
