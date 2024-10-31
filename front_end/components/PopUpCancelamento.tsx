@@ -22,7 +22,6 @@ export default function PopUpCancelamento({ id }: { id: number }) {
     const { toast } = useToast();
     const handleDescricaoChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const descricao = event.target.value;
-        // Verifica se a descrição excede o limite de caracteres
         if (descricao.length <= descricaoLimiteCaracteres) {
             setDescricaoProduto(descricao);
         }
@@ -52,11 +51,10 @@ export default function PopUpCancelamento({ id }: { id: number }) {
     }
 
     return (
-        <CardFooter className="flex justify-center items-center w-full h-full">
+        <CardFooter className="p-0 flex justify-center items-center w-full h-full">
             <Dialog>
                 <DialogTrigger asChild >
-                    {/* <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold rounded ">Confirmar</button> */}
-                    <button className="col-span-1  font-bold text-black bg-white rounded border border-red-600 hover:bg-red-700 hover:text-white focus:outline-none">Inativar Venda</button>
+                    <button className="w-full h-full col-span-1 p-2 font-bold text-white bg-red-500 rounded hover:bg-red-700 focus:outline-none">Inativar Venda</button>
                 </DialogTrigger>
                 <DialogContent className="w-1/3 rounded-lg">
                     <DialogHeader>
@@ -79,15 +77,13 @@ export default function PopUpCancelamento({ id }: { id: number }) {
                             maxLength={descricaoLimiteCaracteres}
                             className="shadow-inner-2 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         ></textarea>
-                        {/* Exibe o contador de caracteres restantes */}
                         <div className="flex justify-end">
                             <p className="text-sm text-gray-500">{descricaoProduto.length}/{descricaoLimiteCaracteres}</p>
                         </div>
                     </div>
-                    <DialogFooter className="flex justify-center items-center">
+                    <DialogFooter className="flex justify-center items-center sm:justify-center">
                         <div>
-                            <button className="w-auto border border-green-500 text-black font-semibold bg-white transition duration-500 ease-in-out
-                             hover:bg-green-500 hover:text-white" type="button" onClick={handleCancel}>Confirmar</button>
+                            <button className="w-52 h-auto col-span-1 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none" type="button" onClick={handleCancel}>Confirmar</button>
                         </div>
                     </DialogFooter>
                 </DialogContent>

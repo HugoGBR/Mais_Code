@@ -438,7 +438,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                         onSetValoresParcelas={handleParcelasChange}
                                         onConfirm={handleConfirmParcelas}
                                         idVenda={params.id}
-                                        listaParcelas={parcelas} // Passa as parcelas carregadas
+                                        listaParcelas={parcelas} 
                                     />
                                 </div>
                             )}
@@ -464,7 +464,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                         type="button"
                                         onClick={handleButtonsavle}
                                         className="col-span-1 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
-                                        SALVAR
+                                        Salvar
                                     </button>
                                     <button
                                         type="submit"
