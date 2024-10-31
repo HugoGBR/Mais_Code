@@ -112,6 +112,12 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         }
     }
 
+    const [isHidden, setIsHidden] = useState(false);
+
+    const handleIsHidden = () => {
+        setIsHidden(true);
+    };
+    
     async function handleAtivarVenda() {
         try {
             const response = await ativarVenda(params.id);
@@ -185,6 +191,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
 
     const handleButtonClick = async () => {
         setInputHabilitados(true);
+        setIsHidden(true);
     };
 
     const handleParcelasChange = (novosValores: number[], novosStatus: string[]) => {
@@ -453,22 +460,30 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     {statusVenda === "em andamento" ? (
                                         <PopUpCancelamento id={params.id} />
                                     ) : (
+                                        isHidden && (
                                         <button
                                             type="submit"
                                             onClick={handleAtivarVenda}
-                                            className="col-span-1 p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
+                                            className=" col-span-1 p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
                                             Ativar Venda
                                         </button>
+                                        )
                                     )}
+                                    {isHidden && (
                                     <button
                                         type="button"
                                         onClick={handleButtonsavle}
                                         className="col-span-1 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
                                         Salvar
                                     </button>
+                                    )}
                                     <button
                                         type="submit"
-                                        onClick={handleButtonClick}
+                                        onClick={() => {
+                                            handleButtonClick();
+                                            handleIsHidden();
+                                        }}
+
                                         className="mt-3 col-span-2 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
                                         Editar
                                     </button>

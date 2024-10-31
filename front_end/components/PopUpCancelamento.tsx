@@ -63,7 +63,7 @@ export default function PopUpCancelamento({ id }: { id: number }) {
                         </DialogTitle>
                         <DialogDescription className="flex justify-center items-center">
                             Explique o motivo do cancelamento
-                            da venda no campo a baixo
+                            da venda no campo abaixo
                         </DialogDescription>
                     </DialogHeader>
                     <div>
