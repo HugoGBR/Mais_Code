@@ -457,7 +457,8 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                         <div className="text-center col-span-2">
                             <div className="text-center col-span-2">
                                 <div className="grid grid-cols-2 gap-x-5">
-                                    {statusVenda === "em andamento" ? (
+                                    {statusVenda === "em andamento" && isHidden? (
+                                        
                                         <PopUpCancelamento id={params.id} />
                                     ) : (
                                         isHidden && (
