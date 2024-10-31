@@ -62,7 +62,7 @@ export default function CadastroProduto() {
                                         setHorasTrabalhadas(maskedValue);
                                     }
                                 }}
-                                placeholder="Horas Trabalhadas (HHMM)"
+                                placeholder="Valor das Horas"
                                 required
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />

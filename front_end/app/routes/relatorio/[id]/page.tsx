@@ -13,7 +13,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { Span } from "next/dist/trace";
 import PopUpCancelamento from "@/components/PopUpCancelamento";
-
+import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
 
 export default function EditVenda({ params }: { params: { id: number } }) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
@@ -327,7 +327,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                 type="text" />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                 placeholder="(99) 99999-9999"
-                                onChange={(event) => setTelefoneContato(event.target.value)} type="phone"
+                                onChange={(event) => setTelefoneContato(insertMaskTelefone(event.target.value))} type="phone"
                                 value={telefone}
                                 disabled={!inputsHabilitados} />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
@@ -360,7 +360,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     type="text"
                                     value={valor_entrada}
                                     disabled={!inputsHabilitados}
-                                    onChange={(event) => setValorEntrada(event.target.value)}
+                                    onChange={(event) => setValorEntrada(insertMaskValorMonetarioSemVirgula(event.target.value))}
                                 />
                             </div>
                         </div>
