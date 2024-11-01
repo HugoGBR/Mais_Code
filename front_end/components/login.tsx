@@ -50,11 +50,11 @@ const LoginPage = () => {
                             <h1 className="text-center md:mt-20 mb-8 text-3xl">FAÇA LOGIN</h1>
                             <form id="loginform" onSubmit={handleSubmit(handleFormSubmit)}>
                                 <div className="flex flex-col gap-3">
-                                    <input
-                                        type="text"
-                                        id="loginname"
-                                        placeholder="Login" {...register("user")}
-                                        className="ps-2 border-b-2 h-10 focus:border-b-2 focus:outline-none focus:border-blue-500" />
+                                    <input 
+                                    type="text" 
+                                    id="loginname" 
+                                    placeholder="Login" {...register("user")} 
+                                    className="ps-2 border-b-2 h-10 focus:border-b-2 focus:outline-none focus:border-blue-500"/>
                                     {memoizedErrors.user}
 
                                     <div className="max-w-sm">
@@ -111,6 +111,11 @@ const LoginPage = () => {
                                 <button type="submit"
                                     className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Entrar
                                 </button>
+                                <div className="flex justify-center mt-2">
+                                    <a href="/redefinirSenha" className="text-sm">
+                                        Esqueci minha senha
+                                    </a>
+                                </div>
                             </form>
                         </div>
                     </div>
