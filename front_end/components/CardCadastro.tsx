@@ -162,15 +162,17 @@ export default function CardCadastro() {
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
-
+    
         if (!validateForm()) return;
-
+    
         const datadoinicio = new Date(DataInicio);
         const datadofim = new Date(DataFim);
-
+    
         try {
             console.log("Tentando cadastrar a venda...");
 
+            const numeroFinal = metodo_pagamento === "À vista" ? 1 : 2;
+    
             const vendaResponse = await createNewSell(
                 Number(new_cliente_id),
                 Number(new_tipo_contrato_id),
@@ -187,23 +189,22 @@ export default function CardCadastro() {
                 telefone,
                 nome_contato,
                 Number(numero_parcelo),
-                2
+                numeroFinal 
             );
-
+    
             if (vendaResponse) {
                 console.log("Venda cadastrada com sucesso.");
-
+    
                 toast({
                     title: "Sucesso",
                     description: "Cadastro realizado com sucesso!",
                     className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400"
                 });
-
+    
                 resetForm();
                 route.push("/routes/home");
-
+    
             } else {
-               
                 throw new Error("Erro ao cadastrar a venda: resposta inválida");
             }
         } catch (error) {
@@ -215,6 +216,7 @@ export default function CardCadastro() {
             });
         }
     }
+    
 
     async function handleSubmitParcela(vendaId: number, numeroParcelas: number, valoresParcelas: number[], toast: any) {
         try {
