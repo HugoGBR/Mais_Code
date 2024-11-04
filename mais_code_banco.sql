@@ -237,4 +237,118 @@ END $$
 
 DELIMITER ;
 
+CREATE VIEW view_triggers_ativos AS
+SELECT 
+    TRIGGER_NAME AS nome_trigger,
+    EVENT_MANIPULATION AS evento,
+    EVENT_OBJECT_TABLE AS tabela,
+    ACTION_TIMING AS momento,
+    ACTION_STATEMENT AS acao
+FROM 
+    information_schema.TRIGGERS
+WHERE 
+    TRIGGER_SCHEMA = 'mais_code';
+
+CREATE VIEW view_detalhes_vendas AS
+SELECT 
+    v.id AS venda_id,
+    c.nome AS cliente_nome,
+    p.nome AS produto_nome,
+    u.nome AS usuario_nome,
+    v.status AS status_venda,
+    v.inicio_contrato,
+    v.final_contrato,
+    v.valor_total,
+    v.metodo_pagamento,
+    pa.numero_da_parcela,
+    pa.valor_da_parcela,
+    pa.status AS status_parcela
+FROM 
+    vendas v
+JOIN 
+    clientes c ON v.cliente_id = c.id
+JOIN 
+    produtos p ON v.produto_id = p.id
+JOIN 
+    usuarios u ON v.usuario_id = u.id
+LEFT JOIN 
+    parcelas pa ON v.id = pa.id_venda;
+
+CREATE VIEW view_relatorio_comissoes AS
+SELECT 
+    bc.id AS comissao_id,
+    v.id AS venda_id,
+    u.nome AS usuario_nome,
+    bc.comissao_total,
+    bc.data_pagamento,
+    bc.numero_da_parcela,
+    bc.status AS status_comissao
+FROM 
+    bancocomissao bc
+JOIN 
+    vendas v ON bc.id_venda = v.id
+JOIN 
+    usuarios u ON bc.user_id = u.id;
+
+CREATE VIEW view_resumo_clientes AS
+SELECT 
+    c.id AS cliente_id,
+    c.nome AS cliente_nome,
+    c.email AS cliente_email,
+    COUNT(v.id) AS total_vendas,
+    SUM(v.horas_trabalhadas) AS total_horas_trabalhadas,
+    SUM(v.valor_total) AS total_valor_vendas
+FROM 
+    clientes c
+LEFT JOIN 
+    vendas v ON c.id = v.cliente_id
+GROUP BY 
+    c.id;
+
+CREATE VIEW view_resumo_usuarios_vendas AS
+SELECT 
+    u.id AS usuario_id,
+    u.nome AS usuario_nome,
+    c.nome AS cargo_nome,
+    COUNT(v.id) AS total_vendas,
+    SUM(v.valor_total) AS total_valor_vendas
+FROM 
+    usuarios u
+JOIN 
+    cargos c ON u.cargo_id = c.id
+LEFT JOIN 
+    vendas v ON u.id = v.usuario_id
+GROUP BY 
+    u.id;
+
+CREATE VIEW view_status_contratos AS
+SELECT 
+    v.id AS contrato_id,
+    c.nome AS cliente_nome,
+    v.inicio_contrato,
+    v.final_contrato,
+    v.status AS status_contrato,
+    v.valor_total AS valor_contrato
+FROM 
+    vendas v
+JOIN 
+    clientes c ON v.cliente_id = c.id
+WHERE 
+    v.status IN ('em andamento', 'cancelado');
+
+CREATE VIEW view_produtos_comissoes AS
+SELECT 
+    p.id AS produto_id,
+    p.nome AS produto_nome,
+    p.horas_trabalhadas,
+    p.comissao_antiga,
+    p.comissao_nova,
+    COUNT(v.id) AS total_vendas
+FROM 
+    produtos p
+LEFT JOIN 
+    vendas v ON p.id = v.produto_id
+GROUP BY 
+    p.id;
+
 

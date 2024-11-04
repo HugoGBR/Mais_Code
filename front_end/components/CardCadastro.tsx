@@ -457,7 +457,7 @@ export default function CardCadastro() {
                                 id="valorEntrada "
                                 name="valorEntrada"
                                 value={valor_entrada}
-                                onChange={(event) => setValorEntrada(insertMaskValorMonetarioSemVirgula(event.target.value))}
+                                onChange={(event) => setValorEntrada(Number(insertMaskValorMonetarioSemVirgula(event.target.value).replace(/\./g, '').replace(',', '.')))}
                                 placeholder="R$"
                                 className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                             />
