@@ -125,10 +125,10 @@ BEGIN
 END $$
 
 DELIMITER ;
-drop * trigger
+drop trigger COMISSÃO;
 DELIMITER $$
 
-CREATE TRIGGER COMISSÃO
+CREATE TRIGGER COMISSAO
 AFTER INSERT ON vendas
 FOR EACH ROW
 BEGIN
@@ -139,8 +139,8 @@ BEGIN
   DECLARE user_id BIGINT(20);
   DECLARE status_cliente INT;
   
-  -- Recupera o total de parcelas e o valor da parcela da tabela parcelas
-  SELECT total_parcela, valor_da_parcela INTO total_parcelas, valor_parcela FROM parcelas WHERE id_venda = NEW.id LIMIT 1;
+  -- Recupera o total de parcelas da tabela parcelas
+  SELECT total_parcela INTO total_parcelas FROM parcelas WHERE id_venda = NEW.id LIMIT 1;
   
   -- Recupera a data de início do contrato, o id do usuário e o status_cliente
   SET data_pagamento = NEW.inicio_contrato;
@@ -149,6 +149,11 @@ BEGIN
   
   -- Loop para inserir todas as comissões de acordo com o número de parcelas
   WHILE i <= total_parcelas DO
+    -- Recupera o valor da parcela atual
+    SELECT valor_da_parcela INTO valor_parcela 
+    FROM parcelas 
+    WHERE id_venda = NEW.id AND numero_da_parcela = i;
+    
     -- Insere as informações na tabela bancocomissao
     INSERT INTO bancocomissao (id_venda, user_id, comissao_total, data_pagamento, numero_da_parcela, status)
     VALUES (
@@ -166,6 +171,7 @@ BEGIN
 END $$
 
 DELIMITER ;
+
 
 DELIMITER $$
 
