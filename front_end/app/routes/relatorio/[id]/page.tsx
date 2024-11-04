@@ -249,7 +249,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                     <form>
                         <div className="flex justify-between mb-6 md:text-2xl font-bold">
                             <h1>Contrato</h1>
-                            <h1 className="hidden">Nº </h1>
+                            <h1 className="">{`Nº ${params.id}`}</h1>
                         </div>
 
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
@@ -438,7 +438,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             </div>
 
                             {mostrarParcelas && (
-                                <div className="col-span-12">
+                                <div className="col-span-1">
                                     <EditConfiguracoesParcela
                                         valorTotal={valor_total}
                                         parcelas={parcelas.length}
