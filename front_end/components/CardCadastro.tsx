@@ -501,55 +501,47 @@ export default function CardCadastro() {
                                             À vista
                                         </label>
                                     </div>
-                                    <div className="lg:inline-flex items-center">
-                                <input
-                                    id="pagamento-opcao-2"
-                                    type="radio"
-                                    name="forma-pagamento"
-                                    value="Parcelado"
-                                    className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                    aria-labelledby="pagamento-opcao-2"
-                                    aria-describedby="pagamento-opcao-2"
-                                    onClick={() => {
-                                        setmetodo_pagamento("Parcelado");
-                                        setMostrarParcelas(true);
-                                        setnumero_parcelo(0); 
-                                    }}
-                                />
-                                <label htmlFor="pagamento-opcao-2" className="block ml-2 text-sm font-medium text-gray-900">
-                                    Parcelado
-                                </label>
-                            </div>
-                            </div>
-
-                            {mostrarParcelas && (
-                                <div className="grid grid-cols-1 gap-x-5 lg:flex lg:items-center lg:justify-between">
-                                    <div className="">
+                                    <div className="flex items-center">
                                         <input
-                                            className="border-b-2 w-10 text-center focus:outline-none focus:border-blue-500"
-                                            placeholder="0" 
-                                            type="number"
-                                            min="1"
-                                            value={numero_parcelo === 0 ? "" : numero_parcelo} 
-                                            onChange={(event) => {
-                                                const value = Number(event.target.value);
-                                                setnumero_parcelo(value || 0); 
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="col-span-1">
-                                        <PopUpConfig
-                                            valorTotal={valor_total}
-                                            parcelas={numero_parcelo}
-                                            onSetValoresParcelas={handleSetValoresParcelas}
-                                            onConfirm={(vendaId, numeroParcelas, valoresParcelas) =>
-                                                handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)
-                                            }
-                                            idVenda={id_venda}
-                                        />
+                                            id="pagamento-opcao-2" type="radio" name="forma-pagamento"
+                                            value="Parcelado"
+                                            className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                            aria-labelledby="pagamento-opcao-2"
+                                            aria-describedby="pagamento-opcao-2"
+                                            onClick={() => {
+                                                setmetodo_pagamento("Parcelado");
+                                                setMostrarParcelas(true);
+                                                setErrors((prevErrors) => ({ ...prevErrors, metodo_pagamento: '' }));
+                                            }} />
+                                        <label htmlFor="pagamento-opcao-2"
+                                            className="block ml-2 text-sm font-medium text-gray-900">
+                                            Parcelado
+                                        </label>
                                     </div>
                                 </div>
-                            )}
+                                {mostrarParcelas && (
+                                    <div className="flex space-x-4">
+                                        <div>
+                                            <input
+                                                className="border-b-2 text-center w-14 focus:outline-none focus:border-blue-500"
+                                                placeholder="36x"
+                                                type="number"
+                                                min="1"
+                                                value={numero_parcelo}
+                                                onChange={(event) => setnumero_parcelo(Number(event.target.value))}
+                                                />
+                                        </div>
+                                        <div>
+                                            <PopUpConfig
+                                                valorTotal={valor_total}
+                                                parcelas={numero_parcelo}
+                                                onSetValoresParcelas={handleSetValoresParcelas}
+                                                onConfirm={(vendaId, numeroParcelas, valoresParcelas) => handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)}
+                                                idVenda={id_venda}
+                                                />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                                 {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
                             <div className="flex justify-between mt-5 h-auto">
