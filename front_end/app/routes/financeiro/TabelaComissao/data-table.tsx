@@ -108,7 +108,7 @@ export function DataTableComissao<TData, TValue>({
                     />
                 </div>
                 <div className="rounded-3xl border">
-                    <Table>
+                    <Table className="rounded-[26px]">
                         <TableHeader>
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
