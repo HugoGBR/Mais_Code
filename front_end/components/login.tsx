@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { loginSchema } from "@/app/schemas/loginSchema";
 import { validacaoLogin } from "@/lib/UsuarioController";
+import { toast } from "./ui/use-toast";
+import { Toaster } from "./ui/toaster";
 
 
 
@@ -21,7 +23,11 @@ const LoginPage = () => {
         const autenticacao = await validacaoLogin(data.user, data.password);
 
         if (autenticacao.error) {
-            alert(autenticacao.error);
+            toast({
+                title: "Erro",
+                description: "Usuário não encontrado. Por favor, verifique suas credenciais.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
         } else {
             router.push('routes/home');
         }
@@ -35,6 +41,7 @@ const LoginPage = () => {
     }), [errors.user, errors.password]);
 
     return (
+        <>
         <div className="bg-no-repeat bg-gradient-to-tr from-[#A9BFDD] to-[#122F54] h-screen flex items-center justify-center">
             <div className="h-screen flex items-center justify-center bg-cover w-full">
                 <div className="sm:w-full md:w-2/3 lg:w-1/2 md:flex-row sm:flex-col sm:flex bg-cover bg-no-repeat bg-[url('/patern.png')]">
@@ -62,7 +69,7 @@ const LoginPage = () => {
                                             <input
                                                 id="hs-toggle-password"
                                                 type={showPassword ? "text" : "password"}
-                                                className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10 w-full pr-10"  // pr-10 para evitar que o botão sobreponha o texto
+                                                className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10 w-full pr-10" 
                                                 placeholder="Senha"
                                                 {...register('password')}
                                             />
@@ -122,6 +129,8 @@ const LoginPage = () => {
                 </div>
             </div>
         </div>
+        <Toaster />
+    </>
     );
 };
 

@@ -38,10 +38,9 @@ class ProdutoController
 
         $ProdutoExists = $this->checkProdutoExistsName($produto->nome);
         if ($ProdutoExists) {
-            return json_encode(['status' => 1, 'message' => 'Usuário já existe.']);
-        }
-
-        $sql = "INSERT INTO produtos (nome, horas_trabalhadas, descricao_produto, comissao_antiga, comissao_nova) 
+            return json_encode(['status' => 3, 'message' => 'Usuário já existe.']);
+        }else{
+            $sql = "INSERT INTO produtos (nome, horas_trabalhadas, descricao_produto, comissao_antiga, comissao_nova) 
                 VALUES (:nome, :horas_trabalhadas, :descricao_produto, :comissao_antiga, :comissao_nova)";
         
 
@@ -59,6 +58,9 @@ class ProdutoController
         }
 
         return json_encode($resposta);
+        }
+
+        
     } catch (\Exception $e) {
         error_log('Erro ao criar produto: ' . $e->getMessage());
         return json_encode(['status' => 0, 'message' => 'Erro ao criar produto.']);

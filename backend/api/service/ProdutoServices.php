@@ -39,10 +39,10 @@ switch ($acao) {
             echo json_encode($mensagem);
         }
         break;
-    case "checkProdutoExistsById":
+    case "checkProdutoExistsName":
         if ($id !== null) {
-            $user = $produtoController->checkProdutoExistsById($id);
-            echo json_encode($user);
+            $user = $produtoController->checkProdutoExistsName($nome);
+            echo json_encode($produto);
         } else {
             echo json_encode(["error" => "Ação checkProdutoExistsById necessita de um ID"]);
         }

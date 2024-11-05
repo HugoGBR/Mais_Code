@@ -29,7 +29,7 @@ export async function createNewProduto(
       throw new Error(`Erro ao criar novo produto: ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const data = JSON.parse(await response.json());
     console.log(data);
 
     return data;

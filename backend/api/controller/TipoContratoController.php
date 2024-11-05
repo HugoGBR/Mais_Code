@@ -21,21 +21,35 @@ class TipoContratoController
     }
 
     public function createNewTipoContrato()
-    {
+{
+    try {
         $tipo_contrato = json_decode(file_get_contents("php://input"));
 
-        $sql = "INSERT INTO tipo_contrato(nome) VALUES (:nome)";
+        if (!$tipo_contrato || !isset($tipo_contrato->nome)) {
+            return json_encode(['status' => 0, 'message' => 'Dados incompletos.']);
+        }
 
+        $TipoContratoExists = $this->checkContratoExistsName($tipo_contrato->nome);
+        if ($TipoContratoExists) {
+            return json_encode(['status' => 0, 'message' => 'Tipo de Contrato já existe.']);
+        }
+
+        $sql = "INSERT INTO tipo_contrato (nome) VALUES (:nome)";
         $db = $this->conn->prepare($sql);
         $db->bindParam(":nome", $tipo_contrato->nome);
-     
+
         if ($db->execute()) {
-            $resposta = ["Mensagem" => "Tipo Contrato Cadastrado com Sucessso!"];
+            $resposta = ['status' => 1, 'message' => 'Tipo de Contrato cadastrado com sucesso.'];
         } else {
-            $resposta = ["Mensagem" => "Erro ao cadastrar Tipo Contrato"];
+            $resposta = ['status' => 0, 'message' => 'Erro ao cadastrar Tipo de Contrato.'];
         }
-        return $resposta;
+
+        return json_encode($resposta);
+    } catch (\Exception $e) {
+        error_log('Erro ao criar Tipo de Contrato: ' . $e->getMessage());
+        return json_encode(['status' => 0, 'message' => 'Erro ao criar Tipo de Contrato.']);
     }
+}
     public function updateContratoById(int $id){
         try {
             $user = json_decode(file_get_contents('php://input'));
@@ -74,6 +88,17 @@ public function getContratoById(int $id)
         return null;
     }
 }
+
+
+private function checkContratoExistsName(string $nome){
+    $query = "SELECT COUNT(*) FROM tipo_contrato WHERE nome = :nome";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':nome', $nome);
+    $stmt->execute();
+    $count = $stmt->fetchColumn();
+    return $count > 0;
+}
+
 
     private function checkContratoExistsById(int $id){
         $query = "SELECT COUNT(*) FROM tipo_contrato WHERE id = :id";

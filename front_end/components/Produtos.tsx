@@ -33,16 +33,8 @@ export default function CadastroProduto() {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        await createNewProduto(
-            nomeProduto,
-            removerMascaraValorMonetario(horasTrabalhadas),
-            descricaoProduto,
-            Number(comissaoNovo),
-            Number(comissaoAntigo)
-        );
-        router.push('/routes/ajustes');
         try {
-
+            
             const response = await createNewProduto(
                 nomeProduto,
                 removerMascaraValorMonetario(horasTrabalhadas),
@@ -50,8 +42,8 @@ export default function CadastroProduto() {
                 Number(comissaoNovo),
                 Number(comissaoAntigo)
             );
-
-            if (response === 1) {
+            console.log(response.status)
+            if (response.status == 1) {
                 toast({
                     title: "Sucesso",
                     description: "Produto cadastrado com sucesso!",
