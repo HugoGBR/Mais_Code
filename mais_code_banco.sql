@@ -74,6 +74,7 @@ CREATE TABLE `vendas` (
   `metodo_pagamento` VARCHAR(45) NOT NULL,
   `numero_parcela` DECIMAL(10, 2),
   `status` ENUM('concluido','em andamento','cancelado') NOT NULL,
+  `justificativa_cancelamento` text,
   PRIMARY KEY (`id`),
   KEY `vendas_cliente_id_foreign` (`cliente_id`),
   KEY `vendas_tipo_contrato_id_foreign` (`tipo_contrato_id`),

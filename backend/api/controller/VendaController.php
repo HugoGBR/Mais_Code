@@ -218,35 +218,33 @@ class Vendacontroller
     }
 
 
-    public function CancelamentodaVenda(int $id): array
+    public function CancelamentodaVenda(int $id, string $justificativa)
     {
-        $cancelamento = "cancelado";
         try {
-            $vendaExists = $this->checkContratoExistsById($id);
-            if (!$vendaExists) {
-                return ['status' => 0, 'message' => 'Venda não encontrada.'];
-            }
+            $sql = "UPDATE vendas SET status = :status, justificativa_cancelamento = :justificativa WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $cancelamentoStatus = "cancelado";
 
-            $sql = "UPDATE vendas SET status = :cancelado WHERE id = :id";
-            $db = $this->conn->prepare($sql);
-            $db->bindValue(":cancelado", $cancelamento);
-            $db->bindValue(":id", $id);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':status', $cancelamentoStatus, PDO::PARAM_STR);
+            $stmt->bindParam(':justificativa', $justificativa, PDO::PARAM_STR);
 
-            if ($db->execute()) {
+            if ($stmt->execute()) {
                 return ['status' => 1, 'message' => 'Venda cancelada com sucesso.'];
             } else {
                 return ['status' => 0, 'message' => 'Falha ao cancelar a venda.'];
             }
-        } catch (Exception $e) {
-
-            return ['status' => 0, 'message' => 'Erro ao cancelar a venda: ' . $e->getMessage()];
+        } catch (\Exception $e) {
+            error_log('Erro ao cancelar venda: ' . $e->getMessage());
+            return ['status' => 0, 'message' => 'Erro ao cancelar a venda.'];
         }
     }
+
 
     public function AtivarVenda(int $id)
     {
         $ativar = "em andamento";
-       
+
         try {
             $vendaExists = $this->checkContratoExistsById($id);
             if (!$vendaExists) {
@@ -255,7 +253,7 @@ class Vendacontroller
 
             $sql = "UPDATE vendas SET status = :emandamento WHERE id = :id";
             $db = $this->conn->prepare($sql);
-            $db->bindValue(":emandamento", $ativar );
+            $db->bindValue(":emandamento", $ativar);
             $db->bindValue(":id", $id);
 
             if ($db->execute()) {
@@ -273,7 +271,7 @@ class Vendacontroller
     public function ConcluirVenda(int $id)
     {
         $ativar = "concluido";
-       
+
         try {
             $vendaExists = $this->checkContratoExistsById($id);
             if (!$vendaExists) {
@@ -282,7 +280,7 @@ class Vendacontroller
 
             $sql = "UPDATE vendas SET status = :concluido WHERE id = :id";
             $db = $this->conn->prepare($sql);
-            $db->bindValue(":concluido", $ativar );
+            $db->bindValue(":concluido", $ativar);
             $db->bindValue(":id", $id);
 
             if ($db->execute()) {
@@ -327,25 +325,25 @@ class Vendacontroller
         try {
             // Obtendo os dados do corpo da requisição
             $user = json_decode(file_get_contents('php://input'));
-    
+
             // Verificando se os dados enviados são válidos
             if (!$user) {
                 return ['status' => 0, 'message' => 'Dados da parcela inválidos.'];
             }
-    
+
             // Preparando a consulta SQL para atualizar a parcela
             $sql = "UPDATE parcelas SET 
                     valor_da_parcela = :valor_da_parcela,
                     status = :status    
                     WHERE id = :id";
-    
+
             $db = $this->conn->prepare($sql);
-    
+
             // Vinculando os parâmetros
             $db->bindParam(":valor_da_parcela", $user->valor_da_parcela);
             $db->bindParam(":status", $user->status);
             $db->bindParam(":id", $id);
-    
+
             // Executando a consulta
             if ($db->execute()) {
                 return ['status' => 1, 'message' => 'Parcela atualizada com sucesso.'];
@@ -357,7 +355,4 @@ class Vendacontroller
             return ['status' => 0, 'message' => 'Erro ao atualizar a parcela: ' . $e->getMessage()];
         }
     }
-    
 }
-
-

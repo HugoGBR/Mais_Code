@@ -89,29 +89,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         fetchData();
     }, []);
 
-    async function handleCancel() {
-        try {
-            const response = await CancelamentodaVenda(params.id);
-            if (response.status === 1) {
-                toast({
-                    title: "Sucesso",
-                    description: "Venda inativada!",
-                    className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
-                });
-                setTimeout(() => {
-                    route.push('/routes/relatorio');
-                }, 2000);
-            }
-        } catch (error) {
-            toast({
-                title: "Erro",
-                description: "Erro ao inativar a venda!",
-                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
-            });
-            console.error("Erro ao cancelar a venda:", error);
-        }
-    }
-
     const [isHidden, setIsHidden] = useState(false);
 
     const handleIsHidden = () => {
@@ -512,7 +489,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     )}
                                     <button
                                         type="button"
-                                        onClick={(event) => handleButtonClick(event)} // Passa o event ao chamar handleButtonClick
+                                        onClick={(event) => handleButtonClick(event)}
                                         className="mt-3 col-span-2 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
                                         {isEditing ? "Salvar" : "Editar"}
                                     </button>

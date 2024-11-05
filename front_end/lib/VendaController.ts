@@ -96,7 +96,7 @@ export async function updateVenda(
     produtoId: number,
     usuarioId: number,
     statusCliente: string,
-    horastrabalhadas:Number,
+    horastrabalhadas: Number,
     inicioContrato: string,
     finalContrato: string,
     valorEntrada: number,
@@ -107,7 +107,7 @@ export async function updateVenda(
     metodoPagamento: string,
     numeroParcela: Number,
     status: string,
-    vendaId: number 
+    vendaId: number
 ) {
     try {
         const request = await fetch(`${backendURL()}/VendaService.php?acao=updateContratoByID&id=${vendaId}`, {
@@ -121,7 +121,7 @@ export async function updateVenda(
                 produto_id: produtoId,
                 usuario_id: usuarioId,
                 status_cliente: statusCliente,
-                horas_trabalhadas:horastrabalhadas,
+                horas_trabalhadas: horastrabalhadas,
                 inicio_contrato: inicioContrato,
                 final_contrato: finalContrato,
                 valor_entrada: valorEntrada,
@@ -135,7 +135,7 @@ export async function updateVenda(
             })
         });
         const response = await request.json();
-       
+
         return response.message;
 
     } catch (error) {
@@ -197,16 +197,27 @@ export async function CountVendas() {
 
 }
 
-export async function CancelamentodaVenda(vendaId: Number) {
+export async function CancelamentodaVenda(vendaId: number, justificativa: string) {
     try {
-        const response = await fetch(`${backendURL()}/VendaService.php?acao=CancelamentodaVenda&id=${vendaId}`);
+        const response = await fetch(`${backendURL()}/VendaService.php?acao=CancelamentodaVenda`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: vendaId,
+                justificativa: justificativa,
+            }),
+        });
+
         const dados = await response.json();
         return dados;
     } catch (error) {
-        console.error('Erro ao buscar venda por ID:', error);
-        return null;
+        console.error('Erro ao cancelar a venda:', error);
+        return { status: 0, message: 'Erro ao cancelar a venda.' };
     }
 }
+
 
 export async function ativarVenda(vendaId: Number) {
     try {
@@ -253,7 +264,7 @@ export async function updateParcelaByIDv(
         });
 
         const response = await fetch(`${backendURL()}/VendaService.php?acao=updateParcelaByIDv&id=${id_parcela}`, {
-            method: "POST",  
+            method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },

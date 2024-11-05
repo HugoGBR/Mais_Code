@@ -7,19 +7,18 @@ import {
     DialogTitle,
     DialogTrigger,
     DialogDescription,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import { CancelamentodaVenda } from "@/lib/VendaController";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { Toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
-
 
 export default function PopUpCancelamento({ id }: { id: number }) {
     const [descricaoProduto, setDescricaoProduto] = useState<string>('');
     const descricaoLimiteCaracteres = 255;
-    const route = useRouter()
+    const route = useRouter();
     const { toast } = useToast();
+
     const handleDescricaoChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const descricao = event.target.value;
         if (descricao.length <= descricaoLimiteCaracteres) {
@@ -28,8 +27,10 @@ export default function PopUpCancelamento({ id }: { id: number }) {
     };
 
     async function handleCancel() {
+        console.log("ID:", id, "Justificativa:", descricaoProduto);
         try {
-            const response = await CancelamentodaVenda(id)
+            const response = await CancelamentodaVenda(id, descricaoProduto);
+            console.log("Response:", response);
             if (response.status === 1) {
                 toast({
                     title: "Sucesso",
@@ -39,11 +40,17 @@ export default function PopUpCancelamento({ id }: { id: number }) {
                 setTimeout(() => {
                     route.push('/routes/relatorio');
                 }, 2000);
+            } else {
+                toast({
+                    title: "Erro",
+                    description: response.message || "Erro ao inativar a venda!",
+                    className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+                });
             }
         } catch (error) {
             toast({
                 title: "Erro",
-                description: "Erro ao inativada a venda!",
+                description: "Erro ao inativar a venda!",
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
             });
             console.error("Erro ao cancelar a venda:", error);
@@ -89,5 +96,5 @@ export default function PopUpCancelamento({ id }: { id: number }) {
                 </DialogContent>
             </Dialog>
         </CardFooter>
-    )
+    );
 }

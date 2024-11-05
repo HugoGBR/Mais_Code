@@ -64,11 +64,19 @@ switch ($acao) {
         }
         break;
     case "CancelamentodaVenda":
-        if ($id !== null) {
-            $user = $vendaController->CancelamentodaVenda($id);
-            echo json_encode($user);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents("php://input"), true);
+
+            if (isset($data['id']) && isset($data['justificativa'])) {
+                $id = $data['id'];
+                $justificativa = $data['justificativa'];
+                $response = $vendaController->CancelamentodaVenda($id, $justificativa);
+                echo json_encode($response);
+            } else {
+                echo json_encode(["error" => "ID e justificativa são necessários para o cancelamento"]);
+            }
         } else {
-            echo json_encode(["error" => "Ação GetVendaById necessita de um ID"]);
+            echo json_encode(["error" => "Método não suportado para cancelamento"]);
         }
         break;
     case "AtivarVenda":
