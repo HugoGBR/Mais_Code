@@ -270,6 +270,33 @@ class Vendacontroller
         }
     }
 
+    public function ConcluirVenda(int $id)
+    {
+        $ativar = "concluido";
+       
+        try {
+            $vendaExists = $this->checkContratoExistsById($id);
+            if (!$vendaExists) {
+                return ['status' => 0, 'message' => 'Venda não encontrada.'];
+            }
+
+            $sql = "UPDATE vendas SET status = :concluido WHERE id = :id";
+            $db = $this->conn->prepare($sql);
+            $db->bindValue(":concluido", $ativar );
+            $db->bindValue(":id", $id);
+
+            if ($db->execute()) {
+                return ['status' => 1, 'message' => 'Venda concluida com sucesso.'];
+            } else {
+                $errorInfo = $db->errorInfo();
+                return ['status' => 0, 'message' => 'Falha ao concluir a venda.', 'error' => $errorInfo];
+            }
+        } catch (Exception $e) {
+
+            return ['status' => 0, 'message' => 'Erro ao concluir a venda: ' . $e->getMessage()];
+        }
+    }
+
     public function getParcelaByIdv(int $id)
     {
         try {

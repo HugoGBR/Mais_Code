@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Link from "next/link";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CancelamentodaVenda, getVendaById, ativarVenda, updateVenda, updateParcelaByIDv, getParcelaByidv } from "@/lib/VendaController";
+import { CancelamentodaVenda, getVendaById, ativarVenda, updateVenda, updateParcelaByIDv, getParcelaByidv, ConcluirVenda } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
 import { getAllContratos } from "@/lib/ContratoController";
 import CardCliente from '@/components/CardClienteGestao';
@@ -117,7 +117,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     const handleIsHidden = () => {
         setIsHidden(true);
     };
-    
+
     async function handleAtivarVenda() {
         try {
             const response = await ativarVenda(params.id);
@@ -138,6 +138,29 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
             });
             console.error("Erro ao ativar a venda:", error);
+        }
+    }
+
+    async function handleConcluirVenda() {
+        try {
+            const response = await ConcluirVenda(params.id);
+            if (response.status === 1) {
+                toast({
+                    title: "Sucesso",
+                    description: "Venda Concluida!",
+                    className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+                });
+                setTimeout(() => {
+                    route.push('/routes/relatorio');
+                }, 1000);
+            }
+        } catch (error) {
+            toast({
+                title: "Erro",
+                description: "Erro ao Concluir venda!",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
+            console.error("Erro ao Concluir a venda:", error);
         }
     }
 
@@ -189,10 +212,18 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         }
     };
 
-    const handleButtonClick = async () => {
-        setInputHabilitados(true);
-        setIsHidden(true);
+    const [isEditing, setIsEditing] = useState(false); // Novo estado para controlar o modo de edição
+
+    const handleButtonClick = (event: FormEvent) => {
+        if (isEditing) {
+            handleButtonsavle(event); // Passa o event ao chamar handleButtonsavle
+        }
+        setInputHabilitados(!inputsHabilitados);
+        setIsEditing(!isEditing);
+        setIsHidden(!isHidden);
     };
+
+
 
     const handleParcelasChange = (novosValores: number[], novosStatus: string[]) => {
         const novasParcelas = parcelas.map((parcela, i) => ({
@@ -202,15 +233,15 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         }));
         setParcelas(novasParcelas);
     };
-    
+
     const handleConfirmParcelas = async (vendaId: number, numeroParcelas: number, valoresParcelas: number[], statusParcelas: string[]) => {
         try {
             for (let i = 0; i < parcelas.length; i++) {
                 const parcela = parcelas[i];
-                const statusParcela = statusParcelas[i]; 
+                const statusParcela = statusParcelas[i];
                 await updateParcelaByIDv(valoresParcelas[i], statusParcela, parcela.id);
             }
-    
+
             toast({
                 title: "Sucesso",
                 description: "Parcelas atualizadas com sucesso!",
@@ -225,8 +256,8 @@ export default function EditVenda({ params }: { params: { id: number } }) {
             console.error("Erro ao atualizar as parcelas:", error);
         }
     };
-    
-    
+
+
 
 
     const renderGestaoCliente = () => {
@@ -445,7 +476,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                         onSetValoresParcelas={handleParcelasChange}
                                         onConfirm={handleConfirmParcelas}
                                         idVenda={params.id}
-                                        listaParcelas={parcelas} 
+                                        listaParcelas={parcelas}
                                     />
                                 </div>
                             )}
@@ -457,36 +488,33 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                         <div className="text-center col-span-2">
                             <div className="text-center col-span-2">
                                 <div className="grid grid-cols-2 gap-x-5">
-                                    {statusVenda === "em andamento" && isHidden? (
-                                        
+                                    {statusVenda === "em andamento" && isHidden ? (
+
                                         <PopUpCancelamento id={params.id} />
+
                                     ) : (
                                         isHidden && (
-                                        <button
-                                            type="submit"
-                                            onClick={handleAtivarVenda}
-                                            className=" col-span-1 p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
-                                            Ativar Venda
-                                        </button>
+                                            <button
+                                                type="submit"
+                                                onClick={handleAtivarVenda}
+                                                className=" col-span-1 p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
+                                                Ativar Venda
+                                            </button>
                                         )
                                     )}
-                                    {isHidden && (
-                                    <button
-                                        type="button"
-                                        onClick={handleButtonsavle}
-                                        className="col-span-1 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
-                                        Salvar
-                                    </button>
+                                    {isEditing && statusVenda === "em andamento" && (
+                                        <button
+                                            type="button"
+                                            onClick={handleConcluirVenda}
+                                            className="col-span-1 p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
+                                            Concluir Venda
+                                        </button>
                                     )}
                                     <button
-                                        type="submit"
-                                        onClick={() => {
-                                            handleButtonClick();
-                                            handleIsHidden();
-                                        }}
-
+                                        type="button"
+                                        onClick={(event) => handleButtonClick(event)} // Passa o event ao chamar handleButtonClick
                                         className="mt-3 col-span-2 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
-                                        Editar
+                                        {isEditing ? "Salvar" : "Editar"}
                                     </button>
                                 </div>
                             </div>

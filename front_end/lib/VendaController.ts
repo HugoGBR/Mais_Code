@@ -219,6 +219,17 @@ export async function ativarVenda(vendaId: Number) {
     }
 }
 
+export async function ConcluirVenda(vendaId: Number) {
+    try {
+        const response = await fetch(`${backendURL()}/VendaService.php?acao=ConcluirVenda&id=${vendaId}`);
+        const dados = await response.json();
+        return dados;
+    } catch (error) {
+        console.error('Erro ao buscar venda por ID:', error);
+        return null;
+    }
+}
+
 export async function getParcelaByidv(vendaId: Number) {
     try {
         const response = await fetch(`${backendURL()}/VendaService.php?acao=getParcelaByIdv&id=${vendaId}`);

@@ -28,7 +28,7 @@ switch ($acao) {
             echo json_encode(["error" => "Ação updateContratoByID necessita de um ID"]);
         }
         break;
-    
+
 
     case "getAllProductById":
         if ($id !== null) {
@@ -74,6 +74,14 @@ switch ($acao) {
     case "AtivarVenda":
         if ($id !== null) {
             $user = $vendaController->AtivarVenda($id);
+            echo json_encode($user);
+        } else {
+            echo json_encode(["error" => "Ação GetVendaById necessita de um ID"]);
+        }
+        break;
+    case "ConcluirVenda":
+        if ($id !== null) {
+            $user = $vendaController->ConcluirVenda($id);
             echo json_encode($user);
         } else {
             echo json_encode(["error" => "Ação GetVendaById necessita de um ID"]);
