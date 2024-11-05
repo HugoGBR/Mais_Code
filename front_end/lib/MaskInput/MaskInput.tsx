@@ -1,15 +1,38 @@
 export const insertMaskCpfCnpj = (value: string) => {
-    let numericValue = value.replace(/\D/g, '');
+    let numericValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
 
-
+    // Limitar o número de caracteres a 14 (tamanho máximo de um CNPJ)
     numericValue = numericValue.slice(0, 14);
 
+    // Se tiver 11 ou menos caracteres, formata como CPF
     if (numericValue.length <= 11) {
-        return numericValue.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        // Aplica a máscara CPF somente quando houver 11 caracteres
+        if (numericValue.length <= 3) {
+            return numericValue; // Sem máscara até 3 caracteres
+        } else if (numericValue.length <= 6) {
+            return numericValue.replace(/(\d{3})(\d{1,3})/, '$1.$2'); // 3 primeiros + 3 caracteres
+        } else if (numericValue.length <= 9) {
+            return numericValue.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3'); // 3 + 3 + 3
+        } else {
+            return numericValue.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); // CPF completo
+        }
     } else {
-        return numericValue.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        // Se tiver mais de 11 caracteres, formata como CNPJ
+        // Aplica a máscara CNPJ somente quando houver mais de 11 caracteres
+        if (numericValue.length <= 4) {
+            return numericValue; // Sem máscara até 4 caracteres
+        } else if (numericValue.length <= 7) {
+            return numericValue.replace(/(\d{2})(\d{1,3})/, '$1.$2'); // 2 primeiros + 3 caracteres
+        } else if (numericValue.length <= 11) {
+            return numericValue.replace(/(\d{2})(\d{3})(\d{1,3})/, '$1.$2.$3'); // 2 + 3 + 3
+        } else if (numericValue.length <= 12) {
+            return numericValue.replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, '$1.$2.$3/$4'); // 2 + 3 + 3 + 1
+        } else {
+            return numericValue.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5'); // CNPJ completo
+        }
     }
 };
+
 
 export const insertMaskTelefone = (telefone: string) => {
     let numericTelefone = telefone.replace(/\D/g, '').slice(0, 11);

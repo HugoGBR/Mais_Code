@@ -29,6 +29,7 @@ export default function CadastrarCliente() {
         setValue('telefone', maskedValue);
     };
 
+    
     const handleCpfCnpjChange = (event: any) => {
         const { value } = event.target;
         const maskedValue = insertMaskCpfCnpj(value);
@@ -116,15 +117,30 @@ export default function CadastrarCliente() {
                             </div>
 
                             <div className="flex flex-col space-y-1.5">
-                                <input
-                                    type="text"
-                                    className={`border-b-2 focus:border-b-2 ${errors.cpf_cnpj ? 'border-red-500' : ''}`}
-                                    placeholder="CPF/CNPJ"
-                                    {...register('cpf_cnpj')}
-                                    onChange={handleCpfCnpjChange}
-                                />
-                                {errors.cpf_cnpj && <div className="text-red-500">{errors.cpf_cnpj.message}</div>}
-                            </div>
+                            <input
+                                type="text"
+                                className={`border-b-2 focus:border-b-2 ${errors.cpf_cnpj ? 'border-red-500' : ''}`}
+                                placeholder="CPF/CNPJ"
+                                {...register('cpf_cnpj', {
+                                    required: "CPF/CNPJ é obrigatório",
+                                    minLength: {
+                                        value: 11,
+                                        message: "O CPF/CNPJ deve ter no mínimo 11 caracteres",
+                                    },
+                                    maxLength: {
+                                        value: 14,
+                                        message: "O CPF/CNPJ deve ter no máximo 14 caracteres",
+                                    },
+                                    pattern: {
+                                        value: /^[0-9]*$/,
+                                        message: "O CPF/CNPJ deve conter apenas números",
+                                    },
+                                })}
+                                onChange={handleCpfCnpjChange}
+                            />
+                            {errors.cpf_cnpj && <div className="text-red-500">{errors.cpf_cnpj.message}</div>}
+                        </div>
+
 
                             <div className="flex flex-col space-y-1.5">
                                 <input
@@ -141,7 +157,21 @@ export default function CadastrarCliente() {
                                     type="text"
                                     className={`border-b-2 focus:border-b-2 ${errors.telefone ? 'border-red-500' : ''}`}
                                     placeholder="Telefone"
-                                    {...register('telefone')}
+                                    {...register('telefone', {
+                                        required: "Telefone é obrigatório",
+                                        minLength: {
+                                            value: 11,
+                                            message: "O Telefone deve ter no mínimo 11 caracteres",
+                                        },
+                                        maxLength: {
+                                            value: 14,
+                                            message: "O Telefone deve ter no máximo 14 caracteres",
+                                        },
+                                        pattern: {
+                                            value: /^[0-9]*$/,
+                                            message: "O Telefone deve conter apenas números",
+                                        },
+                                    })}  
                                     onChange={handleTelefoneChange}
                                 />
                                 {errors.telefone && <div className="text-red-500">{errors.telefone.message}</div>}
