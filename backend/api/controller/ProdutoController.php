@@ -21,14 +21,29 @@ class ProdutoController
     }
 
     public function createNewProduto()
-    {
+{
+    try {
         $produto = json_decode(file_get_contents("php://input"));
         $sql = "INSERT INTO produtos(nome, horas_trabalhadas, descricao_produto, comissao_antiga, comissao_nova) VALUES (
             :nome, 
             :horas_trabalhadas, 
             :descricao_produto, 
-            :comissao_antiga,
-            :comissao_nova)";
+            :comissao_antiga, 
+            :comissao_nova
+        )";
+        
+        if (!$produto || !isset($produto->nome) || !isset($produto->horas_trabalhadas) || !isset($produto->descricao_produto) || !isset($produto->comissaoAntigo) || !isset($produto->comissaoNovo)) {
+            return json_encode(['status' => 0, 'message' => 'Dados incompletos.']);
+        }
+
+        $ProdutoExists = $this->checkProdutoExistsName($produto->nome);
+        if ($ProdutoExists) {
+            return json_encode(['status' => 1, 'message' => 'Usuário já existe.']);
+        }
+
+        $sql = "INSERT INTO produtos (nome, horas_trabalhadas, descricao_produto, comissao_antiga, comissao_nova) 
+                VALUES (:nome, :horas_trabalhadas, :descricao_produto, :comissao_antiga, :comissao_nova)";
+        
 
         $db = $this->conn->prepare($sql);
         $db->bindParam(":nome", $produto->nome);
@@ -38,12 +53,18 @@ class ProdutoController
         $db->bindParam(":comissao_nova", $produto->comissaoNovo);
 
         if ($db->execute()) {
-            $resposta = ["Mensagem" => "Produto Cadastrado com Sucesso!"];
+            $resposta = ['status' => 1, 'message' => 'Sucesso.'];
         } else {
-            $resposta = ["Mensagem" => "Erro ao cadastrar produto"];
+            $resposta = ['status' => 0, 'message' => 'Erro ao cadastrar'];
         }
-        return $resposta;
+
+        return json_encode($resposta);
+    } catch (\Exception $e) {
+        error_log('Erro ao criar produto: ' . $e->getMessage());
+        return json_encode(['status' => 0, 'message' => 'Erro ao criar produto.']);
     }
+}
+
 
     public function updateProdutoById(int $id)
     {
@@ -82,6 +103,16 @@ class ProdutoController
         $query = "SELECT COUNT(*) FROM produtos WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+
+    private function checkProdutoExistsName($nome)
+    {
+        $query = "SELECT COUNT(*) FROM produtos WHERE nome = :nome";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':nome', $nome);
         $stmt->execute();
         $count = $stmt->fetchColumn();
         return $count > 0;
