@@ -1,4 +1,4 @@
-import {backendURL} from "./URLS/backendURL";
+import { backendURL } from "./URLS/backendURL";
 
 export async function createNewTipoContrato(
     newNome: string
@@ -21,7 +21,7 @@ export async function createNewTipoContrato(
             throw new Error(`Erro ao criar novo Tipo Contrato: ${response.statusText}`);
         }
 
-        const data = await response.json();
+        const data = JSON.parse(await response.json());
         console.log(data);
 
         return data;
@@ -38,8 +38,8 @@ export async function updateContratoById(
     const request = await fetch(`${backendURL()}/TipoContratoService.php?acao=updateContratoById&id=${paramsId}`, {
         method: "POST",
         body: JSON.stringify({
-                nome: newNome
-            }
+            nome: newNome
+        }
         )
     });
     const response = await request.json();

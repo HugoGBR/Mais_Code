@@ -1,17 +1,43 @@
-"use client"
+"use client";
 import React, { useState, FormEvent } from 'react';
-
 import { useRouter } from 'next/navigation';
 import { createNewTipoContrato } from '@/lib/TipoContratoController';
+import { Toaster } from "@/components/ui/toaster";
+import { useToast } from '@/components/ui/use-toast';
 
 export default function ModeloContrato() {
+    const { toast } = useToast();
     const [nomeContrato, setNomeContrato] = useState<string>('');
     const router = useRouter();
 
+    const resetForm = () => {
+        setNomeContrato('');
+    };
+
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        await createNewTipoContrato(nomeContrato);
-        router.push('/routes/ajustes');
+        try {
+            const response = await createNewTipoContrato(nomeContrato);
+
+            if (response.status === 1) {
+                toast({
+                    title: "Sucesso",
+                    description: "Tipo de Contrato cadastrado com sucesso!",
+                    className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+                });
+                resetForm();
+                router.push('/routes/ajustes');
+            } else {
+                throw new Error("Erro ao cadastrar o Tipo de Contrato: resposta inválida");
+            }
+        } catch (error) {
+            console.error("Erro ao cadastrar o Tipo de Contrato:", error);
+            toast({
+                title: "Erro",
+                description: "Falha ao cadastrar o Tipo de Contrato. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
+        }
     };
 
     return (
@@ -38,6 +64,7 @@ export default function ModeloContrato() {
                     </div>
                 </form>
             </div>
+            <Toaster />
         </div>
     );
-};
+}
