@@ -8,17 +8,25 @@ import { Dialog, DialogContent, DialogFooter, DialogTrigger, DialogClose } from 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from './ui/select';
-
 interface PopUpConfigProps {
     valorTotal: number;
     parcelas: number;
     onSetValoresParcelas: (valores: number[], status: string[]) => void;
-    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[], statusParcelas: string[]) => Promise<void>;
+    onConfirm: (vendaId: number, numeroParcelas: number, valoresParcelas: number[], statusParcelas: string[]) => void;
     idVenda: number;
     listaParcelas: any[];
+    disabled: boolean;
 }
 
-export default function EditConfiguracoesParcela({ valorTotal, parcelas, onSetValoresParcelas, onConfirm, idVenda, listaParcelas }: PopUpConfigProps): React.JSX.Element {
+export default function EditConfiguracoesParcela({
+    valorTotal,
+    parcelas,
+    onSetValoresParcelas,
+    onConfirm,
+    idVenda,
+    listaParcelas,
+    disabled,
+}: PopUpConfigProps) {
     const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
     const [statusParcelas, setStatusParcelas] = useState<string[]>([]);
     const [mensagemErro, setMensagemErro] = useState<string | null>(null);
@@ -64,7 +72,7 @@ export default function EditConfiguracoesParcela({ valorTotal, parcelas, onSetVa
         <CardFooter className="flex justify-center items-center">
             <Dialog>
                 <DialogTrigger asChild>
-                    <FontAwesomeIcon icon={faSlidersH} className="w-8 h-8" />
+                    <FontAwesomeIcon icon={faSlidersH} className={`w-5 h-5 cursor-pointer ${disabled ? 'cursor-not-allowed' : ''}`} />
                 </DialogTrigger>
                 <DialogContent className="pt-10 rounded-lg">
                     <div className="text-center">
@@ -93,10 +101,14 @@ export default function EditConfiguracoesParcela({ valorTotal, parcelas, onSetVa
                                                 type="text"
                                                 value={`R$ ${valoresParcelas[i]?.toFixed(2) || '0.00'}`}
                                                 onChange={(e) => handleChange(i, e)}
+                                                disabled={disabled} // Desativa o campo de input
                                             />
                                         </TableCell>
                                         <TableCell>
-                                            <Select onValueChange={(value) => handleStatusChange(i, value)}>
+                                            <Select
+                                                onValueChange={(value) => handleStatusChange(i, value)}
+                                                disabled={disabled} // Desativa o seletor
+                                            >
                                                 <SelectTrigger>
                                                     <SelectValue placeholder={statusParcelas[i]} />
                                                 </SelectTrigger>
@@ -117,9 +129,9 @@ export default function EditConfiguracoesParcela({ valorTotal, parcelas, onSetVa
                     <DialogFooter>
                         <DialogClose asChild>
                             <button
-                                className={`hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500 ${mensagemErro ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500 ${mensagemErro || disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 onClick={handleConfirm}
-                                disabled={!!mensagemErro}
+                                disabled={!!mensagemErro || disabled} // Desativa o botão se houver erro ou estiver `disabled`
                             >
                                 Confirmar
                             </button>

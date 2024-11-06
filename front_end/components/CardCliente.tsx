@@ -97,7 +97,7 @@ export default function CadastrarCliente() {
         <>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <div className="flex justify-center items-center bg-gray-100">
-                    <Card className="p-10 drop-shadow-xl rounded-xl">
+                    <Card className="p-10 hover:shadow-xl rounded-lg border">
                         <div className="h-12 mb-5">
                             <h1 className="font-bold text-2xl">Cliente</h1>
                         </div>

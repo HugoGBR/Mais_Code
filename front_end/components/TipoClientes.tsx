@@ -17,7 +17,7 @@ export default function TipoClientes() {
     return (
         <div>
             <div className="flex justify-center items-center h-screen">
-                <Card className="w-[375px]Z\">
+                <Card className="w-[375px]Z\ rounded-lg border">
                     <CardHeader>
                         <CardTitle>Cliente</CardTitle>
                     </CardHeader>

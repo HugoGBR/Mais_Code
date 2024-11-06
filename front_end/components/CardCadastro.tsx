@@ -41,7 +41,7 @@ export default function CardCadastro() {
     const [statusClienteValor, setstatusClienteValor] = useState(0);
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState(0);
-    const [valoresParcelas, setValoresParcelas] = useState<number[]>([]); 
+    const [valoresParcelas, setValoresParcelas] = useState<number[]>([]);
     const [id_venda, setIdVenda] = useState(1);
 
     const route = useRouter();
@@ -96,8 +96,8 @@ export default function CardCadastro() {
     useEffect(() => {
         const atualizarIdVenda = async () => {
             try {
-                const vendaCountResponse = await CountVendas(); 
-                const vendaCount = vendaCountResponse["COUNT(*)"]; 
+                const vendaCountResponse = await CountVendas();
+                const vendaCount = vendaCountResponse["COUNT(*)"];
                 setIdVenda(vendaCount + 1);
             } catch (error) {
                 console.error("Erro ao contar as vendas: ", error);
@@ -162,17 +162,17 @@ export default function CardCadastro() {
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
-    
+
         if (!validateForm()) return;
-    
+
         const datadoinicio = new Date(DataInicio);
         const datadofim = new Date(DataFim);
-    
+
         try {
             console.log("Tentando cadastrar a venda...");
 
             const numeroFinal = metodo_pagamento === "À vista" ? 1 : 2;
-    
+
             const vendaResponse = await createNewSell(
                 Number(new_cliente_id),
                 Number(new_tipo_contrato_id),
@@ -189,21 +189,21 @@ export default function CardCadastro() {
                 telefone,
                 nome_contato,
                 Number(numero_parcelo),
-                numeroFinal 
+                numeroFinal
             );
-    
+
             if (vendaResponse) {
                 console.log("Venda cadastrada com sucesso.");
-    
+
                 toast({
                     title: "Sucesso",
                     description: "Cadastro realizado com sucesso!",
                     className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400"
                 });
-    
+
                 resetForm();
                 route.push("/routes/home");
-    
+
             } else {
                 throw new Error("Erro ao cadastrar a venda: resposta inválida");
             }
@@ -216,7 +216,7 @@ export default function CardCadastro() {
             });
         }
     }
-    
+
 
     async function handleSubmitParcela(vendaId: number, numeroParcelas: number, valoresParcelas: number[], toast: any) {
         try {
@@ -232,7 +232,7 @@ export default function CardCadastro() {
                     2
                 );
 
-               
+
                 if (responseParcela && responseParcela.status === 0) {
                     throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
                 }
@@ -254,7 +254,7 @@ export default function CardCadastro() {
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
 
-      
+
             throw error;
         }
     }
@@ -294,7 +294,7 @@ export default function CardCadastro() {
         <>
             <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
                 <div className="w-full lg:w-3/5">
-                    <Card className="p-10 drop-shadow-xl">
+                    <Card className="p-10 hover:shadow-xl rounded-lg border">
                         <form onSubmit={handleSearchCPF}>
                             <div className="flex justify-between mb-6 md:text-2xl font-bold">
                                 <h1>Contrato</h1>
@@ -332,8 +332,8 @@ export default function CardCadastro() {
                                             setDataInicio(event.target.value);
                                             setErrors((prevErrors) => ({ ...prevErrors, DataInicio: '' }));
                                         }}
-                                        />
-                                        {errors.DataInicio && <span className="error text-xs text-red-600 mt-1">{errors.DataInicio}</span>}
+                                    />
+                                    {errors.DataInicio && <span className="error text-xs text-red-600 mt-1">{errors.DataInicio}</span>}
                                 </div>
                                 <div className="flex flex-col mb-5">
                                     <label className="text-sm" htmlFor="teste">Data Término</label>
@@ -351,8 +351,8 @@ export default function CardCadastro() {
                                 <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
                                     <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
                                     <Select onValueChange={(value) => {
-                                    setnew_tipo_contrato_id(value);
-                                    setErrors((prevErrors) => ({ ...prevErrors, new_tipo_contrato_id: '' }));
+                                        setnew_tipo_contrato_id(value);
+                                        setErrors((prevErrors) => ({ ...prevErrors, new_tipo_contrato_id: '' }));
                                     }}>
                                         <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
                                             <SelectValue placeholder="Tipo Contrato" />
@@ -365,11 +365,11 @@ export default function CardCadastro() {
                                     </Select>
                                     {errors.new_tipo_contrato_id && <span className="error text-xs text-red-600 h-fit mt-10 mr-1">{errors.new_tipo_contrato_id}</span>}
                                     <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
-                                    <Select onValueChange={(value) => { 
+                                    <Select onValueChange={(value) => {
                                         setnew_produto_id(value);
                                         setErrors((prevErrors) => ({ ...prevErrors, new_produto_id: '' }));
-                                        }}>
-                                        
+                                    }}>
+
                                         <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
                                             <SelectValue placeholder="Produto" />
                                         </SelectTrigger>
@@ -381,27 +381,27 @@ export default function CardCadastro() {
                                     </Select>
                                     <div></div> {/*Sim, deixa dessa forma, gambiarra mas funciona, se tirar essa div vai quebrar*/}
                                     {errors.new_produto_id && <span className="error text-xs text-red-600 h-fit mt-1 w-max ,r-1">{errors.new_produto_id}</span>}
-                                    
+
                                 </div>
                                 <div className="flex flex-col mb-5 md:ml-2.5">
                                     <label className="text-sm mb-2" htmlFor="horas-trabalhadas">Horas Trabalhadas</label>
                                     <input
-                                         id="horas-trabalhadas"
-                                         className="border-b-2 focus:outline-none focus:border-blue-500"
-                                         placeholder="0 "
-                                         type="number"
-                                         min="0"
-                                         value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
-                                         onChange={(event) => {
-                                             const value = Number(event.target.value);
-                                             if (!isNaN(value) && value >= 0) {
-                                                 setHorasTrabalhadas(value);
-                                                 setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
-                                             } else {
-                                                 setHorasTrabalhadas(0);
-                                             }
-                                         }}
-                                     />
+                                        id="horas-trabalhadas"
+                                        className="border-b-2 focus:outline-none focus:border-blue-500"
+                                        placeholder="0 "
+                                        type="number"
+                                        min="0"
+                                        value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
+                                        onChange={(event) => {
+                                            const value = Number(event.target.value);
+                                            if (!isNaN(value) && value >= 0) {
+                                                setHorasTrabalhadas(value);
+                                                setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
+                                            } else {
+                                                setHorasTrabalhadas(0);
+                                            }
+                                        }}
+                                    />
                                     {errors.horas_trabalhadas && <span className="error text-xs text-red-600 mt-1">{errors.horas_trabalhadas}</span>}
                                 </div>
                             </div>
@@ -427,7 +427,7 @@ export default function CardCadastro() {
                                         onChange={(event) => {
                                             setTelefoneContato(insertMaskTelefone(event.target.value));
                                             setErrors((prevErrors) => ({ ...prevErrors, telefone: '' }));
-                                            }}
+                                        }}
                                         type="tel" />
                                     {errors.telefone && <span className="error text-xs text-red-600 mt-1">{errors.telefone}</span>}
                                 </div>
@@ -448,28 +448,28 @@ export default function CardCadastro() {
                     </Card>
                 </div>
                 <div className="w-full lg:w-2/5">
-                    <Card className="p-10 drop-shadow-xl">
+                    <Card className="p-10 hover:shadow-xl rounded-lg border">
                         <form onSubmit={handleSubmit}>
                             <div className="flex justify-center mb-6 text-2xl font-bold">
                                 <h1>Forma de Pagamento</h1>
                             </div>
                             <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
-                            <input
-                                type="text"
-                                id="valorEntrada "
-                                name="valorEntrada"
-                                value={valor_entrada}
-                                onChange={(event) => setValorEntrada(insertMaskValorMonetarioSemVirgula(event.target.value))}
-                                placeholder="R$"
-                                className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                            />
+                                <input
+                                    type="text"
+                                    id="valorEntrada "
+                                    name="valorEntrada"
+                                    value={valor_entrada}
+                                    onChange={(event) => setValorEntrada(insertMaskValorMonetarioSemVirgula(event.target.value))}
+                                    placeholder="R$"
+                                    className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                />
                             </div>
                             <div className="mb-5">
                                 <label className="text-sm" htmlFor="Nn">Status Cliente</label>
                                 <Select onValueChange={(value) => {
                                     setstatusCliente(value);
                                     setErrors((prevErrors) => ({ ...prevErrors, statusCliente: '' }));
-                                    }}>
+                                }}>
                                     <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
                                         <SelectValue placeholder="Tipo Cliente" />
                                     </SelectTrigger>
@@ -502,56 +502,56 @@ export default function CardCadastro() {
                                         </label>
                                     </div>
                                     <div className="lg:inline-flex items-center">
-                                <input
-                                    id="pagamento-opcao-2"
-                                    type="radio"
-                                    name="forma-pagamento"
-                                    value="Parcelado"
-                                    className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                    aria-labelledby="pagamento-opcao-2"
-                                    aria-describedby="pagamento-opcao-2"
-                                    onClick={() => {
-                                        setmetodo_pagamento("Parcelado");
-                                        setMostrarParcelas(true);
-                                        setnumero_parcelo(0); 
-                                    }}
-                                />
-                                <label htmlFor="pagamento-opcao-2" className="block ml-2 text-sm font-medium text-gray-900">
-                                    Parcelado
-                                </label>
-                            </div>
-                            </div>
-
-                            {mostrarParcelas && (
-                                <div className="grid grid-cols-1 gap-x-5 lg:flex lg:items-center lg:justify-between">
-                                    <div className="">
                                         <input
-                                            className="border-b-2 w-10 text-center focus:outline-none focus:border-blue-500"
-                                            placeholder="0" 
-                                            type="number"
-                                            min="1"
-                                            value={numero_parcelo === 0 ? "" : numero_parcelo} 
-                                            onChange={(event) => {
-                                                const value = Number(event.target.value);
-                                                setnumero_parcelo(value || 0); 
+                                            id="pagamento-opcao-2"
+                                            type="radio"
+                                            name="forma-pagamento"
+                                            value="Parcelado"
+                                            className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                            aria-labelledby="pagamento-opcao-2"
+                                            aria-describedby="pagamento-opcao-2"
+                                            onClick={() => {
+                                                setmetodo_pagamento("Parcelado");
+                                                setMostrarParcelas(true);
+                                                setnumero_parcelo(0);
                                             }}
                                         />
-                                    </div>
-                                    <div className="col-span-1">
-                                        <PopUpConfig
-                                            valorTotal={valor_total}
-                                            parcelas={numero_parcelo}
-                                            onSetValoresParcelas={handleSetValoresParcelas}
-                                            onConfirm={(vendaId, numeroParcelas, valoresParcelas) =>
-                                                handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)
-                                            }
-                                            idVenda={id_venda}
-                                        />
+                                        <label htmlFor="pagamento-opcao-2" className="block ml-2 text-sm font-medium text-gray-900">
+                                            Parcelado
+                                        </label>
                                     </div>
                                 </div>
-                            )}
+
+                                {mostrarParcelas && (
+                                    <div className="grid grid-cols-1 gap-x-5 lg:flex lg:items-center lg:justify-between">
+                                        <div className="">
+                                            <input
+                                                className="border-b-2 w-10 text-center focus:outline-none focus:border-blue-500"
+                                                placeholder="0"
+                                                type="number"
+                                                min="1"
+                                                value={numero_parcelo === 0 ? "" : numero_parcelo}
+                                                onChange={(event) => {
+                                                    const value = Number(event.target.value);
+                                                    setnumero_parcelo(value || 0);
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="col-span-1">
+                                            <PopUpConfig
+                                                valorTotal={valor_total}
+                                                parcelas={numero_parcelo}
+                                                onSetValoresParcelas={handleSetValoresParcelas}
+                                                onConfirm={(vendaId, numeroParcelas, valoresParcelas) =>
+                                                    handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)
+                                                }
+                                                idVenda={id_venda}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                                {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
+                            {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
                             <div className="flex justify-between mt-5 h-auto">
                                 <label className="font-bold" htmlFor="teste">Valor total a pagar:</label>
                                 <h1 className="font-bold">{`R$ ${valor_total.toFixed(2)}`}</h1>

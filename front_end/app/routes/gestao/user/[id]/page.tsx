@@ -81,7 +81,7 @@ export default function App({ params }: { params: { id: number } }) {
         <div>
             <form onSubmit={handleEditSubmit}>
                 <div className="flex justify-center items-center bg-gray-100 mt-10">
-                    <Card className="p-10 drop-shadow-xl rounded-xl">
+                    <Card className="p-10 drop-shadow-xl rounded-lg border">
                         <div className="h-12 mb-5">
                             <h1 className="font-bold text-2xl">Usuário</h1>
                         </div>

@@ -8,12 +8,13 @@ import { CancelamentodaVenda, getVendaById, ativarVenda, updateVenda, updateParc
 import { dadosCliente, dadosModelo_contrato, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
 import { getAllContratos } from "@/lib/ContratoController";
 import CardCliente from '@/components/CardClienteGestao';
-import EditConfiguracoesParcela from "@/components/ParcelaEdit"; // Componente de edição de parcelas
+import EditConfiguracoesParcela from "@/components/ParcelaEdit";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { Span } from "next/dist/trace";
 import PopUpCancelamento from "@/components/PopUpCancelamento";
 import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
+import MotivoCancelamento from "@/components/MotivoCancelamento";
 
 export default function EditVenda({ params }: { params: { id: number } }) {
     const [venda, setVenda] = useState<dadosVenda | null>(null);
@@ -41,6 +42,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     const [foundCliente, setFoundCliente] = useState<dadosCliente | null>(null);
     const [horas_trabalhadas, setHorasTrabalhadas] = useState<number>(0);
     const [statusVenda, setStatusVenda] = useState("");
+    const [descricaoProduto, setDescricaoProduto] = useState<string>('');
     const [parcelas, setParcelas] = useState<any[]>([]); // Estado para armazenar as parcelas
 
     const route = useRouter();
@@ -71,6 +73,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 setCpfCnpjInput(vendaData.cpf_cnpj);
                 setMostrarParcelas(vendaData.metodo_pagamento === "Parcelado");
                 setStatusVenda(vendaData.status_venda);
+                setDescricaoProduto(vendaData.justificativa_cancelamento);
 
                 // Carregar parcelas ao carregar a venda
                 const parcelasData = await getParcelaByidv(params.id);
@@ -93,6 +96,10 @@ export default function EditVenda({ params }: { params: { id: number } }) {
 
     const handleIsHidden = () => {
         setIsHidden(true);
+    };
+
+    const handleDescricaoChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setDescricaoProduto(event.target.value);
     };
 
     async function handleAtivarVenda() {
@@ -251,9 +258,9 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     };
 
     return (
-        <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
-            <div className="w-full lg:w-3/5">
-                <Card className="p-10 drop-shadow-xl">
+        <div className="flex flex-col gap-3 md:flex md:flex-col lg:flex-row">
+            <div className="w-full lg:w-7/12">
+                <Card className="p-10 hover:shadow-xl rounded-lg border">
                     <form>
                         <div className="flex justify-between mb-6 md:text-2xl font-bold">
                             <h1>Contrato</h1>
@@ -342,11 +349,13 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                 type="text" />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
                                 placeholder="(99) 99999-9999"
-                                onChange={(event) => setTelefoneContato(insertMaskTelefone(event.target.value))} type="phone"
+                                onChange={(event) => setTelefoneContato(insertMaskTelefone(event.target.value))}
+                                type="phone"
                                 value={telefone}
                                 disabled={!inputsHabilitados} />
                             <input className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="Email" onChange={(event) => setEmailContato(event.target.value)}
+                                placeholder="Email"
+                                onChange={(event) => setEmailContato(event.target.value)}
                                 type="email"
                                 value={email}
                                 disabled={!inputsHabilitados}
@@ -356,11 +365,20 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 </Card>
             </div>
 
-            <div className="w-full lg:w-2/5">
+            <div className="w-full lg:w-4/12 h-auto gap-3">
                 <form onSubmit={handleSearchCPF}>
-                    <Card className="p-10 drop-shadow-xl grid grid-cols-2 gap-5">
-                        <div className="col-span-2 text-2xl text-center font-bold">
-                            <span>Forma de Pagamento</span>
+                    <Card className="py-5 px-8 grid grid-cols-2 gap-5 hover:shadow-xl rounded-lg border">
+                        <div className="col-span-2 flex justify-between">
+                            <div className="col-span-2 text-2xl text-left font-bold">
+                                <span>Forma de Pagamento</span>
+                            </div>
+                            <div>
+                                <MotivoCancelamento
+                                    idVenda={params.id}
+                                    descricaoProduto={descricaoProduto}
+                                    onDescricaoChange={handleDescricaoChange}
+                                />
+                            </div>
                         </div>
 
                         <div className="col-span-2 grid grid-cols-2 items-center gap-5">
@@ -370,7 +388,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     R$
                                 </span>
                                 <input
-                                    className="border-b-2 pl-8 w-full focus:outline-none focus:border-blue-500"
+                                    className="border-b-2 pl-8 w-full bg-white focus:outline-none focus:border-blue-500"
                                     placeholder="0000,00"
                                     type="text"
                                     value={valor_entrada}
@@ -381,7 +399,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                         </div>
 
                         <div className="col-span-1">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Status Cliente</label>
+                            <label className="block text-sm font-medium text-gray-700">Status Cliente</label>
                             <Select value={statusCliente}
                                 disabled={!inputsHabilitados}>
                                 <SelectTrigger>
@@ -394,77 +412,89 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             </Select>
                         </div>
 
-                        <div className="col-span-2 font-bold">
-                            <h2 className="col-span-2">Método de Pagamento</h2>
-                        </div>
+                        <div className="col-span-2">
+                            <h2 className="font-bold mb-3">Método de Pagamento</h2>
 
-                        <div className="col-span-2 grid grid-cols-12">
-                            <div className="col-span-3">
-                                <input
-                                    id="pagamento-opcao-1"
-                                    type="radio"
-                                    name="forma-pagamento"
-                                    value="À vista"
-                                    className="w-5 h-5 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                    aria-labelledby="pagamento-opcao-1"
-                                    aria-describedby="pagamento-opcao-1"
-                                    checked={metodo_pagamento === "À vista"}
-                                    disabled={!inputsHabilitados}
-                                    onChange={() => {
-                                        setMostrarParcelas(false);
-                                        setmetodo_pagamento("À vista");
-                                    }}
-                                />
-                                <label
-                                    htmlFor="pagamento-opcao-1"
-                                    className="ml-2 text-sm font-medium text-gray-900">
-                                    À vista
-                                </label>
-                            </div>
+                            <div className="flex items-center justify-between">
+                                {/* Contêiner de Radio Buttons alinhado à esquerda */}
+                                <div className="flex items-center space-x-6">
+                                    {/* Opção "À vista" */}
+                                    <div className="flex items-center">
+                                        <input
+                                            id="pagamento-opcao-1"
+                                            type="radio"
+                                            name="forma-pagamento"
+                                            value="À vista"
+                                            className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                            checked={metodo_pagamento === "À vista"}
+                                            disabled={!inputsHabilitados}
+                                            onChange={() => {
+                                                setMostrarParcelas(false);
+                                                setmetodo_pagamento("À vista");
+                                            }}
+                                        />
+                                        <label htmlFor="pagamento-opcao-1" className="ml-2 text-sm font-medium text-gray-900">
+                                            À vista
+                                        </label>
+                                    </div>
 
-                            <div className="col-span-3">
-                                <input
-                                    id="pagamento-opcao-2"
-                                    type="radio"
-                                    name="forma-pagamento"
-                                    value="Parcelado"
-                                    className="w-5 h-5 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                    aria-labelledby="pagamento-opcao-2"
-                                    aria-describedby="pagamento-opcao-2"
-                                    checked={metodo_pagamento === "Parcelado"}
-                                    disabled={!inputsHabilitados}
-                                    onChange={() => {
-                                        setMostrarParcelas(true);
-                                        setmetodo_pagamento("Parcelado");
-                                    }}
-                                />
-                                <label
-                                    htmlFor="pagamento-opcao-2"
-                                    className="ml-2 text-sm font-medium text-gray-900">
-                                    Parcelado
-                                </label>
-                            </div>
-
-                            {mostrarParcelas && (
-                                <div className="col-span-1">
-                                    <EditConfiguracoesParcela
-                                        valorTotal={valor_total}
-                                        parcelas={parcelas.length}
-                                        onSetValoresParcelas={handleParcelasChange}
-                                        onConfirm={handleConfirmParcelas}
-                                        idVenda={params.id}
-                                        listaParcelas={parcelas}
-                                    />
+                                    {/* Opção "Parcelado" */}
+                                    <div className="flex items-center">
+                                        <input
+                                            id="pagamento-opcao-2"
+                                            type="radio"
+                                            name="forma-pagamento"
+                                            value="Parcelado"
+                                            className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                            checked={metodo_pagamento === "Parcelado"}
+                                            disabled={!inputsHabilitados}
+                                            onChange={() => {
+                                                setMostrarParcelas(true);
+                                                setmetodo_pagamento("Parcelado");
+                                            }}
+                                        />
+                                        <label htmlFor="pagamento-opcao-2" className="ml-2 text-sm font-medium text-gray-900">
+                                            Parcelado
+                                        </label>
+                                    </div>
                                 </div>
-                            )}
+
+                                {/* Contêiner de Parcelas alinhado à direita */}
+                                {mostrarParcelas && (
+                                    <div className="flex items-center space-x-8">
+                                        <input
+                                            className="border-b-2 w-16 text-center focus:outline-none focus:border-blue-500"
+                                            placeholder="36x"
+                                            type="text"
+                                            value={numero_parcela}
+                                            onChange={(event) => setnumero_parcela(event.target.value)}
+                                        />
+                                        <EditConfiguracoesParcela
+                                            valorTotal={valor_total}
+                                            parcelas={parcelas.length}
+                                            onSetValoresParcelas={handleParcelasChange}
+                                            onConfirm={handleConfirmParcelas}
+                                            idVenda={params.id}
+                                            listaParcelas={parcelas}
+                                            disabled={!inputsHabilitados}
+                                        />
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                        <div className="col-span-2 grid grid-cols-2">
-                            <label className="font-bold col-span-1" htmlFor="teste">Valor total a pagar:</label>
-                            <h1 className="font-bold">{`R$ ${valor_total}`}</h1>
+
+                        <div className="col-span-2 flex justify-between items-center">
+                            <label className="font-bold" htmlFor="teste">
+                                Valor total a pagar:
+                            </label>
+                            <h1 className="font-bold">
+                                {`R$ ${valor_total}`}
+                            </h1>
                         </div>
+
                         <div className="text-center col-span-2">
                             <div className="text-center col-span-2">
-                                <div className="grid grid-cols-2 gap-x-5">
+                                <div className="grid grid-cols-2 gap-2">
                                     {statusVenda === "em andamento" && isHidden ? (
 
                                         <PopUpCancelamento id={params.id} />
@@ -474,7 +504,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                             <button
                                                 type="submit"
                                                 onClick={handleAtivarVenda}
-                                                className=" col-span-1 p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
+                                                className="col-span-1 py-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
                                                 Ativar Venda
                                             </button>
                                         )
@@ -483,14 +513,14 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                         <button
                                             type="button"
                                             onClick={handleConcluirVenda}
-                                            className="col-span-1 p-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
+                                            className="col-span-1 py-2 font-bold text-black bg-white rounded border border-green-600 hover:bg-green-700 hover:text-white focus:outline-none">
                                             Concluir Venda
                                         </button>
                                     )}
                                     <button
                                         type="button"
                                         onClick={(event) => handleButtonClick(event)}
-                                        className="mt-3 col-span-2 p-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
+                                        className="col-span-2 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none">
                                         {isEditing ? "Salvar" : "Editar"}
                                     </button>
                                 </div>
@@ -498,9 +528,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                         </div>
                     </Card>
                 </form>
-                <div className="flex flex-col mb-5 py-3">
-                    {renderGestaoCliente()}
-                </div>
             </div>
             <Toaster />
         </div>

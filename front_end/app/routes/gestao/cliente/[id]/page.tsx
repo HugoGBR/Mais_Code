@@ -20,7 +20,7 @@ export default function App({ params }: { params: { id: number } }) {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<LoginFormSchema>({
         resolver: zodResolver(clientSchema)
     });
-    
+
     const HabilitarEventos = () => {
         setInputHabilitados(true);
     }
@@ -70,7 +70,7 @@ export default function App({ params }: { params: { id: number } }) {
         <div>
             <form onSubmit={handleEditSubmit}>
                 <div className="flex justify-center items-center bg-gray-100">
-                    <Card className="p-10 drop-shadow-xl rounded-xl">
+                    <Card className="p-10 drop-shadow-xl rounded-lg border">
                         <div className="h-12 mb-5">
                             <h1 className="font-bold text-2xl">Cliente</h1>
                         </div>
@@ -98,25 +98,25 @@ export default function App({ params }: { params: { id: number } }) {
                                 />
                             </div>
                             <div className="flex flex-col space-y-1.5">
-                            <input
-                                type="text"
-                                className={`border-b-2 focus:border-b-2 ${errors.telefone ? 'border-red-500' : ''}`}
-                                placeholder="Telefone"
-                                {...register('telefone')}
-                                onChange={handleTelefoneChange}
-                            />
-                            {errors.telefone && <div className="text-red-500">{errors.telefone.message}</div>}
-                        </div>
+                                <input
+                                    type="text"
+                                    className={`border-b-2 focus:border-b-2 ${errors.telefone ? 'border-red-500' : ''}`}
+                                    placeholder="Telefone"
+                                    {...register('telefone')}
+                                    onChange={handleTelefoneChange}
+                                />
+                                {errors.telefone && <div className="text-red-500">{errors.telefone.message}</div>}
+                            </div>
                             <div className="flex flex-col space-y-1.5">
-                            <input
-                                type="text"
-                                className={`border-b-2 focus:border-b-2 ${errors.cpf_cnpj ? 'border-red-500' : ''}`}
-                                placeholder="CPF/CNPJ"
-                                {...register('cpf_cnpj')}
-                                onChange={handleCpfCnpjChange}
-                            />
-                            {errors.cpf_cnpj && <div className="text-red-500">{errors.cpf_cnpj.message}</div>}
-                        </div>
+                                <input
+                                    type="text"
+                                    className={`border-b-2 focus:border-b-2 ${errors.cpf_cnpj ? 'border-red-500' : ''}`}
+                                    placeholder="CPF/CNPJ"
+                                    {...register('cpf_cnpj')}
+                                    onChange={handleCpfCnpjChange}
+                                />
+                                {errors.cpf_cnpj && <div className="text-red-500">{errors.cpf_cnpj.message}</div>}
+                            </div>
                         </div>
                         <div className='flex justify-center'>
                             <button type='button' onClick={handleButtonClick}

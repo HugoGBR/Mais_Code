@@ -77,7 +77,7 @@ export default function CardUsers() {
     return (
         <form onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="flex justify-center items-center bg-gray-100">
-                <Card className="p-10 drop-shadow-xl rounded-xl">
+                <Card className="rounded-lg border p-10 drop-shadow-xl">
                     <div className="h-12 mb-5">
                         <h1 className="font-bold text-2xl">Usuário</h1>
                     </div>
