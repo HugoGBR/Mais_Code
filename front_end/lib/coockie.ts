@@ -9,6 +9,12 @@ export async function criarCookie(cookieName: string, values: string) {
     });
 }
 
+export async function DeleteCookie(cookieName: string) {
+    
+    cookies().delete(cookieName);
+    return 1;
+}
+
 export async function getCookie(cookieName: string) {
     const allCookies = cookies();
     const userCookie = allCookies.get(cookieName);

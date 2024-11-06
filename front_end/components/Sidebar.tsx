@@ -77,7 +77,7 @@ export default function SideBar() {
                     <Link href="/">
                         <div className="flex text-lg font-medium hover:bg-white/10 rounded-lg p-3 items-center gap-3 transition-all duration-200 ease-in-out transform hover:scale-105">
                             <FontAwesomeIcon icon={faSignOutAlt} />
-                            <span className={`transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'} hidden md:block`}>Sair</span>
+                            <span  className={`transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'} hidden md:block`}>Sair</span>
                         </div>
                     </Link>
                 </div>
