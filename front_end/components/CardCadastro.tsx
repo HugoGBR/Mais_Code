@@ -292,19 +292,18 @@ export default function CardCadastro() {
 
     return (
         <>
-            <div className="flex flex-col md:gap-3 md:flex md:flex-col lg:flex-row">
-                <div className="w-full lg:w-3/5">
+            <div className="flex flex-col gap-3 md:flex md:flex-col lg:flex-row">
+                <div className="w-full lg:w-7/12">
                     <Card className="p-10 hover:shadow-xl rounded-lg border">
                         <form onSubmit={handleSearchCPF}>
                             <div className="flex justify-between mb-6 md:text-2xl font-bold">
                                 <h1>Contrato</h1>
-                                <h1 className="hidden">Nº 00005</h1>
                             </div>
                             <h2 className="mb-5 font-bold">Dados do Contrato</h2>
                             <div className="md:grid md:grid-cols-2 gap-5 mb-5">
                                 <div className="md:grid md:grid-cols-2 gap-5 mt-5">
                                     <input
-                                        className="border-b-2 h-6 mt-auto focus:outline-none focus:border-blue-500"
+                                        className="border-b-2 mt-auto focus:outline-none focus:border-blue-500"
                                         placeholder="CPF/CNPJ do Cliente"
                                         type="text"
                                         value={cpf_cnpj_input}
@@ -315,7 +314,7 @@ export default function CardCadastro() {
                                     />
                                     <button
                                         type="submit"
-                                        className="w-28 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                        className="w-auto font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                         BUSCAR
                                     </button>
                                     {errors.cpf_cnpj_input && <span className="error text-xs text-red-600 -mt-4">{errors.cpf_cnpj_input}</span>}

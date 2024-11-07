@@ -3,8 +3,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { Card, CardFooter } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface MotivoCancelamentoProps {
     descricaoProduto: string;
@@ -12,8 +12,7 @@ interface MotivoCancelamentoProps {
     onDescricaoChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export default function MotivoCancelamento({ descricaoProduto, idVenda, onDescricaoChange }: MotivoCancelamentoProps): React.JSX.Element {
-    const descricaoLimiteCaracteres = 200;
+export default function MotivoCancelamento({ descricaoProduto, onDescricaoChange }: MotivoCancelamentoProps): React.JSX.Element {
 
     return (
         <Card className="flex justify-center items-center bg-none">
@@ -34,12 +33,9 @@ export default function MotivoCancelamento({ descricaoProduto, idVenda, onDescri
                             value={descricaoProduto}
                             onChange={onDescricaoChange}
                             disabled
-                            maxLength={descricaoLimiteCaracteres}
                             className="shadow-inner-2 p-2 block w-full h-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         ></textarea>
-                        <div className="flex justify-end">
-                            <p className="text-sm text-gray-500">{descricaoProduto.length}/{descricaoLimiteCaracteres}</p>
-                        </div>
+
                     </div>
                 </DialogContent>
             </Dialog>
