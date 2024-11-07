@@ -41,27 +41,24 @@ export const insertMaskTelefone = (telefone: string) => {
 
     return maskedTelefone;
 };
+
+
+
+
 export const insertMaskValorMonetarioSemVirgula = (valor: string) => {
-
     let numericValor = valor.replace(/\D/g, '').slice(0, 15);
-
 
     if (numericValor === '') {
         return '';
     }
-
-
     let valorComCentavos = numericValor.padStart(3, '0');
-    
     const reais = valorComCentavos.slice(0, -2);
     const centavos = valorComCentavos.slice(-2);
+    const formattedReais = Number(reais).toLocaleString('pt-BR', { maximumFractionDigits: 0 });
 
-
-    const formattedReais = Number(reais).toLocaleString('pt-BR');
-
-
-    return `${formattedReais}.${centavos}`;
+    return `${formattedReais},${centavos}`;
 };
+
 
 export const removerMascaraValorMonetario = (valor: string) => {
 

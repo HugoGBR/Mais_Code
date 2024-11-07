@@ -294,13 +294,11 @@ export default function CardCadastro() {
         <div className="flex flex-col gap-3 md:flex md:flex-col lg:flex-row">
             <div className="w-full lg:w-7/12">
                 <Card className="p-10 hover:shadow-xl rounded-lg border">
-                    <form>
+                    <form onSubmit={handleSearchCPF}>
                         <div className="flex justify-between mb-6 md:text-2xl font-bold">
                             <h1>Contrato</h1>
                         </div>
-
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
-
                         <div className="md:grid md:grid-cols-12 gap-5 mb-5">
                             <input
                                 className="border-b-2 mt-auto md:col-span-4 focus:outline-none focus:border-blue-500"
@@ -386,7 +384,6 @@ export default function CardCadastro() {
                                 </Select>
                                 <div></div> {/*Sim, deixa dessa forma, gambiarra mas funciona, se tirar essa div vai quebrar*/}
                                 {errors.new_produto_id && <span className="error text-xs text-red-600 h-fit mt-1 w-max ,r-1">{errors.new_produto_id}</span>}
-
                             </div>
                             <div className="md:col-span-1">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Horas Trabalhadas</label>
@@ -471,10 +468,10 @@ export default function CardCadastro() {
                                 </span>
                                 <input
                                     type="text"
-                                    id="valorEntrada "
+                                    id="valorEntrada"
                                     name="valorEntrada"
                                     value={valor_entrada}
-                                    onChange={(event) => setValorEntrada(insertMaskValorMonetarioSemVirgula(event.target.value))}
+                                    onChange={(event) => setValorEntrada(Number(insertMaskValorMonetarioSemVirgula(event.target.value)))}
                                     placeholder="R$"
                                     className="border-b-2 pl-8 w-full bg-white focus:outline-none focus:border-blue-500"
                                 />
@@ -575,7 +572,7 @@ export default function CardCadastro() {
                         {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
 
                         <div className="col-span-2 flex justify-between items-center">
-                            <label className="font-bold" htmlFor="teste">
+                            <label className="font-bold">
                                 Valor total a pagar:
                             </label>
                             <h1 className="font-bold">
@@ -584,7 +581,7 @@ export default function CardCadastro() {
                         </div>
                         <div className="text-center col-span-2">
                             <div className="text-center col-span-2">
-                                <div className="mt-5 text-center">
+                                <div className="text-center">
                                     <button type="submit"
                                         className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                         CADASTRAR
