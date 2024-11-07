@@ -134,7 +134,6 @@ export default function CardCadastro() {
             });
             return false;
         }
-
         return true;
     };
 
@@ -169,10 +168,7 @@ export default function CardCadastro() {
         const datadofim = new Date(DataFim);
 
         try {
-            console.log("Tentando cadastrar a venda...");
-
             const numeroFinal = metodo_pagamento === "À vista" ? 1 : 2;
-
             const vendaResponse = await createNewSell(
                 Number(new_cliente_id),
                 Number(new_tipo_contrato_id),
@@ -193,8 +189,6 @@ export default function CardCadastro() {
             );
 
             if (vendaResponse) {
-                console.log("Venda cadastrada com sucesso.");
-
                 toast({
                     title: "Sucesso",
                     description: "Cadastro realizado com sucesso!",
@@ -208,7 +202,6 @@ export default function CardCadastro() {
                 throw new Error("Erro ao cadastrar a venda: resposta inválida");
             }
         } catch (error) {
-            console.error("Erro ao cadastrar a venda:", error);
             toast({
                 title: "Erro",
                 description: "Falha ao cadastrar a venda",
@@ -220,8 +213,6 @@ export default function CardCadastro() {
 
     async function handleSubmitParcela(vendaId: number, numeroParcelas: number, valoresParcelas: number[], toast: any) {
         try {
-            console.log("Iniciando cadastro das parcelas...");
-
             for (let i = 0; i < numeroParcelas; i++) {
                 const valorParcela = valoresParcelas[i] || 0;
                 const responseParcela = await createNewParcela(
@@ -232,12 +223,10 @@ export default function CardCadastro() {
                     2
                 );
 
-
                 if (responseParcela && responseParcela.status === 0) {
                     throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
                 }
 
-                console.log(`Parcela ${i + 1} cadastrada com sucesso.`);
             }
 
             toast({
@@ -247,13 +236,11 @@ export default function CardCadastro() {
             });
 
         } catch (error) {
-            console.error("Erro ao cadastrar as parcelas:", error);
             toast({
                 title: "Erro",
                 description: "Falha ao cadastrar as parcelas",
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400"
             });
-
 
             throw error;
         }
