@@ -11,8 +11,8 @@ import { getAllClient } from "@/lib/ClienteController";
 import CardCliente from '@/components/CardClienteGestao';
 import PopUpConfig from "./PopUpConfig";
 import { getCookie } from "@/lib/coockie";
-import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
 import { number } from "zod";
 

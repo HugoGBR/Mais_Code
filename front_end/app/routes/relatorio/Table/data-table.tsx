@@ -65,10 +65,7 @@ export function DataTable<TData, TValue>({
             columnFilters,
             columnVisibility,
             rowSelection,
-        },
-
-
-        
+        }, 
     });
 
 
@@ -149,7 +146,6 @@ export function DataTable<TData, TValue>({
                                     <TableRow
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
-                                        // onClick={() => router.push(`/routes/relatorio/${Number(row.id) + 1}`)}
                                         onClick={() => HandleClick(JSON.stringify(row.original))}
                                         className="cursor-pointer"
                                     >
