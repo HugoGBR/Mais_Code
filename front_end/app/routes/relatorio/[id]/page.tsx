@@ -4,16 +4,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Link from "next/link";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CancelamentodaVenda, getVendaById, ativarVenda, updateVenda, updateParcelaByIDv, getParcelaByidv, ConcluirVenda } from "@/lib/VendaController";
+import { getVendaById, ativarVenda, updateVenda, updateParcelaByIDv, getParcelaByidv, ConcluirVenda } from "@/lib/VendaController";
 import { dadosCliente, dadosModelo_contrato, dadosVenda } from "@/lib/interfaces/dadosUsuarios";
 import { getAllContratos } from "@/lib/ContratoController";
 import CardCliente from '@/components/CardClienteGestao';
 import EditConfiguracoesParcela from "@/components/ParcelaEdit";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-import { Span } from "next/dist/trace";
 import PopUpCancelamento from "@/components/PopUpCancelamento";
-import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
+import { insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
 import MotivoCancelamento from "@/components/MotivoCancelamento";
 
 export default function EditVenda({ params }: { params: { id: number } }) {
@@ -373,12 +372,15 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                 <span>Forma de Pagamento</span>
                             </div>
                             <div>
-                                <MotivoCancelamento
-                                    idVenda={params.id}
-                                    descricaoProduto={descricaoProduto}
-                                    onDescricaoChange={handleDescricaoChange}
-                                />
+                                {statusVenda === "cancelado" && (
+                                    <MotivoCancelamento
+                                        idVenda={params.id}
+                                        descricaoProduto={descricaoProduto}
+                                        onDescricaoChange={handleDescricaoChange}
+                                    />
+                                )}
                             </div>
+
                         </div>
 
                         <div className="col-span-2 grid grid-cols-2 items-center gap-5">
