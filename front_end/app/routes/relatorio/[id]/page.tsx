@@ -365,7 +365,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
             </div>
 
             <div className="w-full lg:w-4/12 h-auto gap-3">
-                <form onSubmit={handleSearchCPF}>
+                <form>
                     <Card className="py-5 px-8 grid grid-cols-2 gap-5 hover:shadow-xl rounded-lg border">
                         <div className="col-span-2 flex justify-between">
                             <div className="col-span-2 text-2xl text-left font-bold">

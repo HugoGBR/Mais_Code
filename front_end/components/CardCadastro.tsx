@@ -291,168 +291,184 @@ export default function CardCadastro() {
     };
 
     return (
-        <>
-            <div className="flex flex-col gap-3 md:flex md:flex-col lg:flex-row">
-                <div className="w-full lg:w-7/12">
-                    <Card className="p-10 hover:shadow-xl rounded-lg border">
-                        <form onSubmit={handleSearchCPF}>
-                            <div className="flex justify-between mb-6 md:text-2xl font-bold">
-                                <h1>Contrato</h1>
-                            </div>
-                            <h2 className="mb-5 font-bold">Dados do Contrato</h2>
-                            <div className="md:grid md:grid-cols-2 gap-5 mb-5">
-                                <div className="md:grid md:grid-cols-2 gap-5 mt-5">
-                                    <input
-                                        className="border-b-2 mt-auto focus:outline-none focus:border-blue-500"
-                                        placeholder="CPF/CNPJ do Cliente"
-                                        type="text"
-                                        value={cpf_cnpj_input}
-                                        onChange={(e) => {
-                                            setCpfCnpjInput(insertMaskCpfCnpj(e.target.value));
-                                            setErrors((prevErrors) => ({ ...prevErrors, cpf_cnpj_input: '' }));
-                                        }}
-                                    />
-                                    <button
-                                        type="submit"
-                                        className="w-auto font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                                        BUSCAR
-                                    </button>
-                                    {errors.cpf_cnpj_input && <span className="error text-xs text-red-600 -mt-4">{errors.cpf_cnpj_input}</span>}
-                                </div>
-                            </div>
-                            <div className="md:grid md:grid-cols-2 gap-5 mt-5">
-                                <div className="flex flex-col mb-5">
-                                    <label className="text-sm" htmlFor="teste">Data Inicio</label>
-                                    <input
-                                        className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="Data de inicio" type="date"
-                                        value={DataInicio}
-                                        onChange={(event) => {
-                                            setDataInicio(event.target.value);
-                                            setErrors((prevErrors) => ({ ...prevErrors, DataInicio: '' }));
-                                        }}
-                                    />
-                                    {errors.DataInicio && <span className="error text-xs text-red-600 mt-1">{errors.DataInicio}</span>}
-                                </div>
-                                <div className="flex flex-col mb-5">
-                                    <label className="text-sm" htmlFor="teste">Data Término</label>
-                                    <input
-                                        className="border-b-2 focus:outline-none focus:border-blue-500" type="date"
-                                        value={DataFim}
-                                        onChange={(event) => {
-                                            setDataFim(event.target.value);
-                                            setErrors((prevErrors) => ({ ...prevErrors, DataFim: '' }));
-                                        }} />
-                                    {errors.DataFim && <span className="error text-xs text-red-600 mt-1">{errors.DataFim}</span>}
-                                </div>
-                            </div>
-                            <div className="md:grid md:grid-cols-2">
-                                <div className="md:grid md:grid-cols-1 mb-5 md:mb-9 w-48">
-                                    <label className="col-span-2 text-sm" htmlFor="teste">Modelo do Contratos</label>
-                                    <Select onValueChange={(value) => {
-                                        setnew_tipo_contrato_id(value);
-                                        setErrors((prevErrors) => ({ ...prevErrors, new_tipo_contrato_id: '' }));
-                                    }}>
-                                        <SelectTrigger className="h-8 mt-1 mb-4 rounded-lg w-36">
-                                            <SelectValue placeholder="Tipo Contrato" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {ModeloContrato.map((tipos_contrato) => (
-                                                <SelectItem key={tipos_contrato.id} value={tipos_contrato.id.toString()}>{tipos_contrato.nome}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    {errors.new_tipo_contrato_id && <span className="error text-xs text-red-600 h-fit mt-10 mr-1">{errors.new_tipo_contrato_id}</span>}
-                                    <label className="col-span-2 text-sm" htmlFor="teste">Produto</label>
-                                    <Select onValueChange={(value) => {
-                                        setnew_produto_id(value);
-                                        setErrors((prevErrors) => ({ ...prevErrors, new_produto_id: '' }));
-                                    }}>
+        <div className="flex flex-col gap-3 md:flex md:flex-col lg:flex-row">
+            <div className="w-full lg:w-7/12">
+                <Card className="p-10 hover:shadow-xl rounded-lg border">
+                    <form>
+                        <div className="flex justify-between mb-6 md:text-2xl font-bold">
+                            <h1>Contrato</h1>
+                        </div>
 
-                                        <SelectTrigger className="h-8 mt-1 rounded-lg w-36">
-                                            <SelectValue placeholder="Produto" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {TiposProduto.map((tipo_Produto) => (
-                                                <SelectItem key={tipo_Produto.id} value={tipo_Produto.id.toString()}>{tipo_Produto.nome}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <div></div> {/*Sim, deixa dessa forma, gambiarra mas funciona, se tirar essa div vai quebrar*/}
-                                    {errors.new_produto_id && <span className="error text-xs text-red-600 h-fit mt-1 w-max ,r-1">{errors.new_produto_id}</span>}
+                        <h2 className="mb-5 font-bold">Dados do Contrato</h2>
 
-                                </div>
-                                <div className="flex flex-col mb-5 md:ml-2.5">
-                                    <label className="text-sm mb-2" htmlFor="horas-trabalhadas">Horas Trabalhadas</label>
-                                    <input
-                                        id="horas-trabalhadas"
-                                        className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="0 "
-                                        type="number"
-                                        min="0"
-                                        value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
-                                        onChange={(event) => {
-                                            const value = Number(event.target.value);
-                                            if (!isNaN(value) && value >= 0) {
-                                                setHorasTrabalhadas(value);
-                                                setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
-                                            } else {
-                                                setHorasTrabalhadas(0);
-                                            }
-                                        }}
-                                    />
-                                    {errors.horas_trabalhadas && <span className="error text-xs text-red-600 mt-1">{errors.horas_trabalhadas}</span>}
-                                </div>
+                        <div className="md:grid md:grid-cols-12 gap-5 mb-5">
+                            <input
+                                className="border-b-2 mt-auto md:col-span-4 focus:outline-none focus:border-blue-500"
+                                placeholder="CPF/CNPJ do Cliente"
+                                type="text"
+                                value={cpf_cnpj_input}
+                                onChange={(e) => {
+                                    setCpfCnpjInput(insertMaskCpfCnpj(e.target.value));
+                                    setErrors((prevErrors) => ({ ...prevErrors, cpf_cnpj_input: '' }));
+                                }}
+                            />
+                            <button
+                                type="submit"
+                                className="col-span-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                BUSCAR
+                            </button>
+                            {errors.cpf_cnpj_input && <span className="error text-xs text-red-600 -mt-4">{errors.cpf_cnpj_input}</span>}
+                        </div>
+
+                        <div className="md:grid md:grid-cols-2 gap-5 mt-5">
+                            <div className="flex flex-col mb-5">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Data Inicio</label>
+                                <input
+                                    className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    placeholder="Data de inicio" type="date"
+                                    value={DataInicio}
+                                    onChange={(event) => {
+                                        setDataInicio(event.target.value);
+                                        setErrors((prevErrors) => ({ ...prevErrors, DataInicio: '' }));
+                                    }}
+                                />
+                                {errors.DataInicio && <span className="error text-xs text-red-600 mt-1">{errors.DataInicio}</span>}
                             </div>
-                            <h2 className="font-bold">Dados do Contato</h2>
-                            <div className="grid grid-cols-2 gap-5 mt-5">
-                                <div className="grid grid-cols-1">
-                                    <input
-                                        className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="Nome"
-                                        value={nome_contato}
-                                        onChange={(event) => {
-                                            setNomeContato(event.target.value);
-                                            setErrors((prevErrors) => ({ ...prevErrors, nome_contato: '' }));
-                                        }}
-                                        type="text" />
-                                    {errors.nome_contato && <span className="error text-xs text-red-600 mt-1">{errors.nome_contato}</span>}
-                                </div>
-                                <div className="grid grid-cols-1">
-                                    <input
-                                        className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="(99) 99999-9999"
-                                        value={telefone}
-                                        onChange={(event) => {
-                                            setTelefoneContato(insertMaskTelefone(event.target.value));
-                                            setErrors((prevErrors) => ({ ...prevErrors, telefone: '' }));
-                                        }}
-                                        type="tel" />
-                                    {errors.telefone && <span className="error text-xs text-red-600 mt-1">{errors.telefone}</span>}
-                                </div>
-                                <div className="grid grid-cols-1">
-                                    <input
-                                        className="border-b-2 focus:outline-none focus:border-blue-500"
-                                        placeholder="Email"
-                                        value={email}
-                                        onChange={(event) => {
-                                            setEmailContato(event.target.value);
-                                            setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
-                                        }}
-                                        type="email" />
-                                    {errors.email && <span className="error text-xs text-red-600 mt-1">{errors.email}</span>}
-                                </div>
+
+                            <div className="flex flex-col mb-5">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Data Termino</label>
+                                <input
+                                    className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    type="date"
+                                    value={DataFim}
+                                    onChange={(event) => {
+                                        setDataFim(event.target.value);
+                                        setErrors((prevErrors) => ({ ...prevErrors, DataFim: '' }));
+                                    }} />
+                                {errors.DataFim && <span className="error text-xs text-red-600 mt-1">{errors.DataFim}</span>}
                             </div>
-                        </form>
-                    </Card>
-                </div>
-                <div className="w-full lg:w-2/5">
-                    <Card className="p-10 hover:shadow-xl rounded-lg border">
-                        <form onSubmit={handleSubmit}>
-                            <div className="flex justify-center mb-6 text-2xl font-bold">
-                                <h1>Forma de Pagamento</h1>
+                        </div>
+
+                        <div className="md:grid md:grid-cols-3 gap-5 mb-5">
+                            <div className="md:col-span-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Modelo do Contratos</label>
+                                <Select onValueChange={(value) => {
+                                    setnew_tipo_contrato_id(value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, new_tipo_contrato_id: '' }));
+                                }}>
+                                    <SelectTrigger className="rounded-lg">
+                                        <SelectValue placeholder="Tipo Contrato" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {ModeloContrato.map((tipos_contrato) => (
+                                            <SelectItem key={tipos_contrato.id} value={tipos_contrato.id.toString()}>{tipos_contrato.nome}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {errors.new_tipo_contrato_id && <span className="error text-xs text-red-600 h-fit mt-10 mr-1">{errors.new_tipo_contrato_id}</span>}
                             </div>
-                            <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
+
+                            <div className="md:col-span-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Produto</label>
+                                <Select onValueChange={(value) => {
+                                    setnew_produto_id(value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, new_produto_id: '' }));
+                                }}>
+
+                                    <SelectTrigger className="rounded-lg">
+                                        <SelectValue placeholder="Produto" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {TiposProduto.map((tipo_Produto) => (
+                                            <SelectItem key={tipo_Produto.id} value={tipo_Produto.id.toString()}>{tipo_Produto.nome}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <div></div> {/*Sim, deixa dessa forma, gambiarra mas funciona, se tirar essa div vai quebrar*/}
+                                {errors.new_produto_id && <span className="error text-xs text-red-600 h-fit mt-1 w-max ,r-1">{errors.new_produto_id}</span>}
+
+                            </div>
+                            <div className="md:col-span-1">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Horas Trabalhadas</label>
+                                <input
+                                    id="horas-trabalhadas"
+                                    className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    placeholder="0 "
+                                    type="number"
+                                    min="0"
+                                    value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
+                                    onChange={(event) => {
+                                        const value = Number(event.target.value);
+                                        if (!isNaN(value) && value >= 0) {
+                                            setHorasTrabalhadas(value);
+                                            setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
+                                        } else {
+                                            setHorasTrabalhadas(0);
+                                        }
+                                    }}
+                                />
+                                {errors.horas_trabalhadas && <span className="error text-xs text-red-600 mt-1">{errors.horas_trabalhadas}</span>}
+                            </div>
+                        </div>
+
+                        <h2 className="font-bold">Dados do Contato</h2>
+                        <div className="grid grid-cols-2 gap-5 mt-5">
+                            <div className="grid grid-cols-1">
+                                <input
+                                    className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    placeholder="Nome"
+                                    value={nome_contato}
+                                    onChange={(event) => {
+                                        setNomeContato(event.target.value);
+                                        setErrors((prevErrors) => ({ ...prevErrors, nome_contato: '' }));
+                                    }}
+                                    type="text" />
+                                {errors.nome_contato && <span className="error text-xs text-red-600 mt-1">{errors.nome_contato}</span>}
+                            </div>
+                            <div className="grid grid-cols-1">
+                                <input
+                                    className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    placeholder="(99) 99999-9999"
+                                    value={telefone}
+                                    onChange={(event) => {
+                                        setTelefoneContato(insertMaskTelefone(event.target.value));
+                                        setErrors((prevErrors) => ({ ...prevErrors, telefone: '' }));
+                                    }}
+                                    type="tel" />
+                                {errors.telefone && <span className="error text-xs text-red-600 mt-1">{errors.telefone}</span>}
+                            </div>
+                            <div className="grid grid-cols-1">
+                                <input
+                                    className="border-b-2 focus:outline-none focus:border-blue-500"
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={(event) => {
+                                        setEmailContato(event.target.value);
+                                        setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+                                    }}
+                                    type="email" />
+                                {errors.email && <span className="error text-xs text-red-600 mt-1">{errors.email}</span>}
+                            </div>
+                        </div>
+                    </form>
+                </Card>
+            </div>
+
+            <div className="w-full lg:w-4/12 h-auto gap-3">
+                <form>
+                    <Card className="py-5 px-8 grid grid-cols-2 gap-5 hover:shadow-xl rounded-lg border">
+                        <div className="col-span-2 flex justify-between">
+                            <div className="col-span-2 text-2xl text-left font-bold">
+                                <span>Forma de Pagamento</span>
+                            </div>
+                        </div>
+
+                        <div className="col-span-2 grid grid-cols-2 items-center gap-5">
+                            <label className="block text-md font-bold text-gray-700">Valor da Entrada</label>
+                            <div className="relative w-full">
+                                <span className="absolute top-1/2 transform -translate-y-1/2 text-gray-500">
+                                    R$
+                                </span>
                                 <input
                                     type="text"
                                     id="valorEntrada "
@@ -460,28 +476,35 @@ export default function CardCadastro() {
                                     value={valor_entrada}
                                     onChange={(event) => setValorEntrada(insertMaskValorMonetarioSemVirgula(event.target.value))}
                                     placeholder="R$"
-                                    className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    className="border-b-2 pl-8 w-full bg-white focus:outline-none focus:border-blue-500"
                                 />
                             </div>
-                            <div className="mb-5">
-                                <label className="text-sm" htmlFor="Nn">Status Cliente</label>
-                                <Select onValueChange={(value) => {
-                                    setstatusCliente(value);
-                                    setErrors((prevErrors) => ({ ...prevErrors, statusCliente: '' }));
-                                }}>
-                                    <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
-                                        <SelectValue placeholder="Tipo Cliente" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value={"antigo"}>Antigo</SelectItem>
-                                        <SelectItem value={"novo"}>Novo</SelectItem>
-                                    </SelectContent>
-                                    {errors.statusCliente && <span className="error text-xs text-red-600 mt-1">{errors.statusCliente}</span>}
-                                </Select>
-                            </div>
-                            <h2 className="font-bold mb-5">Metodo de Pagamento</h2>
-                            <div className="space-y-4 md:flex md:justify-between md:w-full">
-                                <div className="flex gap-3">
+                        </div>
+
+                        <div className="col-span-1">
+                            <label className="block text-sm font-medium text-gray-700">Status Cliente</label>
+                            <Select onValueChange={(value) => {
+                                setstatusCliente(value);
+                                setErrors((prevErrors) => ({ ...prevErrors, statusCliente: '' }));
+                            }}>
+                                <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
+                                    <SelectValue placeholder="Tipo Cliente" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value={"antigo"}>Antigo</SelectItem>
+                                    <SelectItem value={"novo"}>Novo</SelectItem>
+                                </SelectContent>
+                                {errors.statusCliente && <span className="error text-xs text-red-600 mt-1">{errors.statusCliente}</span>}
+                            </Select>
+                        </div>
+
+                        <div className="col-span-2">
+                            <h2 className="font-bold mb-3">Método de Pagamento</h2>
+
+                            <div className="flex items-center justify-between">
+                                {/* Contêiner de Radio Buttons alinhado à esquerda */}
+                                <div className="flex items-center space-x-6">
+                                    {/* Opção "À vista" */}
                                     <div className="flex items-center">
                                         <input
                                             id="pagamento-opcao-1" type="radio" name="forma-pagamento"
@@ -495,12 +518,13 @@ export default function CardCadastro() {
                                                 setMostrarParcelas(false);
                                                 setErrors((prevErrors) => ({ ...prevErrors, metodo_pagamento: '' }));
                                             }} />
-                                        <label htmlFor="pagamento-opcao-1"
-                                            className="block ml-2 text-sm font-medium text-gray-900">
+                                        <label htmlFor="pagamento-opcao-1" className="ml-2 text-sm font-medium text-gray-900">
                                             À vista
                                         </label>
                                     </div>
-                                    <div className="lg:inline-flex items-center">
+
+                                    {/* Opção "Parcelado" */}
+                                    <div className="flex items-center">
                                         <input
                                             id="pagamento-opcao-2"
                                             type="radio"
@@ -515,61 +539,67 @@ export default function CardCadastro() {
                                                 setnumero_parcelo(0);
                                             }}
                                         />
-                                        <label htmlFor="pagamento-opcao-2" className="block ml-2 text-sm font-medium text-gray-900">
+                                        <label htmlFor="pagamento-opcao-2" className="ml-2 text-sm font-medium text-gray-900">
                                             Parcelado
                                         </label>
                                     </div>
                                 </div>
 
+                                {/* Contêiner de Parcelas alinhado à direita */}
                                 {mostrarParcelas && (
-                                    <div className="grid grid-cols-1 gap-x-5 lg:flex lg:items-center lg:justify-between">
-                                        <div className="">
-                                            <input
-                                                className="border-b-2 w-10 text-center focus:outline-none focus:border-blue-500"
-                                                placeholder="0"
-                                                type="number"
-                                                min="1"
-                                                value={numero_parcelo === 0 ? "" : numero_parcelo}
-                                                onChange={(event) => {
-                                                    const value = Number(event.target.value);
-                                                    setnumero_parcelo(value || 0);
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="col-span-1">
-                                            <PopUpConfig
-                                                valorTotal={valor_total}
-                                                parcelas={numero_parcelo}
-                                                onSetValoresParcelas={handleSetValoresParcelas}
-                                                onConfirm={(vendaId, numeroParcelas, valoresParcelas) =>
-                                                    handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)
-                                                }
-                                                idVenda={id_venda}
-                                            />
-                                        </div>
+                                    <div className="flex items-center space-x-8">
+                                        <input
+                                            className="border-b-2 w-16 text-center focus:outline-none focus:border-blue-500"
+                                            placeholder="0"
+                                            type="number"
+                                            min="1"
+                                            value={numero_parcelo === 0 ? "" : numero_parcelo}
+                                            onChange={(event) => {
+                                                const value = Number(event.target.value);
+                                                setnumero_parcelo(value || 0);
+                                            }}
+                                        />
+                                        <PopUpConfig
+                                            valorTotal={valor_total}
+                                            parcelas={numero_parcelo}
+                                            onSetValoresParcelas={handleSetValoresParcelas}
+                                            onConfirm={(vendaId, numeroParcelas, valoresParcelas) =>
+                                                handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)
+                                            }
+                                            idVenda={id_venda}
+                                        />
                                     </div>
                                 )}
                             </div>
-                            {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
-                            <div className="flex justify-between mt-5 h-auto">
-                                <label className="font-bold" htmlFor="teste">Valor total a pagar:</label>
-                                <h1 className="font-bold">{`R$ ${valor_total.toFixed(2)}`}</h1>
+                        </div>
+                        {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
+
+                        <div className="col-span-2 flex justify-between items-center">
+                            <label className="font-bold" htmlFor="teste">
+                                Valor total a pagar:
+                            </label>
+                            <h1 className="font-bold">
+                                {`R$ ${valor_total.toFixed(2)}`}
+                            </h1>
+                        </div>
+                        <div className="text-center col-span-2">
+                            <div className="text-center col-span-2">
+                                <div className="mt-5 text-center">
+                                    <button type="submit"
+                                        className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                        CADASTRAR
+                                    </button>
+                                </div>
                             </div>
-                            <div className="mt-5 text-center">
-                                <button type="submit"
-                                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                                    CADASTRAR
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </Card>
-                    <div className="flex flex-col mb-5 py-3">
-                        {renderGestaoCliente()}
-                    </div>
+                </form>
+                <div className="flex flex-col mb-5 py-3">
+                    {renderGestaoCliente()}
                 </div>
             </div>
             <Toaster />
-        </>
+        </div>
     );
 }
 function setErrors(newErrors: { [key: string]: string; }) {
