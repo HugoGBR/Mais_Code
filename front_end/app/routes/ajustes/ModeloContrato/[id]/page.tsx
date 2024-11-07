@@ -13,6 +13,7 @@ const ModeloContrato: React.FC<Props> = ({ params }) => {
     const [nomeContrato, setNomeContrato] = useState<string>('');
     const [dadosContrato, setDadosContrato] = useState<{ nome: string }>({ nome: '' });
     const router = useRouter();
+    const [inputsHabilitados, setInputHabilitados] = useState(false);
 
     useEffect(() => {
         const fetchContrato = async () => {
@@ -45,7 +46,18 @@ const ModeloContrato: React.FC<Props> = ({ params }) => {
             console.error('Erro ao salvar contrato:', error);
         }
     };
+    const HabilitarEventos = () => {
+        setInputHabilitados(true);
+    }
 
+    const handleButtonClick = async () => {
+        if (inputsHabilitados) {
+            await updateContratoById(nomeContrato, params.id);
+            router.push('/routes/ajustes');
+        } else {
+            HabilitarEventos();
+        }
+    };
     return (
         <div className="flex h-full justify-center items-center">
             <div className="w-full bg-white shadow-xl rounded-2xl p-8">
@@ -59,13 +71,15 @@ const ModeloContrato: React.FC<Props> = ({ params }) => {
                             value={nomeContrato}
                             onChange={(event) => setNomeContrato(event.target.value)}
                             placeholder="Tipo de Contrato"
+                            disabled={!inputsHabilitados}
                             required
                             className="w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                         />
                     </div>
-                    <div className="text-center">
-                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded w-full">
-                            ATUALIZAR
+                    <div className='text-center'>
+                        <button type='button' onClick={handleButtonClick}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded w-full">
+                            {inputsHabilitados ? "Alterar" : "Editar"}
                         </button>
                     </div>
                 </form>

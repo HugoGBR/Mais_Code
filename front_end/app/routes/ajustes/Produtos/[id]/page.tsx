@@ -13,6 +13,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
         comissaoAntigo: ''
     });
     const [descricaoLimiteCaracteres] = useState(255);
+    const [inputsHabilitados, setInputHabilitados] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -59,6 +60,25 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
             console.error('Erro ao atualizar produto:', error);
         }
     };
+    const HabilitarEventos = () => {
+        setInputHabilitados(true);
+    }
+
+    const handleButtonClick = async () => {
+        if (inputsHabilitados) {
+            await updateProdutoById(
+                produto.nome,
+                produto.horas_trabalhadas,
+                produto.descricao_produto,
+                produto.comissaoAntigo,
+                produto.comissaoNovo,
+                params.id
+            );
+            router.push('/routes/ajustes');
+        } else {
+            HabilitarEventos();
+        }
+    };
 
     return (
         <div>
@@ -75,6 +95,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="nome"
                                     placeholder="Nome"
+                                    disabled={!inputsHabilitados}
                                     required
                                 />
                             </div>
@@ -86,6 +107,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="horasTrabalhadas"
                                     placeholder="Horas Trabalhadas"
+                                    disabled={!inputsHabilitados}
                                     required
                                 />
                                 <input
@@ -95,6 +117,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="comissaoNovo"
                                     placeholder="Nova Comissão"
+                                    disabled={!inputsHabilitados}
                                     required
                                 />
                                 <input
@@ -104,6 +127,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="comissaoAntigo"
                                     placeholder="Comissão Antiga"
+                                    disabled={!inputsHabilitados}
                                     required
                                 />
                             </div>
@@ -118,6 +142,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                         rows={4}
                                         maxLength={descricaoLimiteCaracteres}
                                         className="shadow-inner-2 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        disabled={!inputsHabilitados}
                                     ></textarea>
                                     <div className="flex justify-end">
                                         <p className="text-sm text-gray-500">
@@ -126,9 +151,10 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     </div>
                                 </div>
                             </div>
-                            <div className="text-center">
-                                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    EDITAR
+                            <div className='text-center'>
+                                <button type='button' onClick={handleButtonClick}
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    {inputsHabilitados ? "Alterar" : "Editar"}
                                 </button>
                             </div>
                         </div>
