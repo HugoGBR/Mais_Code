@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faUser, faFileAlt, faMoneyBillAlt, faChartBar, faCog, faSignOutAlt, faCircleUser, faPenToSquare, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
-import { getCookie } from "@/lib/coockie";
+import { DeleteCookie, getCookie } from "@/lib/coockie";
 import { escolheTipoCliente } from "@/lib/UsuarioController";
-
+import { useRouter } from "next/navigation"; 
 
 interface MenuItem {
     nome: string;
@@ -16,12 +16,12 @@ interface MenuItem {
 export default function SideBar() {
     const [isExpanded, setIsExpanded] = useState(false);
     const [menuFiltrado, setMenuFiltrado] = useState<MenuItem[]>([]);
+    const router = useRouter(); 
 
     useEffect(() => {
         const fetchMenu = async () => {
             const cargoValue = await getCookie("UserCargo");
             const nomeCargo = escolheTipoCliente(Number(cargoValue));
-
 
             if (nomeCargo) {
                 const menuSuperior = [
@@ -38,12 +38,15 @@ export default function SideBar() {
 
                 setMenuFiltrado(menuFiltrado);
             }
-            
         };
 
         fetchMenu();
     }, []);
 
+    const handleLogout = async () => {
+        await DeleteCookie("CookiCriado");
+        router.push("/"); 
+    };
 
     return (
         <div
@@ -74,12 +77,10 @@ export default function SideBar() {
                             <span className={`transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'} hidden md:block`}>Perfil</span>
                         </div>
                     </Link>
-                    <Link href="/">
-                        <div className="flex text-lg font-medium hover:bg-white/10 rounded-lg p-3 items-center gap-3 transition-all duration-200 ease-in-out transform hover:scale-105">
-                            <FontAwesomeIcon icon={faSignOutAlt} />
-                            <span  className={`transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'} hidden md:block`}>Sair</span>
-                        </div>
-                    </Link>
+                    <div onClick={handleLogout} className="flex text-lg font-medium hover:bg-white/10 rounded-lg p-3 items-center gap-3 transition-all duration-200 ease-in-out transform hover:scale-105 cursor-pointer">
+                        <FontAwesomeIcon icon={faSignOutAlt} />
+                        <span className={`transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'} hidden md:block`}>Sair</span>
+                    </div>
                 </div>
             </div>
         </div>
