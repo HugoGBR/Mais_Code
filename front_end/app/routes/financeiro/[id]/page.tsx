@@ -22,7 +22,7 @@ export default function Relatorio({ params }: { params: { id: Number } }) {
         { label: "valor_total", key: "valor_total" }
     ];
 
-  
+
     const getDados = async () => {
         const Dados = await fetchDataComissao(params.id)
         setData(Dados)
@@ -48,25 +48,27 @@ export default function Relatorio({ params }: { params: { id: Number } }) {
         getDados();
     }, []);
 
-    
+
     return (
         <div className="container mx-auto py-10">
-            <div className="flex justify-end pb-2 drop-shadow-lg">
-                <div className="bg-white border border-gray-300 rounded-md py-2 px-4 w-auto">
-                    <strong>Remuneração do Mês R$ {comissaoTotal.toFixed(2)}</strong>
-                </div>
-            </div>
-            <CSVLink
+            <div className="flex justify-between items-end pb-2">
+                <CSVLink
                     data={dados}
                     headers={headers}
                     filename={"comissao.csv"}
                     separator={";"}
                     className="btn btn-primary"
                 >
-                    <Button variant="outline">
-                        Exportar 
+                    <Button className="hover:bg-blue-500 hover:text-white" variant="outline">
+                        Exportar
                     </Button>
                 </CSVLink>
+                <div className='rounded-lg flex flex-col justify-end bg-white border hover:drop-shadow-lg py-2 px-4'>
+                    <h1 className='text-center text-lg font-bold text-gray-700'>Remuneração do Mês</h1>
+                    <p className='text-md text-left font-medium text-blue-500'>R${comissaoTotal.toFixed(2)}</p>
+                </div>
+
+            </div>
             <DataTableComissao columns={columns} data={dados} />
         </div>
     );

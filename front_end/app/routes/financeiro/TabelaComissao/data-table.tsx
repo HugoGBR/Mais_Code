@@ -49,10 +49,10 @@ export function DataTableComissao<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = useState({})
-  
+
     const [pageIndex, setPageIndex] = useState(0)
     const [pagesize, setPageSize] = useState(8)
-    
+
     const table = useReactTable({
         data,
         columns,
@@ -95,7 +95,7 @@ export function DataTableComissao<TData, TValue>({
         <div>
             <div className="flex justify-end mb-4">
             </div>
-            <div className="bg-white h-3/5 shadow-xl rounded-lg p-4">
+            <div className="bg-white h-3/5 hover:shadow-xl border rounded-lg p-4">
                 <div className="flex items-center py-4 input-container">
                     <input
                         type="text"
@@ -107,8 +107,8 @@ export function DataTableComissao<TData, TValue>({
                         className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                     />
                 </div>
-                <div className="rounded-3xl border">
-                    <Table className="rounded-[26px]">
+                <div className="rounded-xl border">
+                    <Table className="rounded-lg">
                         <TableHeader>
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>

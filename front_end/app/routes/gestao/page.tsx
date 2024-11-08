@@ -112,82 +112,76 @@ export default function Gestao() {
         if (!Array.isArray(listaCliente)) return null;
         return (
             <>
-
-
-                <div className='flex flex-col md:grid md:grid-cols-2 gap-1'> {listaCliente.slice(inicioIndex, finalIndex).map(client => (
-                    <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
-                        <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300  rounded-lg flex-grow'>
-                            <a className="block w-full">
-                                <CardUsuario nome={client.nome} email={client.email} cargoId={4} />
-                            </a>
-                        </div>
-                    </Link>
-                ))}
+                <div className='flex flex-col md:grid md:grid-cols-2 gap-1'>
+                    {listaCliente.slice(inicioIndex, finalIndex).map(client => (
+                        <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
+                            <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300  rounded-lg flex-grow'>
+                                <a className="block w-full">
+                                    <CardUsuario nome={client.nome} email={client.email} cargoId={4} />
+                                </a>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
                 <div>
+                    {listaCliente.length > itensPorPagina && ( // Condição para exibir a paginação
+                        <Pagination>
+                            <PaginationContent>
+                                <PaginationItem>
+                                    <PaginationPrevious className='cursor-pointer hover:text-blue-800' onClick={PaginaAnterior} />
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <h2>{paginaAtual}</h2>
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <PaginationNext className='cursor-pointer hover:text-blue-800' onClick={() => ProximaPaginac(listaCliente)} />
+                                </PaginationItem>
+                            </PaginationContent>
+                        </Pagination>
+                    )}
+                </div>
+            </>
+        );
+    }
 
-                    <Pagination >
+    const renderGestao = (cargo_id: number) => {
+        const listaUsuarioFiltrada = listaUsuarios.filter(item => item.cargo_id === cargo_id);
+        if (!Array.isArray(listaUsuarios)) return null;
+        return (
+            <>
+                <div className='mt-5 grid grid-cols-2 gap-2.5'>
+                    {listaUsuarioFiltrada.slice(inicioIndex, finalIndex).map(item => (
+                        <Link href={`/routes/gestao/user/${item.id}`} key={item.id} className='w-80 flex'>
+                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} 
+                            className='bg-gray-300 rounded-lg flex-grow'>
+                                <a className="block pb-1">
+                                    <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
+                                </a>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+                {listaUsuarioFiltrada.length > itensPorPagina && (
+                    <Pagination>
                         <PaginationContent>
                             <PaginationItem>
-                                <PaginationPrevious onClick={PaginaAnterior} />
+                                <PaginationPrevious className='cursor-pointer hover:text-blue-800' onClick={PaginaAnterior} />
                             </PaginationItem>
                             <PaginationItem>
                                 <PaginationLink href="#">{paginaAtual}</PaginationLink>
                             </PaginationItem>
                             <PaginationItem>
-                                <PaginationNext onClick={() => ProximaPaginac(listaCliente)} />
+                                <PaginationNext className='cursor-pointer hover:text-blue-800' onClick={() => ProximaPagina(listaUsuarioFiltrada)} />
                             </PaginationItem>
                         </PaginationContent>
                     </Pagination>
-                </div>
-
-
-            </>
-
-        )
-
-    }
-
-    const renderGestao = (cargo_id: number) => {
-        const listaUsuarioFiltrada = listaUsuarios.filter(item => item.cargo_id == cargo_id)
-        if (!Array.isArray(listaUsuarios)) return null;
-        return (
-            <>
-                <div>
-                    <div className='mt-5 grid grid-cols-2 gap-1'>
-                        {listaUsuarioFiltrada.slice(inicioIndex, finalIndex).map(item => (
-                            <Link href={`/routes/gestao/user/${item.id}`} key={item.id} className='w-80 flex'>
-                                <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} className='bg-gray-300 rounded-lg flex-grow'>
-                                    <a className="block pb-1">
-                                        <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
-                                    </a>
-                                </div>
-                            </Link>
-                        ))}
-                        
-                    </div>
-                    <Pagination >
-                            <PaginationContent>
-                                <PaginationItem>
-                                    <PaginationPrevious onClick={PaginaAnterior} />
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationLink href="#">{paginaAtual}</PaginationLink>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationNext onClick={() => ProximaPagina(listaUsuarioFiltrada)} />
-                                </PaginationItem>
-                            </PaginationContent>
-                        </Pagination>   
-                </div>
-
+                )}
             </>
         );
     }
 
     return (
         <div className="items-center py-10">
-
             <div className="flex items-center py-4 input-container">
                 <input
                     type="text"
@@ -253,7 +247,6 @@ export default function Gestao() {
                     </>
                 )}
             </Tabs>
-
         </div>
     );
 

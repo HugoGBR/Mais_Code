@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import React, { useState, useEffect } from 'react';
 import Cardfinanceiro from '@/components/Carduserfinanceiro';
@@ -7,16 +7,11 @@ import { getAllFinan } from '@/lib/FinanceiroController';
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
-    PaginationLink,
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { dadosUsuario } from "@/lib/interfaces/dadosUsuarios";
-import ValidarTela from '@/components/ValidarTela';
-import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
-import { columns } from './TabelaComissao/columns';
 
 export default function Financeiro() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
@@ -24,11 +19,6 @@ export default function Financeiro() {
     const [paginaAtual, setPaginaAtual] = useState(1);
     const [termoBusca, setTermoBusca] = useState('');
     const itensPorPagina = 8;
-
-
-
-
-
 
     async function carregarUsuarios() {
         try {
@@ -54,21 +44,18 @@ export default function Financeiro() {
         setPaginaAtual(prevPage => Math.min(prevPage + 1, totalPages));
     };
 
-
-
     const inicioIndex = (paginaAtual - 1) * itensPorPagina;
     const finalIndex = inicioIndex + itensPorPagina;
-
     const usuariosFiltrados = listaUsuarios.filter((usuario) => {
         const nomeCliente = usuario?.nome_cliente || usuario?.nome || usuario?.cliente_nome || "";
         return nomeCliente.toLowerCase().includes(termoBusca.toLowerCase());
     });
-    console.log(listaUsuarios)
+
+    // Verifica se o total de itens filtrados é suficiente para mostrar a paginação
+    const mostrarPaginacao = usuariosFiltrados.length >= itensPorPagina;
 
     return (
-
         <div>
-
             <div className="flex items-center py-4 input-container">
                 <input
                     type="text"
@@ -91,20 +78,21 @@ export default function Financeiro() {
                 ))}
             </div>
 
-            <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious onClick={PaginaAnterior} />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <h2>{paginaAtual}</h2>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationNext onClick={ProximaPagina} />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+            {mostrarPaginacao && (
+                <Pagination>
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious className='cursor-pointer hover:text-blue-800' onClick={PaginaAnterior} />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <h2>{paginaAtual}</h2>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationNext className='cursor-pointer hover:text-blue-800' onClick={ProximaPagina} />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
+            )}
         </div>
     );
 }
-
