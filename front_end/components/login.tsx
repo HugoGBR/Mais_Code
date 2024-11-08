@@ -122,11 +122,6 @@ const LoginPage = () => {
                                             Entrar
                                         </span>
                                     </button>
-                                    <div className="flex justify-center mt-2">
-                                        <a href="/redefinirSenha" className="text-sm">
-                                            Esqueci minha senha
-                                        </a>
-                                    </div>
                                 </form>
                             </div>
                         </div>

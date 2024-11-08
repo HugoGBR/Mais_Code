@@ -27,23 +27,23 @@ export default function ApexAreaChart() {
         ],
         options: {
             chart: {
-                type: "area" as "area", // Define explicitamente o tipo como "area"
+                type: "area" as "area",
                 zoom: {
                     enabled: false,
                 },
                 toolbar: {
-                    show: false, // Desabilita o menu de opções
+                    show: false,
                 },
             },
             dataLabels: {
                 enabled: false,
             },
             stroke: {
-                curve: "smooth" as "smooth", // Define explicitamente o tipo "smooth"
+                curve: "smooth" as "smooth",
             },
             title: {
                 text: "Vendas Mensal",
-                align: "left" as "left", // Define explicitamente o alinhamento como "left"
+                align: "left" as "left",
             },
             grid: {
                 row: {
@@ -69,8 +69,6 @@ export default function ApexAreaChart() {
             },
         },
     };
-
-    console.log(data);
 
     return (
         <div className="w-full h-auto bg-white p-4 border hover:drop-shadow-lg rounded-xl grid grid-cols-1 items-center">

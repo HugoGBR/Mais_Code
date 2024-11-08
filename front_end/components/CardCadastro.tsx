@@ -14,7 +14,6 @@ import { getCookie } from "@/lib/coockie";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
-import { number } from "zod";
 
 
 export default function CardCadastro() {
@@ -70,7 +69,6 @@ export default function CardCadastro() {
             const LCliente = await getAllClient();
             setListaCliente(LCliente);
         };
-
         fetchData();
     }, []);
 
@@ -161,7 +159,6 @@ export default function CardCadastro() {
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
-
         if (!validateForm()) return;
 
         const datadoinicio = new Date(DataInicio);
@@ -226,7 +223,6 @@ export default function CardCadastro() {
                 if (responseParcela && responseParcela.status === 0) {
                     throw new Error(responseParcela.message || "Erro ao cadastrar parcela");
                 }
-
             }
 
             toast({
@@ -359,7 +355,6 @@ export default function CardCadastro() {
                                     setnew_produto_id(value);
                                     setErrors((prevErrors) => ({ ...prevErrors, new_produto_id: '' }));
                                 }}>
-
                                     <SelectTrigger className="rounded-lg">
                                         <SelectValue placeholder="Produto" />
                                     </SelectTrigger>
@@ -486,9 +481,7 @@ export default function CardCadastro() {
                             <h2 className="font-bold mb-3">Método de Pagamento</h2>
 
                             <div className="flex items-center justify-between">
-                                {/* Contêiner de Radio Buttons alinhado à esquerda */}
                                 <div className="flex items-center space-x-6">
-                                    {/* Opção "À vista" */}
                                     <div className="flex items-center">
                                         <input
                                             id="pagamento-opcao-1" type="radio" name="forma-pagamento"
@@ -570,6 +563,7 @@ export default function CardCadastro() {
                             <div className="text-center col-span-2">
                                 <div className="text-center">
                                     <button type="submit"
+                                        onClick={handleSubmit}
                                         className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                         CADASTRAR
                                     </button>
@@ -582,10 +576,10 @@ export default function CardCadastro() {
                     {renderGestaoCliente()}
                 </div>
             </div>
-            <Toaster />
         </div>
     );
 }
+
 function setErrors(newErrors: { [key: string]: string; }) {
     throw new Error("Function not implemented.");
 }
