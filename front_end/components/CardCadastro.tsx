@@ -12,7 +12,6 @@ import CardCliente from '@/components/CardClienteGestao';
 import PopUpConfig from "./PopUpConfig";
 import { getCookie } from "@/lib/coockie";
 import { useToast } from "@/components/ui/use-toast";
-import { Toaster } from "@/components/ui/toaster";
 import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
 
 
@@ -119,7 +118,7 @@ export default function CardCadastro() {
         if (!nome_contato) newErrors.nome_contato = "Nome do contato é obrigatório";
         if (!telefone) newErrors.telefone = "Telefone do contato é obrigatório";
         if (!email) newErrors.email = "Email do contato é obrigatório";
-        if (!statusCliente) newErrors.statusCliente = "Status do cliente é obrigatório";
+        if (!statusCliente) newErrors.statusCliente = "Status obrigatório";
         if (!metodo_pagamento) newErrors.metodo_pagamento = "Selecione um método de pagamento";
 
         setErrors(newErrors);
@@ -184,6 +183,7 @@ export default function CardCadastro() {
                 Number(numero_parcelo),
                 numeroFinal
             );
+            console.log(vendaResponse);
 
             if (vendaResponse) {
                 toast({
@@ -282,7 +282,7 @@ export default function CardCadastro() {
                             <h1>Contrato</h1>
                         </div>
                         <h2 className="mb-5 font-bold">Dados do Contrato</h2>
-                        <div className="md:grid md:grid-cols-12 gap-5 mb-5">
+                        <div className="md:grid md:grid-cols-12 gap-5">
                             <input
                                 className="border-b-2 mt-auto md:col-span-4 focus:outline-none focus:border-blue-500"
                                 placeholder="CPF/CNPJ do Cliente"
@@ -298,8 +298,8 @@ export default function CardCadastro() {
                                 className="col-span-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                                 BUSCAR
                             </button>
-                            {errors.cpf_cnpj_input && <span className="error text-xs text-red-600 -mt-4">{errors.cpf_cnpj_input}</span>}
                         </div>
+                        {errors.cpf_cnpj_input && <span className="error text-xs text-red-600">{errors.cpf_cnpj_input}</span>}
 
                         <div className="md:grid md:grid-cols-2 gap-5 mt-5">
                             <div className="flex flex-col mb-5">
@@ -364,28 +364,29 @@ export default function CardCadastro() {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                                <div></div> {/*Sim, deixa dessa forma, gambiarra mas funciona, se tirar essa div vai quebrar*/}
                                 {errors.new_produto_id && <span className="error text-xs text-red-600 h-fit mt-1 w-max ,r-1">{errors.new_produto_id}</span>}
                             </div>
                             <div className="md:col-span-1">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Horas Trabalhadas</label>
-                                <input
-                                    id="horas-trabalhadas"
-                                    className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="0 "
-                                    type="number"
-                                    min="0"
-                                    value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
-                                    onChange={(event) => {
-                                        const value = Number(event.target.value);
-                                        if (!isNaN(value) && value >= 0) {
-                                            setHorasTrabalhadas(value);
-                                            setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
-                                        } else {
-                                            setHorasTrabalhadas(0);
-                                        }
-                                    }}
-                                />
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Horas Trabalhadas</label>
+                                    <input
+                                        id="horas-trabalhadas"
+                                        className="border-b-2 focus:outline-none focus:border-blue-500"
+                                        placeholder="0 "
+                                        type="number"
+                                        min="0"
+                                        value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
+                                        onChange={(event) => {
+                                            const value = Number(event.target.value);
+                                            if (!isNaN(value) && value >= 0) {
+                                                setHorasTrabalhadas(value);
+                                                setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
+                                            } else {
+                                                setHorasTrabalhadas(0);
+                                            }
+                                        }}
+                                    />
+                                </div>
                                 {errors.horas_trabalhadas && <span className="error text-xs text-red-600 mt-1">{errors.horas_trabalhadas}</span>}
                             </div>
                         </div>
@@ -473,8 +474,8 @@ export default function CardCadastro() {
                                     <SelectItem value={"antigo"}>Antigo</SelectItem>
                                     <SelectItem value={"novo"}>Novo</SelectItem>
                                 </SelectContent>
-                                {errors.statusCliente && <span className="error text-xs text-red-600 mt-1">{errors.statusCliente}</span>}
                             </Select>
+                            {errors.statusCliente && <span className="error text-xs text-red-600">{errors.statusCliente}</span>}
                         </div>
 
                         <div className="col-span-2">
@@ -548,8 +549,8 @@ export default function CardCadastro() {
                                     </div>
                                 )}
                             </div>
+                            {errors.metodo_pagamento && <span className="error text-xs text-red-600">{errors.metodo_pagamento}</span>}
                         </div>
-                        {errors.metodo_pagamento && <span className="error text-xs text-red-600 mt-1">{errors.metodo_pagamento}</span>}
 
                         <div className="col-span-2 flex justify-between items-center">
                             <label className="font-bold">

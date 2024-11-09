@@ -115,7 +115,7 @@ export default function Gestao() {
                 <div className='flex flex-col md:grid md:grid-cols-2 gap-1'>
                     {listaCliente.slice(inicioIndex, finalIndex).map(client => (
                         <Link href={`/routes/gestao/cliente/${client.id}`} key={client.id}>
-                            <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='bg-gray-300  rounded-lg flex-grow'>
+                            <div onClick={() => router.push(`/routes/gestao/cliente/${client.id}`)} key={client.id} className='rounded-lg flex-grow'>
                                 <a className="block w-full">
                                     <CardUsuario nome={client.nome} email={client.email} cargoId={4} />
                                 </a>
@@ -124,7 +124,7 @@ export default function Gestao() {
                     ))}
                 </div>
                 <div>
-                    {listaCliente.length > itensPorPagina && ( // Condição para exibir a paginação
+                    {listaCliente.length > itensPorPagina && (
                         <Pagination>
                             <PaginationContent>
                                 <PaginationItem>
@@ -152,8 +152,8 @@ export default function Gestao() {
                 <div className='mt-5 grid grid-cols-2 gap-2.5'>
                     {listaUsuarioFiltrada.slice(inicioIndex, finalIndex).map(item => (
                         <Link href={`/routes/gestao/user/${item.id}`} key={item.id} className='w-80 flex'>
-                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id} 
-                            className='bg-gray-300 rounded-lg flex-grow'>
+                            <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id}
+                                className='bg-gray-300 rounded-lg flex-grow'>
                                 <a className="block pb-1">
                                     <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
                                 </a>
@@ -224,7 +224,7 @@ export default function Gestao() {
 
                         {clienteFiltrado.slice(inicioIndex, finalIndex).map(item => (
                             <Link href={`/routes/gestao/cliente/${item.id}`} key={item.id} className='w-80 flex'>
-                                <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} className='bg-gray-300 rounded-lg flex-grow'>
+                                <div onClick={() => router.push(`/routes/gestao/cliente/${item.id}`)} className='rounded-lg flex-grow'>
                                     <CardUsuario nome={item.nome} email={item.email} cargoId={4} />
                                 </div>
                             </Link>

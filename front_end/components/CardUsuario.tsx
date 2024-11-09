@@ -21,5 +21,3 @@ export default function CardUsuario({ nome, email, cargoId }: { nome: string, em
         </div>
     )
 }
-
-// fazer o if pra nao aparecer o id 
