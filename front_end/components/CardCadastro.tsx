@@ -13,7 +13,8 @@ import PopUpConfig from "./PopUpConfig";
 import { getCookie } from "@/lib/coockie";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
+import { insertMaskCpfCnpj, insertMaskTelefone, } from "@/lib/MaskInput/MaskInput";
+import { number } from "zod";
 
 
 export default function CardCadastro() {
@@ -46,6 +47,8 @@ export default function CardCadastro() {
     const route = useRouter();
     const { toast } = useToast();
 
+    
+
     useEffect(() => {
         if (foundCliente) {
             setnew_cliente_id(foundCliente.id.toString());
@@ -60,6 +63,7 @@ export default function CardCadastro() {
         fetchUsername();
     }, []);
 
+
     useEffect(() => {
         const fetchData = async () => {
             const tipos_contrato = await getAllContratos();
@@ -71,7 +75,7 @@ export default function CardCadastro() {
         };
         fetchData();
     }, []);
-
+    
     useEffect(() => {
         if (new_produto_id && horas_trabalhadas >= 0) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
@@ -104,7 +108,7 @@ export default function CardCadastro() {
         atualizarIdVenda();
     }, []);
 
-
+    
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const validateForm = () => {
@@ -134,7 +138,7 @@ export default function CardCadastro() {
         }
         return true;
     };
-
+    
     const resetForm = () => {
         setNumeroParcelas("");
         setValorEntrada(0);
@@ -453,7 +457,7 @@ export default function CardCadastro() {
                                     id="valorEntrada"
                                     name="valorEntrada"
                                     value={valor_entrada}
-                                    onChange={(event) => setValorEntrada(Number(insertMaskValorMonetarioSemVirgula(event.target.value)))}
+                                    onChange={(event) => setValorEntrada(Number(event.target.value))}
                                     placeholder="R$"
                                     className="border-b-2 pl-8 w-full bg-white focus:outline-none focus:border-blue-500"
                                 />
@@ -582,5 +586,4 @@ export default function CardCadastro() {
 
 function setErrors(newErrors: { [key: string]: string; }) {
     throw new Error("Function not implemented.");
-}
-
+}   
