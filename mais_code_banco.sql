@@ -74,7 +74,7 @@ CREATE TABLE `vendas` (
   `metodo_pagamento` VARCHAR(45) NOT NULL,
   `numero_parcela` DECIMAL(10, 2),
   `status` ENUM('concluido','em andamento','cancelado') NOT NULL,
-  `justificativa_cancelamento` text,
+  `justificativa_cancelamento` text default null,
   PRIMARY KEY (`id`),
   KEY `vendas_cliente_id_foreign` (`cliente_id`),
   KEY `vendas_tipo_contrato_id_foreign` (`tipo_contrato_id`),
@@ -85,6 +85,7 @@ CREATE TABLE `vendas` (
   CONSTRAINT `vendas_tipo_contrato_id_foreign` FOREIGN KEY (`tipo_contrato_id`) REFERENCES `tipo_contrato` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vendas_usuario_id_foreign` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 CREATE TABLE `parcelas`(
 `id`BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -126,7 +127,7 @@ BEGIN
 END $$
 
 DELIMITER ;
-drop trigger COMISSÃO;
+drop trigger COMISSAO;
 DELIMITER $$
 
 CREATE TRIGGER COMISSAO
@@ -141,7 +142,10 @@ BEGIN
   DECLARE status_cliente INT;
   
   -- Recupera o total de parcelas da tabela parcelas
-  SELECT total_parcela INTO total_parcelas FROM parcelas WHERE id_venda = NEW.id LIMIT 1;
+  SELECT total_parcela INTO total_parcelas 
+  FROM parcelas 
+  WHERE id_venda = NEW.id 
+  LIMIT 1;
   
   -- Recupera a data de início do contrato, o id do usuário e o status_cliente
   SET data_pagamento = NEW.inicio_contrato;
@@ -153,7 +157,8 @@ BEGIN
     -- Recupera o valor da parcela atual
     SELECT valor_da_parcela INTO valor_parcela 
     FROM parcelas 
-    WHERE id_venda = NEW.id AND numero_da_parcela = i;
+    WHERE id_venda = NEW.id AND numero_da_parcela = i
+    LIMIT 1;
     
     -- Insere as informações na tabela bancocomissao
     INSERT INTO bancocomissao (id_venda, user_id, comissao_total, data_pagamento, numero_da_parcela, status)
@@ -163,7 +168,7 @@ BEGIN
       (valor_parcela * (status_cliente / 100)),  -- Calcula a comissão com base no status_cliente
       DATE_ADD(data_pagamento, INTERVAL (i - 1) MONTH),  -- Adiciona i-1 meses à data de início do contrato
       i, 
-      (SELECT status FROM parcelas WHERE id_venda = NEW.id AND numero_da_parcela = i)  -- Recupera o status de cada parcela
+      (SELECT status FROM parcelas WHERE id_venda = NEW.id AND numero_da_parcela = i LIMIT 1)  -- Recupera o status de cada parcela
     );
     
     -- Incrementa o contador
@@ -172,6 +177,7 @@ BEGIN
 END $$
 
 DELIMITER ;
+
 
 
 DELIMITER $$

@@ -82,8 +82,8 @@ class Vendacontroller
     {
         try {
             $user = json_decode(file_get_contents("php://input"));
-            $sql = "INSERT INTO vendas(cliente_id, tipo_contrato_id, produto_id, usuario_id, status_cliente, horas_trabalhadas, inicio_contrato, final_contrato, valor_entrada, valor_total, nome_contato, email, telefone,  metodo_pagamento, numero_parcela, status)
-                    VALUES (:cliente_id, :tipo_contrato_id, :produto_id, :usuario_id, :status_cliente, :horas_trabalhadas, :inicio_contrato, :final_contrato, :valor_entrada, :valor_total, :nome_contato, :email, :telefone,  :metodo_pagamento, :numero_parcela, :status)";
+            $sql = "INSERT INTO vendas(cliente_id, tipo_contrato_id, produto_id, usuario_id, status_cliente, horas_trabalhadas, inicio_contrato, final_contrato, valor_entrada, valor_total, nome_contato, email, telefone,  metodo_pagamento, numero_parcela, status, justificativa_cancelamento)
+                    VALUES (:cliente_id, :tipo_contrato_id, :produto_id, :usuario_id, :status_cliente, :horas_trabalhadas, :inicio_contrato, :final_contrato, :valor_entrada, :valor_total, :nome_contato, :email, :telefone,  :metodo_pagamento, :numero_parcela, :status, :justificativa_cancelamento)";
 
             $db = $this->conn->prepare($sql);
             $db->bindParam(":cliente_id", $user->cliente_id);
@@ -102,6 +102,7 @@ class Vendacontroller
             $db->bindParam(":metodo_pagamento", $user->metodo_pagamento);
             $db->bindParam(":numero_parcela", $user->numero_parcela);
             $db->bindParam(":status", $user->status);
+            $db->bindParam(":justificativa_cancelamento", $user->justificativa_cancelamento);
 
             $db->execute();
 
