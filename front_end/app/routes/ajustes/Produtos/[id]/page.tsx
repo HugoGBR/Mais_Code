@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getProdutoById, updateProdutoById } from '@/lib/ProdutoController';
+import { moneyMask } from '@/lib/MaskInput/MaskInput';
 
 export default function CadastroProduto({ params }: { params: { id: number } }) {
     const [produto, setProduto] = useState({
         nome: '',
-        horas_trabalhadas: 0,
+        horas_trabalhadas: '',
         descricao_produto: '',
         comissaoNovo: '',
         comissaoAntigo: ''
@@ -100,20 +101,26 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                 />
                             </div>
                             <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
-                                <input
-                                    type="number"
-                                    value={produto.horas_trabalhadas}
-                                    onChange={(e) => setProduto({ ...produto, horas_trabalhadas: Number(e.target.value) })}
-                                    className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                    id="horasTrabalhadas"
-                                    placeholder="Horas Trabalhadas"
-                                    disabled={!inputsHabilitados}
-                                    required
-                                />
+                            <input
+                            type="text"
+                            value={produto.horas_trabalhadas}
+                            onChange={(event) => {
+                                const valorComMascara = moneyMask(event.target.value);
+                                setProduto({ ...produto, horas_trabalhadas: valorComMascara });
+                            }}
+                            className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                            id="horasTrabalhadas"
+                            placeholder="Horas Trabalhadas"
+                            disabled={!inputsHabilitados}
+                            required
+                        />
                                 <input
                                     type="text"
                                     value={produto.comissaoNovo}
-                                    onChange={(e) => setProduto({ ...produto, comissaoNovo: e.target.value })}
+                                    onChange={(event) => {
+                                        const valorComMascara = moneyMask(event.target.value);
+                                        setProduto({ ...produto, comissaoNovo: valorComMascara });
+                                    }}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="comissaoNovo"
                                     placeholder="Nova Comissão"
@@ -123,7 +130,10 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                 <input
                                     type="text"
                                     value={produto.comissaoAntigo}
-                                    onChange={(e) => setProduto({ ...produto, comissaoAntigo: e.target.value })}
+                                    onChange={(event) => {
+                                        const valorComMascara = moneyMask(event.target.value);
+                                        setProduto({ ...produto, comissaoAntigo: valorComMascara });
+                                    }}
                                     className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="comissaoAntigo"
                                     placeholder="Comissão Antiga"
