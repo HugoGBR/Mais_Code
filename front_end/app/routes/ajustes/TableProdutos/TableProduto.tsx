@@ -22,30 +22,24 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { RiCloseCircleLine } from "react-icons/ri";
 import { PiPlusCircleBold } from "react-icons/pi";
 import Link from "next/link";
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function TableProduto<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function TableProduto<TData, TValue>({ columns, data, }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
-
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 }) // Define o pageIndex e pageSize
   const router = useRouter();
+
   const table = useReactTable({
     data,
     columns,
@@ -62,14 +56,21 @@ export function TableProduto<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination,
     },
+    onPaginationChange: setPagination,
   })
+
+  function HandleClick(row: string) {
+    const dadosDaLinha = JSON.parse(row)
+    router.push(`/routes/ajustes/Produtos/${dadosDaLinha.id}`)
+  }
 
   return (
     <div>
-      <div className="bg-white shadow-xl flex-container rounded-lg p-4">
-        <div className="flex items-center justify-between py-4 input-container">
-          <h1 className="text-lg">
+      <div className="bg-white hover:shadow-lg border flex-container rounded-lg p-4">
+        <div className="flex items-center justify-between mb-3">
+          <h1 className="md:text-2xl">
             <b>Produtos</b>
           </h1>
           <div className="flex gap-2">
@@ -79,17 +80,17 @@ export function TableProduto<TData, TValue>({
           </div>
         </div>
         <div>
-          <input
+          {/* <input
             type="text"
             placeholder="Pesquisar..."
             value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("nome")?.setFilterValue(event.target.value)
             }
-            className="max-w-full border border-gray-300 rounded-md p-2 mb-2 focus:outline-none focus:border-blue-500"
-          />
-          
-          <div className="rounded-lg border h-96">
+            className="border border-gray-300 rounded-md py-1 px-2 w-5/12 mb-3 focus:outline-none focus:border-blue-500"
+          /> */}
+
+          <div className="rounded-lg border">
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -115,7 +116,7 @@ export function TableProduto<TData, TValue>({
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
-                      onClick={() => router.push(`/routes/ajustes/Produtos/${Number(row.id) + 1}`)}
+                      onClick={() => HandleClick(JSON.stringify(row.original))}
                       className="cursor-pointer"
                     >
                       {row.getVisibleCells().map((cell) => (
@@ -132,7 +133,7 @@ export function TableProduto<TData, TValue>({
                   <TableRow>
                     <TableCell
                       colSpan={columns.length}
-                      className="h-24 text-center"
+                      className="text-center"
                     >
                       Nenhum Resultado
                     </TableCell>
@@ -142,24 +143,28 @@ export function TableProduto<TData, TValue>({
             </Table>
           </div>
         </div>
-        <div className="space-x-3 mt-4 flex justify-center items-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Próximo
-          </Button>
-        </div>
+
+        {/* Paginação */}
+        {data.length > pagination.pageSize && (
+          <div className="flex justify-center items-center">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    className='cursor-pointer hover:text-blue-800'
+                    onClick={() => table.previousPage()}
+                  />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext
+                    className='cursor-pointer hover:text-blue-800'
+                    onClick={() => table.nextPage()}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -12,14 +12,13 @@ import CardCliente from '@/components/CardClienteGestao';
 import PopUpConfig from "./PopUpConfig";
 import { getCookie } from "@/lib/coockie";
 import { useToast } from "@/components/ui/use-toast";
-import { insertMaskCpfCnpj, insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
-import { Toaster } from "@/components/ui/toaster";
-import { number } from "zod";
+import { insertMaskCpfCnpj, insertMaskTelefone, moneyMask } from "@/lib/MaskInput/MaskInput";
+
 
 
 export default function CardCadastro() {
     const [numero_parcelas, setNumeroParcelas] = useState("");
-    const [valor_entrada, setValorEntrada] = useState(0);
+    const [valor_entrada, setValorEntrada] = useState("");
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
@@ -47,7 +46,7 @@ export default function CardCadastro() {
     const route = useRouter();
     const { toast } = useToast();
 
-    
+
 
     useEffect(() => {
         if (foundCliente) {
@@ -75,12 +74,12 @@ export default function CardCadastro() {
         };
         fetchData();
     }, []);
-    
+
     useEffect(() => {
         if (new_produto_id && horas_trabalhadas >= 0) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
-                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - valor_entrada);
+                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - Number(valor_entrada));
             }
         }
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
@@ -108,7 +107,7 @@ export default function CardCadastro() {
         atualizarIdVenda();
     }, []);
 
-    
+
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const validateForm = () => {
@@ -138,10 +137,10 @@ export default function CardCadastro() {
         }
         return true;
     };
-    
+
     const resetForm = () => {
         setNumeroParcelas("");
-        setValorEntrada(0);
+        setValorEntrada("");
         setMostrarParcelas(false);
         setDataInicio("");
         setDataFim("");
@@ -459,8 +458,8 @@ export default function CardCadastro() {
                                     id="valorEntrada"
                                     name="valorEntrada"
                                     value={valor_entrada}
-                                    onChange={(event) => setValorEntrada(Number(event.target.value))}
-                                    placeholder="R$"
+                                    onChange={(event) => (setValorEntrada(moneyMask((event.target.value))))}
+                                    placeholder="15.000,00"
                                     className="border-b-2 pl-8 w-full bg-white focus:outline-none focus:border-blue-500"
                                 />
                             </div>

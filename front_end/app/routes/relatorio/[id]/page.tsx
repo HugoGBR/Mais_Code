@@ -12,7 +12,7 @@ import EditConfiguracoesParcela from "@/components/ParcelaEdit";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import PopUpCancelamento from "@/components/PopUpCancelamento";
-import { insertMaskTelefone, insertMaskValorMonetarioSemVirgula } from "@/lib/MaskInput/MaskInput";
+import { insertMaskTelefone, moneyMask, } from "@/lib/MaskInput/MaskInput";
 import MotivoCancelamento from "@/components/MotivoCancelamento";
 
 export default function EditVenda({ params }: { params: { id: number } }) {
@@ -395,7 +395,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     type="text"
                                     value={valor_entrada}
                                     disabled={!inputsHabilitados}
-                                    onChange={(event) => setValorEntrada(insertMaskValorMonetarioSemVirgula(event.target.value))}
+                                    onChange={(event) => setValorEntrada(moneyMask(event.target.value))}
                                 />
                             </div>
                         </div>

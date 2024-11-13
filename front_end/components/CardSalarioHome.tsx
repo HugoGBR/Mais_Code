@@ -1,40 +1,26 @@
 import { remuneracaoComissao } from "@/lib/RelatorioComissaoController";
 import { getCookie } from "@/lib/coockie";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CardSalarioHome() {
     const [comissaoTotal, setComissaoTotal] = useState(0);
-    const [usuario_id, set_usuario_id] = useState("");
 
     useEffect(() => {
-        async function fetchUsername() {
-            const user = await getCookie("CookiCriado");
-            set_usuario_id(user || "Usuário");
-        }
-        fetchUsername();
-    }, []);
+        const carregarDados = async () => {
+            try {
+                const usuario_id = await getCookie("CookiCriado");
+                if (!usuario_id) return;
 
-    useEffect(() => {
-        if (usuario_id) {
-            carregarRemuneracao();
-        }
-    }, [usuario_id]);
-
-    async function carregarRemuneracao() {
-        try {
-            const remuneracao = await remuneracaoComissao(Number(usuario_id));
-            if (Array.isArray(remuneracao) && remuneracao.length > 0) {
-                const valor = remuneracao[0]["SUM(comissao_total)"];
-                const comissao = isNaN(parseFloat(valor)) ? 0 : parseFloat(valor);
-                setComissaoTotal(comissao);
-            } else {
+                const remuneracao = await remuneracaoComissao(Number(usuario_id));
+                const valor = remuneracao?.[0]?.["SUM(comissao_total)"] ?? 0;
+                setComissaoTotal(parseFloat(valor) || 0);
+            } catch {
                 setComissaoTotal(0);
             }
-        } catch (error) {
-            console.error('Failed to load remuneracao:', error);
-            setComissaoTotal(0);
-        }
-    }
+        };
+
+        carregarDados();
+    }, []);
 
     return (
         <div className='rounded-lg flex flex-col justify-end bg-white border hover:drop-shadow-lg py-2 px-4'>

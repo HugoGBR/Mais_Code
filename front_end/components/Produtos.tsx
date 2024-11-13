@@ -2,7 +2,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { createNewProduto } from '@/lib/ProdutoController';
-import { insertMaskValorMonetarioSemVirgula, removerMascaraValorMonetario } from '@/lib/MaskInput/MaskInput';
+import { moneyMask, removerMascaraValorMonetario } from '@/lib/MaskInput/MaskInput';
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from './ui/use-toast';
 
@@ -34,7 +34,7 @@ export default function CadastroProduto() {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         try {
-            
+
             const response = await createNewProduto(
                 nomeProduto,
                 removerMascaraValorMonetario(horasTrabalhadas),
@@ -90,7 +90,7 @@ export default function CadastroProduto() {
                                     name="horasTrabalhadas"
                                     value={horasTrabalhadas}
                                     onChange={(event) => {
-                                        const maskedValue = insertMaskValorMonetarioSemVirgula(event.target.value);
+                                        const maskedValue = moneyMask(event.target.value);
                                         if (maskedValue.replace(/\D/g, '').length <= 12) {
                                             setHorasTrabalhadas(maskedValue);
                                         }

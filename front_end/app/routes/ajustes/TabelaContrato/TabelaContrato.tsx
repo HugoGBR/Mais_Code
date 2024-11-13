@@ -66,12 +66,12 @@ export function TabelaContrato<TData, TValue>({
 
   return (
     <div>
-      <div className="bg-white md:w-full shadow-xl flex-container rounded-lg p-4">
-        <div className="flex items-center justify-between py-4 input-container">
-          <h1 className="text-lg">
+      <div className="bg-white md:w-full hover:shadow-lg border flex-container rounded-lg p-4">
+        <div className="flex items-center justify-between mb-3">
+          <h1 className="md:text-2xl">
             <b>Contrato</b>
           </h1>
-          <div className="flex space-x-2">
+          <div className="flex">
             <Link href={'/routes/ajustes/ModeloContrato'}>
               <PiPlusCircleBold size={25} color="#0762C8" />
             </Link>

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList } from '@/components/ui/tabs';
 import { TabsTrigger } from '@radix-ui/react-tabs';
 import CardUsuario from '@/components/CardUsuario';
@@ -9,7 +9,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getAllClient } from '@/lib/GestaoControler';
 import { getAllUsers } from '@/lib/UsuarioController';
-import CardCliente from '@/components/CardClienteGestao';
 import {
     Pagination,
     PaginationContent,
@@ -100,8 +99,6 @@ export default function Gestao() {
             nomeCliente.toLowerCase().includes(termoBusca.toLowerCase())
         );
     });
-    console.log(usuariosFiltrados)
-    console.log(clienteFiltrado)
 
     useEffect(() => {
         carregarUsuarios();
@@ -153,7 +150,7 @@ export default function Gestao() {
                     {listaUsuarioFiltrada.slice(inicioIndex, finalIndex).map(item => (
                         <Link href={`/routes/gestao/user/${item.id}`} key={item.id} className='w-80 flex'>
                             <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} key={item.id}
-                                className='bg-gray-300 rounded-lg flex-grow'>
+                                className='rounded-lg flex-grow'>
                                 <a className="block pb-1">
                                     <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
                                 </a>
@@ -193,12 +190,12 @@ export default function Gestao() {
             </div>
 
             <Tabs defaultValue='Administrador'>
-                <TabsList className='will-change-contents gap-6'>
+                <TabsList className='will-change-contents flex justify-between gap-6'>
                     <div className='space-x-5'>
-                        <TabsTrigger value="Administrador">Administrador</TabsTrigger>
-                        <TabsTrigger value="Vendedor">Vendedor</TabsTrigger>
-                        <TabsTrigger value="Financeiro">Financeiro</TabsTrigger>
-                        <TabsTrigger value="Cliente">Cliente</TabsTrigger>
+                        <TabsTrigger className='focus:text-blue-500 focus:font-bold hover:text-blue-500 hover:font-medium' value="Administrador">Administrador</TabsTrigger>
+                        <TabsTrigger className='focus:text-blue-500 focus:font-bold hover:text-blue-500 hover:font-medium' value="Vendedor">Vendedor</TabsTrigger>
+                        <TabsTrigger className='focus:text-blue-500 focus:font-bold hover:text-blue-500 hover:font-medium' value="Financeiro">Financeiro</TabsTrigger>
+                        <TabsTrigger className='focus:text-blue-500 focus:font-bold hover:text-blue-500 hover:font-medium' value="Cliente">Cliente</TabsTrigger>
                     </div>
                     <div>
                         <button
@@ -216,7 +213,7 @@ export default function Gestao() {
                     <div className='grid grid-cols-2 gap-3'>
                         {usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
                             <Link href={`/routes/gestao/user/${item.id}`} key={item.id} className='w-80 flex'>
-                                <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} className='bg-gray-300 rounded-lg flex-grow'>
+                                <div onClick={() => router.push(`/routes/gestao/user/${item.id}`)} className='rounded-lg flex-grow'>
                                     <CardUsuario nome={item.nome} email={item.email} cargoId={item.cargo_id} />
                                 </div>
                             </Link>
@@ -247,9 +244,6 @@ export default function Gestao() {
                     </>
                 )}
             </Tabs>
-        </div>
+        </div >
     );
-
-
-
 }

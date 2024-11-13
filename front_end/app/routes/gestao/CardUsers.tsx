@@ -158,7 +158,7 @@ export default function CardUsers() {
 
                         <div className="flex flex-col space-y-1.5">
                             <Select onValueChange={(value) => setValue('cargo', value)}>
-                                <SelectTrigger className="">
+                                <SelectTrigger className="h-10">
                                     <SelectValue placeholder="Cargos..." />
                                 </SelectTrigger>
                                 <SelectContent id="cargo_id">

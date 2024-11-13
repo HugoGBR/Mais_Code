@@ -1,15 +1,26 @@
 "use client"
-
 import { Button } from "@/components/ui/button";
 import { Payment } from "@/lib/interfaces/dadosUsuarios";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 
-// Este tipo é usado para definir o formato dos nossos dados.
-// Você pode usar um esquema Zod aqui, se quiser.
-
-
 export const ColumnsProdutos: ColumnDef<Payment>[] = [
+  {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <Button
+          className="hidden"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Nome
+          <CaretSortIcon className="h-4 w-4 hidden" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div className="lowercase hidden">{row.getValue("id")}</div>,
+  },
   {
     accessorKey: "nome",
     header: ({ column }) => {
@@ -19,7 +30,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Nome
-          <CaretSortIcon className="h-4 w-4 "  />
+          <CaretSortIcon className="h-4 w-4" />
         </Button>
       )
     },
@@ -34,7 +45,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Novo
-          <CaretSortIcon className="h-4 w-4"/>
+          <CaretSortIcon className="h-4 w-4" />
         </Button>
       )
     },
@@ -49,7 +60,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Antigo
-          <CaretSortIcon className="h-4 w-4"/>
+          <CaretSortIcon className="h-4 w-4" />
         </Button>
       )
     },
@@ -64,7 +75,7 @@ export const ColumnsProdutos: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Valor
-          <CaretSortIcon className="h-4 w-4"/>
+          <CaretSortIcon className="h-4 w-4" />
         </Button>
       )
     },

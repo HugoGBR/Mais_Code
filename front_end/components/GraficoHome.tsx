@@ -1,6 +1,6 @@
+import React, { useEffect, useState, useCallback } from "react";
+import Chart from "react-apexcharts"; // Adicione esta linha para importar o componente Chart
 import { fetchDadosGrafico } from "@/lib/RelatorioHomeController";
-import React, { useEffect, useState } from "react";
-import Chart from "react-apexcharts";
 
 interface DadoGrafico {
     valor: number;
@@ -8,17 +8,24 @@ interface DadoGrafico {
 
 export default function ApexAreaChart() {
     const [dadosGrafico, setDadosGrafico] = useState<DadoGrafico[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const fetchData = async () => {
-        const dados: DadoGrafico[] = await fetchDadosGrafico();
-        setDadosGrafico(dados);
-    };
+    const fetchData = useCallback(async () => {
+        try {
+            const dados: DadoGrafico[] = await fetchDadosGrafico();
+            setDadosGrafico(dados);
+        } catch (error) {
+            console.error('Erro ao carregar os dados do gráfico:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
-    const data = {
+    const chartOptions = {
         series: [
             {
                 name: "Vendas",
@@ -27,7 +34,7 @@ export default function ApexAreaChart() {
         ],
         options: {
             chart: {
-                type: "area" as "area",
+                type: "area" as const,
                 zoom: {
                     enabled: false,
                 },
@@ -39,11 +46,11 @@ export default function ApexAreaChart() {
                 enabled: false,
             },
             stroke: {
-                curve: "smooth" as "smooth",
+                curve: "smooth" as const,
             },
             title: {
                 text: "Vendas Mensal",
-                align: "left" as "left",
+                align: "left" as const,
             },
             grid: {
                 row: {
@@ -53,31 +60,33 @@ export default function ApexAreaChart() {
             },
             xaxis: {
                 categories: [
-                    "Janeiro",
-                    "Fevereiro",
-                    "Março",
-                    "Abril",
-                    "Maio",
-                    "Junho",
-                    "Julho",
-                    "Agosto",
-                    "Setembro",
-                    "Outubro",
-                    "Novembro",
-                    "Dezembro",
+                    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
                 ],
             },
         },
     };
 
+    if (loading) {
+        return (
+            <div className="w-full h-auto bg-white p-4 border rounded-xl flex justify-center items-center">
+                <p>Carregando...</p>
+            </div>
+        );
+    }
+
     return (
-        <div className="w-full h-auto bg-white p-4 border hover:drop-shadow-lg rounded-xl grid grid-cols-1 items-center">
-            <Chart
-                options={data.options}
-                series={data.series}
-                type="area"
-                height={250}
-            />
+        <div className="w-full h-auto bg-white p-4 border hover:drop-shadow-lg rounded-xl">
+            {dadosGrafico.length > 0 ? (
+                <Chart
+                    options={chartOptions.options}
+                    series={chartOptions.series}
+                    type="area"
+                    height={250}
+                />
+            ) : (
+                <p className="text-center">Nenhum dado disponível para exibir.</p>
+            )}
         </div>
     );
 }
