@@ -106,9 +106,9 @@ export default function CadastroProduto() {
                                     name="comissaoNovo"
                                     value={comissaoNovo}
                                     onChange={(event) => {
-                                        const value = event.target.value;
-                                        if (Number(value) >= 0) {
-                                            setComissaoNovo(value);
+                                        const maskedValue = insertMaskValorMonetarioSemVirgula(event.target.value);
+                                        if (maskedValue.replace(/\D/g, '').length <= 12) {
+                                            setComissaoNovo(maskedValue);
                                         }
                                     }}
                                     min="0"
