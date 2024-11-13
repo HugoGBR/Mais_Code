@@ -42,7 +42,7 @@ export default function ModeloContrato() {
 
     return (
         <div className="flex h-full justify-center items-center">
-            <div className="w-full bg-white shadow-xl rounded-2xl p-8">
+            <div className="w-full bg-white border hover:shadow-xl rounded-2xl p-5">
                 <h2 className="text-2xl font-semibold mb-8 text-center">Tipo de Contrato</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">

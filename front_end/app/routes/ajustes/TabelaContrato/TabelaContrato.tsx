@@ -21,12 +21,11 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { RiCloseCircleLine } from "react-icons/ri";
 import { PiPlusCircleBold } from "react-icons/pi";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"; // Import da paginação
 
 
 
@@ -39,12 +38,10 @@ export function TabelaContrato<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
   const router = useRouter();
 
   const table = useReactTable({
@@ -61,7 +58,9 @@ export function TabelaContrato<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination, // Adiciona a paginação ao estado da tabela
     },
+    onPaginationChange: setPagination, // Controla mudanças na paginação
   })
 
   return (
@@ -78,7 +77,7 @@ export function TabelaContrato<TData, TValue>({
           </div>
         </div>
 
-        <div className="rounded-lg border h-96">
+        <div className="rounded-lg border">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -130,6 +129,28 @@ export function TabelaContrato<TData, TValue>({
             </TableBody>
           </Table>
         </div>
+
+        {/* Paginação */}
+        {data.length > pagination.pageSize && (
+          <div className="flex justify-center items-center mt-4">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    className='cursor-pointer hover:text-blue-800'
+                    onClick={() => table.previousPage()}
+                  />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext
+                    className='cursor-pointer hover:text-blue-800'
+                    onClick={() => table.nextPage()}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
     </div>
   )
