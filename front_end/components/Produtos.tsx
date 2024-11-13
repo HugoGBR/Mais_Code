@@ -68,7 +68,7 @@ export default function CadastroProduto() {
         <>
             <div className="flex flex-col h-screen">
                 <div className="flex justify-center items-center flex-grow">
-                    <div className="max-w-lg w-full bg-white shadow-xl rounded-md p-6">
+                    <div className="max-w-lg w-full bg-white border hover:shadow-xl rounded-2xl p-5">
                         <h2 className="text-2xl font-semibold mb-4 text-center">Cadastro Produto</h2>
                         <form onSubmit={handleSubmit}>
                             <div className="mb-4">

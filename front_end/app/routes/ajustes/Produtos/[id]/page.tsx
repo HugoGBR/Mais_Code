@@ -85,7 +85,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
             <form onSubmit={handleEditSubmit}>
                 <div className="flex flex-col h-screen">
                     <div className="flex justify-center items-center flex-grow">
-                        <div className="max-w-lg w-full bg-white shadow-xl rounded-md p-8">
+                        <div className="max-w-lg w-full bg-white border hover:shadow-xl rounded-2xl p-5">
                             <h2 className="text-2xl font-semibold mb-4 text-center">Editar Produto</h2>
                             <div className="mb-4">
                                 <input
