@@ -46,7 +46,11 @@ export default function CardCadastro() {
     const route = useRouter();
     const { toast } = useToast();
 
-
+    function removeMaskAndConvert(value: string): number {
+        if (!value) return 0; // Caso o valor esteja vazio, retorna 0
+        return parseFloat(value.replace(/\./g, '').replace(',', '.'));
+    }
+    
 
     useEffect(() => {
         if (foundCliente) {
@@ -79,11 +83,12 @@ export default function CardCadastro() {
         if (new_produto_id && horas_trabalhadas >= 0) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
             if (selectedProduct) {
-                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - Number(valor_entrada));
+                const entrada = removeMaskAndConvert(valor_entrada);
+                setvalortotal((selectedProduct.horas_trabalhadas * horas_trabalhadas) - entrada);
             }
         }
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
-
+    
     useEffect(() => {
         if (new_produto_id) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
@@ -565,7 +570,7 @@ export default function CardCadastro() {
                                 Valor total a pagar:
                             </label>
                             <h1 className="font-bold">
-                                {`R$ ${valor_total.toFixed(2)}`}
+                                {`R$ ${moneyMask(valor_total.toString())}`}
                             </h1>
                         </div>
                         <div className="text-center col-span-2">
