@@ -18,9 +18,9 @@ export default function HomePage() {
             </div>
 
             <div className='h-auto w-full space-y-3'>
-                {/* <div>
+                <div>
                     <ApexAreaChart />
-                </div> */}
+                </div>
                 <div className='hidden md:block md:rounded-xl bg-white md:border md:hover:drop-shadow-lg md:text-center'>
                     <RelatorioHome />
                 </div>

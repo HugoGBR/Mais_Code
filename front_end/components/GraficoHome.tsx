@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
-import Chart from "react-apexcharts"; // Adicione esta linha para importar o componente Chart
+import dynamic from "next/dynamic"; // Importa o dynamic
 import { fetchDadosGrafico } from "@/lib/RelatorioHomeController";
+
+// Importação dinâmica do Chart com SSR desativado
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface DadoGrafico {
     valor: number;
