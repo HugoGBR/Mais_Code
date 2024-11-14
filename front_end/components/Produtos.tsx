@@ -2,7 +2,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { createNewProduto } from '@/lib/ProdutoController';
-import { moneyMask, removerMascaraValorMonetario } from '@/lib/MaskInput/MaskInput';
+import { moneyMask, percentageMask, removerMascaraValorMonetario } from '@/lib/MaskInput/MaskInput';
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from './ui/use-toast';
 
@@ -83,35 +83,35 @@ export default function CadastroProduto() {
                                     className="w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                 />
                             </div>
-                            <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
-                                <input
-                                    type="text"
-                                    id="horasTrabalhadas"
-                                    name="horasTrabalhadas"
-                                    value={horasTrabalhadas}
-                                    onChange={(event) => {
-                                        const maskedValue = moneyMask(event.target.value);
-                                        if (maskedValue.replace(/\D/g, '').length <= 12) {
-                                            setHorasTrabalhadas(maskedValue);
-                                        }
-                                    }}
-                                    placeholder="Valor das Horas"
-                                    required
-                                    className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                />
-
+                            <div className="grid grid-cols-3 gap-5 mb-4">
+                                <div className="relative col-span-1">
+                                    <span className="absolute top-1/2 transform -translate-y-1/2 text-gray-500">
+                                        R$
+                                    </span>
+                                    <input
+                                        type="text"
+                                        id="horasTrabalhadas"
+                                        name="horasTrabalhadas"
+                                        value={horasTrabalhadas}
+                                        onChange={(event) => {
+                                            const maskedValue = moneyMask(event.target.value);
+                                            if (maskedValue.replace(/\D/g, '').length <= 12) {
+                                                setHorasTrabalhadas(maskedValue);
+                                            }
+                                        }}
+                                        placeholder="15.000,00"
+                                        required
+                                        className="pl-8 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    />
+                                </div>
                                 <input
                                     type="text"
                                     id="comissaoNovo"
                                     name="comissaoNovo"
                                     value={comissaoNovo}
                                     onChange={(event) => {
-<<<<<<< Updated upstream
-                                        const maskedValue = insertMaskValorMonetarioSemVirgula(event.target.value);
-=======
                                         const value = event.target.value;
-                                        const maskedValue = moneyMask(event.target.value);
->>>>>>> Stashed changes
+                                        const maskedValue = percentageMask(event.target.value);
                                         if (maskedValue.replace(/\D/g, '').length <= 12) {
                                             setComissaoNovo(maskedValue);
                                         }
@@ -119,25 +119,26 @@ export default function CadastroProduto() {
                                     min="0"
                                     placeholder="Nova Comissão"
                                     required
-                                    className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    className="col-span-1 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                 />
                                 <input
-                                    type="text" 
+                                    type="text"
                                     id="comissaoAntigo"
                                     name="comissaoAntigo"
                                     value={comissaoAntigo}
                                     onChange={(event) => {
-                                        const maskedValue = moneyMask(event.target.value);
+                                        const maskedValue = percentageMask(event.target.value);
                                         if (maskedValue.replace(/\D/g, '').length <= 12) {
-                                        setComissaoAntigo(maskedValue);
+                                            setComissaoAntigo(maskedValue);
                                         }
                                     }}
                                     min="0"
                                     placeholder="Comissão Antiga"
                                     required
-                                    className="col-span-1 border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                    />
+                                    className="col-span-1 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                />
                             </div>
+
                             <div className="mb-4 flex flex-col">
                                 <div>
                                     <textarea
@@ -149,7 +150,8 @@ export default function CadastroProduto() {
                                         rows={4}
                                         maxLength={descricaoLimiteCaracteres}
                                         className="shadow-inner-2 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    ></textarea>
+                                    >
+                                    </textarea>
                                     <div className="flex justify-end">
                                         <p className="text-sm text-gray-500">{descricaoProduto.length}/{descricaoLimiteCaracteres}</p>
                                     </div>
@@ -166,6 +168,5 @@ export default function CadastroProduto() {
             </div>
             <Toaster />
         </>
-
     );
 }

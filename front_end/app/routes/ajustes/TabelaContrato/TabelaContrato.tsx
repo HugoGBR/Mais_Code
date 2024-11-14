@@ -44,6 +44,11 @@ export function TabelaContrato<TData, TValue>({
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
   const router = useRouter();
 
+  function HandleClick(row: string) {
+    const dadosDaLinha = JSON.parse(row)
+    router.push(`/routes/ajustes/ModeloContrato/${dadosDaLinha.id}`)
+  }
+
   const table = useReactTable({
     data,
     columns,
@@ -103,7 +108,7 @@ export function TabelaContrato<TData, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
-                    onClick={() => router.push(`/routes/ajustes/ModeloContrato/${Number(row.id) + 1}`)}
+                    onClick={() => HandleClick(JSON.stringify(row.original))}
                     className="cursor-pointer"
                   >
                     {row.getVisibleCells().map((cell) => (

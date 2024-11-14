@@ -4,7 +4,7 @@ export const insertMaskCpfCnpj = (value: string) => {
 
     if (numericValue.length <= 11) {
         if (numericValue.length <= 3) {
-            return numericValue; 
+            return numericValue;
         } else if (numericValue.length <= 6) {
             return numericValue.replace(/(\d{3})(\d{1,3})/, '$1.$2');
         } else if (numericValue.length <= 9) {
@@ -44,6 +44,27 @@ export const moneyMask = (valor: string) => {
 
     return result;
 }
+
+export const percentageMask = (valor: string) => {
+    // Remove tudo que não for número ou vírgula
+    valor = valor.replace(/\D/g, '').replace(',', '.');
+
+    // Converte para número e divide por 100 para permitir frações como 56,54
+    let percentage = parseFloat(valor) / 100;
+
+    // Limita o valor máximo a 100%
+    if (percentage > 100) {
+        percentage = 100;
+    }
+
+    // Formata o número como porcentagem com 2 casas decimais
+    const options = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+    const result = new Intl.NumberFormat('pt-BR', options).format(percentage);
+
+    // Retorna o valor formatado com o símbolo de porcentagem no final
+    return `${result}%`;
+}
+
 
 export const removerMascaraValorMonetario = (valor: string) => {
     let numericValor = valor.replace(/[^\d]/g, '');

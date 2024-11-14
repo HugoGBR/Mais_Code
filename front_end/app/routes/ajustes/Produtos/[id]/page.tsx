@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getProdutoById, updateProdutoById } from '@/lib/ProdutoController';
-import { moneyMask } from '@/lib/MaskInput/MaskInput';
+import { moneyMask, percentageMask } from '@/lib/MaskInput/MaskInput';
 
 export default function CadastroProduto({ params }: { params: { id: number } }) {
     const [produto, setProduto] = useState({
@@ -93,35 +93,40 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     type="text"
                                     value={produto.nome}
                                     onChange={(e) => setProduto({ ...produto, nome: e.target.value })}
-                                    className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    className="w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="nome"
                                     placeholder="Nome"
                                     disabled={!inputsHabilitados}
                                     required
                                 />
                             </div>
-                            <div className="gap-5 mb-4 grid grid-cols-3 rounded-none">
-                            <input
-                            type="text"
-                            value={produto.horas_trabalhadas}
-                            onChange={(event) => {
-                                const valorComMascara = moneyMask(event.target.value);
-                                setProduto({ ...produto, horas_trabalhadas: valorComMascara });
-                            }}
-                            className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                            id="horasTrabalhadas"
-                            placeholder="Horas Trabalhadas"
-                            disabled={!inputsHabilitados}
-                            required
-                        />
+                            <div className="grid grid-cols-3 gap-5 mb-4">
+                                <div className="relative col-span-1">
+                                    <span className="absolute top-1/2 transform -translate-y-1/2 text-gray-500">
+                                        R$
+                                    </span>
+                                    <input
+                                        type="text"
+                                        value={produto.horas_trabalhadas}
+                                        onChange={(event) => {
+                                            const valorComMascara = moneyMask(event.target.value);
+                                            setProduto({ ...produto, horas_trabalhadas: valorComMascara });
+                                        }}
+                                        className="pl-8 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                        id="horasTrabalhadas"
+                                        placeholder="15.000,00"
+                                        disabled={!inputsHabilitados}
+                                        required
+                                    />
+                                </div>
                                 <input
                                     type="text"
                                     value={produto.comissaoNovo}
                                     onChange={(event) => {
-                                        const valorComMascara = moneyMask(event.target.value);
+                                        const valorComMascara = percentageMask(event.target.value);
                                         setProduto({ ...produto, comissaoNovo: valorComMascara });
                                     }}
-                                    className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    className="col-span-1 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="comissaoNovo"
                                     placeholder="Nova Comissão"
                                     disabled={!inputsHabilitados}
@@ -131,17 +136,16 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                     type="text"
                                     value={produto.comissaoAntigo}
                                     onChange={(event) => {
-                                        const valorComMascara = moneyMask(event.target.value);
+                                        const valorComMascara = percentageMask(event.target.value);
                                         setProduto({ ...produto, comissaoAntigo: valorComMascara });
                                     }}
-                                    className="border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    className="col-span-1 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
                                     id="comissaoAntigo"
                                     placeholder="Comissão Antiga"
                                     disabled={!inputsHabilitados}
                                     required
                                 />
                             </div>
-
                             <div className="mb-4 flex flex-col">
                                 <div>
                                     <textarea
@@ -164,7 +168,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                             <div className='text-center'>
                                 <button type='button' onClick={handleButtonClick}
                                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    {inputsHabilitados ? "Alterar" : "Editar"}
+                                    {inputsHabilitados ? "Salvar" : "Editar"}
                                 </button>
                             </div>
                         </div>
