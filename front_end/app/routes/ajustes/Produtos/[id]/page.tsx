@@ -50,7 +50,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
         try {
             await updateProdutoById(
                 produto.nome,
-                produto.horas_trabalhadas,
+                Number(produto.horas_trabalhadas),
                 produto.descricao_produto,
                 produto.comissaoAntigo,
                 produto.comissaoNovo,
@@ -69,7 +69,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
         if (inputsHabilitados) {
             await updateProdutoById(
                 produto.nome,
-                produto.horas_trabalhadas,
+                Number(produto.horas_trabalhadas),
                 produto.descricao_produto,
                 produto.comissaoAntigo,
                 produto.comissaoNovo,
