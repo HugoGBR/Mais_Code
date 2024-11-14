@@ -9,6 +9,7 @@ import { TabelaContrato } from "./TabelaContrato/TabelaContrato";
 import { useRouter } from "next/navigation";
 import { getAllContratos } from "@/lib/ContratoController";
 import { getAllProduto } from "@/lib/ProdutoController";
+import { toast } from "@/components/ui/use-toast";
 
 export default function Ajuste() {
     const [data, setData] = useState({
@@ -24,7 +25,12 @@ export default function Ajuste() {
             ]);
             setData({ produtos, contratos });
         } catch (error) {
-            console.error('Erro ao buscar dados:', error);
+            toast({
+                title: "Erro",
+                description: "Erro ao buscar dados. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
+            
         }
     }
 

@@ -12,6 +12,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { dadosUsuario } from "@/lib/interfaces/dadosUsuarios";
+import { toast } from '@/components/ui/use-toast';
 
 export default function Financeiro() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
@@ -25,7 +26,11 @@ export default function Financeiro() {
             const usuarios = await getAllFinan();
             setListaUsuarios(usuarios);
         } catch (error) {
-            console.error("Erro ao carregar usuários:", error);
+            toast({
+                title: "Erro",
+                description: "Erro ao carregar usuários. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
         } finally {
             setCarregando(false);
         }
@@ -51,7 +56,6 @@ export default function Financeiro() {
         return nomeCliente.toLowerCase().includes(termoBusca.toLowerCase());
     });
 
-    // Verifica se o total de itens filtrados é suficiente para mostrar a paginação
     const mostrarPaginacao = usuariosFiltrados.length >= itensPorPagina;
 
     return (

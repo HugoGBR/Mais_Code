@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getProdutoById, updateProdutoById } from '@/lib/ProdutoController';
 import { moneyMask, percentageMask } from '@/lib/MaskInput/MaskInput';
+import { toast } from '@/components/ui/use-toast';
 
 export default function CadastroProduto({ params }: { params: { id: number } }) {
     const [produto, setProduto] = useState({
@@ -29,7 +30,12 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                     comissaoAntigo: produtoData.comissao_antiga
                 });
             } catch (error) {
-                console.error('Erro ao carregar produto:', error);
+                toast({
+                    title: "Erro",
+                    description: "Erro ao carregar produto. Por favor, tente novamente.",
+                    className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+                });
+                
             }
         };
 
@@ -58,7 +64,12 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
             );
             router.push('/routes/ajustes');
         } catch (error) {
-            console.error('Erro ao atualizar produto:', error);
+            toast({
+                title: "Erro",
+                description: "Erro ao atualizar produto. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
+            
         }
     };
     const HabilitarEventos = () => {

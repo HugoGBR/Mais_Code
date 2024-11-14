@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { DadosCargos } from '@/lib/interfaces/dadosUsuarios';
 import { criarCookie, getCookie } from '@/lib/coockie';
 import { useRouter } from 'next/navigation';
+import { toast } from '@/components/ui/use-toast';
 
 const schema = z.object({
     nome: z.string(),
@@ -67,7 +68,11 @@ export default function Perfil() {
             await criarCookie('UserSenha', dados.senha);
             setInputHabilitados(false);
         } else {
-            console.error('Erro ao atualizar o usuário:', response.message);
+            toast({
+                title: "Erro",
+                description: "Erro ao atualizar o usuário. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
         }
     }
 

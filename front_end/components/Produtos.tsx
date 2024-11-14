@@ -55,7 +55,6 @@ export default function CadastroProduto() {
                 throw new Error("Erro ao cadastrar o produto: resposta inválida");
             }
         } catch (error) {
-            console.error("Erro ao cadastrar o produto:", error);
             toast({
                 title: "Erro",
                 description: "Falha ao cadastrar o produto. Por favor, tente novamente.",
@@ -111,7 +110,7 @@ export default function CadastroProduto() {
                                     value={comissaoNovo}
                                     onChange={(event) => {
                                         const value = event.target.value;
-                                        const maskedValue = percentageMask(event.target.value);
+                                        const maskedValue = moneyMask(event.target.value);
                                         if (maskedValue.replace(/\D/g, '').length <= 12) {
                                             setComissaoNovo(maskedValue);
                                         }

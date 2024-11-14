@@ -57,6 +57,7 @@ export default function Gestao() {
             }
         } catch (error) {
             console.error('Failed to load users:', error);
+            
             setListaUsuarios([]);
         }
     }

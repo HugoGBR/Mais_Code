@@ -10,6 +10,7 @@ import { userSchema } from "@/app/schemas/userSchema";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DadosCargos } from "@/lib/interfaces/dadosUsuarios";
 import { z } from "zod";
+import { toast } from "@/components/ui/use-toast";
 
 type LoginFormSchema = z.infer<typeof userSchema>;
 
@@ -72,7 +73,11 @@ export default function App({ params }: { params: { id: number } }) {
             setdadosUsuario((prev) => ({ ...prev, status_usuario: novoStatus }));
 
         } catch (error) {
-            console.error("Erro ao alterar o status do usuário: ", error);
+            toast({
+                title: "Erro",
+                description: "Erro ao alterar o status do usuário. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
         }
     };
 

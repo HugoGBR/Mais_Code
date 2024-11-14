@@ -2,6 +2,7 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { getContratoById, updateContratoById } from '@/lib/TipoContratoController';
+import { toast } from '@/components/ui/use-toast';
 
 interface Props {
     params: {
@@ -23,10 +24,19 @@ const ModeloContrato: React.FC<Props> = ({ params }) => {
                     setDadosContrato({ nome: contrato.nome });
                     setNomeContrato(contrato.nome);
                 } else {
-                    console.error('Contrato não encontrado');
+                    toast({
+                        title: "Erro",
+                        description: "Contrato não encontrado. Por favor, tente novamente.",
+                        className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+                    });
+                    
                 }
             } catch (error) {
-                console.error('Erro ao buscar contrato:', error);
+                toast({
+                    title: "Erro",
+                    description: "Erro ao buscar contrato:. Por favor, tente novamente.",
+                    className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+                });
             }
         };
 
@@ -40,10 +50,20 @@ const ModeloContrato: React.FC<Props> = ({ params }) => {
                 await updateContratoById(nomeContrato, params.id);
                 router.push('/routes/ajustes');
             } else {
-                console.error('ID do contrato inexistente.');
+                toast({
+                    title: "Erro",
+                    description: "ID do contrato inexistente. Por favor, tente novamente.",
+                    className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+                });
+                
             }
         } catch (error) {
-            console.error('Erro ao salvar contrato:', error);
+            
+            toast({
+                title: "Erro",
+                description: "Erro ao salvar contrato. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
         }
     };
     const HabilitarEventos = () => {

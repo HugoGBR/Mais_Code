@@ -63,9 +63,9 @@ export function TabelaContrato<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
-      pagination, // Adiciona a paginação ao estado da tabela
+      pagination, 
     },
-    onPaginationChange: setPagination, // Controla mudanças na paginação
+    onPaginationChange: setPagination, 
   })
 
   return (
