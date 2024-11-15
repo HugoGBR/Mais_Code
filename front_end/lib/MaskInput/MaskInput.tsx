@@ -35,15 +35,33 @@ export const insertMaskTelefone = (telefone: string) => {
 };
 
 export const moneyMask = (valor: string) => {
-    valor = valor.replace('.', '').replace(',', '').replace(/\D/g, '')
+    if (!valor) return "0,00";
 
-    const options = { minimumFractionDigits: 2 }
-    const result = new Intl.NumberFormat('pt-BR', options).format(
-        parseFloat(valor) / 100
-    )
+    valor = valor.replace(/\D/g, "");
 
-    return result;
+    while (valor.length < 3) {
+        valor = "0" + valor;
+    }
+
+    const parteInteira = valor.slice(0, -2);
+    const parteDecimal = valor.slice(-2);
+    return `${parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, ".")},${parteDecimal}`;
 }
+
+export const entradaMask = (valor: string): string => {
+    if (!valor) return "0,00";
+
+    valor = valor.replace(/\D/g, "");
+
+    while (valor.length < 3) {
+        valor = "0" + valor;
+    }
+
+    const parteInteira = valor.slice(0, -2);
+    const parteDecimal = valor.slice(-2);
+    return `${parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, ".")},${parteDecimal}`;
+};
+
 
 export const percentageMask = (valor: string) => {
     // Remove tudo que não for número ou vírgula

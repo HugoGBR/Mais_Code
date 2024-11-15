@@ -12,13 +12,14 @@ import CardCliente from '@/components/CardClienteGestao';
 import PopUpConfig from "./PopUpConfig";
 import { getCookie } from "@/lib/coockie";
 import { useToast } from "@/components/ui/use-toast";
-import { insertMaskCpfCnpj, insertMaskTelefone, moneyMask } from "@/lib/MaskInput/MaskInput";
+import { entradaMask, insertMaskCpfCnpj, insertMaskTelefone, moneyMask } from "@/lib/MaskInput/MaskInput";
 
 
 
 export default function CardCadastro() {
     const [numero_parcelas, setNumeroParcelas] = useState("");
     const [valor_entrada, setValorEntrada] = useState("");
+    const [valor_entrada_num, setValorEntradaNum] = useState(0);
     const [TiposProduto, setTipoProduto] = useState<dadosProduto[]>([]);
     const [ModeloContrato, setModeloContrato] = useState<dadosModelo_contrato[]>([]);
     const [listaCliente, setListaCliente] = useState<dadosCliente[]>([]);
@@ -47,10 +48,10 @@ export default function CardCadastro() {
     const { toast } = useToast();
 
     function removeMaskAndConvert(value: string): number {
-        if (!value) return 0; // Caso o valor esteja vazio, retorna 0
+        if (!value) return 0;
         return parseFloat(value.replace(/\./g, '').replace(',', '.'));
     }
-    
+
 
     useEffect(() => {
         if (foundCliente) {
@@ -88,7 +89,7 @@ export default function CardCadastro() {
             }
         }
     }, [new_produto_id, horas_trabalhadas, valor_entrada]);
-    
+
     useEffect(() => {
         if (new_produto_id) {
             const selectedProduct = TiposProduto.find(produto => produto.id.toString() === new_produto_id);
@@ -146,7 +147,7 @@ export default function CardCadastro() {
         }
         return true;
     };
-
+    console.log(valor_entrada)
     const resetForm = () => {
         setNumeroParcelas("");
         setValorEntrada("");
@@ -175,7 +176,7 @@ export default function CardCadastro() {
 
         const datadoinicio = new Date(DataInicio);
         const datadofim = new Date(DataFim);
-
+        const entrada = valor_entrada_num;
         try {
             const numeroFinal = metodo_pagamento === "À vista" ? 1 : 2;
             const vendaResponse = await createNewSell(
@@ -186,7 +187,7 @@ export default function CardCadastro() {
                 statusClienteValor,
                 horas_trabalhadas,
                 datadofim,
-                Number(valor_entrada),
+                Number(entrada),
                 valor_total,
                 datadoinicio,
                 metodo_pagamento,
@@ -285,6 +286,15 @@ export default function CardCadastro() {
     const handleSetValoresParcelas = (novosValores: number[]) => {
         setValoresParcelas(novosValores);
     };
+
+    const handleValorEntradaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const valorFormatado = entradaMask(event.target.value);
+        const valorNumerico = removeMaskAndConvert(valorFormatado);
+    
+        setValorEntrada(valorFormatado);
+        setValorEntradaNum(valorNumerico);
+    };
+    
 
     return (
         <div className="flex flex-col gap-3 md:flex md:flex-col lg:flex-row">
@@ -464,11 +474,9 @@ export default function CardCadastro() {
                                 </span>
                                 <input
                                     type="text"
-                                    id="valorEntrada"
-                                    name="valorEntrada"
                                     value={valor_entrada}
-                                    onChange={(event) => (setValorEntrada(moneyMask((event.target.value))))}
-                                    placeholder="15.000,00"
+                                    onChange={handleValorEntradaChange}
+                                    placeholder="00,00"
                                     className="border-b-2 pl-8 w-full bg-white focus:outline-none focus:border-blue-500"
                                 />
                             </div>
@@ -570,7 +578,7 @@ export default function CardCadastro() {
                                 Valor total a pagar:
                             </label>
                             <h1 className="font-bold">
-                                {`R$ ${moneyMask(valor_total.toString())}`}
+                                {`R$ ${valor_total}`}
                             </h1>
                         </div>
                         <div className="text-center col-span-2">
