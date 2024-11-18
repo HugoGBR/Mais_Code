@@ -51,37 +51,40 @@ export const moneyMask = (valor: string) => {
 export const entradaMask = (valor: string): string => {
     if (!valor) return "0,00";
 
-    valor = valor.replace(/\D/g, "");
+    let valorNumerico = valor.replace(/\D/g, "");
 
-    while (valor.length < 3) {
-        valor = "0" + valor;
-    }
+    valorNumerico = valorNumerico.replace(/^0+/, "") || "0";
 
-    const parteInteira = valor.slice(0, -2);
-    const parteDecimal = valor.slice(-2);
-    return `${parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, ".")},${parteDecimal}`;
+    valorNumerico = valorNumerico.padStart(3, "0");
+
+    const parteInteira = valorNumerico.slice(0, -2);
+    const parteDecimal = valorNumerico.slice(-2);
+
+    const parteInteiraFormatada = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return `${parteInteiraFormatada},${parteDecimal}`;
 };
 
 
-export const percentageMask = (valor: string) => {
-    // Remove tudo que não for número ou vírgula
-    valor = valor.replace(/\D/g, '').replace(',', '.');
 
-    // Converte para número e divide por 100 para permitir frações como 56,54
-    let percentage = parseFloat(valor) / 100;
 
-    // Limita o valor máximo a 100%
-    if (percentage > 100) {
-        percentage = 100;
-    }
+export const percentageMask = (valor: string): string => {
+    if (!valor) return "0,00";
 
-    // Formata o número como porcentagem com 2 casas decimais
-    const options = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-    const result = new Intl.NumberFormat('pt-BR', options).format(percentage);
+    let valorNumerico = valor.replace(/\D/g, "");
 
-    // Retorna o valor formatado com o símbolo de porcentagem no final
-    return `${result}%`;
-}
+    valorNumerico = valorNumerico.replace(/^0+/, "") || "0";
+
+    valorNumerico = valorNumerico.padStart(3, "0");
+
+    const parteInteira = valorNumerico.slice(0, -2);
+    const parteDecimal = valorNumerico.slice(-2);
+
+    const parteInteiraFormatada = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return `${parteInteiraFormatada},${parteDecimal}%`;
+};
+
 
 
 export const removerMascaraValorMonetario = (valor: string) => {
