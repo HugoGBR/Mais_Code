@@ -109,7 +109,7 @@ export default function CadastrarCliente() {
                             <div className="flex flex-col space-y-1.5">
                                 <input
                                     type="text"
-                                    className={`border-b-2 focus:border-b-2 ${errors.nome ? 'border-red-500' : ''}`}
+                                    className={`mt-auto md:col-span-4 focus:outline-none focus:border-blue-500 border-b-2 focus:border-b-2 ${errors.nome ? 'border-red-500' : ''}`}
                                     placeholder="Nome"
                                     {...register('nome')}
                                 />
@@ -119,7 +119,7 @@ export default function CadastrarCliente() {
                             <div className="flex flex-col space-y-1.5">
                             <input
                                 type="text"
-                                className={`border-b-2 focus:border-b-2 ${errors.cpf_cnpj ? 'border-red-500' : ''}`}
+                                className={`mt-auto md:col-span-4 focus:outline-none focus:border-blue-500 border-b-2 focus:border-b-2 ${errors.cpf_cnpj ? 'border-red-500' : ''}`}
                                 placeholder="CPF/CNPJ"
                                 {...register('cpf_cnpj', {
                                     required: "CPF/CNPJ é obrigatório",
@@ -145,7 +145,7 @@ export default function CadastrarCliente() {
                             <div className="flex flex-col space-y-1.5">
                                 <input
                                     type="email"
-                                    className={`border-b-2 focus:border-b-2 ${errors.email ? 'border-red-500' : ''}`}
+                                    className={`mt-auto md:col-span-4 focus:outline-none focus:border-blue-500 border-b-2 focus:border-b-2 ${errors.email ? 'border-red-500' : ''}`}
                                     placeholder="Email"
                                     {...register('email')}
                                 />
@@ -155,7 +155,7 @@ export default function CadastrarCliente() {
                             <div className="flex flex-col space-y-1.5">
                                 <input
                                     type="text"
-                                    className={`border-b-2 focus:border-b-2 ${errors.telefone ? 'border-red-500' : ''}`}
+                                    className={`mt-auto md:col-span-4 focus:outline-none focus:border-blue-500 border-b-2 focus:border-b-2 ${errors.telefone ? 'border-red-500' : ''}`}
                                     placeholder="Telefone"
                                     {...register('telefone', {
                                         required: "Telefone é obrigatório",
