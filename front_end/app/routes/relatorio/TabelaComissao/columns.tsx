@@ -3,8 +3,8 @@
 import {Button} from "@/components/ui/button";
 import {CaretSortIcon} from "@radix-ui/react-icons";
 import {ColumnDef} from "@tanstack/react-table";
-import { Payment } from "../../relatorio/Table/columns";
 import { format, parseISO } from 'date-fns';
+import { Payment } from "../../financeiro/Table/columns";
 
 export const columns: ColumnDef<Payment>[] = [
     {

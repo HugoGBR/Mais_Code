@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({
 
     function HandleClick(row:string){
         const dadosDaLinha = JSON.parse(row)
-        router.push(`/routes/relatorio/${dadosDaLinha.numero_contrato}`)
+        router.push(`/routes/financeiro/${dadosDaLinha.numero_contrato}`)
     }
     const getDadosYear = async () => {
         const dados = await GetDadosVendaByYear(hoje);
