@@ -2,7 +2,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { createNewProduto } from '@/lib/ProdutoController';
-import { moneyMask, percentageMask, removerMascaraValorMonetario } from '@/lib/MaskInput/MaskInput';
+import { entradaMask, percentageMask, removerMascaraPorcentagem, removerMascaraValorMonetario } from '@/lib/MaskInput/MaskInput';
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from './ui/use-toast';
 
@@ -34,15 +34,19 @@ export default function CadastroProduto() {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         try {
+            // Remove as máscaras e transforma em valores numéricos
+            const horasTrabalhadasNumber = removerMascaraValorMonetario(horasTrabalhadas);
+            const comissaoNovoNumber = removerMascaraPorcentagem(comissaoNovo);
+            const comissaoAntigoNumber = removerMascaraPorcentagem(comissaoAntigo);
 
             const response = await createNewProduto(
                 nomeProduto,
-                removerMascaraValorMonetario(horasTrabalhadas),
+                horasTrabalhadasNumber,
                 descricaoProduto,
-                Number(comissaoNovo),
-                Number(comissaoAntigo)
+                comissaoNovoNumber,
+                comissaoAntigoNumber
             );
-            console.log(response.status)
+
             if (response.status == 1) {
                 toast({
                     title: "Sucesso",
@@ -93,7 +97,7 @@ export default function CadastroProduto() {
                                         name="horasTrabalhadas"
                                         value={horasTrabalhadas}
                                         onChange={(event) => {
-                                            const maskedValue = moneyMask(event.target.value);
+                                            const maskedValue = entradaMask(event.target.value);
                                             if (maskedValue.replace(/\D/g, '').length <= 12) {
                                                 setHorasTrabalhadas(maskedValue);
                                             }
@@ -109,8 +113,7 @@ export default function CadastroProduto() {
                                     name="comissaoNovo"
                                     value={comissaoNovo}
                                     onChange={(event) => {
-                                        const value = event.target.value;
-                                        const maskedValue = moneyMask(event.target.value);
+                                        const maskedValue = percentageMask(event.target.value);
                                         if (maskedValue.replace(/\D/g, '').length <= 12) {
                                             setComissaoNovo(maskedValue);
                                         }

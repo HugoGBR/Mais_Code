@@ -89,13 +89,23 @@ export const percentageMask = (valor: string): string => {
 
 export const removerMascaraValorMonetario = (valor: string) => {
     let numericValor = valor.replace(/[^\d]/g, '');
-
     if (numericValor === '') {
         return 0;
     }
     const valorNumerico = parseFloat(numericValor.slice(0, -2) + '.' + numericValor.slice(-2));
 
     return valorNumerico || 0;
+};
+
+export const removerMascaraPorcentagem = (valor: string): number => {
+    if (!valor) return 0;
+
+    const numericValor = valor.replace(/[^\d]/g, '');
+
+    if (!numericValor) return 0;
+
+    const valorNumerico = Number(numericValor.slice(0, -2) + '.' + numericValor.slice(-2));
+    return valorNumerico;
 };
 
 
