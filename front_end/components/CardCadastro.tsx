@@ -522,7 +522,6 @@ export default function CardCadastro() {
                                         </label>
                                     </div>
 
-                                    {/* Opção "Parcelado" */}
                                     <div className="flex items-center">
                                         <input
                                             id="pagamento-opcao-2"
@@ -544,7 +543,6 @@ export default function CardCadastro() {
                                     </div>
                                 </div>
 
-                                {/* Contêiner de Parcelas alinhado à direita */}
                                 {mostrarParcelas && (
                                     <div className="flex items-center space-x-8">
                                         <input
@@ -602,6 +600,4 @@ export default function CardCadastro() {
     );
 }
 
-function setErrors(newErrors: { [key: string]: string; }) {
-    throw new Error("Function not implemented.");
-}   
+

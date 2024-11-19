@@ -17,6 +17,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { toast } from '@/components/ui/use-toast';
 
 export default function Gestao() {
     const [listaUsuarios, setListaUsuarios] = useState<dadosUsuario[]>([]);
@@ -41,7 +42,11 @@ export default function Gestao() {
                 setListaCliente([]);
             }
         } catch (error) {
-            console.error('Failed to load clients:', error);
+            toast({
+                title: "Erro",
+                description: "Erro ao cadastrar o usuário. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
             setListaCliente([]);
         }
     }
@@ -56,7 +61,11 @@ export default function Gestao() {
                 setListaUsuarios([]);
             }
         } catch (error) {
-            console.error('Failed to load users:', error);
+            toast({
+                title: "Erro",
+                description: "Erro ao cadastrar o usuário. Por favor, tente novamente.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
             
             setListaUsuarios([]);
         }

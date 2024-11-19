@@ -120,7 +120,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 description: "Erro ao ativar a venda!",
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
             });
-            console.error("Erro ao ativar a venda:", error);
         }
     }
 
@@ -143,15 +142,10 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 description: "Erro ao Concluir venda!",
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
             });
-            console.error("Erro ao Concluir a venda:", error);
         }
     }
 
-    async function handleSearchCPF(event: FormEvent) {
-        event.preventDefault();
-        const clienteEncontrado = listaCliente.find(client => client.cpf_cnpj === cpf_cnpj_input);
-        setFoundCliente(clienteEncontrado || null);
-    }
+   
 
     const handleButtonsavle = async (event: FormEvent) => {
         event.preventDefault();
@@ -191,15 +185,14 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
             });
 
-            console.error("Erro ao atualizar a venda:", error);
         }
     };
 
-    const [isEditing, setIsEditing] = useState(false); // Novo estado para controlar o modo de edição
+    const [isEditing, setIsEditing] = useState(false); 
 
     const handleButtonClick = (event: FormEvent) => {
         if (isEditing) {
-            handleButtonsavle(event); // Passa o event ao chamar handleButtonsavle
+            handleButtonsavle(event); 
         }
         setInputHabilitados(!inputsHabilitados);
         setIsEditing(!isEditing);
@@ -236,25 +229,10 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 description: "Erro ao atualizar as parcelas!",
                 className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
             });
-            console.error("Erro ao atualizar as parcelas:", error);
         }
     };
 
 
-
-
-    const renderGestaoCliente = () => {
-        if (!foundCliente) return null;
-        return (
-            <Link href={`/routes/gestao/cliente/${foundCliente.id}`} key={foundCliente.id}>
-                <div onClick={() => route.push(`/routes/gestao/cliente/${foundCliente.id}`)} className='bg-gray-300 mb-4 rounded-lg flex-grow'>
-                    <a className="block w-full">
-                        <CardCliente dados={foundCliente} />
-                    </a>
-                </div>
-            </Link>
-        );
-    };
 
     return (
         <div className="flex flex-col gap-3 md:flex md:flex-col lg:flex-row">
@@ -418,9 +396,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                             <h2 className="font-bold mb-3">Método de Pagamento</h2>
 
                             <div className="flex items-center justify-between">
-                                {/* Contêiner de Radio Buttons alinhado à esquerda */}
                                 <div className="flex items-center space-x-6">
-                                    {/* Opção "À vista" */}
                                     <div className="flex items-center">
                                         <input
                                             id="pagamento-opcao-1"
@@ -440,7 +416,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                         </label>
                                     </div>
 
-                                    {/* Opção "Parcelado" */}
                                     <div className="flex items-center">
                                         <input
                                             id="pagamento-opcao-2"
@@ -461,7 +436,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                                     </div>
                                 </div>
 
-                                {/* Contêiner de Parcelas alinhado à direita */}
                                 {mostrarParcelas && (
                                     <div className="flex items-center space-x-8">
                                         <input
@@ -531,7 +505,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                     </Card>
                 </form>
             </div>
-            <Toaster />
         </div>
     );
 }

@@ -25,7 +25,7 @@ import { useState } from "react"
 import { PiPlusCircleBold } from "react-icons/pi";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"; // Import da paginação
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"; 
 
 
 
@@ -135,7 +135,7 @@ export function TabelaContrato<TData, TValue>({
           </Table>
         </div>
 
-        {/* Paginação */}
+       
         {data.length > pagination.pageSize && (
           <div className="flex justify-center items-center mt-4">
             <Pagination>

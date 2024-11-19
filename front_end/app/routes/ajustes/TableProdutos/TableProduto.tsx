@@ -37,7 +37,7 @@ export function TableProduto<TData, TValue>({ columns, data, }: DataTableProps<T
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 }) // Define o pageIndex e pageSize
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
   const router = useRouter();
 
   const table = useReactTable({
@@ -80,16 +80,6 @@ export function TableProduto<TData, TValue>({ columns, data, }: DataTableProps<T
           </div>
         </div>
         <div>
-          {/* <input
-            type="text"
-            placeholder="Pesquisar..."
-            value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("nome")?.setFilterValue(event.target.value)
-            }
-            className="border border-gray-300 rounded-md py-1 px-2 w-5/12 mb-3 focus:outline-none focus:border-blue-500"
-          /> */}
-
           <div className="rounded-lg border">
             <Table>
               <TableHeader>
@@ -144,7 +134,6 @@ export function TableProduto<TData, TValue>({ columns, data, }: DataTableProps<T
           </div>
         </div>
 
-        {/* Paginação */}
         {data.length > pagination.pageSize && (
           <div className="flex justify-center items-center">
             <Pagination>
