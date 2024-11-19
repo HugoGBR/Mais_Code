@@ -133,7 +133,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                     className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
                 });
                 setTimeout(() => {
-                    route.push('/routes/relatorio');
+                    route.push('/routes/financeiro');
                 }, 1000);
             }
         } catch (error) {
