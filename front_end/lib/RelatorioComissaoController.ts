@@ -9,7 +9,6 @@ export async function fetchDataComissao(
             throw new Error("Erro ao buscar os dados do relatório");
         }
         const jsonData = await response.json();
-        console.log(jsonData)
         return (jsonData);
 
     } catch (error) {
@@ -26,7 +25,6 @@ export async function remuneracaoComissao(
             throw new Error("Erro ao buscar os dados do relatório");
         }
         const jsonData = await response.json();
-        console.log(jsonData)
         return (jsonData);
 
     } catch (error) {

@@ -29,7 +29,6 @@ export default function Relatorio({ params }: { params: { id: Number } }) {
     const carregarRemuneracao = useCallback(async () => {
         try {
             const remuneracao = await remuneracaoComissao(params.id);
-            console.log(remuneracao);
             if (Array.isArray(remuneracao) && remuneracao.length > 0) {
                 setComissaoTotal(parseFloat(remuneracao[0]["SUM(comissao_total)"]));
             } else {

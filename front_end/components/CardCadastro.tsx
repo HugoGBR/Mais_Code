@@ -149,7 +149,6 @@ export default function CardCadastro() {
         }
         return true;
     };
-    console.log(valor_entrada)
     const resetForm = () => {
         setNumeroParcelas("");
         setValorEntrada("");
@@ -199,7 +198,6 @@ export default function CardCadastro() {
                 Number(numero_parcelo),
                 numeroFinal
             );
-            console.log(vendaResponse);
 
             if (vendaResponse) {
                 toast({

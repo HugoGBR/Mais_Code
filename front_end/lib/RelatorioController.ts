@@ -7,7 +7,6 @@ export async function fetchData() {
             throw new Error("Erro ao buscar os dados do relatório");
         }
         const jsonData = await response.json();
-        console.log(jsonData)
         return (jsonData);
 
     } catch (error) {
@@ -35,7 +34,6 @@ export async function GetDadosVendaByData(
             throw new Error("Erro ao buscar os dados do relatório");
         }
         const jsonData = await response.json();
-        console.log(jsonData)
         return (jsonData);
 
     } catch (error) {
@@ -63,7 +61,6 @@ export async function GetDadosVendaByYear(
             throw new Error("Erro ao buscar os dados do relatório");
         }
         const jsonData = await response.json();
-        console.log(jsonData)
         return (jsonData);
 
     } catch (error) {

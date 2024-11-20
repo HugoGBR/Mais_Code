@@ -7,7 +7,6 @@ export async function fetchRelatorio() {
             throw new Error("Erro ao buscar os dados do relatório");
         }
         const jsonData = await response.json();
-        console.log(jsonData)
         return (jsonData);
     } catch (error) {
         console.error("Erro:", error);
@@ -21,7 +20,6 @@ export async function fetchDadosGrafico() {
             throw new Error("Erro ao buscar os dados do gráfico");
         }
         const jsonData = await response.json();
-        console.log(jsonData)
         return (jsonData);
     } catch (error) {
         console.error("Erro:", error);

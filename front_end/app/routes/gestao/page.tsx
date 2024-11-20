@@ -35,7 +35,6 @@ export default function Gestao() {
     async function carregarCliente() {
         try {
             const cliente = await getAllClient();
-            console.log(cliente);
             if (Array.isArray(cliente)) {
                 setListaCliente(cliente);
             } else {
@@ -54,7 +53,6 @@ export default function Gestao() {
     async function carregarUsuarios() {
         try {
             const usuario = await getAllUsers();
-            console.log(usuario);
             if (Array.isArray(usuario)) {
                 setListaUsuarios(usuario);
             } else {

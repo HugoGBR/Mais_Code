@@ -22,7 +22,6 @@ export async function createNewTipoContrato(
         }
 
         const data = JSON.parse(await response.json());
-        console.log(data);
 
         return data;
     } catch (error) {
