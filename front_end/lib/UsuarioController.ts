@@ -145,8 +145,8 @@ export async function updateUser(
         }
         )
     });
-    const response = await request.json();
-    return response.message;
+    const response = JSON.parse(await request.json());
+    return response;
 }
 
 export async function updatePerfil(

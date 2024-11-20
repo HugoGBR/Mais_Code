@@ -58,8 +58,33 @@ export default function App({ params }: { params: { id: number } }) {
 
     const handleButtonClick = async () => {
         if (inputsHabilitados) {
-            await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, dadosUsuario.status_usuario, params.id);
-            router.push('/routes/gestao');
+            try {
+                const response = await updateUser(
+                    dadosUsuario.nome,
+                    dadosUsuario.cargo_id,
+                    dadosUsuario.email,
+                    dadosUsuario.senha,
+                    dadosUsuario.status_usuario,
+                    params.id
+                );
+    
+                if (response.status === 1) {
+                    toast({
+                        title: "Sucesso",
+                        description: "Usuário atualizado com sucesso!",
+                        className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+                    });
+                    router.push('/routes/gestao');
+                } else {
+                    throw new Error("Erro ao atualizar o usuário. Por favor, tente novamente.");
+                }
+            } catch (error) {
+                toast({
+                    title: "Erro",
+                    description: "Erro inesperado ao atualizar o usuário.",
+                    className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+                });
+            }
         } else {
             HabilitarEventos();
             setIsHidden(false);
