@@ -1,5 +1,5 @@
 <?php
-include "../database.php"; // Importando database
+include "../database.php"; 
 
 class TipoClienteController
 {

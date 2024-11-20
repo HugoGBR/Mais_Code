@@ -325,15 +325,12 @@ class Vendacontroller
     public function updateParcelaByIDv(int $id)
     {
         try {
-            // Obtendo os dados do corpo da requisição
             $user = json_decode(file_get_contents('php://input'));
 
-            // Verificando se os dados enviados são válidos
             if (!$user) {
                 return ['status' => 0, 'message' => 'Dados da parcela inválidos.'];
             }
 
-            // Preparando a consulta SQL para atualizar a parcela
             $sql = "UPDATE parcelas SET 
                     valor_da_parcela = :valor_da_parcela,
                     status = :status    
@@ -341,19 +338,16 @@ class Vendacontroller
 
             $db = $this->conn->prepare($sql);
 
-            // Vinculando os parâmetros
             $db->bindParam(":valor_da_parcela", $user->valor_da_parcela);
             $db->bindParam(":status", $user->status);
             $db->bindParam(":id", $id);
 
-            // Executando a consulta
             if ($db->execute()) {
                 return ['status' => 1, 'message' => 'Parcela atualizada com sucesso.'];
             } else {
                 return ['status' => 0, 'message' => 'Falha ao atualizar a parcela.'];
             }
         } catch (Exception $e) {
-            // Retornando o erro em caso de exceção
             return ['status' => 0, 'message' => 'Erro ao atualizar a parcela: ' . $e->getMessage()];
         }
     }

@@ -34,7 +34,6 @@ export default function CadastroProduto() {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         try {
-            // Remove as máscaras e transforma em valores numéricos
             const horasTrabalhadasNumber = removerMascaraValorMonetario(horasTrabalhadas);
             const comissaoNovoNumber = removerMascaraPorcentagem(comissaoNovo);
             const comissaoAntigoNumber = removerMascaraPorcentagem(comissaoAntigo);

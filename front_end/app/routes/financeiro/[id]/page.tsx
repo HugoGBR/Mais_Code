@@ -42,7 +42,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
     const [horas_trabalhadas, setHorasTrabalhadas] = useState<number>(0);
     const [statusVenda, setStatusVenda] = useState("");
     const [descricaoProduto, setDescricaoProduto] = useState<string>('');
-    const [parcelas, setParcelas] = useState<any[]>([]); // Estado para armazenar as parcelas
+    const [parcelas, setParcelas] = useState<any[]>([]);
 
     const route = useRouter();
     const { toast } = useToast();
@@ -74,7 +74,6 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 setStatusVenda(vendaData.status_venda);
                 setDescricaoProduto(vendaData.justificativa_cancelamento);
 
-                // Carregar parcelas ao carregar a venda
                 const parcelasData = await getParcelaByidv(params.id);
                 setParcelas(parcelasData);
             }

@@ -1,5 +1,5 @@
 <?php
-include "../database.php"; //importando database
+include "../database.php";
 
 class UserFinanceiro
 {
@@ -19,12 +19,6 @@ class UserFinanceiro
         $users = $db->fetchAll(PDO::FETCH_ASSOC);
         return $users;
     }
-
-    
-
-   
-
-    
   
 }
 
