@@ -55,7 +55,6 @@ export default function Perfil() {
 
 
     async function handleForm(dados: Formulario) {
-        console.log(dados)
         const response = await updateUserPerfil(
             dados.nome,
             dados.email,
