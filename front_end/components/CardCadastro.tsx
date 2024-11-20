@@ -535,6 +535,7 @@ export default function CardCadastro() {
                                                 setmetodo_pagamento("Parcelado");
                                                 setMostrarParcelas(true);
                                                 setnumero_parcelo(0);
+                                                setErrors((prevErrors) => ({ ...prevErrors, metodo_pagamento: '' }));
                                             }}
                                         />
                                         <label htmlFor="pagamento-opcao-2" className="ml-2 text-sm font-medium text-gray-900">
