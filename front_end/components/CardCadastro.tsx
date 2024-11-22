@@ -125,17 +125,17 @@ export default function CardCadastro() {
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
 
-        if (!cpf_cnpj_input) newErrors.cpf_cnpj_input = "CPF/CNPJ é obrigatório";
-        if (!DataInicio) newErrors.DataInicio = "Data de início é obrigatória";
-        if (!DataFim) newErrors.DataFim = "Data de término é obrigatória";
-        if (!new_tipo_contrato_id) newErrors.new_tipo_contrato_id = "Modelo de contrato é obrigatório";
-        if (!new_produto_id) newErrors.new_produto_id = "Produto é obrigatório";
-        if (!horas_trabalhadas) newErrors.horas_trabalhadas = "Horas trabalhadas é obrigatório";
-        if (!nome_contato) newErrors.nome_contato = "Nome do contato é obrigatório";
-        if (!telefone) newErrors.telefone = "Telefone do contato é obrigatório";
-        if (!email) newErrors.email = "Email do contato é obrigatório";
-        if (!statusCliente) newErrors.statusCliente = "Status obrigatório";
-        if (!metodo_pagamento) newErrors.metodo_pagamento = "Selecione um método de pagamento";
+        if (!cpf_cnpj_input) newErrors.cpf_cnpj_input = "Campo obrigatório";
+        if (!DataInicio) newErrors.DataInicio = "Campo obrigatório";
+        if (!DataFim) newErrors.DataFim = "Campo obrigatório";
+        if (!new_tipo_contrato_id) newErrors.new_tipo_contrato_id = "Campo obrigatório";
+        if (!new_produto_id) newErrors.new_produto_id = "Campo obrigatório";
+        if (!horas_trabalhadas) newErrors.horas_trabalhadas = "Campo obrigatório";
+        if (!nome_contato) newErrors.nome_contato = "Campo obrigatório";
+        if (!telefone) newErrors.telefone = "Campo obrigatório";
+        if (!email) newErrors.email = "Campo obrigatório";
+        if (!statusCliente) newErrors.statusCliente = "Campo obrigatório";
+        if (!metodo_pagamento) newErrors.metodo_pagamento = "Campo obrigatório";
 
         setErrors(newErrors);
 

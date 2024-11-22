@@ -39,10 +39,10 @@ export default function CadastrarCliente() {
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
 
-        if (!nome) newErrors.nome = "Obrigatório Nome";
-        if (!cpf_cnpj_input) newErrors.cpf_cnpj_input = "CPF/CNPJ é obrigatório";
-        if (!telefone) newErrors.telefone = "Telefone do contato é obrigatório";
-        if (!email) newErrors.email = "Email do contato é obrigatório";
+        if (!nome) newErrors.nome = "Campo obrigatório";
+        if (!cpf_cnpj_input) newErrors.cpf_cnpj_input = "Campo obrigatório";
+        if (!telefone) newErrors.telefone = "Campo obrigatório";
+        if (!email) newErrors.email = "Campo obrigatório";
 
         if (Object.keys(newErrors).length > 0) {
             toast({

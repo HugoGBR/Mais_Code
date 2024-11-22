@@ -8,14 +8,22 @@ import { useToast } from '@/components/ui/use-toast';
 export default function ModeloContrato() {
     const { toast } = useToast();
     const [nomeContrato, setNomeContrato] = useState<string>('');
+    const [error, setError] = useState<string>('');
     const router = useRouter();
 
     const resetForm = () => {
         setNomeContrato('');
+        setError('');
     };
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+
+        if (!nomeContrato.trim()) {
+            setError('Campo obrigatório');
+            return;
+        }
+
         try {
             const response = await createNewTipoContrato(nomeContrato);
 
@@ -51,11 +59,16 @@ export default function ModeloContrato() {
                             id="tipoContrato"
                             name="tipoContrato"
                             value={nomeContrato}
-                            onChange={(event) => setNomeContrato(event.target.value)}
+                            onChange={(event) => {
+                                setNomeContrato(event.target.value);
+                                setError('');
+                            }}
                             placeholder="Tipo de Contrato"
-                            required
-                            className="w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                            className={`w-full border-b-2 focus:border-b-2 focus:outline-none ${
+                                error ? 'border-red-500' : 'focus:border-blue-500'
+                            }`}
                         />
+                        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
                     </div>
                     <div className="text-center">
                         <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded w-full">
