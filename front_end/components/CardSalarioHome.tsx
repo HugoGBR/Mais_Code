@@ -24,7 +24,7 @@ export default function CardSalarioHome() {
 
     return (
         <div className='rounded-lg flex flex-col justify-end bg-white border hover:drop-shadow-lg py-2 px-4'>
-            <h1 className='text-center text-xl font-bold text-gray-700'>Remuneração do Mês</h1>
+            <h1 className='text-xl font-bold text-gray-700'>Remuneração do Mês</h1>
             <p className='text-2xl text-left font-medium text-blue-500'>R${comissaoTotal.toFixed(2)}</p>
         </div>
     );
