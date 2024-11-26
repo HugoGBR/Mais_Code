@@ -41,12 +41,12 @@ export default function Financeiro() {
     }, []);
 
     const PaginaAnterior = () => {
-        setPaginaAtual(prevPage => Math.max(prevPage - 1, 1));
+        setPaginaAtual((prevPage) => Math.max(prevPage - 1, 1));
     };
 
     const ProximaPagina = () => {
         const totalPages = Math.ceil(listaUsuarios.length / itensPorPagina);
-        setPaginaAtual(prevPage => Math.min(prevPage + 1, totalPages));
+        setPaginaAtual((prevPage) => Math.min(prevPage + 1, totalPages));
     };
 
     const inicioIndex = (paginaAtual - 1) * itensPorPagina;
@@ -59,19 +59,21 @@ export default function Financeiro() {
     const mostrarPaginacao = usuariosFiltrados.length >= itensPorPagina;
 
     return (
-        <div>
+        <div className="p-4">
+            {/* Campo de Pesquisa */}
             <div className="flex items-center py-4 input-container">
                 <input
                     type="text"
                     placeholder="Pesquisar..."
                     value={termoBusca}
                     onChange={(event) => setTermoBusca(event.target.value)}
-                    className="max-w-sm border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    className="w-full sm:w-auto border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                 />
             </div>
 
-            <div className='grid grid-cols-2 gap-3'>
-                {usuariosFiltrados.slice(inicioIndex, finalIndex).map(item => (
+            {/* Lista de Usuários */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {usuariosFiltrados.slice(inicioIndex, finalIndex).map((item) => (
                     <Link href={`/routes/relatorio/${item.id}`} key={item.id}>
                         <div>
                             <a className="block">
@@ -82,20 +84,29 @@ export default function Financeiro() {
                 ))}
             </div>
 
+            {/* Paginação */}
             {mostrarPaginacao && (
-                <Pagination>
-                    <PaginationContent>
-                        <PaginationItem>
-                            <PaginationPrevious className='cursor-pointer hover:text-blue-800' onClick={PaginaAnterior} />
-                        </PaginationItem>
-                        <PaginationItem>
-                            <h2>{paginaAtual}</h2>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationNext className='cursor-pointer hover:text-blue-800' onClick={ProximaPagina} />
-                        </PaginationItem>
-                    </PaginationContent>
-                </Pagination>
+                <div className="flex justify-center mt-6">
+                    <Pagination>
+                        <PaginationContent className="flex items-center space-x-2">
+                            <PaginationItem>
+                                <PaginationPrevious
+                                    className="cursor-pointer px-3 py-1 hover:text-blue-800"
+                                    onClick={PaginaAnterior}
+                                />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <span className="text-sm font-bold">{paginaAtual}</span>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationNext
+                                    className="cursor-pointer px-3 py-1 hover:text-blue-800"
+                                    onClick={ProximaPagina}
+                                />
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </div>
             )}
         </div>
     );

@@ -297,342 +297,346 @@ export default function CardCadastro() {
 
 
     return (
-        <div className="gap-5 min-h-screen flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:flex-row justify-center gap-5">
             {/* Primeira Coluna: Formulário Principal */}
-            <div className="w-full lg:w-7/12">
-                <Card className="p-6 md:p-10 hover:shadow-xl rounded-lg border">
-                    <form onSubmit={handleSearchCPF}>
-                        <div className="flex justify-between mb-4 md:mb-6 md:text-2xl font-bold">
-                            <h1>Contrato</h1>
-                        </div>
-                        <h2 className="mb-4 font-bold text-lg">Dados do Contrato</h2>
+            <Card className="p-6 md:p-10 hover:shadow-xl rounded-lg border w-full lg:w-7/12">
+                <form onSubmit={handleSearchCPF}>
+                    <div className="flex justify-between mb-4 md:mb-6 md:text-2xl font-bold">
+                        <h1>Contrato</h1>
+                    </div>
+                    <h2 className="mb-4 font-bold text-lg">Dados do Contrato</h2>
 
-                        {/* CPF e Botão Buscar */}
-                        <div className="md:grid md:grid-cols-12 gap-4">
+                    {/* CPF e Botão Buscar */}
+                    <div className="md:grid md:grid-cols-12 gap-4">
+                        <input
+                            className="border-b-2 w-full md:col-span-6 focus:outline-none focus:border-blue-500 p-2"
+                            placeholder="CPF/CNPJ do Cliente"
+                            type="text"
+                            value={cpf_cnpj_input}
+                            onChange={(e) => {
+                                setCpfCnpjInput(insertMaskCpfCnpj(e.target.value));
+                                setErrors((prevErrors) => ({ ...prevErrors, cpf_cnpj_input: '' }));
+                            }}
+                        />
+                        <button
+                            type="submit"
+                            className="w-full mt-2 md:lg:col-span-3 lg:col-span-2  md:mt-0 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 p-2">
+                            BUSCAR
+                        </button>
+                    </div>
+                    {errors.cpf_cnpj_input && (
+                        <span className="error text-xs text-red-600">{errors.cpf_cnpj_input}</span>
+                    )}
+
+                    {/* Datas */}
+                    <div className="md:grid md:grid-cols-2 gap-4 mt-4">
+                        <div className="flex flex-col mb-4 md:mb-0">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Data Início</label>
                             <input
-                                className="border-b-2 md:col-span-8 focus:outline-none focus:border-blue-500 p-2"
-                                placeholder="CPF/CNPJ do Cliente"
-                                type="text"
-                                value={cpf_cnpj_input}
-                                onChange={(e) => {
-                                    setCpfCnpjInput(insertMaskCpfCnpj(e.target.value));
-                                    setErrors((prevErrors) => ({ ...prevErrors, cpf_cnpj_input: '' }));
+                                className="border-b-2 focus:outline-none focus:border-blue-500"
+                                type="date"
+                                value={DataInicio}
+                                onChange={(event) => {
+                                    setDataInicio(event.target.value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, DataInicio: '' }));
                                 }}
                             />
-                            <button
-                                type="submit"
-                                className="col-span-4 mt-2 md:mt-0 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 p-2">
-                                BUSCAR
-                            </button>
+                            {errors.DataInicio && (
+                                <span className="error text-xs text-red-600 mt-1">{errors.DataInicio}</span>
+                            )}
                         </div>
-                        {errors.cpf_cnpj_input && (
-                            <span className="error text-xs text-red-600">{errors.cpf_cnpj_input}</span>
+
+                        <div className="flex flex-col">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Data Término</label>
+                            <input
+                                className="border-b-2 focus:outline-none focus:border-blue-500"
+                                type="date"
+                                value={DataFim}
+                                onChange={(event) => {
+                                    setDataFim(event.target.value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, DataFim: '' }));
+                                }}
+                            />
+                            {errors.DataFim && (
+                                <span className="error text-xs text-red-600 mt-1">{errors.DataFim}</span>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Campos do Contrato */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                        {/* Modelo do Contrato */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Modelo do Contrato
+                            </label>
+                            <Select
+                                onValueChange={(value) => {
+                                    setnew_tipo_contrato_id(value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, new_tipo_contrato_id: '' }));
+                                }}
+                            >
+                                <SelectTrigger className="rounded-lg">
+                                    <SelectValue placeholder="Tipo Contrato" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {ModeloContrato.map((tipo) => (
+                                        <SelectItem key={tipo.id} value={tipo.id.toString()}>
+                                            {tipo.nome}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            {errors.new_tipo_contrato_id && (
+                                <span className="error text-xs text-red-600">{errors.new_tipo_contrato_id}</span>
+                            )}
+                        </div>
+
+                        {/* Produto */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Produto</label>
+                            <Select
+                                onValueChange={(value) => {
+                                    setnew_produto_id(value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, new_produto_id: '' }));
+                                }}
+                            >
+                                <SelectTrigger className="rounded-lg">
+                                    <SelectValue placeholder="Produto" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {TiposProduto.map((produto) => (
+                                        <SelectItem key={produto.id} value={produto.id.toString()}>
+                                            {produto.nome}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            {errors.new_produto_id && (
+                                <span className="error text-xs text-red-600">{errors.new_produto_id}</span>
+                            )}
+                        </div>
+
+                        {/* Horas Trabalhadas */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Horas Trabalhadas
+                            </label>
+                            <input
+                                className="border-b-2 w-full focus:outline-none focus:border-blue-500"
+                                placeholder="0"
+                                type="number"
+                                min="0"
+                                value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
+                                onChange={(event) => {
+                                    const value = Number(event.target.value);
+                                    if (!isNaN(value) && value >= 0) {
+                                        setHorasTrabalhadas(value);
+                                        setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
+                                    } else {
+                                        setHorasTrabalhadas(0);
+                                    }
+                                }}
+                            />
+                            {errors.horas_trabalhadas && (
+                                <span className="error text-xs text-red-600">{errors.horas_trabalhadas}</span>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Contato */}
+                    <h2 className="font-bold text-lg mt-6">Dados do Contato</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                        <input
+                            className="border-b-2 focus:outline-none focus:border-blue-500"
+                            placeholder="Nome"
+                            value={nome_contato}
+                            onChange={(event) => {
+                                setNomeContato(event.target.value);
+                                setErrors((prevErrors) => ({ ...prevErrors, nome_contato: '' }));
+                            }}
+                            type="text"
+                        />
+                        {errors.nome_contato && (
+                            <span className="error text-xs text-red-600">{errors.nome_contato}</span>
                         )}
 
-                        {/* Datas */}
-                        <div className="md:grid md:grid-cols-2 gap-4 mt-4">
-                            <div className="flex flex-col mb-4 md:mb-0">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Data Início</label>
-                                <input
-                                    className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    type="date"
-                                    value={DataInicio}
-                                    onChange={(event) => {
-                                        setDataInicio(event.target.value);
-                                        setErrors((prevErrors) => ({ ...prevErrors, DataInicio: '' }));
-                                    }}
-                                />
-                                {errors.DataInicio && (
-                                    <span className="error text-xs text-red-600 mt-1">{errors.DataInicio}</span>
-                                )}
-                            </div>
+                        <input
+                            className="border-b-2 focus:outline-none focus:border-blue-500"
+                            placeholder="(99) 99999-9999"
+                            value={telefone}
+                            onChange={(event) => {
+                                setTelefoneContato(insertMaskTelefone(event.target.value));
+                                setErrors((prevErrors) => ({ ...prevErrors, telefone: '' }));
+                            }}
+                            type="tel"
+                        />
+                        {errors.telefone && (
+                            <span className="error text-xs text-red-600">{errors.telefone}</span>
+                        )}
 
-                            <div className="flex flex-col">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Data Término</label>
-                                <input
-                                    className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    type="date"
-                                    value={DataFim}
-                                    onChange={(event) => {
-                                        setDataFim(event.target.value);
-                                        setErrors((prevErrors) => ({ ...prevErrors, DataFim: '' }));
-                                    }}
-                                />
-                                {errors.DataFim && (
-                                    <span className="error text-xs text-red-600 mt-1">{errors.DataFim}</span>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Campos do Contrato */}
-                        <div className="md:grid md:grid-cols-3 gap-4 mt-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Modelo do Contrato
-                                </label>
-                                <Select
-                                    onValueChange={(value) => {
-                                        setnew_tipo_contrato_id(value);
-                                        setErrors((prevErrors) => ({ ...prevErrors, new_tipo_contrato_id: '' }));
-                                    }}
-                                >
-                                    <SelectTrigger className="rounded-lg">
-                                        <SelectValue placeholder="Tipo Contrato" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {ModeloContrato.map((tipo) => (
-                                            <SelectItem key={tipo.id} value={tipo.id.toString()}>
-                                                {tipo.nome}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.new_tipo_contrato_id && (
-                                    <span className="error text-xs text-red-600">{errors.new_tipo_contrato_id}</span>
-                                )}
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Produto</label>
-                                <Select
-                                    onValueChange={(value) => {
-                                        setnew_produto_id(value);
-                                        setErrors((prevErrors) => ({ ...prevErrors, new_produto_id: '' }));
-                                    }}
-                                >
-                                    <SelectTrigger className="rounded-lg">
-                                        <SelectValue placeholder="Produto" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {TiposProduto.map((produto) => (
-                                            <SelectItem key={produto.id} value={produto.id.toString()}>
-                                                {produto.nome}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.new_produto_id && (
-                                    <span className="error text-xs text-red-600">{errors.new_produto_id}</span>
-                                )}
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Horas Trabalhadas
-                                </label>
-                                <input
-                                    className="border-b-2 focus:outline-none focus:border-blue-500"
-                                    placeholder="0"
-                                    type="number"
-                                    min="0"
-                                    value={horas_trabalhadas === 0 ? '' : horas_trabalhadas}
-                                    onChange={(event) => {
-                                        const value = Number(event.target.value);
-                                        if (!isNaN(value) && value >= 0) {
-                                            setHorasTrabalhadas(value);
-                                            setErrors((prevErrors) => ({ ...prevErrors, horas_trabalhadas: '' }));
-                                        } else {
-                                            setHorasTrabalhadas(0);
-                                        }
-                                    }}
-                                />
-                                {errors.horas_trabalhadas && (
-                                    <span className="error text-xs text-red-600">{errors.horas_trabalhadas}</span>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Contato */}
-                        <h2 className="font-bold text-lg mt-6">Dados do Contato</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                            <input
-                                className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="Nome"
-                                value={nome_contato}
-                                onChange={(event) => {
-                                    setNomeContato(event.target.value);
-                                    setErrors((prevErrors) => ({ ...prevErrors, nome_contato: '' }));
-                                }}
-                                type="text"
-                            />
-                            {errors.nome_contato && (
-                                <span className="error text-xs text-red-600">{errors.nome_contato}</span>
-                            )}
-
-                            <input
-                                className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="(99) 99999-9999"
-                                value={telefone}
-                                onChange={(event) => {
-                                    setTelefoneContato(insertMaskTelefone(event.target.value));
-                                    setErrors((prevErrors) => ({ ...prevErrors, telefone: '' }));
-                                }}
-                                type="tel"
-                            />
-                            {errors.telefone && (
-                                <span className="error text-xs text-red-600">{errors.telefone}</span>
-                            )}
-
-                            <input
-                                className="border-b-2 focus:outline-none focus:border-blue-500"
-                                placeholder="Email"
-                                value={email}
-                                onChange={(event) => {
-                                    setEmailContato(event.target.value);
-                                    setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
-                                }}
-                                type="email"
-                            />
-                            {errors.email && <span className="error text-xs text-red-600">{errors.email}</span>}
-                        </div>
-                    </form>
-                </Card>
-            </div>
-
-            {/* Segunda Coluna: Detalhes de Pagamento */}
-            <div className="flex flex-col gap-5 lg:flex-row">
-                <form>
-                    <div className="w-full lg:w-4/12">
-                        <Card className="p-6 hover:shadow-xl rounded-lg border">
-                            <div className="flex justify-between mb-6">
-                                <h1 className="text-2xl font-bold">Forma de Pagamento</h1>
-                            </div>
-
-                            {/* Valor da Entrada */}
-                            <div className="grid grid-cols-2 items-center gap-5 mb-6">
-                                <label className="block text-md font-bold text-gray-700">Valor da Entrada</label>
-                                <div className="relative w-full">
-                                    <span className="absolute top-1/2 transform -translate-y-1/2 text-gray-500">R$</span>
-                                    <input
-                                        type="text"
-                                        value={valor_entrada}
-                                        onChange={handleValorEntradaChange}
-                                        placeholder="00,00"
-                                        className="border-b-2 pl-8 w-full bg-white focus:outline-none focus:border-blue-500"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Status Cliente */}
-                            <div className="mb-6">
-                                <label className="block text-sm font-medium text-gray-700">Status Cliente</label>
-                                <Select
-                                    onValueChange={(value) => {
-                                        setstatusCliente(value);
-                                        setErrors((prevErrors) => ({ ...prevErrors, statusCliente: '' }));
-                                    }}
-                                >
-                                    <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
-                                        <SelectValue placeholder="Tipo Cliente" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="antigo">Antigo</SelectItem>
-                                        <SelectItem value="novo">Novo</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                {errors.statusCliente && (
-                                    <span className="error text-xs text-red-600">{errors.statusCliente}</span>
-                                )}
-                            </div>
-
-                            {/* Método de Pagamento */}
-                            <h2 className="font-bold mb-3">Método de Pagamento</h2>
-                            <div className="mb-6">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center space-x-6">
-                                        <div className="flex items-center">
-                                            <input
-                                                id="pagamento-opcao-1"
-                                                type="radio"
-                                                name="forma-pagamento"
-                                                value="À vista"
-                                                className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                                onClick={() => {
-                                                    setmetodo_pagamento("À vista");
-                                                    setnumero_parcelo(1);
-                                                    setMostrarParcelas(false);
-                                                    setErrors((prevErrors) => ({ ...prevErrors, metodo_pagamento: '' }));
-                                                }}
-                                            />
-                                            <label
-                                                htmlFor="pagamento-opcao-1"
-                                                className="ml-2 text-sm font-medium text-gray-900"
-                                            >
-                                                À vista
-                                            </label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input
-                                                id="pagamento-opcao-2"
-                                                type="radio"
-                                                name="forma-pagamento"
-                                                value="Parcelado"
-                                                className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                                                onClick={() => {
-                                                    setmetodo_pagamento("Parcelado");
-                                                    setMostrarParcelas(true);
-                                                    setnumero_parcelo(0);
-                                                }}
-                                            />
-                                            <label
-                                                htmlFor="pagamento-opcao-2"
-                                                className="ml-2 text-sm font-medium text-gray-900"
-                                            >
-                                                Parcelado
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    {mostrarParcelas && (
-                                        <div className="flex items-center space-x-8">
-                                            <input
-                                                className="border-b-2 w-16 text-center focus:outline-none focus:border-blue-500"
-                                                placeholder="0"
-                                                type="number"
-                                                min="1"
-                                                value={numero_parcelo === 0 ? "" : numero_parcelo}
-                                                onChange={(event) => {
-                                                    const value = Number(event.target.value);
-                                                    setnumero_parcelo(value || 0);
-                                                }}
-                                            />
-                                            <PopUpConfig
-                                                valorTotal={valor_total}
-                                                parcelas={numero_parcelo}
-                                                onSetValoresParcelas={handleSetValoresParcelas}
-                                                onConfirm={(vendaId, numeroParcelas, valoresParcelas) =>
-                                                    handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)
-                                                }
-                                                idVenda={id_venda}
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                                {errors.metodo_pagamento && (
-                                    <span className="error text-xs text-red-600">{errors.metodo_pagamento}</span>
-                                )}
-                            </div>
-
-                            {/* Valor Total */}
-                            <div className="flex justify-between items-center mb-6">
-                                <label className="font-bold">Valor total a pagar:</label>
-                                <h1 className="font-bold">{`R$ ${valor_total}`}</h1>
-                            </div>
-
-                            {/* Botão Cadastrar */}
-                            <div className="text-center">
-                                <button
-                                    type="submit"
-                                    onClick={handleSubmit}
-                                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
-                                >
-                                    CADASTRAR
-                                </button>
-                            </div>
-                        </Card>
+                        <input
+                            className="border-b-2 focus:outline-none focus:border-blue-500"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(event) => {
+                                setEmailContato(event.target.value);
+                                setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+                            }}
+                            type="email"
+                        />
+                        {errors.email && <span className="error text-xs text-red-600">{errors.email}</span>}
                     </div>
                 </form>
-                <div className="flex flex-col mb-5 py-3">
+            </Card>
+
+            {/* Segunda Coluna: Detalhes de Pagamento */}
+            <div className="flex flex-col gap-5 lg:flex-row w-full lg:w-4/12">
+                <form>
+                    <Card className="p-6 hover:shadow-xl rounded-lg border">
+                        <div className="flex justify-between mb-6">
+                            <h1 className="text-2xl font-bold">Forma de Pagamento</h1>
+                        </div>
+
+                        {/* Valor da Entrada */}
+                        <div className="grid grid-cols-2 items-center gap-5 mb-6">
+                            <label className="block text-md font-bold text-gray-700">Valor da Entrada</label>
+                            <div className="relative w-full">
+                                <span className="absolute top-1/2 transform -translate-y-1/2 text-gray-500">R$</span>
+                                <input
+                                    type="text"
+                                    value={valor_entrada}
+                                    onChange={handleValorEntradaChange}
+                                    placeholder="00,00"
+                                    className="border-b-2 pl-8 w-full bg-white focus:outline-none focus:border-blue-500"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Status Cliente */}
+                        <div className="mb-6">
+                            <label className="block text-sm font-medium text-gray-700">Status Cliente</label>
+                            <Select
+                                onValueChange={(value) => {
+                                    setstatusCliente(value);
+                                    setErrors((prevErrors) => ({ ...prevErrors, statusCliente: '' }));
+                                }}
+                            >
+                                <SelectTrigger className="h-8 mt-2 rounded-lg w-36">
+                                    <SelectValue placeholder="Tipo Cliente" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="antigo">Antigo</SelectItem>
+                                    <SelectItem value="novo">Novo</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            {errors.statusCliente && (
+                                <span className="error text-xs text-red-600">{errors.statusCliente}</span>
+                            )}
+                        </div>
+
+                        {/* Método de Pagamento */}
+                        <h2 className="font-bold mb-3">Método de Pagamento</h2>
+                        <div className="mb-6">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                {/* Opções de Pagamento */}
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                                    <div className="flex items-center">
+                                        <input
+                                            id="pagamento-opcao-1"
+                                            type="radio"
+                                            name="forma-pagamento"
+                                            value="À vista"
+                                            className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                            onClick={() => {
+                                                setmetodo_pagamento("À vista");
+                                                setnumero_parcelo(1);
+                                                setMostrarParcelas(false);
+                                                setErrors((prevErrors) => ({ ...prevErrors, metodo_pagamento: '' }));
+                                            }}
+                                        />
+                                        <label
+                                            htmlFor="pagamento-opcao-1"
+                                            className="ml-2 text-sm font-medium text-gray-900"
+                                        >
+                                            À vista
+                                        </label>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <input
+                                            id="pagamento-opcao-2"
+                                            type="radio"
+                                            name="forma-pagamento"
+                                            value="Parcelado"
+                                            className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+                                            onClick={() => {
+                                                setmetodo_pagamento("Parcelado");
+                                                setMostrarParcelas(true);
+                                                setnumero_parcelo(0);
+                                            }}
+                                        />
+                                        <label
+                                            htmlFor="pagamento-opcao-2"
+                                            className="ml-2 text-sm font-medium text-gray-900"
+                                        >
+                                            Parcelado
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {/* Configuração de Parcelas */}
+                                {mostrarParcelas && (
+                                    <div className="flex items-center gap-4">
+                                        <input
+                                            className="border-b-2 w-16 text-center focus:outline-none focus:border-blue-500"
+                                            placeholder="0"
+                                            type="number"
+                                            min="1"
+                                            value={numero_parcelo === 0 ? "" : numero_parcelo}
+                                            onChange={(event) => {
+                                                const value = Number(event.target.value);
+                                                setnumero_parcelo(value || 0);
+                                            }}
+                                        />
+                                        <PopUpConfig
+                                            valorTotal={valor_total}
+                                            parcelas={numero_parcelo}
+                                            onSetValoresParcelas={handleSetValoresParcelas}
+                                            onConfirm={(vendaId, numeroParcelas, valoresParcelas) =>
+                                                handleSubmitParcela(vendaId, numeroParcelas, valoresParcelas, toast)
+                                            }
+                                            idVenda={id_venda}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Mensagem de erro */}
+                            {errors.metodo_pagamento && (
+                                <span className="error text-xs text-red-600">{errors.metodo_pagamento}</span>
+                            )}
+                        </div>
+
+
+                        {/* Valor Total */}
+                        <div className="flex justify-between items-center mb-6">
+                            <label className="font-bold">Valor total a pagar:</label>
+                            <h1 className="font-bold">{`R$ ${valor_total}`}</h1>
+                        </div>
+
+                        {/* Botão Cadastrar */}
+                        <div className="text-center">
+                            <button
+                                type="submit"
+                                onClick={handleSubmit}
+                                className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+                            >
+                                CADASTRAR
+                            </button>
+                        </div>
+                    </Card>
+                </form>
+                <div className="">
                     {renderGestaoCliente()}
                 </div>
             </div>

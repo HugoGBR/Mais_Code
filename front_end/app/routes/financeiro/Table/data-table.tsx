@@ -59,17 +59,17 @@ export function DataTable<TData, TValue>({
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
-        
+
         state: {
             sorting,
             columnFilters,
             columnVisibility,
             rowSelection,
-        }, 
+        },
     });
 
 
-    function HandleClick(row:string){
+    function HandleClick(row: string) {
         const dadosDaLinha = JSON.parse(row)
         router.push(`/routes/financeiro/${dadosDaLinha.numero_contrato}`)
     }
@@ -80,117 +80,112 @@ export function DataTable<TData, TValue>({
 
     useEffect(() => {
         getDadosYear();
-    }, []); 
+    }, []);
 
-  
+
     async function handleSubmit() {
         const dados = await GetDadosVendaByData(new Date(startDate));
         console.log(`dados da nova consulta ${startDate}`)
-        setData(dados);         
+        setData(dados);
     }
-
-
 
     return (
         <div>
-            <div className="flex flex-col items-start py-5 input-container">
-                <div className="bg-white h-3/5 border hover:shadow-lg rounded-lg p-4">
-                    <div className="flex justify-between gap-4">
-                        <div className="flex gap-3 border mb-5 border-gray-300 rounded-lg py-2 px-4 bg-white hover:shadow-lg transition-shadow duration-200">
-                            <input
-                                type="month"
-                                id="start"
-                                name="start"
-                                min="2018-03"
-                                value={startDate}
-                                onChange={(event) => setStartDate(event.target.value)}
-                                className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-gray-700"
-                            />
-                            <button
-                                type="submit"
-                                onClick={handleSubmit}
-                                className="px-1 rounded bg-blue-500 text-white hover:bg-blue-600 transition-colors duration-200"
-                            >
-                                <FontAwesomeIcon icon={faSearch} className="" />
-                            </button>
-                        </div>
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-start md:justify-between gap-4 pb-5">
+                <div className="flex flex-wrap items-start md:justify-between gap-4 w-full">
+                    {/* Input de Mês e Botão */}
+                    <div className="w-full sm:w-auto flex flex-row gap-3 border border-gray-300 rounded-lg bg-white hover:shadow-lg transition-shadow duration-200">
                         <input
-                            type="text"
-                            placeholder="Pesquisar..."
-                            value={(table.getColumn("nome_cliente")?.getFilterValue() as string) ?? ""}
-                            onChange={(event) =>
-                                table.getColumn("nome_cliente")?.setFilterValue(event.target.value)
-                            }
-                            className="max-w-sm border border-gray-300 rounded-lg hover:shadow-md py-2 px-4 focus:outline-none focus:border-blue-500 h-[44px]"
+                            type="month"
+                            id="start"
+                            name="start"
+                            min="2018-03"
+                            value={startDate}
+                            onChange={(event) => setStartDate(event.target.value)}
+                            className="w-full sm:w-auto h-[44px] focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-l-md text-gray-700 px-3"
                         />
+                        <button
+                            type="submit"
+                            onClick={handleSubmit}
+                            className="h-[44px] px-4 rounded-r-md bg-blue-500 text-white hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center"
+                        >
+                            <FontAwesomeIcon icon={faSearch} className="w-4 h-4" />
+                        </button>
                     </div>
 
-                    <Table>
-                        <TableHeader>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder ? null : flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
-                                        </TableHead>
+                    {/* Campo de Pesquisa */}
+                    <input
+                        type="text"
+                        placeholder="Pesquisar..."
+                        value={(table.getColumn("nome_cliente")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) =>
+                            table.getColumn("nome_cliente")?.setFilterValue(event.target.value)
+                        }
+                        className="w-full sm:w-auto border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+            </div>
+
+
+            <div className="">
+                <Table className="min-w-full">
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(header.column.columnDef.header, header.getContext())}
+                                    </TableHead>
+                                ))}
+                            </TableRow>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && "selected"}
+                                    onClick={() => HandleClick(JSON.stringify(row.original))}
+                                    className="cursor-pointer"
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id} className="bg-gray-100 text-center">
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
                                     ))}
                                 </TableRow>
-                            ))}
-                        </TableHeader>
-                        <TableBody>
-                            {table.getRowModel().rows?.length ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        data-state={row.getIsSelected() && "selected"}
-                                        onClick={() => HandleClick(JSON.stringify(row.original))}
-                                        className="cursor-pointer"
-                                    >
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id} className="bg-gray-100 text-center">
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext()
-                                                )}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell
-                                        colSpan={columns.length}
-                                        className="h-24 text-center"
-                                    >
-                                        Nenhum Resultado
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={columns.length} className="h-24 text-center">
+                                    Nenhum Resultado
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
 
-                    <div className="space-x-3 mt-4 flex justify-center items-center">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
-                        >
-                            Anterior
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}
-                        >
-                            Próximo
-                        </Button>
-                    </div>
-                </div>
+            <div className="space-x-3 mt-4 flex justify-center items-center">
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
+                >
+                    Anterior
+                </Button>
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
+                >
+                    Próximo
+                </Button>
             </div>
         </div>
     );

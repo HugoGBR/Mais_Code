@@ -6,13 +6,13 @@ import CardCadastro from "@/components/CardCadastro";
 
 export default function Contrato() {
     return (
-        <div className="min-h-screen flex flex-col gap-5 overflow-auto">
+        <div className="flex flex-col justify-center items-center gap-5">
             {/* Cabeçalho */}
-            <div className="flex flex-wrap gap-5 justify-center sm:justify-start p-5">
+            <div className="flex gap-5 justify-start w-full">
                 <div>
                     <Link
                         href="/routes/cadastros"
-                        className="text-blue-700 border-b-2 border-blue-700 text-xl font-bold focus:font-bold"
+                        className="focus:font-bold focus:text-blue-700 focus:border-b-2 text-xl font-bold focus:outline-none focus:border-blue-500"
                     >
                         Contrato
                     </Link>
@@ -27,10 +27,11 @@ export default function Contrato() {
                 </div>
             </div>
 
-            <div className="w-full sm:w-3/4 md:w-1/2 mx-auto">
+            <div className="w-full flex justify-center">
                 <CardCadastro />
             </div>
         </div>
+
     );
 }
 

@@ -17,20 +17,22 @@ export type Payment = {
 export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "numero_contrato",
-        header: ({ column }) => {
-            return (
-                <div className="text-center hidden md:block">
-                    <Button
-                        variant="ghost"
-                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    >
-                        N*Contrato
-                        <CaretSortIcon className="ml-2 h-4 w-4 " />
-                    </Button>
-                </div>
-            )
-        },
-        cell: ({ row }) => <div className="lowercase text-center">#{row.getValue("numero_contrato")}</div>,
+        header: ({ column }) => (
+            <div className="text-center hidden sm:block">
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    N*Contrato
+                    <CaretSortIcon className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
+        ),
+        cell: ({ row }) => (
+            <div className="lowercase text-center hidden sm:block">
+                #{row.getValue("numero_contrato")}
+            </div>
+        ),
     },
 
     {
@@ -49,7 +51,7 @@ export const columns: ColumnDef<Payment>[] = [
         cell: ({ row }) => {
             const dataFormatada = format(parseISO(row.getValue("data_inicio")), 'dd-MM-yyyy');
             return <div className="lowercase">{dataFormatada}</div>;
-          },
+        },
     },
 
     {
@@ -86,15 +88,21 @@ export const columns: ColumnDef<Payment>[] = [
 
     {
         accessorKey: "valor_total",
-        header: () => <div className="text-center">Valor</div>,
+        header: () => (
+            <div className="text-center hidden sm:block">Valor</div>
+        ),
         cell: ({ row }) => {
-            const quantia = parseFloat(row.getValue("valor_total"))
+            const quantia = parseFloat(row.getValue("valor_total"));
             const formatted = new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-            }).format(quantia)
+            }).format(quantia);
 
-            return <div className="text-center">{formatted}</div>
+            return (
+                <div className="text-center hidden sm:block">
+                    {formatted}
+                </div>
+            );
         },
     },
 
@@ -106,10 +114,6 @@ export const columns: ColumnDef<Payment>[] = [
         ),
     },
 
-
-
-
-    
     {
         id: "actions",
         enableHiding: false,

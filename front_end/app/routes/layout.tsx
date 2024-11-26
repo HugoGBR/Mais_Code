@@ -12,7 +12,7 @@ export default function RootLayout({
     const isHome = pathname === '/routes/home';
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen w-full bg-[#F2F6F9]">
+        <div className="flex flex-col min-h-screen md:flex-row w-full bg-[#F2F6F9] overflow-hidden">
             {/* Sidebar com breakpoints */}
             <div className="flex-shrink-0">
                 <div className="md:hidden">
@@ -24,7 +24,7 @@ export default function RootLayout({
             </div>
 
             {/* Conteúdo principal */}
-            <main className="flex-grow p-6 lg:container lg:mx-auto md:p-10">
+            <main className="flex items-center justify-center w-full p-6 md:p-5 lg:px-8 overflow-x-hidden">
                 {children}
             </main>
         </div>
