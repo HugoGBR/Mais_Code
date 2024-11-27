@@ -59,23 +59,23 @@ export default function Financeiro() {
     const mostrarPaginacao = usuariosFiltrados.length >= itensPorPagina;
 
     return (
-        <div className="p-4">
+        <div className="px-4 sm:px-8 lg:px-16 py-8 lg:w-8/12 mx-auto">
             {/* Campo de Pesquisa */}
-            <div className="flex items-center py-4 input-container">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
                 <input
                     type="text"
                     placeholder="Pesquisar..."
                     value={termoBusca}
                     onChange={(event) => setTermoBusca(event.target.value)}
-                    className="w-full sm:w-auto border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
+                    className="w-full sm:w-2/3 lg:w-1/3 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500"
                 />
             </div>
 
             {/* Lista de Usuários */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {usuariosFiltrados.slice(inicioIndex, finalIndex).map((item) => (
                     <Link href={`/routes/relatorio/${item.id}`} key={item.id}>
-                        <div>
+                        <div className="rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow">
                             <a className="block">
                                 <Cardfinanceiro dados={item} />
                             </a>
@@ -88,10 +88,10 @@ export default function Financeiro() {
             {mostrarPaginacao && (
                 <div className="flex justify-center mt-6">
                     <Pagination>
-                        <PaginationContent className="flex items-center space-x-2">
+                        <PaginationContent className="flex items-center space-x-4">
                             <PaginationItem>
                                 <PaginationPrevious
-                                    className="cursor-pointer px-3 py-1 hover:text-blue-800"
+                                    className="cursor-pointer px-3 py-2 border rounded-md hover:bg-gray-100"
                                     onClick={PaginaAnterior}
                                 />
                             </PaginationItem>
@@ -100,7 +100,7 @@ export default function Financeiro() {
                             </PaginationItem>
                             <PaginationItem>
                                 <PaginationNext
-                                    className="cursor-pointer px-3 py-1 hover:text-blue-800"
+                                    className="cursor-pointer px-3 py-2 border rounded-md hover:bg-gray-100"
                                     onClick={ProximaPagina}
                                 />
                             </PaginationItem>

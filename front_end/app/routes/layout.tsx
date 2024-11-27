@@ -24,7 +24,7 @@ export default function RootLayout({
             </div>
 
             {/* Conteúdo principal */}
-            <main className="flex items-center justify-center w-full p-6 md:p-5 lg:px-8 overflow-x-hidden">
+            <main className="flex items-center justify-center w-full p-6 md:p-5 lg:px-8">
                 {children}
             </main>
         </div>
