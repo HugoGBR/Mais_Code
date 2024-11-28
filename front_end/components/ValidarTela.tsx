@@ -12,19 +12,53 @@ export default function AuthGuard({ children }: { children: ReactNode }) {
     const permissoesPorCargo: Record<string, string[]> = {
         Administrador: [
             "/routes/home",
+            "/routes/perfil",
             "/routes/cadastros",
+            "/routes/cadastros/Cliente",
             "/routes/relatorio",
+            "/routes/relatorio/[id]",
+            "/routes/relatorio/TableComissao",
             "/routes/financeiro",
+            "/routes/financeiro/[id]",
             "/routes/gestao",
+            "/routes/gestao/cliente",
+            "/routes/gestao/cliente/[id]",
+            "/routes/gestao/user/[id]",
+            "/routes/gestao/Usuario",
             "/routes/ajustes",
+            "/routes/ajustes/Contrato",
+            "/routes/ajustes/Produtos",
+            "/routes/ajustes/ModeloContrato",
+
         ],
         Vendedor: [
             "/routes/home",
             "/routes/cadastros",
-            "/routes/relatorio",
+            "/routes/cadastros/Cliente",
+            "/routes/relatorio/[id]",
             "/routes/financeiro",
+            "/routes/financeiro/[id]",
         ],
-        Financeiro: ["/routes/home", "/routes/relatorio", "/routes/financeiro"],
+        Financeiro: ["/routes/home", 
+        "/routes/relatorio", 
+        "/routes/relatorio/[id]", 
+        "/routes/relatorio/TabelaComissao", 
+        "/routes/financeiro",
+        "/routes/financeiro/[id]"
+    ],
+    };
+
+    const verificaPermissao = (cargo: string, path: string): boolean => {
+        const permissoes = permissoesPorCargo[cargo] || [];
+        return permissoes.some((rota) => {
+            if (rota.includes("[id]")) {
+                const regex = new RegExp(
+                    `^${rota.replace("[id]", "[^/]+")}$`
+                );
+                return regex.test(path);
+            }
+            return rota === path;
+        });
     };
 
     useEffect(() => {
@@ -44,7 +78,7 @@ export default function AuthGuard({ children }: { children: ReactNode }) {
             const cargoId = await getCookie("UserCargo");
             const nomeCargo = escolheTipoCliente(Number(cargoId));
 
-            if (!nomeCargo || !permissoesPorCargo[nomeCargo]?.includes(pathname)) {
+            if (!nomeCargo || !verificaPermissao(nomeCargo, pathname)) {
                 alert("Você não tem permissão para acessar esta página.");
                 router.push("/routes/home");
                 return;
