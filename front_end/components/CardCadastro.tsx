@@ -491,7 +491,7 @@ export default function CardCadastro() {
             </Card>
 
             {/* Segunda Coluna: Detalhes de Pagamento */}
-            <div className="flex flex-col gap-5 lg:flex-row w-full lg:w-4/12">
+            <div className="flex flex-col gap-5 w-full lg:w-4/12">
                 <form>
                     <Card className="p-6 hover:shadow-xl rounded-lg border">
                         <div className="flex justify-between mb-6">
@@ -636,7 +636,7 @@ export default function CardCadastro() {
                         </div>
                     </Card>
                 </form>
-                <div className="">
+                <div>
                     {renderGestaoCliente()}
                 </div>
             </div>
