@@ -86,7 +86,7 @@ export default function CadastroProduto() {
                 comissaoAntigoNumber
             );
 
-            if (response.status == 1) {
+            if (response.status === 1) {
                 toast({
                     title: "Sucesso",
                     description: "Produto cadastrado com sucesso!",
@@ -121,9 +121,8 @@ export default function CadastroProduto() {
                                     value={nomeProduto}
                                     onChange={(event) => {
                                         setNomeProduto(event.target.value);
-                                        setErrors((prevErrors) => ({ ...prevErrors, nomeProduto: '' }));
+                                        setErrors((prevErrors) => ({ ...prevErrors, nomeProduto: false }));
                                     }}
-                                    
                                     placeholder="Nome do Produto"
                                     className={`w-full border-b-2 focus:outline-none ${errors.nomeProduto ? 'border-red-500' : 'focus:border-blue-500'}`}
                                 />
@@ -144,7 +143,7 @@ export default function CadastroProduto() {
                                             if (maskedValue.replace(/\D/g, '').length <= 12) {
                                                 setHorasTrabalhadas(maskedValue);
                                             }
-                                            setErrors((prevErrors) => ({ ...prevErrors, horasTrabalhadas: '' }));
+                                            setErrors((prevErrors) => ({ ...prevErrors, horasTrabalhadas: false }));
                                         }}
                                         placeholder="15.000,00"
                                         className={`pl-8 w-full border-b-2 focus:outline-none ${errors.horasTrabalhadas ? 'border-red-500' : 'focus:border-blue-500'}`}
@@ -162,7 +161,7 @@ export default function CadastroProduto() {
                                             if (maskedValue.replace(/\D/g, '').length <= 12) {
                                                 setComissaoNovo(maskedValue);
                                             }
-                                            setErrors((prevErrors) => ({ ...prevErrors, comissaoNovo: '' }));
+                                            setErrors((prevErrors) => ({ ...prevErrors, comissaoNovo: false }));
                                         }}
                                         placeholder="Nova Comissão"
                                         className={`col-span-1 w-full border-b-2 focus:outline-none ${errors.comissaoNovo ? 'border-red-500' : 'focus:border-blue-500'}`}
@@ -180,7 +179,7 @@ export default function CadastroProduto() {
                                             if (maskedValue.replace(/\D/g, '').length <= 12) {
                                                 setComissaoAntigo(maskedValue);
                                             }
-                                            setErrors((prevErrors) => ({ ...prevErrors, comissaoAntigo: '' }));
+                                            setErrors((prevErrors) => ({ ...prevErrors, comissaoAntigo: false }));
                                         }}
                                         placeholder="Comissão Antiga"
                                         className={`col-span-1 w-full border-b-2 focus:outline-none ${errors.comissaoAntigo ? 'border-red-500' : 'focus:border-blue-500'}`}
