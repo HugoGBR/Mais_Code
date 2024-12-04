@@ -10,7 +10,7 @@ export async function createNewUserGestao(
 ) {
     const request = await fetch(`${backendURL()}/UserService.php?acao=createNewUserGestao`,
         {
-            
+
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -166,4 +166,15 @@ export async function updatePerfil(
     });
     const response = await request.json();
     return response.message;
+}
+
+export async function createDefaultUserIfNoneExist(): Promise<any> {
+    const resposta = await fetch(`${backendURL()}/UserService.php?acao=createDefaultUserIfNoneExist`);
+
+    if (!resposta.ok) {
+        throw new Error("Erro ao criar usuário administrador.");
+    }
+
+    const dados = await resposta.json();
+    return dados;
 }
