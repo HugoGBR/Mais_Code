@@ -28,7 +28,9 @@ export default function AuthGuard({ children }: { children: ReactNode }) {
             "/routes/ajustes",
             "/routes/ajustes/Contrato",
             "/routes/ajustes/Produtos",
+            "/routes/ajustes/Produtos/[id]",
             "/routes/ajustes/ModeloContrato",
+            "/routes/ajustes/ModeloContrato/[id]",
 
         ],
         Vendedor: [

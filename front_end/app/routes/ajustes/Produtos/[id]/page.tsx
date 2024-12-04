@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getProdutoById, updateProdutoById } from '@/lib/ProdutoController';
-import { moneyMask, percentageMask } from '@/lib/MaskInput/MaskInput';
+import { entradaMask, percentageMask } from '@/lib/MaskInput/MaskInput';
 import { toast } from '@/components/ui/use-toast';
 
 export default function CadastroProduto({ params }: { params: { id: number } }) {
@@ -120,7 +120,7 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
                                         type="text"
                                         value={produto.horas_trabalhadas}
                                         onChange={(event) => {
-                                            const valorComMascara = moneyMask(event.target.value);
+                                            const valorComMascara = entradaMask(event.target.value);
                                             setProduto({ ...produto, horas_trabalhadas: valorComMascara });
                                         }}
                                         className="pl-8 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
