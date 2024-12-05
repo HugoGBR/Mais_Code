@@ -42,8 +42,9 @@ export async function validacaoLogin(
 
     const response = await request.json();
 
+
     if (response != 0) {
-        if (response[0].status_usuario === 1) {
+        if (response[0].status_usuario == 1) {
             await criarCookie("CookiCriado", response[0].id);
             await criarCookie("UserName", response[0].nome);
             await criarCookie("UserEmail", response[0].email);
