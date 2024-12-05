@@ -164,7 +164,7 @@ export default function CardUsers() {
                                 <SelectContent id="cargo_id">
                                     <SelectGroup>
                                         {listaCargo.map((Lcargo) => (
-                                            <SelectItem key={Lcargo.id} value={Lcargo.id.toString()}>
+                                            <SelectItem className="cursor-pointer" key={Lcargo.id} value={Lcargo.id.toString()}>
                                                 {Lcargo.nome}
                                             </SelectItem>
                                         ))}
