@@ -25,7 +25,8 @@ export default function Gestao() {
     const router = useRouter();
     const [paginaAtual, setPaginaAtual] = useState(1);
     const [termoBusca, setTermoBusca] = useState("");
-    const itensPorPagina = 8;
+    const [itensPorPagina, setItensPorPagina] = useState(9);  
+    
 
     const rotaNewUser = () => {
         router.push("/routes/gestao/Usuario");
@@ -62,6 +63,21 @@ export default function Gestao() {
     useEffect(() => {
         carregarUsuarios();
         carregarCliente();
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1280) { 
+                setItensPorPagina(9);
+            } else {
+                setItensPorPagina(8);
+            }
+        };
+    
+        handleResize(); 
+        window.addEventListener("resize", handleResize);
+    
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     const PaginaAnterior = () => {
