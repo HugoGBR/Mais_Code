@@ -41,8 +41,9 @@ export async function updateContratoById(
         }
         )
     });
-    const response = await request.json();
-    return response.message;
+    const data = JSON.parse(await request.json());
+   
+    return data;
 }
 
 export async function getContratoById(contratoID: number) {

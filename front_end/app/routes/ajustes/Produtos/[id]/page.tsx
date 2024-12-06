@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getProdutoById, updateProdutoById } from '@/lib/ProdutoController';
-import { entradaMask, percentageMask } from '@/lib/MaskInput/MaskInput';
+import { entradaMask, percentageMask, removerMascaraValorMonetario } from '@/lib/MaskInput/MaskInput';
 import { toast } from '@/components/ui/use-toast';
 
 export default function CadastroProduto({ params }: { params: { id: number } }) {
@@ -78,20 +78,42 @@ export default function CadastroProduto({ params }: { params: { id: number } }) 
 
     const handleButtonClick = async () => {
         if (inputsHabilitados) {
-            await updateProdutoById(
-                produto.nome,
-                Number(produto.horas_trabalhadas),
-                produto.descricao_produto,
-                produto.comissaoAntigo,
-                produto.comissaoNovo,
-                params.id
-            );
-            router.push('/routes/ajustes');
+            try {
+                const horasTrabalhadaSemMascara = removerMascaraValorMonetario(produto.horas_trabalhadas);
+                const response = await updateProdutoById(
+                    produto.nome,
+                    horasTrabalhadaSemMascara,
+                    produto.descricao_produto,
+                    produto.comissaoAntigo,
+                    produto.comissaoNovo,
+                    params.id
+                );
+                
+                
+                if (response.status === 1) { 
+                    
+                    toast({
+                        title: "Sucesso",
+                        description: "Produto atualizado com sucesso!",
+                        className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+                    });
+                    
+                    router.push('/routes/ajustes');
+                } else {
+                    throw new Error("Erro ao atualizar o produto: resposta inválida");
+                }
+            } catch (error) {
+                console.error("Erro ao atualizar o produto:", error);
+                toast({
+                    title: "Erro",
+                    description: "Erro ao atualizar produto. Por favor, tente novamente.",
+                    className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+                });
+            }
         } else {
             HabilitarEventos();
         }
     };
-
     return (
         <div>
             <form onSubmit={handleEditSubmit}>

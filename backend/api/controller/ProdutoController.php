@@ -68,37 +68,51 @@ class ProdutoController
 }
 
 
-    public function updateProdutoById(int $id)
-    {
-        try {
-            $produto = json_decode(file_get_contents("php://input"));
-    
-            $produtoExists = $this->checkProdutoExistsById($id);
-            if (!$produtoExists) {
-                return json_encode(['status' => 0, 'message' => 'Produto não encontrado.']);
-            }
-    
-            $sql = "UPDATE produtos SET nome = :nome, horas_trabalhadas = :horas_trabalhadas, descricao_produto = :descricao_produto,
-                    comissao_antiga = :comissao_antiga, comissao_nova = :comissao_nova WHERE id = :id";
-            $db = $this->conn->prepare($sql);
-            $db->bindParam(':id', $id);
-            $db->bindParam(":nome", $produto->nome);
-            $db->bindParam(":horas_trabalhadas", $produto->horas_trabalhadas);
-            $db->bindParam(":descricao_produto", $produto->descricao_produto);
-            $db->bindParam(":comissao_nova", $produto->comissao_nova);
-            $db->bindParam(":comissao_antiga", $produto->comissao_antiga);
-    
-            if ($db->execute()) {
-                return json_encode(['status' => 1, 'message' => 'Registro atualizado com sucesso.']);
-            } else {
-                return json_encode(['status' => 0, 'message' => 'Falha ao atualizar o registro.']);
-            }
-    
-        } catch (\Exception $e) {
-            error_log('Erro ao atualizar produto: ' . $e->getMessage());
-            return json_encode(['status' => 0, 'message' => 'Erro ao atualizar produto.']);
+public function updateProdutoById(int $id)
+{
+    try {
+        $produto = json_decode(file_get_contents("php://input"));
+        if (
+            !$produto || 
+            !isset($produto->nome) || 
+            !isset($produto->horas_trabalhadas) || 
+            !isset($produto->descricao_produto) || 
+            !isset($produto->comissao_antiga) || 
+            !isset($produto->comissao_nova)
+        ) {
+            return json_encode(['status' => 3, 'message' => 'Dados incompletos.']);
         }
+
+        $produtoExists = $this->checkProdutoExistsById($id);
+        if (!$produtoExists) {
+            return json_encode(['status' => 0, 'message' => 'Produto não encontrado.']);
+        }
+
+        $sql = "UPDATE produtos SET 
+                    nome = :nome, 
+                    horas_trabalhadas = :horas_trabalhadas, 
+                    descricao_produto = :descricao_produto,
+                    comissao_antiga = :comissao_antiga, 
+                    comissao_nova = :comissao_nova 
+                WHERE id = :id";
+        $db = $this->conn->prepare($sql);
+        $db->bindParam(':id', $id);
+        $db->bindParam(":nome", $produto->nome);
+        $db->bindParam(":horas_trabalhadas", $produto->horas_trabalhadas);
+        $db->bindParam(":descricao_produto", $produto->descricao_produto);
+        $db->bindParam(":comissao_antiga", $produto->comissao_antiga);
+        $db->bindParam(":comissao_nova", $produto->comissao_nova);
+
+        if ($db->execute()) {
+            return json_encode(['status' => 1, 'message' => 'Registro atualizado com sucesso.']);
+        } else {
+            return json_encode(['status' => 0, 'message' => 'Falha ao atualizar o registro.']);
+        }
+    } catch (\Exception $e) {
+        error_log('Erro ao atualizar produto: ' . $e->getMessage());
+        return json_encode(['status' => 0, 'message' => 'Erro ao atualizar produto.']);
     }
+}
     
     private function checkProdutoExistsById(int $id)
     {
