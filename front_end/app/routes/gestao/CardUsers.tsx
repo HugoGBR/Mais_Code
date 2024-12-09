@@ -77,7 +77,7 @@ export default function CardUsers() {
     return (
         <form onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="flex justify-center items-center bg-gray-100">
-                <Card className="rounded-lg border p-10 hover:shadow-xl">
+                <Card className="rounded-lg border p-5 md:p-10 hover:shadow-xl">
                     <div className="h-12 mb-5">
                         <h1 className="font-bold text-2xl">Usuário</h1>
                     </div>
@@ -92,7 +92,7 @@ export default function CardUsers() {
                         <div className="flex flex-col space-y-1.5">
                             <input
                                 type="text"
-                                className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10"
+                                className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10 w-full pr-10"
                                 id="nome"
                                 placeholder="Nome"
                                 {...register('nome')}
@@ -103,7 +103,7 @@ export default function CardUsers() {
                         <div className="flex flex-col space-y-1.5">
                             <input
                                 type="email"
-                                className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10"
+                                className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10 w-full pr-10"
                                 id="email"
                                 placeholder="Email"
                                 {...register('email')}
@@ -156,15 +156,15 @@ export default function CardUsers() {
                             </div>
                         </div>
 
-                        <div className="flex flex-col space-y-1.5">
+                        <div className="flex flex-col space-y-1.5 w-full">
                             <Select onValueChange={(value) => setValue('cargo', value)}>
-                                <SelectTrigger className="h-10">
+                                <SelectTrigger className="h-10 ">
                                     <SelectValue placeholder="Cargos..." />
                                 </SelectTrigger>
                                 <SelectContent id="cargo_id">
                                     <SelectGroup>
                                         {listaCargo.map((Lcargo) => (
-                                            <SelectItem key={Lcargo.id} value={Lcargo.id.toString()}>
+                                            <SelectItem className="cursor-pointer" key={Lcargo.id} value={Lcargo.id.toString()}>
                                                 {Lcargo.nome}
                                             </SelectItem>
                                         ))}

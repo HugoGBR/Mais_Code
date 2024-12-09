@@ -64,7 +64,7 @@ export default function EditConfiguracoesParcela({
     const handleConfirm = () => {
         if (!mensagemErro) {
             onSetValoresParcelas(valoresParcelas, statusParcelas);
-            onConfirm(idVenda, parcelas, valoresParcelas, statusParcelas); // Chama handleConfirmParcelas com status
+            onConfirm(idVenda, parcelas, valoresParcelas, statusParcelas); 
         }
     };
 
@@ -101,13 +101,13 @@ export default function EditConfiguracoesParcela({
                                                 type="text"
                                                 value={`R$ ${valoresParcelas[i]?.toFixed(2) || '0.00'}`}
                                                 onChange={(e) => handleChange(i, e)}
-                                                disabled={disabled} // Desativa o campo de input
+                                                disabled={disabled} 
                                             />
                                         </TableCell>
                                         <TableCell>
                                             <Select
                                                 onValueChange={(value) => handleStatusChange(i, value)}
-                                                disabled={disabled} // Desativa o seletor
+                                                disabled={disabled}
                                             >
                                                 <SelectTrigger>
                                                     <SelectValue placeholder={statusParcelas[i]} />
@@ -131,7 +131,7 @@ export default function EditConfiguracoesParcela({
                             <button
                                 className={`hover:bg-green-500 hover:text-white text-black font-bold py-2 px-4 rounded border-2 border-green-500 ${mensagemErro || disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 onClick={handleConfirm}
-                                disabled={!!mensagemErro || disabled} // Desativa o botão se houver erro ou estiver `disabled`
+                                disabled={!!mensagemErro || disabled} 
                             >
                                 Confirmar
                             </button>

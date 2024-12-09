@@ -7,10 +7,10 @@ export default function Cardfinanceiro({ dados }: { dados: dadosUsuario }) {
     const router = useRouter();
 
     return (
-        <div onClick={() => router.push(`/routes/financeiro/${dados.id}`)} >
+        <div onClick={() => router.push(`/routes/relatorio/${dados.id}`)} >
             <Link href="">
                 <div className="bg-white hover:shadow-lg border rounded-lg overflow-hidden w-full py-3 px-5 " >
-                    <div className="flex gap-6 items-center">
+                    <div className="flex gap-4 items-center">
                         <img src="/icons/icon-perfil-preto.png" alt="Perfil" className="w-12 h-12 rounded-2xl" />
                         <div className="">
                             <h1 className="text-sm">{dados.nome}</h1>

@@ -25,10 +25,10 @@ export default function SideBar() {
 
             if (nomeCargo) {
                 const menuSuperior = [
-                    { nome: "Home", href: "/routes/home", icon: faHome, cargosPermitidos: ["Administrador","Vendedor","Financeiro"] },
+                    { nome: "Home", href: "/routes/home", icon: faHome, cargosPermitidos: ["Administrador", "Vendedor", "Financeiro"] },
                     { nome: "Cadastro", href: "/routes/cadastros", icon: faPenToSquare, cargosPermitidos: ["Administrador", "Vendedor"] },
-                    { nome: "Relatório", href: "/routes/relatorio", icon: faFileAlt, cargosPermitidos: ["Administrador","Financeiro"] },
-                    { nome: "Financeiro", href: "/routes/financeiro", icon: faMoneyBillAlt, cargosPermitidos: ["Administrador","Vendedor", "Financeiro"] },
+                    { nome: "Relatório", href: "/routes/relatorio", icon: faFileAlt, cargosPermitidos: ["Administrador", "Vendedor", "Financeiro"] },
+                    { nome: "Financeiro", href: "/routes/financeiro", icon: faMoneyBillAlt, cargosPermitidos: ["Administrador", "Vendedor", "Financeiro"] },
                     { nome: "Gestão", href: "/routes/gestao", icon: faChartBar, cargosPermitidos: ["Administrador"] },
                     { nome: "Ajuste", href: "/routes/ajustes", icon: faCog, cargosPermitidos: ["Administrador"] },
                 ];

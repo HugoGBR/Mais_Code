@@ -55,7 +55,6 @@ export default function Perfil() {
 
 
     async function handleForm(dados: Formulario) {
-        console.log(dados)
         const response = await updateUserPerfil(
             dados.nome,
             dados.email,
@@ -84,10 +83,6 @@ export default function Perfil() {
         if (inputsHabilitados) {
             await updateUserPerfil(valorInputNome, valorInputEmail, valorInputSenha);
             router.push('/');
-
-            console.log(valorInputNome)
-            console.log(valorInputEmail)
-            console.log(valorInputSenha)
         } else {
             HabilitarEventos();
         }

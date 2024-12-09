@@ -67,7 +67,7 @@ CREATE TABLE `vendas` (
   `inicio_contrato` DATE NOT NULL,
   `final_contrato` DATE NOT NULL,
   `valor_entrada` DECIMAL(8,2),
-  `valor_total` DECIMAL(8,2) NOT NULL,
+  `valor_total` DECIMAL(10,2) NOT NULL,
   `nome_contato` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `telefone` VARCHAR(255) NOT NULL,

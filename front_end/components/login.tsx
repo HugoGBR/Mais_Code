@@ -1,14 +1,11 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { loginSchema } from "@/app/schemas/loginSchema";
-import { validacaoLogin } from "@/lib/UsuarioController";
-import { toast } from "./ui/use-toast";
+import { validacaoLogin, createDefaultUserIfNoneExist } from "@/lib/UsuarioController";
 import { Toaster } from "./ui/toaster";
-
-
 
 type LoginFormSchema = z.infer<typeof loginSchema>;
 
@@ -23,22 +20,33 @@ const LoginPage = () => {
         const autenticacao = await validacaoLogin(data.user, data.password);
 
         if (autenticacao.error) {
-            toast({
-                title: "Erro",
-                description: "Usuário não encontrado. Por favor, verifique suas credenciais.",
-                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
-            });
+            // Caso o login falhe, pode ser mostrado o erro para o usuário
+            alert("Usuário não encontrado. Por favor, verifique suas credenciais.");
         } else {
             router.push('routes/home');
         }
     };
-    const [showPassword, setShowPassword] = useState(false);
 
+    const [showPassword, setShowPassword] = useState(false);
 
     const memoizedErrors = useMemo(() => ({
         user: errors.user && (<div className="text-red-500 text-sm">{errors.user.message}</div>),
         password: errors.password && (<div className="text-red-500 text-sm">{errors.password.message}</div>)
     }), [errors.user, errors.password]);
+
+    // Usando useEffect para chamar a função createDefaultUserIfNoneExist quando o componente for montado
+    useEffect(() => {
+        const initializeDefaultUser = async () => {
+            try {
+                await createDefaultUserIfNoneExist();
+            } catch (error) {
+                // Nenhum toast ou alerta é mostrado, já que você não quer notificar o usuário.
+            }
+        };
+
+        // Chama a função para criar o usuário, se necessário
+        initializeDefaultUser();
+    }, []);
 
     return (
         <>

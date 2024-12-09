@@ -13,6 +13,15 @@ export default function CadastroProduto() {
     const [descricaoProduto, setDescricaoProduto] = useState<string>('');
     const [comissaoNovo, setComissaoNovo] = useState<string>('');
     const [comissaoAntigo, setComissaoAntigo] = useState<string>('');
+
+    const [errors, setErrors] = useState({
+        nomeProduto: false,
+        horasTrabalhadas: false,
+        descricaoProduto: false,
+        comissaoNovo: false,
+        comissaoAntigo: false,
+    });
+
     const descricaoLimiteCaracteres = 255;
     const router = useRouter();
 
@@ -29,12 +38,42 @@ export default function CadastroProduto() {
         setDescricaoProduto('');
         setComissaoNovo('');
         setComissaoAntigo('');
+        setErrors({
+            nomeProduto: false,
+            horasTrabalhadas: false,
+            descricaoProduto: false,
+            comissaoNovo: false,
+            comissaoAntigo: false,
+        });
+    };
+
+    const validateForm = (): boolean => {
+        const newErrors = {
+            nomeProduto: nomeProduto.trim() === '',
+            horasTrabalhadas: horasTrabalhadas.trim() === '',
+            descricaoProduto: descricaoProduto.trim() === '',
+            comissaoNovo: comissaoNovo.trim() === '',
+            comissaoAntigo: comissaoAntigo.trim() === '',
+        };
+
+        setErrors(newErrors);
+
+        return !Object.values(newErrors).includes(true);
     };
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+
+        if (!validateForm()) {
+            toast({
+                title: "Erro",
+                description: "Por favor, preencha todos os campos obrigatórios.",
+                className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+            });
+            return;
+        }
+
         try {
-            // Remove as máscaras e transforma em valores numéricos
             const horasTrabalhadasNumber = removerMascaraValorMonetario(horasTrabalhadas);
             const comissaoNovoNumber = removerMascaraPorcentagem(comissaoNovo);
             const comissaoAntigoNumber = removerMascaraPorcentagem(comissaoAntigo);
@@ -47,7 +86,7 @@ export default function CadastroProduto() {
                 comissaoAntigoNumber
             );
 
-            if (response.status == 1) {
+            if (response.status === 1) {
                 toast({
                     title: "Sucesso",
                     description: "Produto cadastrado com sucesso!",
@@ -80,11 +119,14 @@ export default function CadastroProduto() {
                                     id="nomeProduto"
                                     name="nomeProduto"
                                     value={nomeProduto}
-                                    onChange={(event) => setNomeProduto(event.target.value)}
+                                    onChange={(event) => {
+                                        setNomeProduto(event.target.value);
+                                        setErrors((prevErrors) => ({ ...prevErrors, nomeProduto: false }));
+                                    }}
                                     placeholder="Nome do Produto"
-                                    required
-                                    className="w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                    className={`w-full border-b-2 focus:outline-none ${errors.nomeProduto ? 'border-red-500' : 'focus:border-blue-500'}`}
                                 />
+                                {errors.nomeProduto && <p className="text-red-500 text-sm">Campo obrigatório</p>}
                             </div>
                             <div className="grid grid-cols-3 gap-5 mb-4">
                                 <div className="relative col-span-1">
@@ -101,62 +143,64 @@ export default function CadastroProduto() {
                                             if (maskedValue.replace(/\D/g, '').length <= 12) {
                                                 setHorasTrabalhadas(maskedValue);
                                             }
+                                            setErrors((prevErrors) => ({ ...prevErrors, horasTrabalhadas: false }));
                                         }}
                                         placeholder="15.000,00"
-                                        required
-                                        className="pl-8 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
+                                        className={`pl-8 w-full border-b-2 focus:outline-none ${errors.horasTrabalhadas ? 'border-red-500' : 'focus:border-blue-500'}`}
                                     />
+                                    {errors.horasTrabalhadas && <p className="text-red-500 text-sm">Campo obrigatório</p>}
                                 </div>
-                                <input
-                                    type="text"
-                                    id="comissaoNovo"
-                                    name="comissaoNovo"
-                                    value={comissaoNovo}
-                                    onChange={(event) => {
-                                        const maskedValue = percentageMask(event.target.value);
-                                        if (maskedValue.replace(/\D/g, '').length <= 12) {
-                                            setComissaoNovo(maskedValue);
-                                        }
-                                    }}
-                                    min="0"
-                                    placeholder="Nova Comissão"
-                                    required
-                                    className="col-span-1 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                />
-                                <input
-                                    type="text"
-                                    id="comissaoAntigo"
-                                    name="comissaoAntigo"
-                                    value={comissaoAntigo}
-                                    onChange={(event) => {
-                                        const maskedValue = percentageMask(event.target.value);
-                                        if (maskedValue.replace(/\D/g, '').length <= 12) {
-                                            setComissaoAntigo(maskedValue);
-                                        }
-                                    }}
-                                    min="0"
-                                    placeholder="Comissão Antiga"
-                                    required
-                                    className="col-span-1 w-full border-b-2 focus:border-b-2 focus:outline-none focus:border-blue-500"
-                                />
+                                <div>
+                                    <input
+                                        type="text"
+                                        id="comissaoNovo"
+                                        name="comissaoNovo"
+                                        value={comissaoNovo}
+                                        onChange={(event) => {
+                                            const maskedValue = percentageMask(event.target.value);
+                                            if (maskedValue.replace(/\D/g, '').length <= 12) {
+                                                setComissaoNovo(maskedValue);
+                                            }
+                                            setErrors((prevErrors) => ({ ...prevErrors, comissaoNovo: false }));
+                                        }}
+                                        placeholder="Nova Comissão"
+                                        className={`col-span-1 w-full border-b-2 focus:outline-none ${errors.comissaoNovo ? 'border-red-500' : 'focus:border-blue-500'}`}
+                                    />
+                                    {errors.comissaoNovo && <p className="text-red-500 text-sm">Campo obrigatório</p>}
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        id="comissaoAntigo"
+                                        name="comissaoAntigo"
+                                        value={comissaoAntigo}
+                                        onChange={(event) => {
+                                            const maskedValue = percentageMask(event.target.value);
+                                            if (maskedValue.replace(/\D/g, '').length <= 12) {
+                                                setComissaoAntigo(maskedValue);
+                                            }
+                                            setErrors((prevErrors) => ({ ...prevErrors, comissaoAntigo: false }));
+                                        }}
+                                        placeholder="Comissão Antiga"
+                                        className={`col-span-1 w-full border-b-2 focus:outline-none ${errors.comissaoAntigo ? 'border-red-500' : 'focus:border-blue-500'}`}
+                                    />
+                                    {errors.comissaoAntigo && <p className="text-red-500 text-sm">Campo obrigatório</p>}
+                                </div>
                             </div>
 
                             <div className="mb-4 flex flex-col">
-                                <div>
-                                    <textarea
-                                        id="descricaoProduto"
-                                        name="descricaoProduto"
-                                        value={descricaoProduto}
-                                        onChange={handleDescricaoChange}
-                                        placeholder="Descrição do Produto"
-                                        rows={4}
-                                        maxLength={descricaoLimiteCaracteres}
-                                        className="shadow-inner-2 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    >
-                                    </textarea>
-                                    <div className="flex justify-end">
-                                        <p className="text-sm text-gray-500">{descricaoProduto.length}/{descricaoLimiteCaracteres}</p>
-                                    </div>
+                                <textarea
+                                    id="descricaoProduto"
+                                    name="descricaoProduto"
+                                    value={descricaoProduto}
+                                    onChange={handleDescricaoChange}
+                                    placeholder="Descrição do Produto"
+                                    rows={4}
+                                    maxLength={descricaoLimiteCaracteres}
+                                    className="shadow-inner-2 p-2 block w-full border 'border-red-500' 'border-gray-300' rounded-md focus:outline-none"
+                                ></textarea>
+                                <div className="flex justify-end">
+                                    <p className="text-sm text-gray-500">{descricaoProduto.length}/{descricaoLimiteCaracteres}</p>
                                 </div>
                             </div>
                             <div className="text-center">

@@ -10,7 +10,7 @@ export async function createNewUserGestao(
 ) {
     const request = await fetch(`${backendURL()}/UserService.php?acao=createNewUserGestao`,
         {
-            
+
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -42,8 +42,9 @@ export async function validacaoLogin(
 
     const response = await request.json();
 
+
     if (response != 0) {
-        if (response[0].status_usuario === 1) {
+        if (response[0].status_usuario == 1) {
             await criarCookie("CookiCriado", response[0].id);
             await criarCookie("UserName", response[0].nome);
             await criarCookie("UserEmail", response[0].email);
@@ -145,8 +146,8 @@ export async function updateUser(
         }
         )
     });
-    const response = await request.json();
-    return response.message;
+    const response = JSON.parse(await request.json());
+    return response;
 }
 
 export async function updatePerfil(
@@ -166,4 +167,15 @@ export async function updatePerfil(
     });
     const response = await request.json();
     return response.message;
+}
+
+export async function createDefaultUserIfNoneExist(): Promise<any> {
+    const resposta = await fetch(`${backendURL()}/UserService.php?acao=createDefaultUserIfNoneExist`);
+
+    if (!resposta.ok) {
+        throw new Error("Erro ao criar usuário administrador.");
+    }
+
+    const dados = await resposta.json();
+    return dados;
 }

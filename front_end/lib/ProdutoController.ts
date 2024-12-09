@@ -30,7 +30,6 @@ export async function createNewProduto(
     }
 
     const data = JSON.parse(await response.json());
-    console.log(data);
 
     return data;
   } catch (error) {
@@ -99,6 +98,7 @@ export async function updateProdutoById(
   newComissaoNova: string,
   paramsId: number
 ) {
+  console.log(newHorasTrabalhadas)
   const request = await fetch(`${backendURL()}/ProdutoServices.php?acao=updateProdutoById&id=${paramsId}`, {
     method: "POST",
     headers: {
@@ -118,8 +118,9 @@ export async function updateProdutoById(
     throw new Error(`Erro ao atualizar produto: ${request.statusText}`);
   }
 
-  const response = await request.json();
-  return response.message;
+  const data = JSON.parse(await request.json());
+
+  return data;
 }
 
 export async function getProdutoById(produtoId: number) {

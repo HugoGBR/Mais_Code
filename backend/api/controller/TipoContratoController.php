@@ -1,5 +1,5 @@
 <?php
-include "../database.php"; // Importando database
+include "../database.php";
 
 class TipoContratoController
 {
@@ -53,7 +53,11 @@ class TipoContratoController
     public function updateContratoById(int $id){
         try {
             $user = json_decode(file_get_contents('php://input'));
-    
+            
+            if (!$user || !isset($user->nome)) {
+                return json_encode(['status' => 0, 'message' => 'Dados incompletos.']);
+            }
+
             $userExists = $this->checkContratoExistsById($id);
             if (!$userExists) {
                 return json_encode(['status' => 0, 'message' => 'Usuário não encontrado.']);

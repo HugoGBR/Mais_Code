@@ -7,7 +7,6 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-
 if (isset($_REQUEST["acao"])) {
     $acao = $_REQUEST["acao"];
     $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
@@ -21,23 +20,15 @@ if (isset($_REQUEST["acao"])) {
                 echo json_encode($users);
             }
             break;
+
         case "getAllCargo":
             if ($id !== null) {
-                echo json_encode(["error" => "Ação GetAllUsers não aceita um ID"]);
+                echo json_encode(["error" => "Ação GetAllCargo não aceita um ID"]);
             } else {
                 $users = $userController->getAllCargo();
                 echo json_encode($users);
             }
             break;
-
-        // case "CreateNewUser":
-        //     if ($id !== null) {
-        //         echo json_encode(["error" => "Ação CreateNewUser não aceita um ID"]);
-        //     } else {
-        //         $mensagem = $userController->CreateNewUser();
-        //         echo json_encode($mensagem);
-        //     }
-        //     break;
 
         case "getUserById":
             if ($id !== null) {
@@ -74,19 +65,21 @@ if (isset($_REQUEST["acao"])) {
                 echo json_encode(["error" => "Ação UpdateUserById necessita de um ID"]);
             }
             break;
-        case "updateUserPerfil":
-            if ($id !== null) {
-                $user = $userController->updateUserPerfil($id);
-                echo json_encode($user);
-            } else {
-                echo json_encode(["error" => "Ação updateUserPerfil necessita de um ID"]);
-            }
-            break;
+
         case "validacaoLogin":
             if ($id !== null) {
                 echo json_encode(["error" => "Ação validacaoLogin não aceita um ID"]);
             } else {
                 $mensagem = $userController->validacaoLogin();
+                echo json_encode($mensagem);
+            }
+            break;
+
+        case "createDefaultUserIfNoneExist":
+            if ($id !== null) {
+                echo json_encode(["error" => "Ação createDefaultUserIfNoneExist não aceita um ID"]);
+            } else {
+                $mensagem = $userController->createDefaultUserIfNoneExist();
                 echo json_encode($mensagem);
             }
             break;

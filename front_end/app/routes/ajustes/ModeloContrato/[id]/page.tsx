@@ -72,8 +72,30 @@ const ModeloContrato: React.FC<Props> = ({ params }) => {
 
     const handleButtonClick = async () => {
         if (inputsHabilitados) {
-            await updateContratoById(nomeContrato, params.id);
-            router.push('/routes/ajustes');
+            try {
+                
+                const response = await updateContratoById(nomeContrato, params.id);
+                
+
+                if (response.status === 1) { 
+                    toast({
+                        title: "Sucesso",
+                        description: "Contrato atualizado com sucesso!",
+                        className: "p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400",
+                    });
+    
+                    router.push('/routes/ajustes');
+                } else {
+                    throw new Error("Erro ao atualizar o contrato: resposta inválida");
+                }
+            } catch (error) {
+                console.error("Erro ao atualizar o contrato:", error);
+                toast({
+                    title: "Erro",
+                    description: "Erro ao atualizar o contrato. Por favor, tente novamente.",
+                    className: "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400",
+                });
+            }
         } else {
             HabilitarEventos();
         }
