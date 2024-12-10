@@ -207,7 +207,7 @@ export default function CardCadastro() {
                 });
 
                 resetForm();
-                route.push("/routes/home");
+                route.push("/routes/financeiro");
 
             } else {
                 throw new Error("Erro ao cadastrar a venda: resposta inválida");
