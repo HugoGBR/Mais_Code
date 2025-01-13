@@ -118,11 +118,6 @@ const LoginPage = () => {
                                         </div>
                                         {memoizedErrors.password}
                                     </div>
-                                    <label htmlFor="logincheck" className="text-sm block mb-7">
-                                        <input type="checkbox" id="logincheck" name="logincheck" value="check"
-                                            className="mr-2" />
-                                        Lembrar-me
-                                    </label>
                                     <button
                                         type="submit"
                                         className="w-full relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-blue-500 to-blue-700 group-hover:from-blue-500 group-hover:to-blue-700 hover:text-white dark:text-white">
