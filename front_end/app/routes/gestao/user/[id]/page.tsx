@@ -15,14 +15,16 @@ import { toast } from "@/components/ui/use-toast";
 type LoginFormSchema = z.infer<typeof userSchema>;
 
 export default function App({ params }: { params: { id: number } }) {
-    const [dadosUsuario, setdadosUsuario] = useState({ nome: "", cargo_id: 0, senha: "", email: "", status_usuario: 1 });
+    const [dadosUsuario, setdadosUsuario] = useState({
+        nome: "",
+        cargo_id: 0,
+        senha: "",
+        email: "",
+        status_usuario: 1
+    });
     const router = useRouter();
     const [inputsHabilitados, setInputHabilitados] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-
-    const HabilitarEventos = () => {
-        setInputHabilitados(true);
-    }
     const [listaCargo, setListaCargo] = useState<DadosCargos[]>([]);
     const { setValue } = useForm<LoginFormSchema>({
         resolver: zodResolver(userSchema)
@@ -40,21 +42,22 @@ export default function App({ params }: { params: { id: number } }) {
     useEffect(() => {
         const setdados = async () => {
             const usuario = await getUserById(params.id);
-            setdadosUsuario(usuario);
+            // Não atribuir a senha ao estado
+            setdadosUsuario({
+                ...usuario,
+                senha: "" // Garante que a senha seja sempre inicializada como vazia
+            });
             setValue('cargo', usuario.cargo_id.toString());
         };
 
         setdados();
     }, [params.id, setValue]);
 
-
     const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await updateUser(dadosUsuario.nome, dadosUsuario.cargo_id, dadosUsuario.email, dadosUsuario.senha, dadosUsuario.status_usuario, params.id);
         router.push('/routes/gestao');
     };
-
-    const [isHidden, setIsHidden] = useState(true);
 
     const handleButtonClick = async () => {
         if (inputsHabilitados) {
@@ -67,7 +70,7 @@ export default function App({ params }: { params: { id: number } }) {
                     dadosUsuario.status_usuario,
                     params.id
                 );
-    
+
                 if (response.status === 1) {
                     toast({
                         title: "Sucesso",
@@ -86,8 +89,6 @@ export default function App({ params }: { params: { id: number } }) {
                 });
             }
         } else {
-            HabilitarEventos();
-            setIsHidden(false);
             setInputHabilitados(true);
         }
     };
@@ -96,7 +97,6 @@ export default function App({ params }: { params: { id: number } }) {
         try {
             const novoStatus = dadosUsuario.status_usuario === 1 ? 0 : 1;
             setdadosUsuario((prev) => ({ ...prev, status_usuario: novoStatus }));
-
         } catch (error) {
             toast({
                 title: "Erro",
@@ -105,7 +105,6 @@ export default function App({ params }: { params: { id: number } }) {
             });
         }
     };
-
 
     return (
         <div>
@@ -147,7 +146,7 @@ export default function App({ params }: { params: { id: number } }) {
                                         type={showPassword ? "text" : "password"}
                                         value={dadosUsuario.senha}
                                         onChange={(e) => setdadosUsuario({ ...dadosUsuario, senha: e.target.value })}
-                                        className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10 w-full pr-10"  // pr-10 para evitar que o botão sobreponha o texto
+                                        className="border-b-2 ps-2 focus:border-b-2 focus:outline-none focus:border-blue-500 h-10 w-full pr-10"
                                         placeholder="Senha"
                                         disabled={!inputsHabilitados}
                                     />
@@ -204,16 +203,6 @@ export default function App({ params }: { params: { id: number } }) {
                                     </SelectContent>
                                 </Select>
                             </div>
-                        </div>
-                        <div className={`flex justify-center ${isHidden ? 'hidden' : ''}`}>
-                            <button
-                                type="button"
-                                onClick={toggleUserStatus}
-                                className={`w-full ${dadosUsuario.status_usuario === 1 ? 'col-span-1 p-2 font-bold text-white bg-red-500 rounded hover:bg-red-700 focus:outline-none ' : 'border border-green-700 text-black hover:bg-green-700 hover:text-white'} font-bold py-2 px-4 rounded`}
-                                disabled={!inputsHabilitados}
-                            >
-                                {dadosUsuario.status_usuario === 1 ? "Inativar Usuário" : "Ativar Usuário"}
-                            </button>
                         </div>
                         <div className='flex justify-center'>
                             <button type='button' onClick={handleButtonClick}
