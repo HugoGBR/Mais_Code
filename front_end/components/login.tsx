@@ -118,9 +118,12 @@ const LoginPage = () => {
                                         </div>
                                         {memoizedErrors.password}
                                     </div>
+                                    <div>
+
+                                    </div>
                                     <button
                                         type="submit"
-                                        className="w-full relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-blue-500 to-blue-700 group-hover:from-blue-500 group-hover:to-blue-700 hover:text-white dark:text-white">
+                                        className="mt-2 w-full relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-blue-500 to-blue-700 group-hover:from-blue-500 group-hover:to-blue-700 hover:text-white dark:text-white">
                                         <span className="relative w-full py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                                             Entrar
                                         </span>
