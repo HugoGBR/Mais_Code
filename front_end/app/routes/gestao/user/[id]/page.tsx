@@ -15,6 +15,7 @@ import { toast } from "@/components/ui/use-toast";
 type LoginFormSchema = z.infer<typeof userSchema>;
 
 export default function App({ params }: { params: { id: number } }) {
+    const [loading, setloading] = useState(true);
     const [dadosUsuario, setdadosUsuario] = useState({
         nome: "",
         cargo_id: 0,
@@ -48,6 +49,7 @@ export default function App({ params }: { params: { id: number } }) {
                 senha: "" // Garante que a senha seja sempre inicializada como vazia
             });
             setValue('cargo', usuario.cargo_id.toString());
+            setloading(false);
         };
 
         setdados();
@@ -105,6 +107,9 @@ export default function App({ params }: { params: { id: number } }) {
             });
         }
     };
+    if (loading) {
+        return <div>Carregando...</div>;
+    }
 
     return (
         <div>
