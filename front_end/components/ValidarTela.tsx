@@ -37,17 +37,18 @@ export default function AuthGuard({ children }: { children: ReactNode }) {
             "/routes/home",
             "/routes/cadastros",
             "/routes/cadastros/Cliente",
+            "/routes/relatorio",
             "/routes/relatorio/[id]",
             "/routes/financeiro",
             "/routes/financeiro/[id]",
         ],
-        Financeiro: ["/routes/home", 
-        "/routes/relatorio", 
-        "/routes/relatorio/[id]", 
-        "/routes/relatorio/TabelaComissao", 
-        "/routes/financeiro",
-        "/routes/financeiro/[id]"
-    ],
+        Financeiro: ["/routes/home",
+            "/routes/relatorio",
+            "/routes/relatorio/[id]",
+            "/routes/relatorio/TabelaComissao",
+            "/routes/financeiro",
+            "/routes/financeiro/[id]"
+        ],
     };
 
     const verificaPermissao = (cargo: string, path: string): boolean => {
