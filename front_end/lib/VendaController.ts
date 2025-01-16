@@ -88,7 +88,7 @@ export async function updateVenda(
     tipoContratoId: number,
     produtoId: number,
     usuarioId: number,
-    statusCliente: string,
+    statusCliente: number,
     horastrabalhadas: Number,
     inicioContrato: string,
     finalContrato: string,

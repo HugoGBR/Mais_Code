@@ -144,7 +144,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         }
     }
 
-   
+
 
     const handleButtonsavle = async (event: FormEvent) => {
         event.preventDefault();
@@ -155,7 +155,7 @@ export default function EditVenda({ params }: { params: { id: number } }) {
                 Number(new_tipo_contrato_id),
                 Number(new_produto_id),
                 Number(new_usuario_id),
-                String(statusCliente),
+                statusClienteValor,
                 horas_trabalhadas,
                 String(DataInicio),
                 String(DataFim),
@@ -187,11 +187,11 @@ export default function EditVenda({ params }: { params: { id: number } }) {
         }
     };
 
-    const [isEditing, setIsEditing] = useState(false); 
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleButtonClick = (event: FormEvent) => {
         if (isEditing) {
-            handleButtonsavle(event); 
+            handleButtonsavle(event);
         }
         setInputHabilitados(!inputsHabilitados);
         setIsEditing(!isEditing);
