@@ -26,6 +26,9 @@ export default function RootLayout({
             {/* Conteúdo principal */}
             <main className="flex items-center justify-center w-full p-6 md:p-5 lg:px-8">
                 {children}
+                <div className="w-full bottom-5 text-center fixed text-sm text-gray-500 mt-4">
+                    © 2025 Créditos: Fábrica de Software SENAC Turma 109
+                </div>
             </main>
         </div>
     );
